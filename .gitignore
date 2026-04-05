@@ -1,0 +1,47 @@
+# ==============================================================================
+# Visual Studio / C++ Gitignore
+# ==============================================================================
+
+# Compiled binaries and executables
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.obj
+*.lib
+
+# Visual Studio specific directories
+.vs/
+Debug/
+Release/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+
+# User-specific and temporary configuration files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vcxproj.user
+
+# Intermediate build files and caches
+*.ilk
+*.meta
+*.pdb
+*.tlog
+*.idb
+*.log
+*.iobj
+*.ipdb
+*.aps
+*.ncb
+*.sdf
+*.db
+*.opendb
+*.VC.db
