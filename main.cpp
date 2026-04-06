@@ -2,7 +2,9 @@
 #include "pgr.h"
 #include "mesh.h"
 #include "camera.h"
+#include "input.h"
 #include "shader.h"
+#include "input.h"
 
 namespace copakond {
     const int WIN_WIDTH = 512;
@@ -17,6 +19,7 @@ namespace copakond {
         glm::vec3(0.0f, 0.0f, -1.0f),
         100.0f
     );
+    Input input = Input(camera, WIN_WIDTH, WIN_HEIGHT);
 
     float updateTime() {
         int currentFrameTime = glutGet(GLUT_ELAPSED_TIME);
@@ -55,56 +58,15 @@ namespace copakond {
     }
 
     void keyboardInputEvent(unsigned char key, int x, int y) {
-        //float deltaTime = glutGet(GLUT_ELAPSED_TIME);
-        float deltaTime = 0.1;
-
-        switch (key) {
-            case 'w': case 'W':
-                camera.processKeyboard(FRONT, deltaTime); break;
-            case 's': case 'S':
-                camera.processKeyboard(BACK, deltaTime); break;
-            case 'a': case 'A':
-                camera.processKeyboard(LEFT, deltaTime); break;
-            case 'd': case 'D':
-                camera.processKeyboard(RIGHT, deltaTime); break;
-            case 27: // ESC
-                glutLeaveMainLoop(); break;
-        }
-
-        glutPostRedisplay();
+        input.keyboardInputEvent(key, x, y);
     }
 
     void specKeyboardInputEvent(int key, int x, int y) {
-        //float deltaTime = glutGet(GLUT_ELAPSED_TIME);
-        float deltaTime = 0.1;
-
-        switch (key) {
-            case GLUT_KEY_UP:
-                camera.processKeyboard(FRONT, deltaTime); break;
-            case GLUT_KEY_DOWN:
-                camera.processKeyboard(BACK, deltaTime); break;
-            case GLUT_KEY_LEFT:
-                camera.processKeyboard(LEFT, deltaTime); break;
-            case GLUT_KEY_RIGHT:
-                camera.processKeyboard(RIGHT, deltaTime); break;
-        }
-
-        glutPostRedisplay();
+        input.specKeyboardInputEvent(key, x, y);
     }
 
     void mouseMoveEvent(int x, int y) {
-        int centerX = WIN_WIDTH / 2;
-        int centerY = WIN_HEIGHT / 2;
-
-        if (x == centerX && y == centerY) return;
-
-        float deltaX = (float)(x - centerX);
-        float deltaY = (float)(centerY - y);
-
-        camera.processMouseMovement(deltaX, deltaY);
-
-        glutWarpPointer(centerX, centerY);
-        glutPostRedisplay();
+        input.mouseMoveEvent(x, y);
     }
 }
 
@@ -118,18 +80,20 @@ int main(int argc, char** argv) {
     glutInitWindowSize(copakond::WIN_WIDTH, copakond::WIN_HEIGHT);
     glutCreateWindow(copakond::WIN_TITLE);
 
+    // INPUT - keyboard and mouse event callbacks
     glutKeyboardFunc(copakond::keyboardInputEvent);
     glutSpecialFunc(copakond::specKeyboardInputEvent);
     glutPassiveMotionFunc(copakond::mouseMoveEvent);
-    glutSetCursor(GLUT_CURSOR_NONE);
+    glutSetCursor(GLUT_CURSOR_NONE); // hide cursor
+
+    // SET DRAW CALLBACK
     glutDisplayFunc(copakond::draw);
 
-    if (!pgr::initialize(pgr::OGL_VER_MAJOR, pgr::OGL_VER_MINOR))
+    if (!pgr::initialize(pgr::OGL_VER_MAJOR, pgr::OGL_VER_MINOR)) {
         pgr::dieWithError("pgr init failed, required OpenGL not supported?");
+    }
 
     copakond::init();
-
-    std::cout << "Hello triangle!" << std::endl;
 
     glutMainLoop();
     return 0;

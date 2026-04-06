@@ -12,7 +12,9 @@ add_executable(${PROJECT_NAME} main.cpp
         camera.cpp
         camera.h
         shader.cpp
-        shader.h)
+        shader.h
+        input.h
+        input.cpp)
 
 target_include_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}include)
 target_link_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}lib)
