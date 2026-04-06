@@ -1,101 +1,46 @@
-# ==============================================================================
-# Visual Studio / VS Code / C++ / OpenGL Gitignore
-# ==============================================================================
+# =========================
+# CLion / JetBrains IDE
+# =========================
+# Ignore personal settings and UI history
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/vcs.xml
+.idea/shelf/
+.idea/dictionaries/
+.idea/compiler.xml
+.idea/assetWizardSettings.xml
+.idea/caches/
+.idea/modules.xml
 
-# ------------------------------------------------------------------------------
-# Compiled binaries and executables
-# ------------------------------------------------------------------------------
-*.com
-*.class
-*.dll
+# The rest of the .idea folder (like runConfigurations, toolchains, code styles) WILL BE PUSHED
+
+
+# =========================
+# CMake Build Directories
+# =========================
+# Do not push compiled artifacts, each machine will build its own
+cmake-build-*/
+build/
+out/
+bin/
+
+# =========================
+# C++ and Compiled Files
+# =========================
+# Binaries
 *.exe
-*.o
+*.dll
 *.so
-*.obj
-*.lib
+*.dylib
 *.a
-*.out
+*.lib
 
-# ------------------------------------------------------------------------------
-# Visual Studio directories and files
-# ------------------------------------------------------------------------------
-.vs/
-Debug/
-Release/
-x64/
-x86/
-[Bb]in/
-[Oo]bj/
-[Oo]ut/
-
-# User-specific files
-*.rsuser
+# Object and temporary files
+*.o
+*.obj
+*.pdb
+*.idb
+*.ilk
+*.exp
 *.suo
 *.user
-*.userosscache
-*.sln.docstates
-*.vcxproj.user
-
-# ------------------------------------------------------------------------------
-# VS Code
-# ------------------------------------------------------------------------------
-.vscode/
-
-# (optional – pokud chceš sdílet settings, tak tohle smaž)
-# !.vscode/settings.json
-# !.vscode/tasks.json
-# !.vscode/launch.json
-
-# ------------------------------------------------------------------------------
-# CMake
-# ------------------------------------------------------------------------------
-CMakeFiles/
-CMakeCache.txt
-cmake-build-*/
-compile_commands.json
-CTestTestfile.cmake
-cmake_install.cmake
-Makefile
-
-# ------------------------------------------------------------------------------
-# Intermediate / build / debug files
-# ------------------------------------------------------------------------------
-*.ilk
-*.meta
-*.pdb
-*.tlog
-*.idb
-*.log
-*.iobj
-*.ipdb
-*.aps
-*.ncb
-*.sdf
-*.db
-*.opendb
-*.VC.db
-
-# ------------------------------------------------------------------------------
-# OS-specific
-# ------------------------------------------------------------------------------
-# Windows
-Thumbs.db
-Desktop.ini
-
-# macOS
-.DS_Store
-
-# Linux
-*~
-
-# ------------------------------------------------------------------------------
-# Logs
-# ------------------------------------------------------------------------------
-logs/
-*.log
-
-# ------------------------------------------------------------------------------
-# Temporary files
-# ------------------------------------------------------------------------------
-tmp/
-temp/
