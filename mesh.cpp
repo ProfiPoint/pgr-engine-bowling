@@ -29,6 +29,10 @@ namespace copakond {
         GLint positionLoc = glGetAttribLocation(shaderProgram, "position");
         glEnableVertexAttribArray(positionLoc);
         glVertexAttribPointer(positionLoc, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+        // UNBIND
+        glBindVertexArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     void Mesh::draw(int WIN_WIDTH, int WIN_HEIGHT) {
