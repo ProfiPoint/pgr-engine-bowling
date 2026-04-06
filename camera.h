@@ -11,11 +11,12 @@
 namespace copakond {
     class Camera {
     private:
+        const glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
         glm::vec3 position;
         glm::vec3 front;
         glm::vec3 up;
         glm::vec3 right;
-        glm::vec3 worldUp;
 
         float movementSpeed;
         float mouseSensitivity;
@@ -31,7 +32,8 @@ namespace copakond {
         void updateCameraVectors(); // calculates front, up based off of yaw and pitch and position
 
     public:
-        Camera(const glm::vec3 &startPosition, const glm::vec3 &startLookVectorm, float distance);
+        Camera(const glm::vec3 &startPosition, const glm::vec3 &startLookPoint, float distance);
+        glm::vec3 Camera::lookToPoint(const glm::vec3 &point);
 
         glm::mat4 getViewMatrix();
         glm::mat4 getProjectionMatrix(float aspectWidth, float aspectHeight);

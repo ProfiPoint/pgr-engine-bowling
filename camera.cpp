@@ -1,14 +1,9 @@
 #include "camera.h"
 
 namespace copakond {
-    //TODO implement startLookVector to pitch, yaw
-    Camera::Camera(const glm::vec3 &startPosition, const glm::vec3 &startLookVector, float distance) {
+    Camera::Camera(const glm::vec3 &startPosition, const glm::vec3 &startLookPoint, float distance) {
         position = startPosition;
-        worldUp = glm::vec3(0.0f, 1.0f, 0.0f); //should use startLookVector
-        right = glm::normalize(cross(startLookVector, worldUp)); // (0,0,-1) x (0,1,0) = (1,0,0)
-
-        yaw = -90.0f; // should use startLookVector
-        pitch = 0.0f; //should use startLookVector
+        lookToPoint(startLookPoint); // startLookPoint is default (0,0,0)
 
         fov = 45.0f;
         nearZ = 0.1f;
@@ -16,6 +11,7 @@ namespace copakond {
         maxPitch = 89.0f;
         movementSpeed = 2.0f;
         mouseSensitivity = 0.1f;
+
         updateCameraVectors();
     }
 
@@ -30,11 +26,19 @@ namespace copakond {
             sin(yaw_rad) * cos(pitch_rad)
         );
 
-
-
         front = glm::normalize(front);
-        right = glm::normalize(glm::cross(front, worldUp));
+        right = glm::normalize(glm::cross(front, worldUp)); // (0,0,-1) x (0,1,0) = (1,0,0)
         up = glm::normalize(glm::cross(right, front));
+    }
+
+    // sets yaw and pitch based off of position and look point
+    glm::vec3 Camera::lookToPoint(const glm::vec3 &point) { // https://learnopengl.com/Getting-started/Camera
+        glm::vec3 direction = glm::normalize(point - position);
+
+        pitch = glm::degrees(asin(direction.y));
+        yaw = glm::degrees(atan2(direction.z, direction.x));
+
+        return direction;
     }
 
     glm::mat4 Camera::getViewMatrix() {

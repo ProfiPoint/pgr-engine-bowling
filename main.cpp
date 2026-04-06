@@ -16,7 +16,7 @@ namespace copakond {
     Shader shader = Shader();
     Camera camera(
         glm::vec3(0.0f, 0.0f, 5.0f),
-        glm::vec3(0.0f, 0.0f, -1.0f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
         100.0f
     );
     Input input = Input(camera, WIN_WIDTH, WIN_HEIGHT);
