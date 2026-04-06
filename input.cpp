@@ -3,42 +3,30 @@
 namespace copakond {
     Input::Input(Camera& cam, int WIN_WIDTH, int WIN_HEIGHT) : camera(cam), WIN_WIDTH(WIN_WIDTH), WIN_HEIGHT(WIN_HEIGHT) {}
 
+    void Input::keyboardInputEvent(unsigned char key, int x, int y) {
+        keys_map[key] = true;
+    }
     void Input::specKeyboardInputEvent(int key, int x, int y) {
-        //float deltaTime = glutGet(GLUT_ELAPSED_TIME);
-        float deltaTime = 0.1;
-
-        switch (key) {
-            case GLUT_KEY_UP:
-                camera.processKeyboard(FRONT, deltaTime); break;
-            case GLUT_KEY_DOWN:
-                camera.processKeyboard(BACK, deltaTime); break;
-            case GLUT_KEY_LEFT:
-                camera.processKeyboard(LEFT, deltaTime); break;
-            case GLUT_KEY_RIGHT:
-                camera.processKeyboard(RIGHT, deltaTime); break;
-        }
-
-        glutPostRedisplay();
+        keys_map[key+256] = true;
     }
 
-    void Input::keyboardInputEvent(unsigned char key, int x, int y) {
-        //float deltaTime = glutGet(GLUT_ELAPSED_TIME);
-        float deltaTime = 0.1;
+    void Input::keyboardUpInputEvent(unsigned char key, int x, int y) {
+        keys_map[key] = false;
+    }
+    void Input::specKeyboardUpInputEvent(int key, int x, int y) {
+        keys_map[key+256] = false;
+    }
 
-        switch (key) {
-            case 'w': case 'W':
-                camera.processKeyboard(FRONT, deltaTime); break;
-            case 's': case 'S':
-                camera.processKeyboard(BACK, deltaTime); break;
-            case 'a': case 'A':
-                camera.processKeyboard(LEFT, deltaTime); break;
-            case 'd': case 'D':
-                camera.processKeyboard(RIGHT, deltaTime); break;
-            case 27: // ESC
-                glutLeaveMainLoop(); break;
-        }
-
-        glutPostRedisplay();
+    void Input::keyInput(float deltaTime) {
+        if (keys_map['w'] || keys_map['W']) camera.processKeyboard(FRONT, deltaTime);
+        if (keys_map['s'] || keys_map['S']) camera.processKeyboard(BACK, deltaTime);
+        if (keys_map['a'] || keys_map['A']) camera.processKeyboard(LEFT, deltaTime);
+        if (keys_map['d'] || keys_map['D']) camera.processKeyboard(RIGHT, deltaTime);
+        if (keys_map[27]) glutLeaveMainLoop(); // ESC
+        if (keys_map[GLUT_KEY_UP + IS_SPECIAL_KEY])    camera.processKeyboard(FRONT, deltaTime);
+        if (keys_map[GLUT_KEY_DOWN + IS_SPECIAL_KEY])  camera.processKeyboard(BACK, deltaTime);
+        if (keys_map[GLUT_KEY_LEFT + IS_SPECIAL_KEY])  camera.processKeyboard(LEFT, deltaTime);
+        if (keys_map[GLUT_KEY_RIGHT + IS_SPECIAL_KEY]) camera.processKeyboard(RIGHT, deltaTime);
     }
 
     void Input::mouseMoveEvent(int x, int y) {

@@ -23,8 +23,9 @@ namespace copakond {
 
     float updateTime() {
         int currentFrameTime = glutGet(GLUT_ELAPSED_TIME);
+        uint64_t prevTime = time;
         time = currentFrameTime;
-        return (currentFrameTime - time) / 1000.0f; // delta time
+        return (currentFrameTime - prevTime) / 1000.0f; // delta time
     }
 
     void init() {
@@ -46,6 +47,9 @@ namespace copakond {
     }
 
     void draw() {
+        float deltaTime = updateTime(); // calculate delta time
+        input.keyInput(deltaTime); // process input
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         shader.draw(camera, WIN_WIDTH, WIN_HEIGHT);
@@ -60,9 +64,14 @@ namespace copakond {
     void keyboardInputEvent(unsigned char key, int x, int y) {
         input.keyboardInputEvent(key, x, y);
     }
-
     void specKeyboardInputEvent(int key, int x, int y) {
         input.specKeyboardInputEvent(key, x, y);
+    }
+    void keyboardUpInputEvent(unsigned char key, int x, int y) {
+        input.keyboardUpInputEvent(key, x, y);
+    }
+    void specKeyboardUpInputEvent(int key, int x, int y) {
+        input.specKeyboardUpInputEvent(key, x, y);
     }
 
     void mouseMoveEvent(int x, int y) {
@@ -83,6 +92,9 @@ int main(int argc, char** argv) {
     // INPUT - keyboard and mouse event callbacks
     glutKeyboardFunc(copakond::keyboardInputEvent);
     glutSpecialFunc(copakond::specKeyboardInputEvent);
+    glutKeyboardUpFunc(copakond::keyboardUpInputEvent);
+    glutSpecialUpFunc(copakond::specKeyboardUpInputEvent);
+
     glutPassiveMotionFunc(copakond::mouseMoveEvent);
     glutSetCursor(GLUT_CURSOR_NONE); // hide cursor
 
