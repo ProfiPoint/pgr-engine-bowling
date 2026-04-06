@@ -8,7 +8,9 @@ add_compile_definitions(WIN32 _CONSOLE)
 
 add_executable(${PROJECT_NAME} main.cpp
         mesh.cpp
-        mesh.h)
+        mesh.h
+        camera.cpp
+        camera.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}include)
 target_link_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}lib)
