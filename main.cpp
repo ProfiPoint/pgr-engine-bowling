@@ -59,6 +59,7 @@ namespace copakond {
         }
 
         glutSwapBuffers(); // swap front and back screen buffer
+        glutPostRedisplay(); // !!!!!!!!! schedules display, doesnt stack!!!
     }
 
     void keyboardInputEvent(unsigned char key, int x, int y) {
