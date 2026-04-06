@@ -8,13 +8,14 @@ namespace copakond {
     protected:
         GLuint shaderProgram;
         GLuint arrayBuffer;
-        GLuint vao;
         GLsizei numVertices;
 
-        GLint Mid; // model matrix uniform index;
-        GLint Vid; // view matrix uniform index;
-        GLint Pid; // projection matrix uniform index;
-        GLint PVMid; // PVM matrix uniform index;
+        GLuint vao_unfId;
+
+        GLint M_unfId; // model matrix uniform index;
+        GLint V_unfId; // view matrix uniform index;
+        GLint P_unfId; // projection matrix uniform index;
+        GLint PVM_unfId; // PVM matrix uniform index;
 
     public:
         Mesh();
