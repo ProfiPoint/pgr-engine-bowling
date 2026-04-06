@@ -17,7 +17,7 @@ namespace copakond {
     public:
         Shader();
 
-        virtual void init(GLuint shader);
+        virtual GLuint init(std::string vertShaderLocation, std::string fragShaderLocation);
         virtual void draw(Camera camera, int WIN_WIDTH, int WIN_HEIGHT);
     };
 }

@@ -29,14 +29,10 @@ namespace copakond {
         glEnable(GL_DEPTH_TEST);
         glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 
-        GLuint shaders[] = {
-            pgr::createShaderFromFile(GL_VERTEX_SHADER, "shaders/vertexShader.vert"),
-            pgr::createShaderFromFile(GL_FRAGMENT_SHADER, "shaders/fragmentShader.frag"),
-            0
-        };
-
-        GLuint shaderPrg = pgr::createProgram(shaders);
-        shader.init(shaderPrg);
+        GLuint shaderPrg = shader.init(
+            "shaders/vertexShader.vert",
+            "shaders/fragmentShader.frag"
+        );
 
         Mesh triangleMesh = Mesh();
         meshes.push_back(triangleMesh);

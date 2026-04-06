@@ -3,14 +3,21 @@
 namespace copakond {
     Shader::Shader() {}
 
-    void Shader::init(GLuint shader) {
-        shaderProgram = shader;
+    GLuint Shader::init(std::string vertShaderLocation, std::string fragShaderLocation) {
+        GLuint shaders[] = {
+            pgr::createShaderFromFile(GL_VERTEX_SHADER, vertShaderLocation),
+            pgr::createShaderFromFile(GL_FRAGMENT_SHADER, fragShaderLocation),
+            0
+        };
+
+        shaderProgram = pgr::createProgram(shaders);
 
         // UNIFORM BINDING
         M_unfId = glGetUniformLocation(shaderProgram, "model");
         V_unfId = glGetUniformLocation(shaderProgram, "view");
         P_unfId = glGetUniformLocation(shaderProgram, "projection");
         PVM_unfId = glGetUniformLocation(shaderProgram, "PVM");
+        return shaderProgram;
     }
 
     void Shader::draw(Camera camera, int WIN_WIDTH, int WIN_HEIGHT) {

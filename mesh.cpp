@@ -32,7 +32,6 @@ namespace copakond {
     }
 
     void Mesh::draw(int WIN_WIDTH, int WIN_HEIGHT) {
-        glBindVertexArray(vao_unfId);
         glDrawArrays(GL_TRIANGLES, 0, numVertices);
     };
 }
