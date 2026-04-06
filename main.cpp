@@ -1,16 +1,17 @@
 #include <iostream>
 #include "pgr.h"
-#include "mesh.h"
-#include "camera.h"
-#include "input.h"
-#include "shader.h"
-#include "input.h"
+#include "models/mesh.h"
+#include "geometry/camera.h"
+#include "utils/input.h"
+#include "renderer/shader.h"
+#include "utils/input.h"
 
 namespace copakond {
     int WIN_WIDTH = 1280;
     int WIN_HEIGHT = 720;
     const char* WIN_TITLE = "PGR Semestral Work Copakond";
 
+    // shared variables
     uint64_t time = 0;
     std::vector<Mesh> meshes = {};
     Shader shader = Shader();

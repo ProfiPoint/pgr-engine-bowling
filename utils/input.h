@@ -4,7 +4,7 @@
 #define IS_SPECIAL_KEY 256
 
 #include "pgr.h"
-#include "camera.h"
+#include "../geometry/camera.h"
 
 namespace copakond {
     class Input {

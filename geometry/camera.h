@@ -33,7 +33,7 @@ namespace copakond {
 
     public:
         Camera(const glm::vec3 &startPosition, const glm::vec3 &startLookPoint, float distance);
-        glm::vec3 Camera::lookToPoint(const glm::vec3 &point);
+        void Camera::lookToPoint(const glm::vec3 &point);
 
         glm::mat4 getViewMatrix();
         glm::mat4 getProjectionMatrix(float aspectWidth, float aspectHeight);

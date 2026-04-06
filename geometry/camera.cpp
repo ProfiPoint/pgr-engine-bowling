@@ -3,15 +3,14 @@
 namespace copakond {
     Camera::Camera(const glm::vec3 &startPosition, const glm::vec3 &startLookPoint, float distance) {
         position = startPosition;
-        lookToPoint(startLookPoint); // startLookPoint is default (0,0,0)
-
-        fov = 45.0f;
-        nearZ = 0.1f;
         farZ = distance;
+        nearZ = 0.1f;
+        fov = 45.0f;
         maxPitch = 89.0f;
         movementSpeed = 2.0f;
         mouseSensitivity = 0.1f;
 
+        lookToPoint(startLookPoint); // startLookPoint is default (0,0,0)
         updateCameraVectors();
     }
 
@@ -32,13 +31,11 @@ namespace copakond {
     }
 
     // sets yaw and pitch based off of position and look point
-    glm::vec3 Camera::lookToPoint(const glm::vec3 &point) { // https://learnopengl.com/Getting-started/Camera
+    void Camera::lookToPoint(const glm::vec3 &point) { // https://learnopengl.com/Getting-started/Camera
         glm::vec3 direction = glm::normalize(point - position);
 
         pitch = glm::degrees(asin(direction.y));
         yaw = glm::degrees(atan2(direction.z, direction.x));
-
-        return direction;
     }
 
     glm::mat4 Camera::getViewMatrix() {
@@ -55,17 +52,13 @@ namespace copakond {
 
         switch (direction) {
             case FRONT:
-                position += frontNorm * movementSpeed * deltaTime;
-                break;
+                position += frontNorm * movementSpeed * deltaTime; break;
             case BACK:
-                position -= frontNorm * movementSpeed * deltaTime;
-                break;
+                position -= frontNorm * movementSpeed * deltaTime; break;
             case LEFT:
-                position -= right * movementSpeed * deltaTime;
-                break;
+                position -= right * movementSpeed * deltaTime; break;
             case RIGHT:
-                position += right * movementSpeed * deltaTime;
-                break;
+                position += right * movementSpeed * deltaTime; break;
         }
     }
 

@@ -13,10 +13,10 @@ namespace copakond {
         shaderProgram = pgr::createProgram(shaders);
 
         // UNIFORM BINDING
-        M_unfId = glGetUniformLocation(shaderProgram, "model");
-        V_unfId = glGetUniformLocation(shaderProgram, "view");
-        P_unfId = glGetUniformLocation(shaderProgram, "projection");
-        PVM_unfId = glGetUniformLocation(shaderProgram, "PVM");
+        modelUID = glGetUniformLocation(shaderProgram, "model");
+        viewUID = glGetUniformLocation(shaderProgram, "view");
+        projectionUID = glGetUniformLocation(shaderProgram, "projection");
+        pvmUID = glGetUniformLocation(shaderProgram, "PVM");
         return shaderProgram;
     }
 
@@ -30,9 +30,9 @@ namespace copakond {
         glm::mat4 PVM = projectionM * viewM * modelM;
 
         // UNIFORM APPLY
-        glUniformMatrix4fv(M_unfId, 1, GL_FALSE, glm::value_ptr(modelM)); // TRUE: M -> M^t, opengl accepts vectors by rows.
-        glUniformMatrix4fv(V_unfId, 1, GL_FALSE, glm::value_ptr(viewM));
-        glUniformMatrix4fv(P_unfId, 1, GL_FALSE, glm::value_ptr(projectionM));
-        glUniformMatrix4fv(PVM_unfId, 1, GL_FALSE, glm::value_ptr(PVM));
+        glUniformMatrix4fv(modelUID, 1, GL_FALSE, glm::value_ptr(modelM)); // TRUE: M -> M^t, opengl accepts vectors by rows.
+        glUniformMatrix4fv(viewUID, 1, GL_FALSE, glm::value_ptr(viewM));
+        glUniformMatrix4fv(projectionUID, 1, GL_FALSE, glm::value_ptr(projectionM));
+        glUniformMatrix4fv(pvmUID, 1, GL_FALSE, glm::value_ptr(PVM));
     };
 }
