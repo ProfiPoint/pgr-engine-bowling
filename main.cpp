@@ -8,67 +8,55 @@
 #include <iostream>
 #include "pgr.h"
 
-const int WIN_WIDTH = 512;
-const int WIN_HEIGHT = 512;
-const char* WIN_TITLE = "Hello World";
+namespace copakond {
+    const int WIN_WIDTH = 512;
+    const int WIN_HEIGHT = 512;
+    const char* WIN_TITLE = "Hello World";
 
-GLuint shaderProgram = 0;
-GLuint arrayBuffer = 0;
-GLuint vao = 0;
+    GLuint shaderProgram = 0;
+    GLuint arrayBuffer = 0;
+    GLuint vao = 0;
 
-std::string vertexShaderSrc =
-"#version 140\n"
-"in vec2 position;\n"
-"void main() {\n"
-"  gl_Position = vec4(position, 0.0f, 1.0f);\n"
-"}\n"
-;
+    void init() {
+        glClearColor(0.2f, 0.1f, 0.3f, 1.0f);
+        glEnable(GL_DEPTH_TEST);
+        glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 
-std::string fragmentShaderSrc =
-"#version 140\n"
-"out vec4 color;"
-"void main() {\n"
-"  color = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n"
-"}\n"
-;
+        GLuint shaders[] = {
+          pgr::createShaderFromFile(GL_VERTEX_SHADER, "shaders/vertexShader.vert"),
+          pgr::createShaderFromFile(GL_FRAGMENT_SHADER, "shaders/fragmentShader.frag"),
+          0
+        };
+        shaderProgram = pgr::createProgram(shaders);
 
-void init() {
-    glClearColor(0.2f, 0.1f, 0.3f, 1.0f);
-    glEnable(GL_DEPTH_TEST);
-    glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+        static const float vertices[] = {
+          0.0f,  0.5f,
+          -0.5f, -0.5f,
+          0.5f, -0.5f,
+        };
 
-    GLuint shaders[] = {
-      pgr::createShaderFromSource(GL_VERTEX_SHADER, vertexShaderSrc),
-      pgr::createShaderFromSource(GL_FRAGMENT_SHADER, fragmentShaderSrc),
-      0
-    };
-    shaderProgram = pgr::createProgram(shaders);
+		// VBO
+        glGenBuffers(1, &arrayBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, arrayBuffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    static const float vertices[] = {
-      0.0f,  0.5f,
-      -0.5f, -0.5f,
-      0.5f, -0.5f,
-    };
+		// VAO
+        glGenVertexArrays(1, &vao);
+        glBindVertexArray(vao);
+        GLint positionLoc = glGetAttribLocation(shaderProgram, "position");
+        glEnableVertexAttribArray(positionLoc);
+        glVertexAttribPointer(positionLoc, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    }
 
-    glGenBuffers(1, &arrayBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, arrayBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    void draw() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-    GLint positionLoc = glGetAttribLocation(shaderProgram, "position");
-    glEnableVertexAttribArray(positionLoc);
-    glVertexAttribPointer(positionLoc, 2, GL_FLOAT, GL_FALSE, 0, 0);
-}
+        glUseProgram(shaderProgram);
+        glBindVertexArray(vao);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
-void draw() {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glUseProgram(shaderProgram);
-    glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-
-    glutSwapBuffers();
+        glutSwapBuffers(); // swap front and back screen buffer
+    }
 }
 
 int main(int argc, char** argv) {
@@ -78,15 +66,15 @@ int main(int argc, char** argv) {
     glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
 
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-    glutInitWindowSize(WIN_WIDTH, WIN_HEIGHT);
-    glutCreateWindow(WIN_TITLE);
+    glutInitWindowSize(copakond::WIN_WIDTH, copakond::WIN_HEIGHT);
+    glutCreateWindow(copakond::WIN_TITLE);
 
-    glutDisplayFunc(draw);
+    glutDisplayFunc(copakond::draw);
 
     if (!pgr::initialize(pgr::OGL_VER_MAJOR, pgr::OGL_VER_MINOR))
         pgr::dieWithError("pgr init failed, required OpenGL not supported?");
 
-    init();
+    copakond::init();
 
     std::cout << "Hello triangle!" << std::endl;
 
