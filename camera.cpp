@@ -16,6 +16,7 @@ namespace copakond {
         maxPitch = 89.0f;
         movementSpeed = 2.0f;
         mouseSensitivity = 0.1f;
+        updateCameraVectors();
     }
 
     void Camera::updateCameraVectors() {
@@ -39,7 +40,6 @@ namespace copakond {
     }
 
     glm::mat4 Camera::getProjectionMatrix(float WIN_WIDTH, float WIN_HEIGHT) {
-        updateCameraVectors();
         float aspect = WIN_WIDTH / WIN_HEIGHT;
         return glm::perspective(glm::radians(fov), aspect, nearZ, farZ);
     }
@@ -68,5 +68,6 @@ namespace copakond {
         pitch += deltaY * mouseSensitivity;
         yaw = fmod(yaw, 360.0f);
         pitch = glm::clamp(pitch, -maxPitch, maxPitch);
+        updateCameraVectors();
     }
 }
