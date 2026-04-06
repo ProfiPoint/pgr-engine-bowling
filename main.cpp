@@ -7,9 +7,9 @@
 #include "input.h"
 
 namespace copakond {
-    const int WIN_WIDTH = 512;
-    const int WIN_HEIGHT = 512;
-    const char* WIN_TITLE = "Hello World";
+    int WIN_WIDTH = 1280;
+    int WIN_HEIGHT = 720;
+    const char* WIN_TITLE = "PGR Semestral Work Copakond";
 
     uint64_t time = 0;
     std::vector<Mesh> meshes = {};
@@ -77,6 +77,17 @@ namespace copakond {
 
     void mouseMoveEvent(int x, int y) {
         input.mouseMoveEvent(x, y);
+    }
+
+    void screenResizeEvent(int width, int height) {
+        if (width == 0) width = 1; // sadly it can be 0 for some reason.
+        if (height == 0) height = 1;
+
+        WIN_WIDTH = width;
+        WIN_HEIGHT = height;
+
+        glViewport(0, 0, width, height);
+        input.update(WIN_WIDTH, WIN_HEIGHT);
     }
 }
 

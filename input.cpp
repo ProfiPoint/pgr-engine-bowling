@@ -3,6 +3,11 @@
 namespace copakond {
     Input::Input(Camera &cam, int WIN_WIDTH, int WIN_HEIGHT) : camera(cam), WIN_WIDTH(WIN_WIDTH), WIN_HEIGHT(WIN_HEIGHT) {}
 
+    void Input::update(int WIN_WIDTH, int WIN_HEIGHT) {
+        Input::WIN_WIDTH = WIN_WIDTH;
+        Input::WIN_HEIGHT = WIN_HEIGHT;
+    }
+
     // Saving input to key map once some key is pressed and unpressed
     void Input::keyboardInputEvent(unsigned char key, int x, int y) {
         keys_map[key] = true;
@@ -45,5 +50,4 @@ namespace copakond {
         glutWarpPointer(centerX, centerY);
         glutPostRedisplay();
     }
-
 }
