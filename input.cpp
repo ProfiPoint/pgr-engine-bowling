@@ -1,7 +1,7 @@
 #include "input.h"
 
 namespace copakond {
-    Input::Input(Camera& cam, int WIN_WIDTH, int WIN_HEIGHT) : camera(cam), WIN_WIDTH(WIN_WIDTH), WIN_HEIGHT(WIN_HEIGHT) {}
+    Input::Input(Camera &cam, int WIN_WIDTH, int WIN_HEIGHT) : camera(cam), WIN_WIDTH(WIN_WIDTH), WIN_HEIGHT(WIN_HEIGHT) {}
 
     // Saving input to key map once some key is pressed and unpressed
     void Input::keyboardInputEvent(unsigned char key, int x, int y) {

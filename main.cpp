@@ -41,7 +41,7 @@ namespace copakond {
         Mesh triangleMesh = Mesh();
         meshes.push_back(triangleMesh);
 
-        for (Mesh& mesh: meshes) {
+        for (Mesh &mesh: meshes) {
             mesh.init(shaderPrg);
         }
     }
@@ -54,7 +54,7 @@ namespace copakond {
 
         shader.draw(camera, WIN_WIDTH, WIN_HEIGHT);
 
-        for (Mesh& mesh: meshes) {
+        for (Mesh &mesh: meshes) {
             mesh.draw(WIN_WIDTH, WIN_HEIGHT);
         }
 

@@ -20,7 +20,7 @@ namespace copakond {
         return shaderProgram;
     }
 
-    void Shader::draw(Camera camera, int WIN_WIDTH, int WIN_HEIGHT) {
+    void Shader::draw(Camera &camera, int WIN_WIDTH, int WIN_HEIGHT) {
         glUseProgram(shaderProgram);
 
         // TODO: CHANGE THIS: USING DEFAILT MODEL MATRIX

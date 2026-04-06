@@ -9,13 +9,13 @@
 namespace copakond {
     class Input {
     private:
-        Camera& camera;
+        Camera &camera;
         int WIN_WIDTH;
         int WIN_HEIGHT;
         bool keys_map[512] = {false}; // 256 normal, 256 special
 
     public:
-        Input(Camera& cam, int WIN_WIDTH, int WIN_HEIGHT);
+        Input(Camera &cam, int WIN_WIDTH, int WIN_HEIGHT);
 
         void update(int WIN_WIDTH, int WIN_HEIGHT);
 
