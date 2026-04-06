@@ -7,7 +7,7 @@ namespace copakond {
         worldUp = glm::vec3(0.0f, 1.0f, 0.0f); //should use startLookVector
         right = glm::normalize(cross(startLookVector, worldUp)); // (0,0,-1) x (0,1,0) = (1,0,0)
 
-        yaw = 0.0f; // should use startLookVector
+        yaw = -90.0f; // should use startLookVector
         pitch = 0.0f; //should use startLookVector
 
         fov = 45.0f;
@@ -23,12 +23,14 @@ namespace copakond {
         float yaw_rad = glm::radians(yaw);
         float pitch_rad = glm::radians(pitch);
 
-        // update yaw pitch, (+90 pitch should be up, -90 down)
+        // update yaw pitch, (+90 pitch should be up, -90 down) from: https://learnopengl.com/Getting-started/Camera
         front = glm::vec3(
-        cos(yaw_rad) * sin(pitch_rad),
-        sin(pitch_rad),
-        cos(pitch_rad) * sin(yaw_rad)
+            cos(yaw_rad) * cos(pitch_rad),
+            sin(pitch_rad),
+            sin(yaw_rad) * cos(pitch_rad)
         );
+
+
 
         front = glm::normalize(front);
         right = glm::normalize(glm::cross(front, worldUp));

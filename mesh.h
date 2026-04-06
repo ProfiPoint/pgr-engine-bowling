@@ -12,11 +12,6 @@ namespace copakond {
 
         GLuint vao_unfId;
 
-        GLint M_unfId; // model matrix uniform index;
-        GLint V_unfId; // view matrix uniform index;
-        GLint P_unfId; // projection matrix uniform index;
-        GLint PVM_unfId; // PVM matrix uniform index;
-
     public:
         Mesh();
 

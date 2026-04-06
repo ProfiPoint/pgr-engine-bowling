@@ -2,6 +2,7 @@
 #include "pgr.h"
 #include "mesh.h"
 #include "camera.h"
+#include "shader.h"
 
 namespace copakond {
     const int WIN_WIDTH = 512;
@@ -10,7 +11,7 @@ namespace copakond {
 
     uint64_t time = 0;
     std::vector<Mesh> meshes = {};
-    GLuint shader = -1;
+    Shader shader = Shader();
     Camera camera(
         glm::vec3(0.0f, 0.0f, 5.0f),
         glm::vec3(0.0f, 0.0f, -1.0f),
@@ -34,20 +35,21 @@ namespace copakond {
             0
         };
 
-        shader = pgr::createProgram(shaders);
+        GLuint shaderPrg = pgr::createProgram(shaders);
+        shader.init(shaderPrg);
 
-        Mesh triangleMesh;
+        Mesh triangleMesh = Mesh();
         meshes.push_back(triangleMesh);
 
         for (Mesh& mesh: meshes) {
-            mesh.init(shader);
+            mesh.init(shaderPrg);
         }
-
-
     }
 
     void draw() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        shader.draw(camera, WIN_WIDTH, WIN_HEIGHT);
 
         for (Mesh& mesh: meshes) {
             mesh.draw(WIN_WIDTH, WIN_HEIGHT);
@@ -57,7 +59,8 @@ namespace copakond {
     }
 
     void keyboardInputEvent(unsigned char key, int x, int y) {
-        float deltaTime = glutGet(GLUT_ELAPSED_TIME);
+        //float deltaTime = glutGet(GLUT_ELAPSED_TIME);
+        float deltaTime = 0.1;
 
         switch (key) {
             case 'w': case 'W':
@@ -75,8 +78,9 @@ namespace copakond {
         glutPostRedisplay();
     }
 
-    void specKeyboardInputEvent(unsigned char key, int x, int y) {
-        float deltaTime = glutGet(GLUT_ELAPSED_TIME);
+    void specKeyboardInputEvent(int key, int x, int y) {
+        //float deltaTime = glutGet(GLUT_ELAPSED_TIME);
+        float deltaTime = 0.1;
 
         switch (key) {
             case GLUT_KEY_UP:
@@ -89,6 +93,21 @@ namespace copakond {
                 camera.processKeyboard(RIGHT, deltaTime); break;
         }
 
+        glutPostRedisplay();
+    }
+
+    void mouseMoveEvent(int x, int y) {
+        int centerX = WIN_WIDTH / 2;
+        int centerY = WIN_HEIGHT / 2;
+
+        if (x == centerX && y == centerY) return;
+
+        float deltaX = (float)(x - centerX);
+        float deltaY = (float)(centerY - y);
+
+        camera.processMouseMovement(deltaX, deltaY);
+
+        glutWarpPointer(centerX, centerY);
         glutPostRedisplay();
     }
 }
@@ -104,7 +123,9 @@ int main(int argc, char** argv) {
     glutCreateWindow(copakond::WIN_TITLE);
 
     glutKeyboardFunc(copakond::keyboardInputEvent);
-    //glutSpecialFunc(copakond::specKeyboardInputEvent);
+    glutSpecialFunc(copakond::specKeyboardInputEvent);
+    glutPassiveMotionFunc(copakond::mouseMoveEvent);
+    glutSetCursor(GLUT_CURSOR_NONE);
     glutDisplayFunc(copakond::draw);
 
     if (!pgr::initialize(pgr::OGL_VER_MAJOR, pgr::OGL_VER_MINOR))
