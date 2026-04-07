@@ -7,16 +7,19 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_definitions(WIN32 _CONSOLE)
 
 add_executable(${PROJECT_NAME} main.cpp
-        models/mesh.cpp
-        models/mesh.h
+        meshes/mesh.cpp
+        meshes/mesh.h
         geometry/camera.cpp
         geometry/camera.h
         renderer/shader.cpp
         renderer/shader.h
         utils/input.h
         utils/input.cpp
-        models/objLoader.cpp
-        models/objLoader.h)
+        geometry/objLoader.cpp
+        geometry/objLoader.h
+        meshes/objMesh.cpp
+        meshes/objMesh.h
+)
 
 target_include_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}include)
 target_link_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}lib)

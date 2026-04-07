@@ -1,6 +1,7 @@
 #include <iostream>
 #include "pgr.h"
-#include "models/mesh.h"
+#include "meshes/mesh.h"
+#include "meshes/objMesh.h"
 #include "geometry/camera.h"
 #include "utils/input.h"
 #include "renderer/shader.h"
@@ -13,7 +14,7 @@ namespace copakond {
 
     // shared variables
     uint64_t time = 0;
-    std::vector<Mesh> meshes = {};
+    std::vector<Mesh*> meshes = {};
     Shader shader = Shader();
     Camera camera(
         glm::vec3(0.0f, 0.0f, 5.0f),
@@ -39,11 +40,13 @@ namespace copakond {
             "shaders/fragmentShader.frag"
         );
 
-        Mesh triangleMesh = Mesh();
+        Mesh* triangleMesh = new Mesh();
         meshes.push_back(triangleMesh);
+        Mesh* teddyMesh = new ObjMesh("meshes/models/teddy.obj");
+        meshes.push_back(teddyMesh);
 
-        for (Mesh &mesh: meshes) {
-            mesh.init(shaderPrg);
+        for (Mesh *mesh: meshes) {
+            mesh->init(shaderPrg);
         }
     }
 
@@ -55,8 +58,8 @@ namespace copakond {
 
         shader.draw(camera, WIN_WIDTH, WIN_HEIGHT);
 
-        for (Mesh &mesh: meshes) {
-            mesh.draw(WIN_WIDTH, WIN_HEIGHT);
+        for (Mesh *mesh: meshes) {
+            mesh->draw(WIN_WIDTH, WIN_HEIGHT);
         }
 
         glutSwapBuffers(); // swap front and back screen buffer

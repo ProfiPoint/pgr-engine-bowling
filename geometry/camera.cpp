@@ -15,14 +15,14 @@ namespace copakond {
     }
 
     void Camera::updateCameraVectors() {
-        float yaw_rad = glm::radians(yaw);
-        float pitch_rad = glm::radians(pitch);
+        float YAW_RAD = glm::radians(yaw);
+        float PITCH_RAD = glm::radians(pitch);
 
         // update yaw pitch, (+90 pitch should be up, -90 down) from: https://learnopengl.com/Getting-started/Camera
         front = glm::vec3(
-            cos(yaw_rad) * cos(pitch_rad),
-            sin(pitch_rad),
-            sin(yaw_rad) * cos(pitch_rad)
+            cos(YAW_RAD) * cos(PITCH_RAD),
+            sin(PITCH_RAD),
+            sin(YAW_RAD) * cos(PITCH_RAD)
         );
 
         front = glm::normalize(front);
