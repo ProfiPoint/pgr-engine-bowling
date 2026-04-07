@@ -7,10 +7,10 @@ namespace copakond {
     class Mesh {
     protected:
         GLuint shaderProgram;
-        GLuint arrayBuffer;
+        GLuint vbo;
         GLsizei numVertices;
 
-        GLuint vao_unfId;
+        GLuint vao;
 
     public:
         Mesh();

@@ -18,17 +18,17 @@ namespace copakond {
 
         numVertices = sizeof(vertices) / (3 * sizeof(float));
 
-		// VBO
-        glGenBuffers(1, &arrayBuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, arrayBuffer);
+        // VBO
+        glGenBuffers(1, &vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 		// VAO
-        glGenVertexArrays(1, &vao_unfId);
-        glBindVertexArray(vao_unfId);
-        GLint positionLoc = glGetAttribLocation(shaderProgram, "position");
-        glEnableVertexAttribArray(positionLoc);
-        glVertexAttribPointer(positionLoc, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glGenVertexArrays(1, &vao);
+        glBindVertexArray(vao);
+        GLint position = glGetAttribLocation(shaderProgram, "position");
+        glEnableVertexAttribArray(position);
+        glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
         // UNBIND
         glBindVertexArray(0);
@@ -36,7 +36,8 @@ namespace copakond {
     }
 
     void Mesh::draw(int WIN_WIDTH, int WIN_HEIGHT) {
-        glBindVertexArray(vao_unfId);
+        glBindVertexArray(vao);
         glDrawArrays(GL_TRIANGLES, 0, numVertices);
+        glBindVertexArray(0);
     };
 }
