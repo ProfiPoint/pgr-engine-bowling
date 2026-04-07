@@ -14,7 +14,9 @@ add_executable(${PROJECT_NAME} main.cpp
         renderer/shader.cpp
         renderer/shader.h
         utils/input.h
-        utils/input.cpp)
+        utils/input.cpp
+        models/objLoader.cpp
+        models/objLoader.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}include)
 target_link_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}lib)
