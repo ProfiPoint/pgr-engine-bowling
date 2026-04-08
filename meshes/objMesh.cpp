@@ -2,9 +2,9 @@
 #include "../geometry/objLoader.h"
 
 namespace copakond {
-    ObjMesh::ObjMesh(const std::string& objFileLocation) : Mesh(), fileLocation(objFileLocation)
+    ObjMesh::ObjMesh(const std::string& objFileLocation, bool normalizeCoord) : Mesh(), fileLocation(objFileLocation)
     {
-        ObjLoader objLoader = ObjLoader(objFileLocation);
+        ObjLoader objLoader = ObjLoader(objFileLocation, normalizeCoord);
         vertices = objLoader.getVertices();
         faces = objLoader.getFaces();
         //TODO - IMPLEMENT: normals = objLoader.getNormals();

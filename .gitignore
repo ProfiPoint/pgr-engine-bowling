@@ -37,7 +37,6 @@ bin/
 
 # Object and temporary files
 *.o
-*.obj
 *.pdb
 *.idb
 *.ilk

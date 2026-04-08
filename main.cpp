@@ -42,7 +42,7 @@ namespace copakond {
 
         Mesh* triangleMesh = new Mesh();
         meshes.push_back(triangleMesh);
-        Mesh* teddyMesh = new ObjMesh("meshes/models/teddy.obj");
+        Mesh* teddyMesh = new ObjMesh("meshes/models/teddy.obj", true);
         meshes.push_back(teddyMesh);
 
         for (Mesh *mesh: meshes) {

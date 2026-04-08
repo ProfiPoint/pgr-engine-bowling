@@ -13,7 +13,7 @@ namespace copakond {
         GLuint ebo;
 
     public:
-        ObjMesh(const std::string& objFileLocation);
+        ObjMesh(const std::string& objFileLocation, bool normalizeCoord = false);
 
         void init(GLuint shader) override;
         void draw(int WIN_WIDTH, int WIN_HEIGHT) override;
