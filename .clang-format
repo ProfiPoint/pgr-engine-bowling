@@ -5,3 +5,5 @@ AccessModifierOffset: -4
 AllowShortFunctionsOnASingleLine: Inline
 DerivePointerAlignment: false
 PointerAlignment: Right
+MaxEmptyLinesToKeep: 1
+SeparateDefinitionBlocks: Leave
