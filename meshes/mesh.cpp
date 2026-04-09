@@ -1,7 +1,7 @@
 #include "mesh.h"
 
 namespace copakond {
-    Mesh::Mesh() {}
+    Mesh::Mesh() : Geometry() {}
 
     void Mesh::init(GLuint shader) {
         shaderProgram = shader;

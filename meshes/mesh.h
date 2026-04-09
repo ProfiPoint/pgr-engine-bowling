@@ -2,9 +2,10 @@
 #define PGR_SEM_COPAKOND_MESH_H
 
 #include "pgr.h"
+#include "../geometry/geometry.h"
 
 namespace copakond {
-    class Mesh {
+    class Mesh : public Geometry {
     protected:
         GLuint shaderProgram;
         GLuint vbo;
