@@ -40,14 +40,21 @@ namespace copakond {
             "shaders/fragmentShader.frag"
         );
 
-        Mesh* triangleMesh = new Mesh();
-        meshes.push_back(triangleMesh);
-        Mesh* teddyMesh = new ObjMesh("meshes/models/teddy.obj", true);
+        //Mesh* triangleMesh = new Mesh();
+        //meshes.push_back(triangleMesh);
+        Mesh *teddyMesh = new ObjMesh("meshes/models/teddy.obj", true);
         meshes.push_back(teddyMesh);
+
+        Mesh *teddyMesh2 = new ObjMesh("meshes/models/teddy.obj", true, glm::vec3(-3.0f, 0.0f, 0.0f), glm::vec3(glm::pi<float>(), 0.0f, 0.0f));
+        meshes.push_back(teddyMesh2);
 
         for (Mesh *mesh: meshes) {
             mesh->init(shaderPrg);
         }
+
+        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
+        //glCullFace( GL_BACK);
+        //glEnable(GL_CULL_FACE);
     }
 
     void draw() {
@@ -56,10 +63,11 @@ namespace copakond {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        shader.draw(camera, WIN_WIDTH, WIN_HEIGHT);
+        shader.update(camera, WIN_WIDTH, WIN_HEIGHT);
 
         for (Mesh *mesh: meshes) {
-            mesh->draw(WIN_WIDTH, WIN_HEIGHT);
+            mesh->rotation().x += deltaTime * 0.01f;
+            shader.draw(*mesh);
         }
 
         glutSwapBuffers(); // swap front and back screen buffer
