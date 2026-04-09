@@ -12,14 +12,14 @@ namespace copakond {
         std::vector<float> _normals;
         std::vector<unsigned int> _faces;
 
-        void remapBuffers(const std::vector<float>& vertices, const std::vector<float>& normals, const std::vector<std::string>& faces);
+        void remapBuffers(const std::vector<float> &vertices, const std::vector<float> &normals, const std::vector<std::string> &faces);
 
     public:
-        ObjLoader(const std::string& fileName, bool normalizeCoord);
+        ObjLoader(const std::string &fileName, bool normalizeCoord);
 
-        const std::vector<float>& getVertices() const;
-        const std::vector<float>& getNormals() const;
-        const std::vector<unsigned int>& getFaces() const;
+        const std::vector<float> &getVertices() const;
+        const std::vector<float> &getNormals() const;
+        const std::vector<unsigned int> &getFaces() const;
     };
 }
 

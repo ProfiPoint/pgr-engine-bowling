@@ -1,22 +1,29 @@
 #include "mesh.h"
 
 namespace copakond {
-    Mesh::Mesh() : Geometry() {}
-    Mesh::Mesh(const glm::vec3& translation) : Geometry(translation) {}
-    Mesh::Mesh(const glm::vec3& translation, const glm::vec3& rotation) : Geometry(translation, rotation) {}
-    Mesh::Mesh(const glm::vec3& translation, const glm::vec3& rotation, const glm::vec3& scale) : Geometry(translation, rotation, scale) {}
+    Mesh::Mesh() : Geometry() {
+    }
+
+    Mesh::Mesh(const glm::vec3 &translation) : Geometry(translation) {
+    }
+
+    Mesh::Mesh(const glm::vec3 &translation, const glm::vec3 &rotation) : Geometry(translation, rotation) {
+    }
+
+    Mesh::Mesh(const glm::vec3 &translation, const glm::vec3 &rotation, const glm::vec3 &scale) : Geometry(translation, rotation, scale) {
+    }
 
     void Mesh::init(GLuint shader) {
         _shaderProgram = shader;
 
         static const float vertices[] = {
-            1.0f, 1.0f/2, 0.0f,
+            1.0f, 1.0f / 2, 0.0f,
             1.0f, -1.0f, 0.0f,
-            -1.0f/2, -1.0f, 0.0f,
+            -1.0f / 2, -1.0f, 0.0f,
 
             -1.0f, 1.0f, 0.0f,
-            1.0f/2, 1.0f, 0.0f,
-            -1.0f, -1.0f/2, 0.0f,
+            1.0f / 2, 1.0f, 0.0f,
+            -1.0f, -1.0f / 2, 0.0f,
         };
 
         _numVertices = sizeof(vertices) / (3 * sizeof(float));
@@ -26,7 +33,7 @@ namespace copakond {
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-		// VAO
+        // VAO
         glGenVertexArrays(1, &_vao);
         glBindVertexArray(_vao);
         GLint position = glGetAttribLocation(_shaderProgram, "position");

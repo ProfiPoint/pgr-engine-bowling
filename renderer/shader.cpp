@@ -1,7 +1,8 @@
 #include "shader.h"
 
 namespace copakond {
-    Shader::Shader() {}
+    Shader::Shader() {
+    }
 
     GLuint Shader::init(std::string vertShaderLocation, std::string fragShaderLocation) {
         GLuint shaders[] = {

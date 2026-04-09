@@ -9,18 +9,19 @@ namespace copakond {
         glm::vec3 _translation;
         glm::vec3 _rotation; // radiant
         glm::vec3 _scale;
+
     public:
         Geometry();
-        Geometry(const glm::vec3& translation);
-        Geometry(const glm::vec3& translation, const glm::vec3& rotation);
-        Geometry(const glm::vec3& translation, const glm::vec3& rotation, const glm::vec3& scale);
+        Geometry(const glm::vec3 &translation);
+        Geometry(const glm::vec3 &translation, const glm::vec3 &rotation);
+        Geometry(const glm::vec3 &translation, const glm::vec3 &rotation, const glm::vec3 &scale);
 
         // getters and setters in one
-        glm::vec3& translation() { return _translation; }
-        glm::vec3& rotation() { return _rotation; }
-        glm::vec3& scale() { return _scale; }
+        glm::vec3 &translation() { return _translation; }
+        glm::vec3 &rotation() { return _rotation; }
+        glm::vec3 &scale() { return _scale; }
 
-        void setRotationDegrees(const glm::vec3& rotationDegrees) {  _rotation = glm::radians(rotationDegrees); }
+        void setRotationDegrees(const glm::vec3 &rotationDegrees) { _rotation = glm::radians(rotationDegrees); }
         glm::vec3 getRotationDegrees() const { return glm::degrees(_rotation); }
 
         glm::mat4 getRotationXMatrix() const;

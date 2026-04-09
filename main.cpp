@@ -8,13 +8,13 @@
 #include "utils/input.h"
 
 namespace copakond {
-    const char* WIN_TITLE = "PGR Semestral Work Copakond";
+    const char *WIN_TITLE = "PGR Semestral Work Copakond";
     int winWidth = 1280;
     int winHeight = 720;
 
     // shared variables
     uint64_t time = 0;
-    std::vector<Mesh*> meshes = {};
+    std::vector<Mesh *> meshes = {};
     Shader shader = Shader();
     Camera camera(
         glm::vec3(0.0f, 0.0f, 5.0f),
@@ -45,14 +45,15 @@ namespace copakond {
         Mesh *teddyMesh = new ObjMesh("meshes/models/teddy.obj", true);
         meshes.push_back(teddyMesh);
 
-        Mesh *teddyMesh2 = new ObjMesh("meshes/models/teddy.obj", true, glm::vec3(-3.0f, 0.0f, 0.0f), glm::vec3(glm::pi<float>(), 0.0f, 0.0f));
+        Mesh *teddyMesh2 = new ObjMesh("meshes/models/teddy.obj", true, glm::vec3(-3.0f, 0.0f, 0.0f),
+                                       glm::vec3(glm::pi<float>(), 0.0f, 0.0f));
         meshes.push_back(teddyMesh2);
 
         for (Mesh *mesh: meshes) {
             mesh->init(shaderPrg);
         }
 
-        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         //glCullFace( GL_BACK);
         //glEnable(GL_CULL_FACE);
     }
@@ -77,12 +78,15 @@ namespace copakond {
     void keyboardInputEvent(unsigned char key, int x, int y) {
         input.keyboardInputEvent(key, x, y);
     }
+
     void specKeyboardInputEvent(int key, int x, int y) {
         input.specKeyboardInputEvent(key, x, y);
     }
+
     void keyboardUpInputEvent(unsigned char key, int x, int y) {
         input.keyboardUpInputEvent(key, x, y);
     }
+
     void specKeyboardUpInputEvent(int key, int x, int y) {
         input.specKeyboardUpInputEvent(key, x, y);
     }
@@ -103,7 +107,7 @@ namespace copakond {
     }
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     glutInit(&argc, argv);
 
     glutInitContextVersion(pgr::OGL_VER_MAJOR, pgr::OGL_VER_MINOR);

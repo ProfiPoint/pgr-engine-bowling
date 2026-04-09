@@ -31,7 +31,8 @@ namespace copakond {
     }
 
     // sets yaw and pitch based off of position and look point
-    void Camera::lookToPoint(const glm::vec3 &point) { // https://learnopengl.com/Getting-started/Camera
+    void Camera::lookToPoint(const glm::vec3 &point) {
+        // https://learnopengl.com/Getting-started/Camera
         glm::vec3 direction = glm::normalize(point - _position);
 
         _pitch = glm::degrees(asin(direction.y));
@@ -52,13 +53,17 @@ namespace copakond {
 
         switch (direction) {
             case FRONT:
-                _position += frontNorm * _movementSpeed * deltaTime; break;
+                _position += frontNorm * _movementSpeed * deltaTime;
+                break;
             case BACK:
-                _position -= frontNorm * _movementSpeed * deltaTime; break;
+                _position -= frontNorm * _movementSpeed * deltaTime;
+                break;
             case LEFT:
-                _position -= _right * _movementSpeed * deltaTime; break;
+                _position -= _right * _movementSpeed * deltaTime;
+                break;
             case RIGHT:
-                _position += _right * _movementSpeed * deltaTime; break;
+                _position += _right * _movementSpeed * deltaTime;
+                break;
         }
     }
 

@@ -1,7 +1,8 @@
 #include "input.h"
 
 namespace copakond {
-    Input::Input(Camera &cam, int winWidth, int winHeight) : _camera(cam), _winWidth(winWidth), _winHeight(winHeight) {}
+    Input::Input(Camera &cam, int winWidth, int winHeight) : _camera(cam), _winWidth(winWidth), _winHeight(winHeight) {
+    }
 
     void Input::update(int winWidth, int winHeight) {
         _winWidth = winWidth;
@@ -13,15 +14,18 @@ namespace copakond {
         _keysMap[std::tolower(key)] = true;
         _keysMap[std::toupper(key)] = true;
     }
+
     void Input::specKeyboardInputEvent(int key, int x, int y) {
-        _keysMap[key+256] = true;
+        _keysMap[key + 256] = true;
     }
+
     void Input::keyboardUpInputEvent(unsigned char key, int x, int y) {
         _keysMap[std::tolower(key)] = false;
         _keysMap[std::toupper(key)] = false;
     }
+
     void Input::specKeyboardUpInputEvent(int key, int x, int y) {
-        _keysMap[key+256] = false;
+        _keysMap[key + 256] = false;
     }
 
     // parsing key movement WASD / arrows
