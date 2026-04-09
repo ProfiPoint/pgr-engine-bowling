@@ -31,7 +31,7 @@ namespace copakond {
         glm::mat4 getRotationMatrix() const;
         glm::mat4 getScaleMatrix() const;
 
-        glm::mat4 getSRTMatrix() const;
+        glm::mat4 getModelMatrix() const;
     };
 }
 

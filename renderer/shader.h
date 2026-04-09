@@ -2,6 +2,7 @@
 #define PGR_SEM_COPAKOND_SHADER_H
 
 #include "pgr.h"
+#include "../meshes/mesh.h"
 #include "../geometry/camera.h"
 
 namespace copakond {
@@ -14,11 +15,15 @@ namespace copakond {
         GLint projectionUID; // projection matrix uniform index;
         GLint pvmUID; // PVM matrix uniform index;
 
+        glm::mat4 viewM;
+        glm::mat4 projectionM;
+
     public:
         Shader();
 
         virtual GLuint init(std::string vertShaderLocation, std::string fragShaderLocation);
-        virtual void draw(Camera &camera, int WIN_WIDTH, int WIN_HEIGHT);
+        virtual void update(Camera &camera, int WIN_WIDTH, int WIN_HEIGHT);
+        virtual void draw(Mesh &mesh);
     };
 }
 

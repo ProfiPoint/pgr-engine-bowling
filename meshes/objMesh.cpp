@@ -55,7 +55,7 @@ namespace copakond {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    void ObjMesh::draw(int WIN_WIDTH, int WIN_HEIGHT) {
+    void ObjMesh::draw() {
         glBindVertexArray(vao);
         glDrawElements(GL_TRIANGLES, numVertices, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);

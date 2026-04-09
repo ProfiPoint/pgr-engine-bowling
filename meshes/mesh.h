@@ -20,7 +20,7 @@ namespace copakond {
         Mesh(const glm::vec3& translation, const glm::vec3& rotation, const glm::vec3& scale);
 
         virtual void init(GLuint shader);
-        virtual void draw(int WIN_WIDTH, int WIN_HEIGHT);
+        virtual void draw();
     };
 }
 

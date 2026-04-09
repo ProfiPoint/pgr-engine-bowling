@@ -42,7 +42,7 @@ namespace copakond {
         return glm::scale(glm::mat4(1.0f), _scale);
     }
 
-    glm::mat4 Geometry::getSRTMatrix() const {
+    glm::mat4 Geometry::getModelMatrix() const {
         return getTranslationMatrix() * getRotationMatrix() * getScaleMatrix();
     }
 }

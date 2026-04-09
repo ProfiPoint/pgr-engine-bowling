@@ -26,7 +26,7 @@ namespace copakond {
         ObjMesh(const std::string& objFileLocation, bool normalizeCoord, const glm::vec3& translation, const glm::vec3& rotation, const glm::vec3& scale);
 
         void init(GLuint shader) override;
-        void draw(int WIN_WIDTH, int WIN_HEIGHT) override;
+        void draw() override;
     };
 }
 
