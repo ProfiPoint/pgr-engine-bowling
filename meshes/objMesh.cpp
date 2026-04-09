@@ -2,15 +2,31 @@
 #include "../geometry/objLoader.h"
 
 namespace copakond {
-    ObjMesh::ObjMesh(const std::string& objFileLocation, bool normalizeCoord) : Mesh(), fileLocation(objFileLocation)
-    {
+    void ObjMesh::constructor(const std::string& objFileLocation, bool normalizeCoord) {
         ObjLoader objLoader = ObjLoader(objFileLocation, normalizeCoord);
         vertices = objLoader.getVertices();
         faces = objLoader.getFaces();
         //TODO - IMPLEMENT: normals = objLoader.getNormals();
-
         numVertices = faces.size();
     }
+
+    ObjMesh::ObjMesh(const std::string& objFileLocation)
+    : Mesh(), fileLocation(objFileLocation) { constructor(objFileLocation, false); }
+    ObjMesh::ObjMesh(const std::string& objFileLocation, const glm::vec3& translation)
+    : Mesh(translation), fileLocation(objFileLocation) { constructor(objFileLocation, false); }
+    ObjMesh::ObjMesh(const std::string& objFileLocation, const glm::vec3& translation, const glm::vec3& rotation)
+    : Mesh(translation, rotation), fileLocation(objFileLocation) { constructor(objFileLocation, false); }
+    ObjMesh::ObjMesh(const std::string& objFileLocation, const glm::vec3& translation, const glm::vec3& rotation, const glm::vec3& scale)
+    : Mesh(translation, rotation, scale), fileLocation(objFileLocation) { constructor(objFileLocation, false); }
+
+    ObjMesh::ObjMesh(const std::string& objFileLocation, bool normalizeCoord)
+    : Mesh(), fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
+    ObjMesh::ObjMesh(const std::string& objFileLocation, bool normalizeCoord, const glm::vec3& translation)
+    : Mesh(translation), fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
+    ObjMesh::ObjMesh(const std::string& objFileLocation, bool normalizeCoord, const glm::vec3& translation, const glm::vec3& rotation)
+    : Mesh(translation, rotation), fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
+    ObjMesh::ObjMesh(const std::string& objFileLocation, bool normalizeCoord, const glm::vec3& translation, const glm::vec3& rotation, const glm::vec3& scale)
+    : Mesh(translation, rotation, scale), fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
 
     void ObjMesh::init(GLuint shader) {
         shaderProgram = shader;

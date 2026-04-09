@@ -12,8 +12,18 @@ namespace copakond {
 
         GLuint ebo;
 
+        void constructor(const std::string& objFileLocation, bool normalizeCoord);
+
     public:
-        ObjMesh(const std::string& objFileLocation, bool normalizeCoord = false);
+        ObjMesh(const std::string& objFileLocation);
+        ObjMesh(const std::string& objFileLocation, const glm::vec3& translation);
+        ObjMesh(const std::string& objFileLocation, const glm::vec3& translation, const glm::vec3& rotation);
+        ObjMesh(const std::string& objFileLocation, const glm::vec3& translation, const glm::vec3& rotation, const glm::vec3& scale);
+
+        ObjMesh(const std::string& objFileLocation, bool normalizeCoord);
+        ObjMesh(const std::string& objFileLocation, bool normalizeCoord, const glm::vec3& translation);
+        ObjMesh(const std::string& objFileLocation, bool normalizeCoord, const glm::vec3& translation, const glm::vec3& rotation);
+        ObjMesh(const std::string& objFileLocation, bool normalizeCoord, const glm::vec3& translation, const glm::vec3& rotation, const glm::vec3& scale);
 
         void init(GLuint shader) override;
         void draw(int WIN_WIDTH, int WIN_HEIGHT) override;

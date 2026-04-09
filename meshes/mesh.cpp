@@ -2,6 +2,9 @@
 
 namespace copakond {
     Mesh::Mesh() : Geometry() {}
+    Mesh::Mesh(const glm::vec3& translation) : Geometry(translation) {}
+    Mesh::Mesh(const glm::vec3& translation, const glm::vec3& rotation) : Geometry(translation, rotation) {}
+    Mesh::Mesh(const glm::vec3& translation, const glm::vec3& rotation, const glm::vec3& scale) : Geometry(translation, rotation, scale) {}
 
     void Mesh::init(GLuint shader) {
         shaderProgram = shader;
