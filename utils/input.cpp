@@ -34,6 +34,8 @@ namespace copakond {
         if (_keysMap['s']) _camera.processKeyboard(BACK, deltaTime);
         if (_keysMap['a']) _camera.processKeyboard(LEFT, deltaTime);
         if (_keysMap['d']) _camera.processKeyboard(RIGHT, deltaTime);
+        if (_keysMap['e']) _camera.processKeyboard(UP, deltaTime);
+        if (_keysMap['q']) _camera.processKeyboard(DOWN, deltaTime);
         if (_keysMap[27]) glutLeaveMainLoop(); // ESC
         if (_keysMap[GLUT_KEY_UP + IS_SPECIAL_KEY]) _camera.processKeyboard(FRONT, deltaTime);
         if (_keysMap[GLUT_KEY_DOWN + IS_SPECIAL_KEY]) _camera.processKeyboard(BACK, deltaTime);

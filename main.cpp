@@ -45,8 +45,8 @@ namespace copakond {
         Mesh *teddyMesh = new ObjMesh("meshes/models/teddy.obj", true);
         meshes.push_back(teddyMesh);
 
-        Mesh *teddyMesh2 = new ObjMesh("meshes/models/teddy.obj", true, glm::vec3(-3.0f, 0.0f, 0.0f),
-                                       glm::vec3(glm::pi<float>(), 0.0f, 0.0f));
+        Mesh *teddyMesh2 = new ObjMesh("meshes/models/teddy.obj", true, glm::vec3(-8.0f, 0.0f, 0.0f),
+                                       glm::vec3(glm::pi<float>(), 0.0f, 0.0f), glm::vec3(0.1f, 0.1f, 0.1f));
         meshes.push_back(teddyMesh2);
 
         for (Mesh *mesh: meshes) {

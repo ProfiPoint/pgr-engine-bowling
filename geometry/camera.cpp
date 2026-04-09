@@ -64,6 +64,11 @@ namespace copakond {
             case RIGHT:
                 _position += _right * _movementSpeed * deltaTime;
                 break;
+            case UP:
+                _position += _worldUp * _movementSpeed * deltaTime;
+                break;
+            case DOWN:
+                _position -= _worldUp * _movementSpeed * deltaTime;
         }
     }
 

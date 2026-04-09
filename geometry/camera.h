@@ -7,6 +7,8 @@
 #define BACK 1
 #define LEFT 2
 #define RIGHT 3
+#define UP 4
+#define DOWN 5
 
 namespace copakond {
     class Camera {
