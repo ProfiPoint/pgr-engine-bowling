@@ -4,51 +4,51 @@
 namespace copakond {
     void ObjMesh::constructor(const std::string& objFileLocation, bool normalizeCoord) {
         ObjLoader objLoader = ObjLoader(objFileLocation, normalizeCoord);
-        vertices = objLoader.getVertices();
-        faces = objLoader.getFaces();
+        _vertices = objLoader.getVertices();
+        _faces = objLoader.getFaces();
         //TODO - IMPLEMENT: normals = objLoader.getNormals();
-        numVertices = faces.size();
+        _numVertices = _faces.size();
     }
 
     ObjMesh::ObjMesh(const std::string& objFileLocation)
-    : Mesh(), fileLocation(objFileLocation) { constructor(objFileLocation, false); }
+    : Mesh(), _fileLocation(objFileLocation) { constructor(objFileLocation, false); }
     ObjMesh::ObjMesh(const std::string& objFileLocation, const glm::vec3& translation)
-    : Mesh(translation), fileLocation(objFileLocation) { constructor(objFileLocation, false); }
+    : Mesh(translation), _fileLocation(objFileLocation) { constructor(objFileLocation, false); }
     ObjMesh::ObjMesh(const std::string& objFileLocation, const glm::vec3& translation, const glm::vec3& rotation)
-    : Mesh(translation, rotation), fileLocation(objFileLocation) { constructor(objFileLocation, false); }
+    : Mesh(translation, rotation), _fileLocation(objFileLocation) { constructor(objFileLocation, false); }
     ObjMesh::ObjMesh(const std::string& objFileLocation, const glm::vec3& translation, const glm::vec3& rotation, const glm::vec3& scale)
-    : Mesh(translation, rotation, scale), fileLocation(objFileLocation) { constructor(objFileLocation, false); }
+    : Mesh(translation, rotation, scale), _fileLocation(objFileLocation) { constructor(objFileLocation, false); }
 
     ObjMesh::ObjMesh(const std::string& objFileLocation, bool normalizeCoord)
-    : Mesh(), fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
+    : Mesh(), _fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
     ObjMesh::ObjMesh(const std::string& objFileLocation, bool normalizeCoord, const glm::vec3& translation)
-    : Mesh(translation), fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
+    : Mesh(translation), _fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
     ObjMesh::ObjMesh(const std::string& objFileLocation, bool normalizeCoord, const glm::vec3& translation, const glm::vec3& rotation)
-    : Mesh(translation, rotation), fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
+    : Mesh(translation, rotation), _fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
     ObjMesh::ObjMesh(const std::string& objFileLocation, bool normalizeCoord, const glm::vec3& translation, const glm::vec3& rotation, const glm::vec3& scale)
-    : Mesh(translation, rotation, scale), fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
+    : Mesh(translation, rotation, scale), _fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
 
     void ObjMesh::init(GLuint shader) {
-        shaderProgram = shader;
+        _shaderProgram = shader;
 
         //BINDING
-        glGenVertexArrays(1, &vao);
-        glBindVertexArray(vao);
-        glGenBuffers(1, &vbo);
-        glGenBuffers(1, &ebo);
+        glGenVertexArrays(1, &_vao);
+        glBindVertexArray(_vao);
+        glGenBuffers(1, &_vbo);
+        glGenBuffers(1, &_ebo);
 
         // VBO
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(float), _vertices.data(), GL_STATIC_DRAW);
 
         // VAO
-        GLint position = glGetAttribLocation(shaderProgram, "position");
+        GLint position = glGetAttribLocation(_shaderProgram, "position");
         glEnableVertexAttribArray(position);
         glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
         // EBO
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, faces.size() * sizeof(unsigned int), faces.data(), GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, _faces.size() * sizeof(unsigned int), _faces.data(), GL_STATIC_DRAW);
 
         // UNBIND
         glBindVertexArray(0);
@@ -56,8 +56,8 @@ namespace copakond {
     }
 
     void ObjMesh::draw() {
-        glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, numVertices, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(_vao);
+        glDrawElements(GL_TRIANGLES, _numVertices, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     };
 }

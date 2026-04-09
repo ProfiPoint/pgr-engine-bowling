@@ -7,11 +7,11 @@
 namespace copakond {
     class Mesh : public Geometry {
     protected:
-        GLuint shaderProgram;
-        GLuint vbo;
-        GLsizei numVertices;
+        GLuint _shaderProgram;
+        GLuint _vbo;
+        GLsizei _numVertices;
 
-        GLuint vao;
+        GLuint _vao;
 
     public:
         Mesh();

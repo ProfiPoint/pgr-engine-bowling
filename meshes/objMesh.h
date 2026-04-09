@@ -6,11 +6,11 @@
 namespace copakond {
     class ObjMesh : public Mesh {
     private:
-        std::string fileLocation;
-        std::vector<float> vertices;
-        std::vector<unsigned int> faces;
+        std::string _fileLocation;
+        std::vector<float> _vertices;
+        std::vector<unsigned int> _faces;
 
-        GLuint ebo;
+        GLuint _ebo;
 
         void constructor(const std::string& objFileLocation, bool normalizeCoord);
 

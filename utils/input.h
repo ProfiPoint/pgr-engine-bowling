@@ -9,15 +9,15 @@
 namespace copakond {
     class Input {
     private:
-        Camera &camera;
-        int WIN_WIDTH;
-        int WIN_HEIGHT;
-        bool keys_map[512] = {false}; // 256 normal, 256 special
+        Camera &_camera;
+        int _winWidth;
+        int _winHeight;
+        bool _keysMap[512] = {false}; // 256 normal, 256 special
 
     public:
-        Input(Camera &cam, int WIN_WIDTH, int WIN_HEIGHT);
+        Input(Camera &cam, int winWidth, int winHeight);
 
-        void update(int WIN_WIDTH, int WIN_HEIGHT);
+        void update(int winWidth, int winHeight);
 
         void keyboardInputEvent(unsigned char key, int x, int y);
         void specKeyboardInputEvent(int key, int x, int y);

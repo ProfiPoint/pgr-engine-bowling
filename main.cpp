@@ -8,9 +8,9 @@
 #include "utils/input.h"
 
 namespace copakond {
-    int WIN_WIDTH = 1280;
-    int WIN_HEIGHT = 720;
     const char* WIN_TITLE = "PGR Semestral Work Copakond";
+    int winWidth = 1280;
+    int winHeight = 720;
 
     // shared variables
     uint64_t time = 0;
@@ -21,7 +21,7 @@ namespace copakond {
         glm::vec3(0.0f, 0.0f, 0.0f),
         100.0f
     );
-    Input input = Input(camera, WIN_WIDTH, WIN_HEIGHT);
+    Input input = Input(camera, winWidth, winHeight);
 
     float updateTime() {
         int currentFrameTime = glutGet(GLUT_ELAPSED_TIME);
@@ -63,7 +63,7 @@ namespace copakond {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        shader.update(camera, WIN_WIDTH, WIN_HEIGHT);
+        shader.update(camera, winWidth, winHeight);
 
         for (Mesh *mesh: meshes) {
             mesh->rotation().x += deltaTime * 0.01f;
@@ -95,11 +95,11 @@ namespace copakond {
         if (width == 0) width = 1; // sadly it can be 0 for some reason.
         if (height == 0) height = 1;
 
-        WIN_WIDTH = width;
-        WIN_HEIGHT = height;
+        winWidth = width;
+        winHeight = height;
 
         glViewport(0, 0, width, height);
-        input.update(WIN_WIDTH, WIN_HEIGHT);
+        input.update(winWidth, winHeight);
     }
 }
 
@@ -110,7 +110,7 @@ int main(int argc, char** argv) {
     glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
 
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-    glutInitWindowSize(copakond::WIN_WIDTH, copakond::WIN_HEIGHT);
+    glutInitWindowSize(copakond::winWidth, copakond::winHeight);
     glutCreateWindow(copakond::WIN_TITLE);
 
     // INPUT - keyboard and mouse event callbacks

@@ -8,9 +8,9 @@
 namespace copakond {
     class ObjLoader {
     private:
-        std::vector<float> vertices;
-        std::vector<float> normals;
-        std::vector<unsigned int> faces;
+        std::vector<float> _vertices;
+        std::vector<float> _normals;
+        std::vector<unsigned int> _faces;
 
         void remapBuffers(const std::vector<float>& vertices, const std::vector<float>& normals, const std::vector<std::string>& faces);
 

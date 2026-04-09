@@ -107,7 +107,7 @@ namespace copakond {
 
         for (const std::string& vertexCombo : rawFaces) {
             if (history.count(vertexCombo) > 0) { // already parsed to history
-                faces.push_back(history[vertexCombo]);
+                _faces.push_back(history[vertexCombo]);
 
             } else { // new - processes
                 int vIndex = 0;
@@ -116,31 +116,31 @@ namespace copakond {
                     int vBase = (vIndex - 1) * 3;
                     int nBase = (nIndex - 1) * 3;
 
-                    vertices.push_back(tempV[vBase]);
-                    vertices.push_back(tempV[vBase + 1]);
-                    vertices.push_back(tempV[vBase + 2]);
+                    _vertices.push_back(tempV[vBase]);
+                    _vertices.push_back(tempV[vBase + 1]);
+                    _vertices.push_back(tempV[vBase + 2]);
 
-                    normals.push_back(tempVn[nBase]);
-                    normals.push_back(tempVn[nBase + 1]);
-                    normals.push_back(tempVn[nBase + 2]);
+                    _normals.push_back(tempVn[nBase]);
+                    _normals.push_back(tempVn[nBase + 1]);
+                    _normals.push_back(tempVn[nBase + 2]);
 
-                    unsigned int newIndex = (vertices.size() / 3) - 1;
+                    unsigned int newIndex = (_vertices.size() / 3) - 1;
                     history[vertexCombo] = newIndex;
-                    faces.push_back(newIndex);
+                    _faces.push_back(newIndex);
                 }
             }
         }
     }
 
     const std::vector<float>& ObjLoader::getVertices() const {
-        return vertices;
+        return _vertices;
     }
 
     const std::vector<float>& ObjLoader::getNormals() const {
-        return normals;
+        return _normals;
     }
 
     const std::vector<unsigned int>& ObjLoader::getFaces() const {
-        return faces;
+        return _faces;
     }
 }

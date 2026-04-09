@@ -11,23 +11,23 @@
 namespace copakond {
     class Camera {
     private:
-        const glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+        const glm::vec3 _worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-        glm::vec3 position;
-        glm::vec3 front;
-        glm::vec3 up;
-        glm::vec3 right;
+        glm::vec3 _position;
+        glm::vec3 _front;
+        glm::vec3 _up;
+        glm::vec3 _right;
 
-        float movementSpeed;
-        float mouseSensitivity;
-        float maxPitch;
+        float _movementSpeed;
+        float _mouseSensitivity;
+        float _maxPitch;
 
-        float nearZ;
-        float farZ;
+        float _nearZ;
+        float _farZ;
 
-        float fov; // fovY
-        float yaw;
-        float pitch;
+        float _fov; // fovY
+        float _yaw;
+        float _pitch;
 
         void updateCameraVectors(); // calculates front, up based off of yaw and pitch and position
 

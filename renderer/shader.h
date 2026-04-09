@@ -8,21 +8,21 @@
 namespace copakond {
     class Shader {
     protected:
-        GLuint shaderProgram;
+        GLuint _shaderProgram;
 
-        GLint modelUID; // model matrix uniform index;
-        GLint viewUID; // view matrix uniform index;
-        GLint projectionUID; // projection matrix uniform index;
-        GLint pvmUID; // PVM matrix uniform index;
+        GLint _modelUID; // model matrix uniform index;
+        GLint _viewUID; // view matrix uniform index;
+        GLint _projectionUID; // projection matrix uniform index;
+        GLint _pvmUID; // PVM matrix uniform index;
 
-        glm::mat4 viewM;
-        glm::mat4 projectionM;
+        glm::mat4 _viewM;
+        glm::mat4 _projectionM;
 
     public:
         Shader();
 
         virtual GLuint init(std::string vertShaderLocation, std::string fragShaderLocation);
-        virtual void update(Camera &camera, int WIN_WIDTH, int WIN_HEIGHT);
+        virtual void update(Camera &camera, int winWidth, int winHeight);
         virtual void draw(Mesh &mesh);
     };
 }
