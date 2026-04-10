@@ -1,7 +1,8 @@
 #version 140
 
+in vec3 vertexColor;
 out vec4 color;
 
 void main() {
-    color = vec4(1.0f, 0.0f, 1.0f, 1.0f);
+    color = vec4(vertexColor, 1.0f);
 }

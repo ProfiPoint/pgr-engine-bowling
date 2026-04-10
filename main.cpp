@@ -54,8 +54,8 @@ namespace copakond {
         }
 
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        //glCullFace( GL_BACK);
-        //glEnable(GL_CULL_FACE);
+        glCullFace( GL_BACK);
+        glEnable(GL_CULL_FACE);
     }
 
     void draw() {
@@ -67,7 +67,7 @@ namespace copakond {
         shader.update(camera, winWidth, winHeight);
 
         for (Mesh *mesh: meshes) {
-            mesh->rotation().x += deltaTime * 0.01f;
+            mesh->rotation().x += deltaTime * 1.0f;
             shader.draw(*mesh);
         }
 
