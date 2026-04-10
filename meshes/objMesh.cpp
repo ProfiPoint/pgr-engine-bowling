@@ -6,7 +6,7 @@ namespace copakond {
         ObjLoader objLoader = ObjLoader(objFileLocation, normalizeCoord);
         _vertices = objLoader.getVertices();
         _faces = objLoader.getFaces();
-        //TODO - IMPLEMENT: normals = objLoader.getNormals();
+        _normals = objLoader.getNormals();
         _numVertices = _faces.size();
     }
 
@@ -41,17 +41,25 @@ namespace copakond {
         //BINDING
         glGenVertexArrays(1, &_vao);
         glBindVertexArray(_vao);
-        glGenBuffers(1, &_vbo);
+        glGenBuffers(1, &_vboVertices);
+        glGenBuffers(1, &_vboNormals);
         glGenBuffers(1, &_ebo);
 
-        // VBO
-        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        // VBO vertices
+        glBindBuffer(GL_ARRAY_BUFFER, _vboVertices);
         glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(float), _vertices.data(), GL_STATIC_DRAW);
+
+        // VBO normals
+        glBindBuffer(GL_ARRAY_BUFFER, _vboNormals);
+        glBufferData(GL_ARRAY_BUFFER, _normals.size() * sizeof(float), _normals.data(), GL_STATIC_DRAW);
 
         // VAO
         GLint position = glGetAttribLocation(_shaderProgram, "position");
+        GLint normal = glGetAttribLocation(_shaderProgram, "normal");
         glEnableVertexAttribArray(position);
         glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glEnableVertexAttribArray(normal);
+        glVertexAttribPointer(normal, 3, GL_FLOAT, GL_TRUE, 0, 0); // GL_TRUE normalize normals
 
         // EBO
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);

@@ -9,9 +9,10 @@ namespace copakond {
     class Mesh : public Geometry {
     protected:
         GLuint _shaderProgram;
-        GLuint _vbo;
-        GLsizei _numVertices;
+        GLuint _vboVertices;
+        GLuint _vboNormals;
         GLuint _vao;
+        GLsizei _numVertices;
 
         std::shared_ptr<Material> _material = std::make_shared<Material>();
 

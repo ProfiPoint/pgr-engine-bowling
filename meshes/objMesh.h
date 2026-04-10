@@ -9,6 +9,7 @@ namespace copakond {
         std::string _fileLocation;
         std::vector<float> _vertices;
         std::vector<unsigned int> _faces;
+        std::vector<float> _normals;
 
         GLuint _ebo;
 

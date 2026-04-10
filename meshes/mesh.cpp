@@ -33,8 +33,8 @@ namespace copakond {
         _numVertices = sizeof(vertices) / (3 * sizeof(float));
 
         // VBO
-        glGenBuffers(1, &_vbo);
-        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        glGenBuffers(1, &_vboVertices);
+        glBindBuffer(GL_ARRAY_BUFFER, _vboVertices);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
         // VAO
