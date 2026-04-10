@@ -13,6 +13,10 @@ namespace copakond {
     Mesh::Mesh(const glm::vec3 &translation, const glm::vec3 &rotation, const glm::vec3 &scale) : Geometry(translation, rotation, scale) {
     }
 
+    void Mesh::setMaterial(std::shared_ptr<Material> material) {
+        _material = material;
+    }
+
     void Mesh::init(GLuint shader) {
         _shaderProgram = shader;
 

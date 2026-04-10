@@ -6,10 +6,12 @@
 #define DEFAULT_AMBIENT glm::vec3(0.5f, 0.5f, 0.5f)
 #define DEFAULT_DIFFUSE glm::vec3(1.0f, 1.0f, 1.0f)
 #define DEFAULT_SPECULAR glm::vec3(1.0f, 1.0f, 1.0f)
+#define DEFAULT_ALPHA 1.0f
+#define DEFAULT_SHININESS 1.0f
 
 namespace copakond {
     class Material {
-    private:
+    protected:
         glm::vec3 _ambient;
         glm::vec3 _diffuse;
         glm::vec3 _specular;
@@ -21,6 +23,8 @@ namespace copakond {
 
         void constructor(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float alpha, float shininess,
                          const std::string &textureFile);
+
+        void _setMaterial(const Material &material);
 
     public:
         // color
@@ -43,7 +47,7 @@ namespace copakond {
         float &shininess() { return _shininess; }
 
         // texture managers
-        void setTexture(std::string textureFile);
+        void setTexture(const std::string &textureFile);
         bool hasTexture() { return _hasTexture; }
         void clearTexture() { _hasTexture = false; }
     };

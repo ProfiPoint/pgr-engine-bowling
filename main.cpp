@@ -53,7 +53,7 @@ namespace copakond {
             mesh->init(shaderPrg);
         }
 
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         //glCullFace( GL_BACK);
         //glEnable(GL_CULL_FACE);
     }
