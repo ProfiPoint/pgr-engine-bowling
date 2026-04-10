@@ -15,8 +15,8 @@ uniform mat4 PVM;
 uniform vec3 ambient;
 uniform vec3 diffuse;
 uniform vec3 specular;
-uniform float alpha;
 uniform float shininess;
+uniform float alpha;
 
 vec4 calculateLight() {
     vec3 worldPos = vec3(model * vec4(position, 1.0));

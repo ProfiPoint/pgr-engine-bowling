@@ -32,6 +32,8 @@ namespace copakond {
 
     void init() {
         glClearColor(0.2f, 0.1f, 0.3f, 1.0f);
+        //glEnable(GL_BLEND); // enable transparent colors
+        //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_DEPTH_TEST);
         glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 
@@ -44,7 +46,7 @@ namespace copakond {
             glm::vec3(0.0f, 0.0f, 0.0f),
             glm::vec3(0.5f, 0.33f, 0.2f),
             glm::vec3(1.0f, 1.0f, 1.0f),
-            1.0f, 16.0f
+            16.0f, 1.0f
         );
 
         //Mesh* triangleMesh = new Mesh();

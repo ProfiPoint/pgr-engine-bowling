@@ -1,7 +1,7 @@
 #include "material.h"
 
 namespace copakond {
-    void Material::constructor(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float alpha, float shininess,
+    void Material::constructor(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess, float alpha,
         const std::string &textureFile) {
 
         _ambient = ambient;
@@ -20,29 +20,29 @@ namespace copakond {
     }
 
     Material::Material() {
-        constructor(DEFAULT_AMBIENT, DEFAULT_DIFFUSE, DEFAULT_SPECULAR, DEFAULT_ALPHA, DEFAULT_SHININESS, "");
+        constructor(DEFAULT_AMBIENT, DEFAULT_DIFFUSE, DEFAULT_SPECULAR, DEFAULT_SHININESS, DEFAULT_ALPHA, "");
     }
     Material::Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular) {
-        constructor(ambient, diffuse, specular, DEFAULT_ALPHA, DEFAULT_SHININESS, "");
+        constructor(ambient, diffuse, specular, DEFAULT_SHININESS, DEFAULT_ALPHA, "");
     }
-    Material::Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float alpha) {
-        constructor(ambient, diffuse, specular, alpha, DEFAULT_SHININESS, "");
+    Material::Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess) {
+        constructor(ambient, diffuse, specular, shininess, DEFAULT_ALPHA, "");
     }
-    Material::Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float alpha, float shininess) {
-        constructor(ambient, diffuse, specular, alpha, shininess, "");
+    Material::Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess, float alpha) {
+        constructor(ambient, diffuse, specular, shininess, alpha, "");
     }
 
     Material::Material(const std::string &textureFile) {
-        constructor(DEFAULT_AMBIENT, DEFAULT_DIFFUSE, DEFAULT_SPECULAR, DEFAULT_ALPHA, DEFAULT_SHININESS, textureFile);
+        constructor(DEFAULT_AMBIENT, DEFAULT_DIFFUSE, DEFAULT_SPECULAR, DEFAULT_SHININESS, DEFAULT_ALPHA, textureFile);
     }
     Material::Material(const std::string &textureFile, const glm::vec3 &specular) {
-        constructor(DEFAULT_AMBIENT, DEFAULT_DIFFUSE, specular, DEFAULT_ALPHA, DEFAULT_SHININESS, textureFile);
+        constructor(DEFAULT_AMBIENT, DEFAULT_DIFFUSE, specular, DEFAULT_SHININESS, DEFAULT_ALPHA, textureFile);
     }
-    Material::Material(const std::string &textureFile, const glm::vec3 &specular, float alpha) {
-        constructor(DEFAULT_AMBIENT, DEFAULT_DIFFUSE, specular, alpha, DEFAULT_SHININESS, textureFile);
+    Material::Material(const std::string &textureFile, const glm::vec3 &specular, float shininess) {
+        constructor(DEFAULT_AMBIENT, DEFAULT_DIFFUSE, specular, shininess, DEFAULT_ALPHA, textureFile);
     }
-    Material::Material(const std::string &textureFile, const glm::vec3 &specular, float alpha, float shininess) {
-        constructor(DEFAULT_AMBIENT, DEFAULT_DIFFUSE, specular, alpha, shininess, textureFile);
+    Material::Material(const std::string &textureFile, const glm::vec3 &specular, float shininess, float alpha) {
+        constructor(DEFAULT_AMBIENT, DEFAULT_DIFFUSE, specular, shininess, alpha, textureFile);
     }
 
 

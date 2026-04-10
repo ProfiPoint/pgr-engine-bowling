@@ -15,13 +15,13 @@ namespace copakond {
         glm::vec3 _ambient;
         glm::vec3 _diffuse;
         glm::vec3 _specular;
-        float _alpha;
         float _shininess;
+        float _alpha;
 
         GLuint _texture;
         bool _hasTexture;
 
-        void constructor(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float alpha, float shininess,
+        void constructor(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess, float alpha,
                          const std::string &textureFile);
 
         void _setMaterial(const Material &material);
@@ -30,21 +30,21 @@ namespace copakond {
         // color
         Material();
         Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular);
-        Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float alpha);
-        Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float alpha, float shininess);
+        Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess);
+        Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess, float alpha);
 
         // texture
         Material(const std::string &textureFile);
         Material(const std::string &textureFile, const glm::vec3 &specular);
-        Material(const std::string &textureFile, const glm::vec3 &specular, float alpha);
-        Material(const std::string &textureFile, const glm::vec3 &specular, float alpha, float shininess);
+        Material(const std::string &textureFile, const glm::vec3 &specular, float shininess);
+        Material(const std::string &textureFile, const glm::vec3 &specular, float shininess, float alpha);
 
         // getters and setters
         glm::vec3 &ambient() { return _ambient; }
         glm::vec3 &diffuse() { return _diffuse; }
         glm::vec3 &specular() { return _specular; }
-        float &alpha() { return _alpha; }
         float &shininess() { return _shininess; }
+        float &alpha() { return _alpha; }
 
         // texture managers
         void setTexture(const std::string &textureFile);

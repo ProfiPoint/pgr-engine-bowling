@@ -20,8 +20,8 @@ namespace copakond {
         GLint _ambient;
         GLint _diffuse;
         GLint _specular;
-        GLint _alpha;
         GLint _shininess;
+        GLint _alpha;
 
         glm::mat4 _viewM; // camera view matrix
         glm::mat4 _projectionM; // perspective projection matrix

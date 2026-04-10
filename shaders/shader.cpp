@@ -24,8 +24,8 @@ namespace copakond {
         _ambient = glGetUniformLocation(_shaderProgram, "ambient");
         _diffuse = glGetUniformLocation(_shaderProgram, "diffuse");
         _specular = glGetUniformLocation(_shaderProgram, "specular");
-        _alpha = glGetUniformLocation(_shaderProgram, "alpha");
         _shininess = glGetUniformLocation(_shaderProgram, "shininess");
+        _alpha = glGetUniformLocation(_shaderProgram, "alpha");
         return _shaderProgram;
     }
 
@@ -55,8 +55,8 @@ namespace copakond {
         glUniform3fv(_ambient, 1, glm::value_ptr(mat->ambient()));
         glUniform3fv(_diffuse, 1, glm::value_ptr(mat->diffuse()));
         glUniform3fv(_specular, 1, glm::value_ptr(mat->specular()));
-        glUniform1f(_alpha, mat->alpha());
         glUniform1f(_shininess, mat->shininess());
+        glUniform1f(_alpha, mat->alpha());
         mesh.draw();
     };
 }
