@@ -51,7 +51,7 @@ namespace copakond {
 
         GLint position = glGetAttribLocation(_shaderProgram, "position"); // VAO
         glEnableVertexAttribArray(position);
-        glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
 
         // NORMALS
@@ -60,7 +60,7 @@ namespace copakond {
 
         GLint normal = glGetAttribLocation(_shaderProgram, "normal"); // VAO
         glEnableVertexAttribArray(normal);
-        glVertexAttribPointer(normal, 3, GL_FLOAT, GL_TRUE, 0, 0); // GL_TRUE normalize normals
+        glVertexAttribPointer(normal, 3, GL_FLOAT, GL_TRUE, 0, nullptr); // GL_TRUE normalize normals
 
 
         // EBO
@@ -74,7 +74,7 @@ namespace copakond {
 
     void ObjMesh::draw() {
         glBindVertexArray(_vao);
-        glDrawElements(GL_TRIANGLES, _numVertices, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, _numVertices, GL_UNSIGNED_INT, nullptr);
         glBindVertexArray(0);
     };
 }
