@@ -18,6 +18,8 @@ namespace copakond {
         _viewUID = glGetUniformLocation(_shaderProgram, "view");
         _projectionUID = glGetUniformLocation(_shaderProgram, "projection");
         _pvmUID = glGetUniformLocation(_shaderProgram, "PVM");
+        _camPos = glGetUniformLocation(_shaderProgram, "camPosition");
+        _normalMatrix = glGetUniformLocation(_shaderProgram, "normalMatrix");
         return _shaderProgram;
     }
 
@@ -25,8 +27,10 @@ namespace copakond {
         glUseProgram(_shaderProgram);
         _viewM = camera.getViewMatrix();
         _projectionM = camera.getProjectionMatrix(winWidth, winHeight);
+        _position = camera.getPosition();
 
         // UNIFORM APPLY
+        glUniform3fv(_camPos, 1, glm::value_ptr(_position));
         glUniformMatrix4fv(_viewUID, 1, GL_FALSE, glm::value_ptr(_viewM));
         glUniformMatrix4fv(_projectionUID, 1, GL_FALSE, glm::value_ptr(_projectionM));
     }
@@ -34,10 +38,12 @@ namespace copakond {
     void Shader::draw(Mesh &mesh) {
         glm::mat4 modelM = mesh.getModelMatrix();
         glm::mat4 PVM = _projectionM * _viewM * modelM;
+        glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelM)); // correct matrix for non-rigid transform
 
         // UNIFORM APPLY
         glUniformMatrix4fv(_modelUID, 1, GL_FALSE, glm::value_ptr(modelM)); // TRUE: M -> M^t, opengl accepts vectors by rows.
         glUniformMatrix4fv(_pvmUID, 1, GL_FALSE, glm::value_ptr(PVM));
+        glUniformMatrix4fv(_normalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
         mesh.draw();
     };
 }

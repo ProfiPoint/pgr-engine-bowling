@@ -11,8 +11,8 @@ add_executable(${PROJECT_NAME} main.cpp
         meshes/mesh.h
         geometry/camera.cpp
         geometry/camera.h
-        renderer/shader.cpp
-        renderer/shader.h
+        shaders/shader.cpp
+        shaders/shader.h
         utils/input.h
         utils/input.cpp
         utils/objLoader.cpp

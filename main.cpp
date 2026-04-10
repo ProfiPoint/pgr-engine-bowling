@@ -4,7 +4,7 @@
 #include "meshes/objMesh.h"
 #include "geometry/camera.h"
 #include "utils/input.h"
-#include "renderer/shader.h"
+#include "shaders/shader.h"
 #include "utils/input.h"
 
 namespace copakond {
@@ -36,8 +36,8 @@ namespace copakond {
         glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 
         GLuint shaderPrg = shader.init(
-            "shaders/vertexShader.vert",
-            "shaders/fragmentShader.frag"
+            "shaders/shaders/vertexShader.vert",
+            "shaders/shaders/fragmentShader.frag"
         );
 
         //Mesh* triangleMesh = new Mesh();

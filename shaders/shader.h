@@ -14,9 +14,12 @@ namespace copakond {
         GLint _viewUID; // view matrix uniform index;
         GLint _projectionUID; // projection matrix uniform index;
         GLint _pvmUID; // PVM matrix uniform index;
+        GLint _camPos; // position of camera eye position uniform index;
+        GLint _normalMatrix; // correct matrix for non-rigid transform uniform index;
 
-        glm::mat4 _viewM;
-        glm::mat4 _projectionM;
+        glm::mat4 _viewM; // camera view matrix
+        glm::mat4 _projectionM; // perspective projection matrix
+        glm::vec3 _position;
 
     public:
         Shader();

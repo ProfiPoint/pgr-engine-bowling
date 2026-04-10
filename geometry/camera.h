@@ -40,6 +40,7 @@ namespace copakond {
 
         glm::mat4 getViewMatrix();
         glm::mat4 getProjectionMatrix(float aspectWidth, float aspectHeight);
+        glm::vec3 getPosition() { return _position; }
 
         void processKeyboard(int direction, float deltaTime);
         void processMouseMovement(float deltaX, float deltaY);
