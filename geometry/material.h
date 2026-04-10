@@ -3,11 +3,11 @@
 
 #include "pgr.h"
 
-#define DEFAULT_AMBIENT glm::vec3(0.5f, 0.5f, 0.5f)
+#define DEFAULT_AMBIENT glm::vec3(0.25f, 0.25f, 0.25f)
 #define DEFAULT_DIFFUSE glm::vec3(1.0f, 1.0f, 1.0f)
 #define DEFAULT_SPECULAR glm::vec3(1.0f, 1.0f, 1.0f)
 #define DEFAULT_ALPHA 1.0f
-#define DEFAULT_SHININESS 1.0f
+#define DEFAULT_SHININESS 64.0f
 
 namespace copakond {
     class Material {

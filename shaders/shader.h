@@ -17,6 +17,12 @@ namespace copakond {
         GLint _camPos; // position of camera eye position uniform index;
         GLint _normalMatrix; // correct matrix for non-rigid transform uniform index;
 
+        GLint _ambient;
+        GLint _diffuse;
+        GLint _specular;
+        GLint _alpha;
+        GLint _shininess;
+
         glm::mat4 _viewM; // camera view matrix
         glm::mat4 _projectionM; // perspective projection matrix
         glm::vec3 _position;

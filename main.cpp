@@ -40,9 +40,17 @@ namespace copakond {
             "shaders/shaders/fragmentShader.frag"
         );
 
+        std::shared_ptr<Material> teddyMaterial = std::make_shared<Material>(
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(0.5f, 0.33f, 0.2f),
+            glm::vec3(1.0f, 1.0f, 1.0f),
+            1.0f, 16.0f
+        );
+
         //Mesh* triangleMesh = new Mesh();
         //meshes.push_back(triangleMesh);
         Mesh *teddyMesh = new ObjMesh("meshes/models/teddy.obj", true);
+        teddyMesh->setMaterial(teddyMaterial);
         meshes.push_back(teddyMesh);
 
         Mesh *teddyMesh2 = new ObjMesh("meshes/models/teddy.obj", true, glm::vec3(-8.0f, 0.0f, 0.0f),
