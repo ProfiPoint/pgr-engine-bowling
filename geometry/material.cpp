@@ -10,7 +10,7 @@ namespace copakond {
         _alpha = alpha;
         _shininess = shininess;
 
-
+        // TODO: IMPLEMENT TEXTURE FILE PARSING
     }
 
 
