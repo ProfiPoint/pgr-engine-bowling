@@ -21,6 +21,8 @@ add_executable(${PROJECT_NAME} main.cpp
         meshes/objMesh.h
         geometry/geometry.cpp
         geometry/geometry.h
+        renderer/material.cpp
+        renderer/material.h
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}include)
