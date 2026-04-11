@@ -3,7 +3,7 @@
 #include "meshes/mesh.h"
 #include "meshes/objMesh.h"
 #include "geometry/camera.h"
-#include "geometry/light.h"
+#include "light/light.h"
 #include "utils/input.h"
 #include "shaders/shader.h"
 
@@ -53,7 +53,7 @@ namespace copakond {
         glm::vec3 lightAmbient = glm::vec3(1.0f, 1.0f, 1.0f);
         glm::vec3 lightDiffuse = glm::vec3(1.0f, 1.0f, 1.0f);
         glm::vec3 lightSpecular = glm::vec3(1.0f, 1.0f, 1.0f);
-        Light *light = new Light(Light::POINT, lightDirection, lightAmbient, lightDiffuse, lightSpecular, 999.0f, 0.0f);
+        Light *light = new Light(Light::POINT, lightDirection, lightAmbient, lightDiffuse, lightSpecular, 999.0f, false);
         shader.setLight(light);
 
         //Mesh* triangleMesh = new Mesh();

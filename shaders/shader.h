@@ -4,7 +4,7 @@
 #include "pgr.h"
 #include "../meshes/mesh.h"
 #include "../geometry/camera.h"
-#include "../geometry/light.h"
+#include "../light/light.h"
 
 namespace copakond {
     class Shader {

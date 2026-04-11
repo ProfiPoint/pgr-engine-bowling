@@ -26,13 +26,13 @@ private:
 
     float _range;
     float _angle;
-    float _dimCoeff;
+    bool _dim;
 
 public:
     Light(LightType directionalLight, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
-    Light(LightType pointLight, glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range, float dimCoeff);
+    Light(LightType pointLight, glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range, bool dim);
     Light(LightType spotlightLight, glm::vec3 position, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular,
-        float range, float angle, float dimCoeff);
+        float range, float angle, bool dim);
 
     int type() { return _type; }
     glm::vec3 &position() { return _position; }
@@ -44,7 +44,7 @@ public:
 
     float &range() { return _range; }
     float &angle() { return _angle; }
-    float &dimCoeff() { return _dimCoeff; }
+    bool &dimCoeff() { return _dim; }
 };
 
 }

@@ -17,11 +17,11 @@ namespace copakond {
         _specular = specular;
         _range = 0;
         _angle = 0;
-        _dimCoeff = 0;
+        _dim = false;
 
     }
-    Light::Light(LightType pointLight, glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range, float
-        dimCoeff) {
+    Light::Light(LightType pointLight, glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range, bool
+        dim) {
         if (pointLight != POINT) {
             std::cout << "ERROR: This template is for POINT light" << std::endl;
             return;
@@ -35,11 +35,11 @@ namespace copakond {
         _specular = specular;
         _range = range;
         _angle = 0;
-        _dimCoeff = dimCoeff;
+        _dim = dim;
 
     }
     Light::Light(LightType spotlightLight, glm::vec3 position, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular,
-        float range, float angle, float dimCoeff) {
+        float range, float angle, bool dim) {
         if (spotlightLight != SPOTLIGHT) {
             std::cout << "ERROR: This template is for SPOTLIGHT light" << std::endl;
             return;
@@ -53,6 +53,6 @@ namespace copakond {
         _specular = specular;
         _range = range;
         _angle = angle;
-        _dimCoeff = dimCoeff;
+        _dim = dim;
     }
 }
