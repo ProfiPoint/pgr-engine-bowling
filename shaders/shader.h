@@ -4,6 +4,7 @@
 #include "pgr.h"
 #include "../meshes/mesh.h"
 #include "../geometry/camera.h"
+#include "../geometry/light.h"
 
 namespace copakond {
     class Shader {
@@ -23,12 +24,21 @@ namespace copakond {
         GLint _shininess;
         GLint _alpha;
 
+        GLint _lightType;
+        GLint _lightPos;
+        GLint _lightDir;
+        GLint _lightAmb;
+        GLint _lightDiff;
+        GLint _lightSpec;
+
         glm::mat4 _viewM; // camera view matrix
         glm::mat4 _projectionM; // perspective projection matrix
         glm::vec3 _position;
 
     public:
         Shader();
+
+        virtual void setLight(Light *light);
 
         virtual GLuint init(std::string vertShaderLocation, std::string fragShaderLocation);
         virtual void update(Camera &camera, int winWidth, int winHeight);

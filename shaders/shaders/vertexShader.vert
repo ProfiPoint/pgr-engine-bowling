@@ -4,6 +4,20 @@ in vec3 position;
 in vec3 normal;
 smooth out vec4 vertexColor;
 
+struct Light {
+    int type; // 0 = directional, 1 = point, 2 = spotlight
+
+    vec3 position;
+    vec3 direction;
+
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+
+    float range;
+    float angle;
+};
+
 uniform vec3 camPosition;
 uniform mat4 normalMatrix;
 
@@ -18,31 +32,28 @@ uniform vec3 specular;
 uniform float shininess;
 uniform float alpha;
 
-vec4 calculateLight() {
+uniform Light light;
+
+vec4 calculatePointLight() {
     vec3 worldPos = vec3(model * vec4(position, 1.0));
     vec3 vertexNormal = normalize((normalMatrix * vec4(normal, 0.0)).xyz);
 
-    vec3 lightPosition = vec3(10.0f, 10.0f, 10.0f);
-    vec3 lightAmbient = vec3(1.0f, 1.0f, 1.0f);
-    vec3 lightDiffuse = vec3(1.0f, 1.0f, 1.0f);
-    vec3 lightSpecular = vec3(1.0f, 1.0f, 1.0f);
-
     vec3 resColor = vec3(0.0f);
-    vec3 L = normalize(lightPosition - worldPos);
+    vec3 L = normalize(light.position - worldPos);
     vec3 R = reflect(-L, vertexNormal);
     vec3 V = normalize(camPosition - worldPos);
 
-    resColor += ambient * lightAmbient;
-    resColor += diffuse * lightDiffuse * max(dot(L, vertexNormal), 0.0f);
+    resColor += ambient * light.ambient;
+    resColor += diffuse * light.diffuse * max(dot(L, vertexNormal), 0.0f);
 
     if (dot(L, vertexNormal) > 0.0f) {
-        resColor += specular * lightSpecular * pow(max(dot(R, V), 0.0f), shininess);
+        resColor += specular * light.specular * pow(max(dot(R, V), 0.0f), shininess);
     }
 
     return vec4(resColor,alpha);
 }
 
 void main() {
-    vertexColor = calculateLight();
+    vertexColor = calculatePointLight();
     gl_Position = PVM * vec4(position, 1.0f);
 }

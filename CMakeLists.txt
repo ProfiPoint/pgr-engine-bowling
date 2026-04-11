@@ -23,6 +23,8 @@ add_executable(${PROJECT_NAME} main.cpp
         geometry/geometry.h
         geometry/material.cpp
         geometry/material.h
+        geometry/light.cpp
+        geometry/light.h
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}include)
