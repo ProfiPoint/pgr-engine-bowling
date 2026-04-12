@@ -22,6 +22,7 @@ namespace copakond {
         100.0f
     );
     Input input = Input(camera, winWidth, winHeight);
+    Light *light;
 
     float updateTime() {
         int currentFrameTime = glutGet(GLUT_ELAPSED_TIME);
@@ -49,11 +50,11 @@ namespace copakond {
             16.0f, 1.0f
         );
 
-        glm::vec3 lightDirection = glm::vec3(10.0f, 10.0f, 10.0f);
+        glm::vec3 lightDirection = glm::vec3(0.0f, 0.0f, 2.0f);
         glm::vec3 lightAmbient = glm::vec3(1.0f, 1.0f, 1.0f);
         glm::vec3 lightDiffuse = glm::vec3(1.0f, 1.0f, 1.0f);
         glm::vec3 lightSpecular = glm::vec3(1.0f, 1.0f, 1.0f);
-        Light *light = new PointLight(lightDirection, lightAmbient, lightDiffuse, lightSpecular, 30.0f, false);
+        Light *light = new PointLight(lightDirection, lightAmbient, lightDiffuse, lightSpecular, 50.0f, true);
         shader.setLight(light);
 
         //Mesh* triangleMesh = new Mesh();
@@ -84,6 +85,7 @@ namespace copakond {
 
         shader.update(camera, winWidth, winHeight);
 
+        light->range();
         for (Mesh *mesh: meshes) {
             //mesh->rotation().x += deltaTime * 1.0f;
             shader.draw(*mesh);
