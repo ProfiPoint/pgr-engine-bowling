@@ -35,14 +35,27 @@ uniform float alpha;
 
 uniform Light light;
 
-vec4 calculatePointLight() {
-    vec3 worldPos = vec3(model * vec4(position, 1.0));
-    vec3 vertexNormal = normalize((normalMatrix * vec4(normal, 0.0)).xyz);
+vec3 calculateDirectionalL(vec3 worldPos, vec3 vertexNormal) {
+    vec3 L = normalize(-light.direction);
+    vec3 V = normalize(camPosition - worldPos);
+    vec3 R = reflect(-L, vertexNormal);
 
+    vec3 resColor = vec3(0.0f);
+    resColor += ambient * light.ambient;
+    resColor += diffuse * light.diffuse * max(dot(L, vertexNormal), 0.0f);
+
+    if (dot(L, vertexNormal) > 0.0f) {
+        resColor += specular * light.specular * pow(max(dot(R, V), 0.0f), shininess);
+    }
+
+    return resColor;
+}
+
+vec3 calculatePointL(vec3 worldPos, vec3 vertexNormal) {
     float dist = distance(worldPos, light.position);
 
     if (dist > light.range) {
-        return vec4(ambient, alpha);
+        return ambient;
     }
 
     vec3 L = normalize(light.position - worldPos);
@@ -62,10 +75,29 @@ vec4 calculatePointLight() {
         resColor = mix(ambient, resColor, attenuation);
     }
 
-    return vec4(resColor, alpha);
+    return resColor;
+}
+
+vec3 calculateSpotL(vec3 worldPos, vec3 vertexNormal) {
+    return vec3(0.0f, 0.0f, 0.0f);
+}
+
+vec3 calculateLight() {
+    vec3 worldPos = vec3(model * vec4(position, 1.0));
+    vec3 vertexNormal = normalize((normalMatrix * vec4(normal, 0.0)).xyz);
+
+    if (light.type == 0) {
+        return calculateDirectionalL(worldPos, vertexNormal);
+    } else if (light.type == 1) {
+        return calculatePointL(worldPos, vertexNormal);
+    } else if (light.type == 2) {
+        return calculateSpotL(worldPos, vertexNormal);
+    }
+
+    return ambient;
 }
 
 void main() {
-    vertexColor = calculatePointLight();
+    vertexColor = vec4(calculateLight(), alpha);
     gl_Position = PVM * vec4(position, 1.0f);
 }
