@@ -42,7 +42,7 @@ public:
 
     float &range() { return _range; }
     float &angle() { return _angle; }
-    bool &dimCoeff() { return _dim; }
+    bool &dim() { return _dim; }
 };
 
 class DirectionalLight : public Light {

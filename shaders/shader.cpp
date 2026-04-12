@@ -33,6 +33,9 @@ namespace copakond {
         _lightAmb  = glGetUniformLocation(_shaderProgram, "light.ambient");
         _lightDiff = glGetUniformLocation(_shaderProgram, "light.diffuse");
         _lightSpec = glGetUniformLocation(_shaderProgram, "light.specular");
+        _lightRange = glGetUniformLocation(_shaderProgram, "light.range");
+        _lightAngle = glGetUniformLocation(_shaderProgram, "light.angle");
+        _lightDim = glGetUniformLocation(_shaderProgram, "light.dim");
         return _shaderProgram;
     }
 
@@ -46,6 +49,9 @@ namespace copakond {
         glUniform3fv(_lightAmb, 1, glm::value_ptr(light->ambient()));
         glUniform3fv(_lightDiff, 1, glm::value_ptr(light->diffuse()));
         glUniform3fv(_lightSpec, 1, glm::value_ptr(light->specular()));
+        glUniform1f(_lightRange, light->range());
+        glUniform1f(_lightAngle, light->angle());
+        glUniform1i(_lightDim, light->dim());
     }
 
     void Shader::update(Camera &camera, int winWidth, int winHeight) {

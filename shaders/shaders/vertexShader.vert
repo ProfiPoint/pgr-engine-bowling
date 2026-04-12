@@ -16,6 +16,7 @@ struct Light {
 
     float range;
     float angle;
+    bool dim;
 };
 
 uniform vec3 camPosition;
@@ -37,8 +38,13 @@ uniform Light light;
 vec4 calculatePointLight() {
     vec3 worldPos = vec3(model * vec4(position, 1.0));
     vec3 vertexNormal = normalize((normalMatrix * vec4(normal, 0.0)).xyz);
-
     vec3 resColor = vec3(0.0f);
+
+    if (distance(worldPos, light.position) > light.range) {
+        resColor = ambient;
+        return vec4(resColor,alpha);
+    }
+
     vec3 L = normalize(light.position - worldPos);
     vec3 R = reflect(-L, vertexNormal);
     vec3 V = normalize(camPosition - worldPos);
