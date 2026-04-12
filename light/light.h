@@ -14,7 +14,7 @@ public:
         SPOTLIGHT
     };
 
-private:
+protected:
     LightType _type;
 
     glm::vec3 _position;
@@ -29,10 +29,8 @@ private:
     bool _dim;
 
 public:
-    Light(LightType directionalLight, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
-    Light(LightType pointLight, glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range, bool dim);
-    Light(LightType spotlightLight, glm::vec3 position, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular,
-        float range, float angle, bool dim);
+    Light(LightType type, glm::vec3 position, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range,
+        float angle, bool dim);
 
     int type() { return _type; }
     glm::vec3 &position() { return _position; }
@@ -45,6 +43,21 @@ public:
     float &range() { return _range; }
     float &angle() { return _angle; }
     bool &dimCoeff() { return _dim; }
+};
+
+class DirectionalLight : public Light {
+public:
+    DirectionalLight(glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
+};
+
+class PointLight : public Light {
+public:
+    PointLight(glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range, bool dim);
+};
+
+class SpotLight : public Light {
+public:
+    SpotLight(glm::vec3 position, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range, float angle, bool dim);
 };
 
 }
