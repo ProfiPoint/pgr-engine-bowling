@@ -5,6 +5,8 @@ namespace copakond {
     }
 
     GLuint Shader::init(std::string vertShaderLocation, std::string fragShaderLocation) {
+        while(glGetError() != GL_NO_ERROR); // for linux, flush all errors
+
         GLuint shaders[] = {
             pgr::createShaderFromFile(GL_VERTEX_SHADER, vertShaderLocation),
             pgr::createShaderFromFile(GL_FRAGMENT_SHADER, fragShaderLocation),

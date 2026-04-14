@@ -1,6 +1,6 @@
 #version 140
 
-in vec4 vertexColor;
+smooth in vec4 vertexColor;
 out vec4 color;
 
 void main() {
