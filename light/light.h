@@ -5,6 +5,19 @@
 
 namespace copakond {
 
+struct LightUniforms {
+    GLint type;
+    GLint position;
+    GLint direction;
+    GLint ambient;
+    GLint diffuse;
+    GLint specular;
+    GLint range;
+    GLint angle;
+    GLint exponent;
+    GLint dim;
+};
+
 class Light {
 
 public:
@@ -24,10 +37,12 @@ protected:
     glm::vec3 _diffuse;
     glm::vec3 _specular;
 
+    int _id;
     float _range;
     float _angle;
     float _exponent;
     bool _dim;
+    LightUniforms _uniformLocations;
 
 public:
     Light(LightType type, glm::vec3 position, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range,
@@ -41,10 +56,13 @@ public:
     glm::vec3 &diffuse() { return _diffuse; }
     glm::vec3 &specular() { return _specular; }
 
+    int &id() { return _id; }
     float &range() { return _range; }
     float &angle() { return _angle; }
     float &exponent() { return _exponent; }
     bool &dim() { return _dim; }
+
+    LightUniforms& getUniformLocations() { return _uniformLocations; }
 };
 
 class DirectionalLight : public Light {

@@ -35,22 +35,41 @@ namespace copakond {
     }
 
     void Shader::setLight(Light* light, int index) {
+        light->id() = index;
         glUseProgram(_shaderProgram);
 
-        std::string baseName = "lights[" + std::to_string(index) + "].";
+        std::string uniformLightId = "lights[" + std::to_string(index) + "].";
 
-        glUniform1i(glGetUniformLocation(_shaderProgram, (baseName + "type").c_str()), light->type());
-        glUniform3fv(glGetUniformLocation(_shaderProgram, (baseName + "position").c_str()), 1, glm::value_ptr(light->position()));
-        glUniform3fv(glGetUniformLocation(_shaderProgram, (baseName + "direction").c_str()), 1, glm::value_ptr(light->direction()));
-        glUniform3fv(glGetUniformLocation(_shaderProgram, (baseName + "ambient").c_str()), 1, glm::value_ptr(light->ambient()));
-        glUniform3fv(glGetUniformLocation(_shaderProgram, (baseName + "diffuse").c_str()), 1, glm::value_ptr(light->diffuse()));
-        glUniform3fv(glGetUniformLocation(_shaderProgram, (baseName + "specular").c_str()), 1, glm::value_ptr(light->specular()));
+        LightUniforms &unifLocs = light->getUniformLocations();
+        unifLocs.type = glGetUniformLocation(_shaderProgram, (uniformLightId + "type").c_str());
+        unifLocs.position = glGetUniformLocation(_shaderProgram, (uniformLightId + "position").c_str());
+        unifLocs.direction = glGetUniformLocation(_shaderProgram, (uniformLightId + "direction").c_str());
+        unifLocs.ambient = glGetUniformLocation(_shaderProgram, (uniformLightId + "ambient").c_str());
+        unifLocs.diffuse = glGetUniformLocation(_shaderProgram, (uniformLightId + "diffuse").c_str());
+        unifLocs.specular = glGetUniformLocation(_shaderProgram, (uniformLightId + "specular").c_str());
+        unifLocs.range = glGetUniformLocation(_shaderProgram, (uniformLightId + "range").c_str());
+        unifLocs.angle = glGetUniformLocation(_shaderProgram, (uniformLightId + "angle").c_str());
+        unifLocs.exponent = glGetUniformLocation(_shaderProgram, (uniformLightId + "exponent").c_str());
+        unifLocs.dim = glGetUniformLocation(_shaderProgram, (uniformLightId + "dim").c_str());
 
-        glUniform1f(glGetUniformLocation(_shaderProgram, (baseName + "range").c_str()), light->range());
-        glUniform1f(glGetUniformLocation(_shaderProgram, (baseName + "angle").c_str()), light->angle());
-        glUniform1f(glGetUniformLocation(_shaderProgram, (baseName + "exponent").c_str()), light->exponent());
-        glUniform1i(glGetUniformLocation(_shaderProgram, (baseName + "dim").c_str()), light->dim());
         glUniform1i(glGetUniformLocation(_shaderProgram, "numLights"), index+1);
+    }
+
+    void Shader::updateLight(Light* light) {
+        glUseProgram(_shaderProgram);
+
+        LightUniforms& unifLocs = light->getUniformLocations();
+
+        glUniform1i(unifLocs.type, light->type());
+        glUniform3fv(unifLocs.position, 1, glm::value_ptr(light->position()));
+        glUniform3fv(unifLocs.direction, 1, glm::value_ptr(light->direction()));
+        glUniform3fv(unifLocs.ambient, 1, glm::value_ptr(light->ambient()));
+        glUniform3fv(unifLocs.diffuse, 1, glm::value_ptr(light->diffuse()));
+        glUniform3fv(unifLocs.specular, 1, glm::value_ptr(light->specular()));
+        glUniform1f(unifLocs.range, light->range());
+        glUniform1f(unifLocs.angle, light->angle());
+        glUniform1f(unifLocs.exponent, light->exponent());
+        glUniform1i(unifLocs.dim, light->dim());
     }
 
     void Shader::update(Camera &camera, int winWidth, int winHeight) {

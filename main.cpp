@@ -50,7 +50,7 @@ namespace copakond {
             16.0f, 1.0f
         );
 
-        glm::vec3 lightPosition = glm::vec3(-8.0f, 0.0f, 2.0f);
+        glm::vec3 lightPosition = glm::vec3(-8.0f, 0.0f, 5.0f);
         glm::vec3 lightDirection = glm::vec3(0.0f, 0.0f, -1.0f);
         glm::vec3 lightAmbient = glm::vec3(1.0f, 1.0f, 1.0f);
         glm::vec3 lightDiffuse = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -58,13 +58,13 @@ namespace copakond {
 
         //Light *light = new SpotLight(lightPosition, lightDirection, lightAmbient, lightDiffuse, lightSpecular, 20.0f, 30.0f, 5.0f, false);
         //lights.push_back(light);
-        //Light *light1 = new PointLight(lightDirection, lightAmbient, lightDiffuse, lightSpecular, 10.0f, true);
-        //lights.push_back(light1);
-        Light *light2 = new DirectionalLight(-lightDirection, lightAmbient, lightDiffuse, lightSpecular);
-        lights.push_back(light2);
+        Light *light1 = new PointLight(lightPosition, lightAmbient, lightDiffuse, lightSpecular, 10.0f, true);
+        lights.push_back(light1);
+        //Light *light2 = new DirectionalLight(-lightDirection, lightAmbient, lightDiffuse, lightSpecular);
+        //lights.push_back(light2);
 
-        Light *light3 = new DirectionalLight(lightDirection, lightAmbient, lightDiffuse, lightSpecular);
-        lights.push_back(light3);
+        //Light *light3 = new DirectionalLight(lightDirection, lightAmbient, lightDiffuse, lightSpecular);
+        //lights.push_back(light3);
 
         //Mesh* triangleMesh = new Mesh();
         //meshes.push_back(triangleMesh);
@@ -103,6 +103,9 @@ namespace copakond {
             //mesh->rotation().x += deltaTime * 1.0f;
             shader.draw(*mesh);
         }
+
+        lights[0]->position() += glm::vec3(deltaTime, 0.0f, 0.0f);
+        shader.updateLight(lights[0]);
 
         glutSwapBuffers(); // swap front and back screen buffer
         glutPostRedisplay(); // !!!!!!!!! schedules display, doesnt stack!!!
