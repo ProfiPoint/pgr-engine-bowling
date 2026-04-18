@@ -37,6 +37,7 @@ namespace copakond {
         _lightSpec = glGetUniformLocation(_shaderProgram, "light.specular");
         _lightRange = glGetUniformLocation(_shaderProgram, "light.range");
         _lightAngle = glGetUniformLocation(_shaderProgram, "light.angle");
+        _lightExponent = glGetUniformLocation(_shaderProgram, "light.exponent");
         _lightDim = glGetUniformLocation(_shaderProgram, "light.dim");
         return _shaderProgram;
     }
@@ -53,6 +54,7 @@ namespace copakond {
         glUniform3fv(_lightSpec, 1, glm::value_ptr(light->specular()));
         glUniform1f(_lightRange, light->range());
         glUniform1f(_lightAngle, light->angle());
+        glUniform1f(_lightExponent, light->exponent());
         glUniform1i(_lightDim, light->dim());
     }
 

@@ -26,11 +26,12 @@ protected:
 
     float _range;
     float _angle;
+    float _exponent;
     bool _dim;
 
 public:
     Light(LightType type, glm::vec3 position, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range,
-        float angle, bool dim);
+        float angle, float exponent, bool dim);
 
     int type() { return _type; }
     glm::vec3 &position() { return _position; }
@@ -42,6 +43,7 @@ public:
 
     float &range() { return _range; }
     float &angle() { return _angle; }
+    float &exponent() { return _exponent; }
     bool &dim() { return _dim; }
 };
 
@@ -57,7 +59,8 @@ public:
 
 class SpotLight : public Light {
 public:
-    SpotLight(glm::vec3 position, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range, float angle, bool dim);
+    SpotLight(glm::vec3 position, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range, float
+        angle, float exponent, bool dim);
 };
 
 }

@@ -16,6 +16,7 @@ struct Light {
 
     float range;
     float angle;
+    float exponent;
     bool dim;
 };
 
@@ -71,15 +72,48 @@ vec3 calculatePointL(vec3 worldPos, vec3 vertexNormal) {
     }
 
     if (light.dim) {
-        float attenuation = 1.0 - (dist / light.range);
-        resColor = mix(ambient, resColor, attenuation);
+        float dimCoeff = 1.0f - (dist / light.range);
+        resColor = mix(ambient, resColor, dimCoeff);
     }
 
     return resColor;
 }
 
 vec3 calculateSpotL(vec3 worldPos, vec3 vertexNormal) {
-    return vec3(0.0f, 0.0f, 0.0f);
+    float dist = distance(worldPos, light.position);
+    if (dist > light.range) {
+        return ambient * light.ambient;
+    }
+
+    vec3 L = normalize(light.position - worldPos);
+    vec3 R = reflect(-L, vertexNormal);
+    vec3 V = normalize(camPosition - worldPos);
+
+    vec3 resColor = vec3(0.0f);
+    float alpha_angle = dot(-L, normalize(light.direction));
+    float spotlightEffect = pow(max(alpha_angle, 0.0), light.exponent);
+
+    resColor += ambient * light.ambient;
+
+    float cutoff = cos(radians(light.angle));
+    if (alpha_angle >= cutoff) {
+        resColor += diffuse * light.diffuse * max(dot(L, vertexNormal), 0.0) * spotlightEffect;
+
+        if (dot(L, vertexNormal) > 0.0) {
+            resColor += specular * light.specular * pow(max(dot(R, V), 0.0), shininess) * spotlightEffect;
+        }
+
+        // dim from the center lineary
+        if (light.dim) {
+            float distanceDimming = 1.0 - (dist / light.range);
+            resColor = mix(ambient * light.ambient, resColor, distanceDimming);
+        }
+
+    } else {
+        resColor = ambient * light.ambient;
+    }
+
+    return resColor;
 }
 
 vec3 calculateLight() {

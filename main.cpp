@@ -44,18 +44,20 @@ namespace copakond {
         );
 
         std::shared_ptr<Material> teddyMaterial = std::make_shared<Material>(
-            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(0.5f, 0.33f, 0.2f) * 0.1f,
             glm::vec3(0.5f, 0.33f, 0.2f),
             glm::vec3(1.0f, 1.0f, 1.0f),
             16.0f, 1.0f
         );
 
-        glm::vec3 lightDirection = glm::vec3(0.0f, 0.0f, 2.0f);
+        glm::vec3 lightPosition = glm::vec3(-8.0f, 0.0f, 2.0f);
+        glm::vec3 lightDirection = glm::vec3(0.0f, 0.0f, -1.0f);
         glm::vec3 lightAmbient = glm::vec3(1.0f, 1.0f, 1.0f);
         glm::vec3 lightDiffuse = glm::vec3(1.0f, 1.0f, 1.0f);
         glm::vec3 lightSpecular = glm::vec3(1.0f, 1.0f, 1.0f);
-        //Light *light = new PointLight(lightDirection, lightAmbient, lightDiffuse, lightSpecular, 50.0f, true);
-        Light *light = new DirectionalLight(-lightDirection, lightAmbient, lightDiffuse, lightSpecular);
+        //Light *light = new PointLight(lightDirection, lightAmbient, lightDiffuse, lightSpecular, 10.0f, true);
+        //Light *light = new DirectionalLight(-lightDirection, lightAmbient, lightDiffuse, lightSpecular);
+        Light *light = new SpotLight(lightPosition, lightDirection, lightAmbient, lightDiffuse, lightSpecular, 20.0f, 30.0f, 5.0f, false);
         shader.setLight(light);
 
         //Mesh* triangleMesh = new Mesh();

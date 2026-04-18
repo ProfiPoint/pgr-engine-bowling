@@ -32,6 +32,7 @@ namespace copakond {
         GLint _lightSpec;
         GLint _lightRange;
         GLint _lightAngle;
+        GLint _lightExponent;
         GLint _lightDim;
 
         glm::mat4 _viewM; // camera view matrix
