@@ -104,7 +104,7 @@ namespace copakond {
             shader.draw(*mesh);
         }
 
-        lights[0]->position() += glm::vec3(deltaTime, 0.0f, 0.0f);
+        lights[0]->position() = camera.getPosition();
         shader.updateLight(lights[0]);
 
         glutSwapBuffers(); // swap front and back screen buffer
