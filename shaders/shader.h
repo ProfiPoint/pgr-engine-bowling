@@ -24,7 +24,7 @@ namespace copakond {
         GLint _shininess;
         GLint _alpha;
 
-        GLint _lightType;
+        /*GLint _lightType;
         GLint _lightPos;
         GLint _lightDir;
         GLint _lightAmb;
@@ -33,7 +33,9 @@ namespace copakond {
         GLint _lightRange;
         GLint _lightAngle;
         GLint _lightExponent;
-        GLint _lightDim;
+        GLint _lightDim;*/
+        GLint _numLights; // uniform id
+        size_t totalNumLights; // actual counter
 
         glm::mat4 _viewM; // camera view matrix
         glm::mat4 _projectionM; // perspective projection matrix
@@ -42,7 +44,8 @@ namespace copakond {
     public:
         Shader();
 
-        virtual void setLight(Light *light);
+        virtual void setLight(Light *light, int lightIndex);
+        virtual void setNumLights(int count);
 
         virtual GLuint init(std::string vertShaderLocation, std::string fragShaderLocation);
         virtual void update(Camera &camera, int winWidth, int winHeight);

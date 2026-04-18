@@ -1,4 +1,5 @@
 #version 140
+#define MAX_LIGHTS 64
 
 in vec3 position;
 in vec3 normal;
@@ -34,7 +35,8 @@ uniform vec3 specular;
 uniform float shininess;
 uniform float alpha;
 
-uniform Light light;
+uniform Light lights[MAX_LIGHTS];
+uniform int numLights;
 
 vec3 calculateDirectionalL(Light light, vec3 worldPos, vec3 vertexNormal) {
     vec3 L = normalize(-light.direction);
@@ -132,6 +134,11 @@ vec3 calculateLight(Light light) {
 }
 
 void main() {
-    vertexColor = vec4(calculateLight(light), alpha);
+    vec3 resultColor = vec3(0.0f);
+    for (int i = 0; i < numLights; ++i) {
+        resultColor += calculateLight(lights[i]);
+    }
+
+    vertexColor = vec4(resultColor, alpha);
     gl_Position = PVM * vec4(position, 1.0f);
 }
