@@ -83,7 +83,6 @@ namespace copakond {
         for (int i = 0; i < lights.size(); i++) {
             shader.setLight(lights[i], i);
         }
-        shader.setNumLights(lights.size());
 
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glCullFace( GL_BACK);

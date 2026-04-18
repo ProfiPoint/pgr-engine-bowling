@@ -23,11 +23,11 @@ namespace copakond {
         _camPos = glGetUniformLocation(_shaderProgram, "camPosition");
         _normalMatrix = glGetUniformLocation(_shaderProgram, "normalMatrix");
 
-        _ambient = glGetUniformLocation(_shaderProgram, "ambient");
-        _diffuse = glGetUniformLocation(_shaderProgram, "diffuse");
-        _specular = glGetUniformLocation(_shaderProgram, "specular");
-        _shininess = glGetUniformLocation(_shaderProgram, "shininess");
-        _alpha = glGetUniformLocation(_shaderProgram, "alpha");
+        _ambient = glGetUniformLocation(_shaderProgram, "material.ambient");
+        _diffuse = glGetUniformLocation(_shaderProgram, "material.diffuse");
+        _specular = glGetUniformLocation(_shaderProgram, "material.specular");
+        _shininess = glGetUniformLocation(_shaderProgram, "material.shininess");
+        _alpha = glGetUniformLocation(_shaderProgram, "material.alpha");
 
         _numLights = glGetUniformLocation(_shaderProgram, "numLights");
         totalNumLights = 0;
@@ -50,12 +50,7 @@ namespace copakond {
         glUniform1f(glGetUniformLocation(_shaderProgram, (baseName + "angle").c_str()), light->angle());
         glUniform1f(glGetUniformLocation(_shaderProgram, (baseName + "exponent").c_str()), light->exponent());
         glUniform1i(glGetUniformLocation(_shaderProgram, (baseName + "dim").c_str()), light->dim());
-        //glUniform1i(glGetUniformLocation(_shaderProgram, "numLights"), index+1);
-    }
-
-    void Shader::setNumLights(int count) {
-        glUseProgram(_shaderProgram);
-        glUniform1i(_numLights, count);
+        glUniform1i(glGetUniformLocation(_shaderProgram, "numLights"), index+1);
     }
 
     void Shader::update(Camera &camera, int winWidth, int winHeight) {

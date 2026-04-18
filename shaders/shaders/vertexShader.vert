@@ -5,6 +5,22 @@ in vec3 position;
 in vec3 normal;
 smooth out vec4 vertexColor;
 
+uniform vec3 camPosition;
+uniform mat4 normalMatrix;
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+uniform mat4 PVM;
+
+struct Material {
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+    float shininess;
+    float alpha;
+};
+
 struct Light {
     int type; // 0 = directional, 1 = point, 2 = spotlight
 
@@ -21,20 +37,7 @@ struct Light {
     bool dim;
 };
 
-uniform vec3 camPosition;
-uniform mat4 normalMatrix;
-
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
-uniform mat4 PVM;
-
-uniform vec3 ambient;
-uniform vec3 diffuse;
-uniform vec3 specular;
-uniform float shininess;
-uniform float alpha;
-
+uniform Material material;
 uniform Light lights[MAX_LIGHTS];
 uniform int numLights;
 
@@ -44,11 +47,11 @@ vec3 calculateDirectionalL(Light light, vec3 worldPos, vec3 vertexNormal) {
     vec3 R = reflect(-L, vertexNormal);
 
     vec3 resColor = vec3(0.0f);
-    resColor += ambient * light.ambient;
-    resColor += diffuse * light.diffuse * max(dot(L, vertexNormal), 0.0f);
+    resColor += material.ambient * light.ambient;
+    resColor += material.diffuse * light.diffuse * max(dot(L, vertexNormal), 0.0f);
 
     if (dot(L, vertexNormal) > 0.0f) {
-        resColor += specular * light.specular * pow(max(dot(R, V), 0.0f), shininess);
+        resColor += material.specular * light.specular * pow(max(dot(R, V), 0.0f), material.shininess);
     }
 
     return resColor;
@@ -58,7 +61,7 @@ vec3 calculatePointL(Light light, vec3 worldPos, vec3 vertexNormal) {
     float dist = distance(worldPos, light.position);
 
     if (dist > light.range) {
-        return ambient;
+        return material.ambient;
     }
 
     vec3 L = normalize(light.position - worldPos);
@@ -66,16 +69,16 @@ vec3 calculatePointL(Light light, vec3 worldPos, vec3 vertexNormal) {
     vec3 V = normalize(camPosition - worldPos);
 
     vec3 resColor = vec3(0.0f);
-    resColor += ambient * light.ambient;
-    resColor += diffuse * light.diffuse * max(dot(L, vertexNormal), 0.0f);
+    resColor += material.ambient * light.ambient;
+    resColor += material.diffuse * light.diffuse * max(dot(L, vertexNormal), 0.0f);
 
     if (dot(L, vertexNormal) > 0.0f) {
-        resColor += specular * light.specular * pow(max(dot(R, V), 0.0f), shininess);
+        resColor += material.specular * light.specular * pow(max(dot(R, V), 0.0f), material.shininess);
     }
 
     if (light.dim) {
         float dimCoeff = 1.0f - (dist / light.range);
-        resColor = mix(ambient, resColor, dimCoeff);
+        resColor = mix(material.ambient, resColor, dimCoeff);
     }
 
     return resColor;
@@ -84,7 +87,7 @@ vec3 calculatePointL(Light light, vec3 worldPos, vec3 vertexNormal) {
 vec3 calculateSpotL(Light light, vec3 worldPos, vec3 vertexNormal) {
     float dist = distance(worldPos, light.position);
     if (dist > light.range) {
-        return ambient * light.ambient;
+        return material.ambient * light.ambient;
     }
 
     vec3 L = normalize(light.position - worldPos);
@@ -95,24 +98,24 @@ vec3 calculateSpotL(Light light, vec3 worldPos, vec3 vertexNormal) {
     float alpha_angle = dot(-L, normalize(light.direction));
     float spotlightEffect = pow(max(alpha_angle, 0.0), light.exponent);
 
-    resColor += ambient * light.ambient;
+    resColor += material.ambient * light.ambient;
 
     float cutoff = cos(radians(light.angle));
     if (alpha_angle >= cutoff) {
-        resColor += diffuse * light.diffuse * max(dot(L, vertexNormal), 0.0) * spotlightEffect;
+        resColor += material.diffuse * light.diffuse * max(dot(L, vertexNormal), 0.0) * spotlightEffect;
 
         if (dot(L, vertexNormal) > 0.0) {
-            resColor += specular * light.specular * pow(max(dot(R, V), 0.0), shininess) * spotlightEffect;
+            resColor += material.specular * light.specular * pow(max(dot(R, V), 0.0), material.shininess) * spotlightEffect;
         }
 
         // dim from the center lineary
         if (light.dim) {
             float distanceDimming = 1.0 - (dist / light.range);
-            resColor = mix(ambient * light.ambient, resColor, distanceDimming);
+            resColor = mix(material.ambient * light.ambient, resColor, distanceDimming);
         }
 
     } else {
-        resColor = ambient * light.ambient;
+        resColor = material.ambient * light.ambient;
     }
 
     return resColor;
@@ -130,7 +133,7 @@ vec3 calculateLight(Light light) {
         return calculateSpotL(light, worldPos, vertexNormal);
     }
 
-    return ambient;
+    return material.ambient;
 }
 
 void main() {
@@ -139,6 +142,6 @@ void main() {
         resultColor += calculateLight(lights[i]);
     }
 
-    vertexColor = vec4(resultColor, alpha);
+    vertexColor = vec4(resultColor, material.alpha);
     gl_Position = PVM * vec4(position, 1.0f);
 }

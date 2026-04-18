@@ -45,7 +45,6 @@ namespace copakond {
         Shader();
 
         virtual void setLight(Light *light, int lightIndex);
-        virtual void setNumLights(int count);
 
         virtual GLuint init(std::string vertShaderLocation, std::string fragShaderLocation);
         virtual void update(Camera &camera, int winWidth, int winHeight);
