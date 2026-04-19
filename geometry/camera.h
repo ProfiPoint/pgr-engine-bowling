@@ -1,7 +1,7 @@
 #ifndef PGR_SEM_COPAKOND_CAMERA_H
 #define PGR_SEM_COPAKOND_CAMERA_H
 
-#include "pgr.h"
+#include "../pgr-portable.h"
 
 #define FRONT 0
 #define BACK 1

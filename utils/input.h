@@ -3,7 +3,7 @@
 
 #define IS_SPECIAL_KEY 256
 
-#include "pgr.h"
+#include "../pgr-portable.h"
 #include "../geometry/camera.h"
 
 namespace copakond {

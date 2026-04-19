@@ -1,7 +1,7 @@
 #ifndef PGR_SEM_COPAKOND_LIGHT_H
 #define PGR_SEM_COPAKOND_LIGHT_H
 
-#include "pgr.h"
+#include "../pgr-portable.h"
 
 namespace copakond {
 

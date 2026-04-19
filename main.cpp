@@ -1,5 +1,5 @@
 #include <iostream>
-#include "pgr.h"
+#include "pgr-portable.h"
 #include "meshes/mesh.h"
 #include "meshes/objMesh.h"
 #include "geometry/camera.h"
@@ -80,7 +80,7 @@ namespace copakond {
         for (Mesh *mesh: meshes) {
             mesh->init(shaderPrg);
         }
-        for (int i = 0; i < lights.size(); i++) {
+        for (size_t i = 0; i < lights.size(); i++) {
             shader.setLight(lights[i], i);
         }
 

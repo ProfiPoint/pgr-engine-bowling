@@ -1,7 +1,7 @@
 #ifndef PGR_SEM_COPAKOND_MESH_H
 #define PGR_SEM_COPAKOND_MESH_H
 
-#include "pgr.h"
+#include "../pgr-portable.h"
 #include "../geometry/material.h"
 #include "../geometry/geometry.h"
 

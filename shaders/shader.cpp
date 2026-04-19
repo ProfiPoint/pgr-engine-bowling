@@ -75,7 +75,7 @@ namespace copakond {
     void Shader::update(Camera &camera, int winWidth, int winHeight) {
         glUseProgram(_shaderProgram);
         _viewM = camera.getViewMatrix();
-        _projectionM = camera.getProjectionMatrix(winWidth, winHeight);
+        _projectionM = camera.getProjectionMatrix((float)winWidth, (float)winHeight);
         _position = camera.getPosition();
 
         // UNIFORM APPLY

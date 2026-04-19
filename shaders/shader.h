@@ -1,7 +1,7 @@
 #ifndef PGR_SEM_COPAKOND_SHADER_H
 #define PGR_SEM_COPAKOND_SHADER_H
 
-#include "pgr.h"
+#include "../pgr-portable.h"
 #include "../meshes/mesh.h"
 #include "../geometry/camera.h"
 #include "../light/light.h"

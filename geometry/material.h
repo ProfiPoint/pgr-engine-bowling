@@ -1,7 +1,7 @@
 #ifndef PGR_SEM_COPAKOND_MATERIAL_H
 #define PGR_SEM_COPAKOND_MATERIAL_H
 
-#include "pgr.h"
+#include "../pgr-portable.h"
 
 #define DEFAULT_AMBIENT glm::vec3(0.25f, 0.25f, 0.25f)
 #define DEFAULT_DIFFUSE glm::vec3(1.0f, 1.0f, 1.0f)

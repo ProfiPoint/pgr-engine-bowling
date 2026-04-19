@@ -1,7 +1,7 @@
 #ifndef PGR_SEM_COPAKOND_GEOMETRY_H
 #define PGR_SEM_COPAKOND_GEOMETRY_H
 
-#include "pgr.h"
+#include "../pgr-portable.h"
 
 namespace copakond {
     class Geometry {

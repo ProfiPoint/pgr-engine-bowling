@@ -4,8 +4,6 @@ project(pgr-sem-copakond)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_compile_definitions(WIN32 _CONSOLE)
-
 add_executable(${PROJECT_NAME} main.cpp
         meshes/mesh.cpp
         meshes/mesh.h
@@ -25,12 +23,31 @@ add_executable(${PROJECT_NAME} main.cpp
         geometry/material.h
         light/light.cpp
         light/light.h
+        pgr-portable.h
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}include)
-target_link_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}lib)
+if(WIN32) # WINDOWS CONFIGURATION
+    add_compile_definitions(WIN32 _CONSOLE)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
-        debug pgrd
-        optimized pgr
-)
+    target_include_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}include)
+    target_link_directories(${PROJECT_NAME} PRIVATE $ENV{PGR_FRAMEWORK_ROOT}lib)
+
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+            debug pgrd
+            optimized pgr
+    )
+
+
+elseif(UNIX AND NOT APPLE) # ARCH LINUX CONFIGURATION
+    target_include_directories(${PROJECT_NAME} PRIVATE /usr/include)
+    target_link_directories(${PROJECT_NAME} PRIVATE /usr/lib)
+
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+            pgr
+            assimp
+            glut
+            GL
+            GLEW
+            glfw
+    )
+endif()
