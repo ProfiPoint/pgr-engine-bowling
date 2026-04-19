@@ -24,6 +24,18 @@ namespace copakond {
         GLint _shininess;
         GLint _alpha;
 
+        GLuint _diffuseMapUID;
+        GLuint _specularMapUID;
+        GLuint _shininessMapUID;
+        GLuint _alphaMapUID;
+        GLuint _normalMapUID;
+
+        GLuint _useDiffuseMapUID;
+        GLuint _useSpecularMapUID;
+        GLuint _useShininessMapUID;
+        GLuint _useAlphaMapUID;
+        GLuint _useNormalMapUID;
+
         /*GLint _lightType;
         GLint _lightPos;
         GLint _lightDir;

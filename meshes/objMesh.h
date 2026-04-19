@@ -10,7 +10,9 @@ namespace copakond {
         std::vector<float> _vertices;
         std::vector<unsigned int> _faces;
         std::vector<float> _normals;
+        std::vector<float> _uvs;
 
+        GLuint _vboUvs;
         GLuint _ebo;
 
         void constructor(const std::string &objFileLocation, bool normalizeCoord);

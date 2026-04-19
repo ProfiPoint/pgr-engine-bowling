@@ -8,6 +8,7 @@ namespace copakond {
         _faces = objLoader.getFaces();
         _normals = objLoader.getNormals();
         _numVertices = _faces.size();
+        _uvs = objLoader.getUvs();
 
         setMaterial(objLoader.getMaterial());
     }
@@ -45,6 +46,7 @@ namespace copakond {
         glBindVertexArray(_vao);
         glGenBuffers(1, &_vboVertices);
         glGenBuffers(1, &_vboNormals);
+        glGenBuffers(1, &_vboUvs);
         glGenBuffers(1, &_ebo);
 
         // VERTICES
@@ -63,6 +65,16 @@ namespace copakond {
         GLint normal = glGetAttribLocation(_shaderProgram, "normal"); // VAO
         glEnableVertexAttribArray(normal);
         glVertexAttribPointer(normal, 3, GL_FLOAT, GL_TRUE, 0, nullptr); // GL_TRUE normalize normals
+
+
+        // UVS
+        glBindBuffer(GL_ARRAY_BUFFER, _vboUvs);
+        glBufferData(GL_ARRAY_BUFFER, _uvs.size() * sizeof(float), _uvs.data(), GL_STATIC_DRAW);
+
+        // TEXTURE
+        GLint textureCoord = glGetAttribLocation(_shaderProgram, "textureCoord");
+        glEnableVertexAttribArray(textureCoord);
+        glVertexAttribPointer(textureCoord, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
 
         // EBO

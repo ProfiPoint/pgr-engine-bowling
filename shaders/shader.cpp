@@ -32,6 +32,18 @@ namespace copakond {
         _shininess = glGetUniformLocation(_shaderProgram, "material.shininess");
         _alpha = glGetUniformLocation(_shaderProgram, "material.alpha");
 
+        _diffuseMapUID = glGetUniformLocation(_shaderProgram, "texture.diffuseMapUID");
+        _specularMapUID = glGetUniformLocation(_shaderProgram, "texture.specularMapUID");
+        _shininessMapUID = glGetUniformLocation(_shaderProgram, "texture.shininessMapUID");
+        _alphaMapUID = glGetUniformLocation(_shaderProgram, "texture.alphaMapUID");
+        _normalMapUID = glGetUniformLocation(_shaderProgram, "texture.normalMapUID");
+
+        _useDiffuseMapUID = glGetUniformLocation(_shaderProgram, "texture.useDiffuseMapUID");
+        _useSpecularMapUID = glGetUniformLocation(_shaderProgram, "texture.useSpecularMapUID");
+        _useShininessMapUID = glGetUniformLocation(_shaderProgram, "texture.useShininessMapUID");
+        _useAlphaMapUID = glGetUniformLocation(_shaderProgram, "texture.useAlphaMapUID");
+        _useNormalMapUID = glGetUniformLocation(_shaderProgram, "texture.useNormalMapUID");
+
         _numLights = glGetUniformLocation(_shaderProgram, "numLights");
         totalNumLights = 0;
         return _shaderProgram;
@@ -74,10 +86,6 @@ namespace copakond {
         glUniform1f(unifLocs.angle, light->angle());
         glUniform1f(unifLocs.exponent, light->exponent());
         glUniform1i(unifLocs.dim, light->dim());
-
-        std::cout << light->exponent() << std::endl;
-        std::cout << light->range() << std::endl;
-        std::cout << light->angle() << std::endl;
     }
 
     void Shader::update(Camera &camera, int winWidth, int winHeight) {
@@ -104,10 +112,66 @@ namespace copakond {
         glUniformMatrix4fv(_normalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
 
         glUniform3fv(_ambient, 1, glm::value_ptr(mat->ambient()));
-        glUniform3fv(_diffuse, 1, glm::value_ptr(mat->diffuse()));
-        glUniform3fv(_specular, 1, glm::value_ptr(mat->specular()));
-        glUniform1f(_shininess, mat->shininess());
-        glUniform1f(_alpha, mat->alpha());
+
+
+        // SET DIFFUSE TEXTURE / DIFFUSE VECTOR
+        if (mat->hasDiffuseTexture()) {
+            glUniform1i(_useDiffuseMapUID, 1);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, mat->diffuseTextureUniform());
+            glUniform1i(_diffuseMapUID, 0);
+        } else {
+            glUniform3fv(_diffuse, 1, glm::value_ptr(mat->diffuse()));
+            glUniform1i(_useDiffuseMapUID, 0);
+        }
+
+        // SET SPECULAR TEXTURE / SPECULAR VECTOR
+        if (mat->hasSpecularTexture()) {
+            glUniform1i(_useSpecularMapUID, 1);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, mat->specularTextureUniform());
+            glUniform1i(_specularMapUID, 0);
+        } else {
+            glUniform3fv(_specular, 1, glm::value_ptr(mat->specular()));
+            glUniform1i(_useSpecularMapUID, 0);
+        }
+
+        // SET SHININESS TEXTURE / SHININESS FLOAT
+        if (mat->hasShininessTexture()) {
+            glUniform1i(_useShininessMapUID, 1);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, mat->shininessTextureUniform());
+            glUniform1i(_shininessMapUID, 0);
+        } else {
+            glUniform1f(_shininess, mat->shininess());
+            glUniform1i(_useShininessMapUID, 0);
+        }
+
+        // SET ALPHA TEXTURE / ALPHA FLOAT
+        if (mat->hasAlphaTexture()) {
+            glUniform1i(_useAlphaMapUID, 1);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, mat->alphaTextureUniform());
+            glUniform1i(_alphaMapUID, 0);
+        } else {
+            glUniform1f(_alpha, mat->alpha());
+            glUniform1i(_useAlphaMapUID, 0);
+        }
+
+        // SET NORMAL TEXTURE / NORMAL VECTOR
+        if (mat->hasNormalTexture()) {
+            glUniform1i(_useNormalMapUID, 1);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, mat->normalTextureUniform());
+        } else {
+            glUniform1i(_useNormalMapUID, 0);
+        }
+
+
+
+
+
+
         mesh.draw();
     };
 }

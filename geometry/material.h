@@ -68,6 +68,12 @@ namespace copakond {
         bool hasNormalTexture() { return _hasNormalTexture; }
         void clearNormalTexture() { _hasNormalTexture = false; }
 
+        GLuint diffuseTextureUniform() const { return _diffuseTexture; }
+        GLuint specularTextureUniform() const { return _specularTexture; }
+        GLuint shininessTextureUniform() const { return _shininessTexture; }
+        GLuint alphaTextureUniform() const { return _alphaTexture; }
+        GLuint normalTextureUniform() const { return _normalTexture; }
+
     };
 }
 
