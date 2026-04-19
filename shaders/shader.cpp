@@ -1,5 +1,6 @@
 #include "shader.h"
 
+#include <iostream>
 #include <memory>
 
 namespace copakond {
@@ -55,6 +56,7 @@ namespace copakond {
         unifLocs.dim = glGetUniformLocation(_shaderProgram, (uniformLightId + "dim").c_str());
 
         glUniform1i(glGetUniformLocation(_shaderProgram, "numLights"), index+1);
+        updateLight(light);
     }
 
     void Shader::updateLight(Light* light) {
@@ -72,6 +74,10 @@ namespace copakond {
         glUniform1f(unifLocs.angle, light->angle());
         glUniform1f(unifLocs.exponent, light->exponent());
         glUniform1i(unifLocs.dim, light->dim());
+
+        std::cout << light->exponent() << std::endl;
+        std::cout << light->range() << std::endl;
+        std::cout << light->angle() << std::endl;
     }
 
     void Shader::update(Camera &camera, int winWidth, int winHeight) {

@@ -11,6 +11,7 @@ private:
 
 public:
     MtlLoader(std::string fileName);
+    std::shared_ptr<Material>& material() { return _material; }
 };
 
 }

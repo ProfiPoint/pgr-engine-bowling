@@ -8,6 +8,8 @@ namespace copakond {
         _faces = objLoader.getFaces();
         _normals = objLoader.getNormals();
         _numVertices = _faces.size();
+
+        setMaterial(objLoader.getMaterial());
     }
 
     ObjMesh::ObjMesh(const std::string &objFileLocation)

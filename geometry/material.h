@@ -18,15 +18,15 @@ namespace copakond {
         float _shininess;
         float _alpha;
 
-        GLuint _ambientTexture;
         GLuint _diffuseTexture;
         GLuint _specularTexture;
+        GLuint _shininessTexture;
         GLuint _alphaTexture;
         GLuint _normalTexture;
 
-        bool _hasAmbientTexture;
         bool _hasDiffuseTexture;
         bool _hasSpecularTexture;
+        bool _hasShininessTexture;
         bool _hasAlphaTexture;
         bool _hasNormalTexture;
 
@@ -48,17 +48,17 @@ namespace copakond {
         float &alpha() { return _alpha; }
 
         // texture managers
-        void setAmbientTexture(const std::string &textureFile);
-        bool hasAmbientTexture() { return _hasAmbientTexture; }
-        void clearAmbientTexture() { _hasAmbientTexture = false; }
-
         void setDiffuseTexture(const std::string &textureFile);
-        bool hasDiffuseTexture() { return _hasAmbientTexture; }
-        void clearDiffuseTexture() { _hasAmbientTexture = false; }
+        bool hasDiffuseTexture() { return _hasDiffuseTexture; }
+        void clearDiffuseTexture() { _hasDiffuseTexture = false; }
 
         void setSpecularTexture(const std::string &textureFile);
         bool hasSpecularTexture() { return _hasSpecularTexture; }
         void clearSpecularTexture() { _hasSpecularTexture = false; }
+
+        void setShininessTexture(const std::string &textureFile);
+        bool hasShininessTexture() { return _hasShininessTexture; }
+        void clearShininessTexture() { _hasShininessTexture = false; }
 
         void setAlphaTexture(const std::string &textureFile);
         bool hasAlphaTexture() { return _hasAlphaTexture; }

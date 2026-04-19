@@ -9,36 +9,41 @@ namespace copakond {
         _alpha = alpha;
         _shininess = shininess;
 
-    }
-
-    void Material::setAmbientTexture(const std::string &textureFile) {
-        if (textureFile == "") { return; }
-
-        // TODO: IMPLEMENT TEXTURE FILE PARSING
+        _hasDiffuseTexture = false;
+        _hasSpecularTexture = false;
+        _hasShininessTexture = false;
+        _hasAlphaTexture = false;
+        _hasNormalTexture = false;
     }
 
     void Material::setDiffuseTexture(const std::string &textureFile) {
         if (textureFile == "") { return; }
-
-        // TODO: IMPLEMENT TEXTURE FILE PARSING
+        _diffuseTexture = pgr::createTexture(textureFile);
+        _hasDiffuseTexture = true;
     }
 
     void Material::setSpecularTexture(const std::string &textureFile) {
         if (textureFile == "") { return; }
+        _specularTexture = pgr::createTexture(textureFile);
+        _hasSpecularTexture = true;
+    }
 
-        // TODO: IMPLEMENT TEXTURE FILE PARSING
+    void Material::setShininessTexture(const std::string &textureFile) {
+        if (textureFile == "") { return; }
+        _shininessTexture = pgr::createTexture(textureFile);
+        _hasShininessTexture = true;
     }
 
     void Material::setAlphaTexture(const std::string &textureFile) {
         if (textureFile == "") { return; }
-
-        // TODO: IMPLEMENT TEXTURE FILE PARSING
+        _alphaTexture = pgr::createTexture(textureFile);
+        _hasAlphaTexture = true;
     }
 
     void Material::setNormalTexture(const std::string &textureFile) {
         if (textureFile == "") { return; }
-
-        // TODO: IMPLEMENT TEXTURE FILE PARSING
+        _normalTexture = pgr::createTexture(textureFile);
+        _hasNormalTexture = true;
     }
 
     Material::Material() {

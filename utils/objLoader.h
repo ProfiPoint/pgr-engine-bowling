@@ -25,8 +25,10 @@ namespace copakond {
     public:
         ObjLoader(const std::string &fileName, bool normalizeCoord);
 
-        static bool ObjLoader::loadMtl(std::string fileName);
+        static std::shared_ptr<Material> ObjLoader::loadMtl(std::string fileName);
+        static std::vector<std::string> ObjLoader::splitString(const std::string &str);
 
+        std::shared_ptr<Material> getMaterial() const { return _material; }
         const std::vector<float> &getVertices() const;
         const std::vector<float> &getNormals() const;
         const std::vector<unsigned int> &getFaces() const;

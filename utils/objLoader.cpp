@@ -1,8 +1,14 @@
 #include "objLoader.h"
+#include "mtlLoader.h"
 
 // implemented .obj parser from: MIT https://github.com/dartzon/dotObj-parser (the remapBuffers)
 namespace copakond {
-    std::vector<std::string> splitString(const std::string &str) {
+    static std::string getBasePath(const std::string& filepath) {
+        size_t pos = filepath.find_last_of("\\/");
+        return (pos == std::string::npos) ? "" : filepath.substr(0, pos + 1);
+    }
+
+    std::vector<std::string> ObjLoader::splitString(const std::string &str) {
         // https://stackoverflow.com/questions/5167625
         std::vector<std::string> tokens;
         std::stringstream ss(str);
@@ -46,6 +52,10 @@ namespace copakond {
                 faces.push_back(data[1]);
                 faces.push_back(data[2]);
                 faces.push_back(data[3]);
+            } else if (data[0] == "mtllib") {
+                std::string basePath = getBasePath(fileName);
+                std::string mtlPath = basePath + data[1];
+                _material = loadMtl(mtlPath);
             }
         }
 
@@ -95,10 +105,15 @@ namespace copakond {
         }
 
         remapBuffers(vertices, normals, faces);
+        std::shared_ptr<Material> mtl_mateiral = loadMtl(fileName);
+        if (mtl_mateiral) {
+            _material = mtl_mateiral;
+        }
     }
 
-     bool ObjLoader::loadMtl(std::string fileName) {
-        return true;
+     std::shared_ptr<Material> ObjLoader::loadMtl(std::string fileName) {
+        MtlLoader mtl(fileName.substr(0, fileName.find_last_of(".")) + ".mtl");
+        return mtl.material();
     }
 
     // reorders the vertices and normals, so each index has the same data. Implementation of dartzon's obj parser.
