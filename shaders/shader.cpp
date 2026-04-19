@@ -183,7 +183,7 @@ namespace copakond {
         if (mesh.getSubMeshes().empty()) { // has only one material
             applyMaterialUniforms(mesh.getMaterial());
             mesh.draw();
-        } else {
+        } else { // TODO: double passing (glDepthMask) to ensure each object has the same transparency, (more triangles in same z makes it less transparent)
             for (const auto& subMesh : mesh.getSubMeshes()) { // has multiple materials => iterating over subMeshes
                 applyMaterialUniforms(subMesh.material);
 

@@ -6,6 +6,7 @@
 #include "light/light.h"
 #include "utils/input.h"
 #include "shaders/shader.h"
+#include <algorithm>
 
 namespace copakond {
     const char *WIN_TITLE = "PGR Semestral Work Copakond";
@@ -33,8 +34,8 @@ namespace copakond {
 
     void init() {
         glClearColor(0.2f, 0.1f, 0.3f, 1.0f);
-        //glEnable(GL_BLEND); // enable transparent colors
-        //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_BLEND); // enable transparent colors
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_DEPTH_TEST);
         glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 
@@ -47,7 +48,7 @@ namespace copakond {
             glm::vec3(0.5f, 0.33f, 0.2f) * 0.1f,
             glm::vec3(0.5f, 0.33f, 0.2f),
             glm::vec3(1.0f, 1.0f, 1.0f),
-            16.0f, 1.0f
+            16.0f, 0.5f
         );
 
         glm::vec3 lightPosition = glm::vec3(-8.0f, 0.0f, 5.0f);
@@ -109,7 +110,14 @@ namespace copakond {
 
         shader.update(camera, winWidth, winHeight);
 
+        // sort all meshes, from the furthest to the nearest (for transparent meshes)
+        glm::vec3 camPos = camera.getPosition();
+        std::sort(meshes.begin(), meshes.end(), [&camPos](Mesh* a, Mesh* b) {
+                glm::vec3 pos1 = glm::vec3(a->getModelMatrix()[3]); // translation
+                glm::vec3 pos2 = glm::vec3(b->getModelMatrix()[3]); // translation
 
+                return glm::distance(camPos, pos1) > glm::distance(camPos, pos2);
+        });
 
         for (Mesh *mesh: meshes) {
             //mesh->rotation().x += deltaTime * 1.0f;

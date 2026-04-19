@@ -156,7 +156,7 @@ void main() {
     if (textureData.useSpecularMap) { specular = texture(textureData.specularMap, fragTexCoord).rgb; }
     if (textureData.useShininessMap) { shininess = texture(textureData.shininessMap, fragTexCoord).r; }
     if (textureData.useAlphaMap) { alpha = texture(textureData.alphaMap, fragTexCoord).r; }
-    
+
     vec3 resultColor = ambient * worldAmbient; // default color is 1/4 of ambient
     for (int i = 0; i < numLights; ++i) {
         resultColor += calculateLight(lights[i], fragmentPosition, normalizedNormal, ambient, diffuse, specular, shininess);

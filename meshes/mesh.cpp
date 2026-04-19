@@ -15,6 +15,9 @@ namespace copakond {
 
     void Mesh::setMaterial(const std::shared_ptr<Material> &material) {
         _material = material;
+        for (auto& subMesh : _subMeshes) {
+            subMesh.material = material;
+        }
     }
     std::shared_ptr<Material> Mesh::getMaterial() {
         return _material;

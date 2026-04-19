@@ -70,9 +70,11 @@ namespace copakond {
             }
             else if (data[0] == "map_Bump") {
                 curMaterial->setNormalTexture(basePath + data[1]);
+                std::cerr << "Bump map not implemented" << fileName << std::endl;
             }
             else if (data[0] == "bump") {
                 curMaterial->setNormalTexture(basePath + data[1]);
+                std::cerr << "Bump map not implemented" << fileName << std::endl;
             }
         }
 
