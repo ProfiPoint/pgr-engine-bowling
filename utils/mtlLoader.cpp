@@ -16,6 +16,12 @@ namespace copakond {
             return;
         }
 
+        std::string basePath = "";
+        size_t pos = fileName.find_last_of("\\/");
+        if (pos != std::string::npos) {
+            basePath = fileName.substr(0, pos + 1);
+        }
+
         std::string line;
         int newmtl_count = 0;
 
@@ -54,22 +60,22 @@ namespace copakond {
             }
 
             else if (data[0] == "map_Kd") {
-                _material->setDiffuseTexture(data[1]);
+                _material->setDiffuseTexture(basePath + data[1]);
             }
             else if (data[0] == "map_Ks") {
-                _material->setSpecularTexture(data[1]);
+                _material->setSpecularTexture(basePath + data[1]);
             }
             else if (data[0] == "map_Ns") {
-                _material->setShininessTexture(data[1]);
+                _material->setShininessTexture(basePath + data[1]);
             }
             else if (data[0] == "map_d") {
-                _material->setAlphaTexture(data[1]);
+                _material->setAlphaTexture(basePath + data[1]);
             }
             else if (data[0] == "map_Bump") {
-                _material->setNormalTexture(data[1]);
+                _material->setNormalTexture(basePath + data[1]);
             }
             else if (data[0] == "bump") {
-                _material->setNormalTexture(data[1]);
+                _material->setNormalTexture(basePath + data[1]);
             }
         }
 

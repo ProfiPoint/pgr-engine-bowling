@@ -68,14 +68,19 @@ namespace copakond {
 
         //Mesh* triangleMesh = new Mesh();
         //meshes.push_back(triangleMesh);
-        Mesh *teddyMesh = new ObjMesh("meshes/models/teddy.obj", true);
-        teddyMesh->setMaterial(teddyMaterial);
-        meshes.push_back(teddyMesh);
+        //Mesh *teddyMesh = new ObjMesh("meshes/models/teddy.obj", true);
+        //teddyMesh->setMaterial(teddyMaterial);
+        //meshes.push_back(teddyMesh);
 
         Mesh *shipMesh = new ObjMesh("meshes/models/ship.obj", true, glm::vec3(-8.0f, 0.0f, 0.0f),
                                        glm::vec3(0.0f, -glm::pi<float>()/2, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f));
         //shipMesh->setMaterial(teddyMaterial);
         meshes.push_back(shipMesh);
+
+        Mesh *bodyMesh = new ObjMesh("meshes/models/character-a.obj", false, glm::vec3(0.0f, 0.0f, 0.0f),
+                                       glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f));
+        //bodyMesh->setMaterial(teddyMaterial);
+        meshes.push_back(bodyMesh);
 
         for (Mesh *mesh: meshes) {
             mesh->init(shaderPrg);

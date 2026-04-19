@@ -33,6 +33,7 @@ namespace copakond {
 
         std::vector<float> vertices;
         std::vector<float> normals;
+        std::vector<float> uvs;
         std::vector<std::string> faces;
         std::string line;
 
@@ -48,6 +49,9 @@ namespace copakond {
                 normals.push_back(std::stof(data[1]));
                 normals.push_back(std::stof(data[2]));
                 normals.push_back(std::stof(data[3]));
+            } else if (data[0] == "vt") {
+                uvs.push_back(std::stof(data[1]));
+                uvs.push_back(std::stof(data[2]));
             } else if (data[0] == "f" && data.size() >= 4) {
                 faces.push_back(data[1]);
                 faces.push_back(data[2]);
@@ -104,11 +108,7 @@ namespace copakond {
             }
         }
 
-        remapBuffers(vertices, normals, faces);
-        std::shared_ptr<Material> mtl_mateiral = loadMtl(fileName);
-        if (mtl_mateiral) {
-            _material = mtl_mateiral;
-        }
+        remapBuffers(vertices, normals, uvs, faces);
     }
 
      std::shared_ptr<Material> ObjLoader::loadMtl(std::string fileName) {
@@ -117,7 +117,7 @@ namespace copakond {
     }
 
     // reorders the vertices and normals, so each index has the same data. Implementation of dartzon's obj parser.
-    void ObjLoader::remapBuffers(const std::vector<float> &tempV, const std::vector<float> &tempVn,
+    void ObjLoader::remapBuffers(const std::vector<float> &tempV, const std::vector<float> &tempVn, const std::vector<float> &tempUvs,
                                  const std::vector<std::string> &rawFaces) {
         std::map<std::string, unsigned int> history;
 
@@ -128,8 +128,29 @@ namespace copakond {
             } else {
                 // new - processes
                 int vIndex = 0;
+                int uIndex = 0;
                 int nIndex = 0;
-                if (sscanf(vertexCombo.c_str(), "%d//%d", &vIndex, &nIndex) == 2) {
+                if (sscanf(vertexCombo.c_str(), "%d/%d/%d", &vIndex, &uIndex, &nIndex) == 3) {
+                    int vBase = (vIndex - 1) * 3;
+                    int uBase = (uIndex - 1) * 2;
+                    int nBase = (nIndex - 1) * 3;
+
+                    _vertices.push_back(tempV[vBase]);
+                    _vertices.push_back(tempV[vBase + 1]);
+                    _vertices.push_back(tempV[vBase + 2]);
+
+                    _normals.push_back(tempVn[nBase]);
+                    _normals.push_back(tempVn[nBase + 1]);
+                    _normals.push_back(tempVn[nBase + 2]);
+
+                    _uvs.push_back(tempUvs[uBase]);
+                    _uvs.push_back(tempUvs[uBase + 1]);
+
+                    unsigned int newIndex = (_vertices.size() / 3) - 1;
+                    history[vertexCombo] = newIndex;
+                    _faces.push_back(newIndex);
+                }
+                else if (sscanf(vertexCombo.c_str(), "%d//%d", &vIndex, &nIndex) == 2) {
                     // parses the face string in format vertexX//normalX  (x/y/z)
                     int vBase = (vIndex - 1) * 3;
                     int nBase = (nIndex - 1) * 3;
@@ -148,17 +169,5 @@ namespace copakond {
                 }
             }
         }
-    }
-
-    const std::vector<float> &ObjLoader::getVertices() const {
-        return _vertices;
-    }
-
-    const std::vector<float> &ObjLoader::getNormals() const {
-        return _normals;
-    }
-
-    const std::vector<unsigned int> &ObjLoader::getFaces() const {
-        return _faces;
     }
 }
