@@ -26,23 +26,25 @@ namespace copakond {
         _camPos = glGetUniformLocation(_shaderProgram, "camPosition");
         _normalMatrix = glGetUniformLocation(_shaderProgram, "normalMatrix");
 
+        _worldAmbientUID = glGetUniformLocation(_shaderProgram, "worldAmbient");
+
         _ambient = glGetUniformLocation(_shaderProgram, "material.ambient");
         _diffuse = glGetUniformLocation(_shaderProgram, "material.diffuse");
         _specular = glGetUniformLocation(_shaderProgram, "material.specular");
         _shininess = glGetUniformLocation(_shaderProgram, "material.shininess");
         _alpha = glGetUniformLocation(_shaderProgram, "material.alpha");
 
-        _diffuseMapUID = glGetUniformLocation(_shaderProgram, "texture.diffuseMap");
-        _specularMapUID = glGetUniformLocation(_shaderProgram, "texture.specularMap");
-        _shininessMapUID = glGetUniformLocation(_shaderProgram, "texture.shininessMap");
-        _alphaMapUID = glGetUniformLocation(_shaderProgram, "texture.alphaMap");
-        _normalMapUID = glGetUniformLocation(_shaderProgram, "texture.normalMap");
+        _diffuseMapUID = glGetUniformLocation(_shaderProgram, "textureData.diffuseMap");
+        _specularMapUID = glGetUniformLocation(_shaderProgram, "textureData.specularMap");
+        _shininessMapUID = glGetUniformLocation(_shaderProgram, "textureData.shininessMap");
+        _alphaMapUID = glGetUniformLocation(_shaderProgram, "textureData.alphaMap");
+        _normalMapUID = glGetUniformLocation(_shaderProgram, "textureData.normalMap");
 
-        _useDiffuseMapUID = glGetUniformLocation(_shaderProgram, "texture.useDiffuseMap");
-        _useSpecularMapUID = glGetUniformLocation(_shaderProgram, "texture.useSpecularMap");
-        _useShininessMapUID = glGetUniformLocation(_shaderProgram, "texture.useShininessMap");
-        _useAlphaMapUID = glGetUniformLocation(_shaderProgram, "texture.useAlphaMap");
-        _useNormalMapUID = glGetUniformLocation(_shaderProgram, "texture.useNormalMap");
+        _useDiffuseMapUID = glGetUniformLocation(_shaderProgram, "textureData.useDiffuseMap");
+        _useSpecularMapUID = glGetUniformLocation(_shaderProgram, "textureData.useSpecularMap");
+        _useShininessMapUID = glGetUniformLocation(_shaderProgram, "textureData.useShininessMap");
+        _useAlphaMapUID = glGetUniformLocation(_shaderProgram, "textureData.useAlphaMap");
+        _useNormalMapUID = glGetUniformLocation(_shaderProgram, "textureData.useNormalMap");
 
         _numLights = glGetUniformLocation(_shaderProgram, "numLights");
         totalNumLights = 0;
@@ -98,6 +100,7 @@ namespace copakond {
         glUniform3fv(_camPos, 1, glm::value_ptr(_position));
         glUniformMatrix4fv(_viewUID, 1, GL_FALSE, glm::value_ptr(_viewM));
         glUniformMatrix4fv(_projectionUID, 1, GL_FALSE, glm::value_ptr(_projectionM));
+        glUniform3fv(_worldAmbientUID, 1, glm::value_ptr(getWorldAmbient()));
     }
 
     void Shader::draw(Mesh &mesh) {
@@ -105,6 +108,11 @@ namespace copakond {
         glm::mat4 PVM = _projectionM * _viewM * modelM;
         glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelM)); // correct matrix for non-rigid transform
         std::shared_ptr<Material> mat = mesh.getMaterial();
+
+        if (!mat) {
+            std::cerr << "ERROR: Mesh doesn't have any materials" << std::endl;
+            exit(0);
+        }
 
         // UNIFORM APPLY
         glUniformMatrix4fv(_modelUID, 1, GL_FALSE, glm::value_ptr(modelM)); // TRUE: M -> M^t, opengl accepts vectors by rows.

@@ -3,6 +3,7 @@
 
 smooth in vec3 fragmentPosition;
 smooth in vec3 fragmentNormal;
+smooth in vec2 fragTexCoord;
 out vec4 color;
 
 uniform vec3 camPosition;
@@ -13,6 +14,20 @@ struct Material {
     vec3 specular;
     float shininess;
     float alpha;
+};
+
+struct TextureData {
+    sampler2D diffuseMap;
+    sampler2D specularMap;
+    sampler2D shininessMap;
+    sampler2D alphaMap;
+    sampler2D normalMap;
+
+    bool useDiffuseMap;
+    bool useSpecularMap;
+    bool useShininessMap;
+    bool useAlphaMap;
+    bool useNormalMap;
 };
 
 struct Light {
@@ -31,27 +46,29 @@ struct Light {
     bool dim;
 };
 
+uniform vec3 worldAmbient;
 uniform Material material;
+uniform TextureData textureData;
 uniform Light lights[MAX_LIGHTS];
 uniform int numLights;
 
-vec3 calculateDirectionalL(Light light, vec3 fragmentPosition, vec3 fragmentNormal) {
+vec3 calculateDirectionalL(Light light, vec3 fragmentPosition, vec3 fragmentNormal, vec3 ambient, vec3 diffuse, vec3 specular, float shininess) {
     vec3 L = normalize(-light.direction);
     vec3 V = normalize(camPosition - fragmentPosition);
     vec3 R = reflect(-L, fragmentNormal);
 
     vec3 resColor = vec3(0.0f);
-    resColor += material.ambient * light.ambient;
-    resColor += material.diffuse * light.diffuse * max(dot(L, fragmentNormal), 0.0f);
+    resColor += ambient * light.ambient;
+    resColor += diffuse * light.diffuse * max(dot(L, fragmentNormal), 0.0f);
 
-    if (dot(L, fragmentNormal) > 0.0f && material.shininess > 0.01f) {
-        resColor += material.specular * light.specular * pow(max(dot(R, V), 0.0f), material.shininess);
+    if (dot(L, fragmentNormal) > 0.0f && shininess > 0.01f) {
+        resColor += specular * light.specular * pow(max(dot(R, V), 0.0f), shininess);
     }
 
     return resColor;
 }
 
-vec3 calculatePointL(Light light, vec3 fragmentPosition, vec3 fragmentNormal) {
+vec3 calculatePointL(Light light, vec3 fragmentPosition, vec3 fragmentNormal, vec3 ambient, vec3 diffuse, vec3 specular, float shininess) {
     float dist = distance(fragmentPosition, light.position);
 
     if (dist > light.range) {
@@ -63,11 +80,11 @@ vec3 calculatePointL(Light light, vec3 fragmentPosition, vec3 fragmentNormal) {
     vec3 V = normalize(camPosition - fragmentPosition);
 
     vec3 resColor = vec3(0.0f);
-    resColor += material.ambient * light.ambient;
-    resColor += material.diffuse * light.diffuse * max(dot(L, fragmentNormal), 0.0f);
+    resColor += ambient * light.ambient;
+    resColor += diffuse * light.diffuse * max(dot(L, fragmentNormal), 0.0f);
 
-    if (dot(L, fragmentNormal) > 0.0f && material.shininess > 0.01f) {
-        resColor += material.specular * light.specular * pow(max(dot(R, V), 0.0f), material.shininess);
+    if (dot(L, fragmentNormal) > 0.0f && shininess > 0.01f) {
+        resColor += specular * light.specular * pow(max(dot(R, V), 0.0f), shininess);
     }
 
     if (light.dim) {
@@ -78,7 +95,7 @@ vec3 calculatePointL(Light light, vec3 fragmentPosition, vec3 fragmentNormal) {
     return resColor;
 }
 
-vec3 calculateSpotL(Light light, vec3 fragmentPosition, vec3 fragmentNormal) {
+vec3 calculateSpotL(Light light, vec3 fragmentPosition, vec3 fragmentNormal, vec3 ambient, vec3 diffuse, vec3 specular, float shininess) {
     float dist = distance(fragmentPosition, light.position);
     if (dist > light.range) {
         return vec3(0.0f);
@@ -92,14 +109,14 @@ vec3 calculateSpotL(Light light, vec3 fragmentPosition, vec3 fragmentNormal) {
     float alpha_angle = dot(-L, normalize(light.direction));
     float spotlightEffect = pow(max(alpha_angle, 0.0), light.exponent);
 
-    resColor += material.ambient * light.ambient;
+    resColor += ambient * light.ambient;
 
     float cutoff = cos(radians(light.angle));
     if (alpha_angle >= cutoff) {
-        resColor += material.diffuse * light.diffuse * max(dot(L, fragmentNormal), 0.0) * spotlightEffect;
+        resColor += diffuse * light.diffuse * max(dot(L, fragmentNormal), 0.0) * spotlightEffect;
 
-        if (dot(L, fragmentNormal) > 0.0 && material.shininess > 0.01f) {
-            resColor += material.specular * light.specular * pow(max(dot(R, V), 0.0), material.shininess) * spotlightEffect;
+        if (dot(L, fragmentNormal) > 0.0 && shininess > 0.01f) {
+            resColor += specular * light.specular * pow(max(dot(R, V), 0.0), shininess) * spotlightEffect;
         }
     }
 
@@ -111,26 +128,39 @@ vec3 calculateSpotL(Light light, vec3 fragmentPosition, vec3 fragmentNormal) {
     return resColor;
 }
 
-vec3 calculateLight(Light light, vec3 fragmentPosition, vec3 fragmentNormal) {
+vec3 calculateLight(Light light, vec3 fragmentPosition, vec3 fragmentNormal, vec3 ambient, vec3 diffuse, vec3 specular, float shininess) {
     if (light.type == 0) {
-        return calculateDirectionalL(light, fragmentPosition, fragmentNormal);
+        return calculateDirectionalL(light, fragmentPosition, fragmentNormal, ambient, diffuse, specular, shininess);
     } else if (light.type == 1) {
-        return calculatePointL(light, fragmentPosition, fragmentNormal);
+        return calculatePointL(light, fragmentPosition, fragmentNormal, ambient, diffuse, specular, shininess);
     } else if (light.type == 2) {
-        return calculateSpotL(light, fragmentPosition, fragmentNormal);
+        return calculateSpotL(light, fragmentPosition, fragmentNormal, ambient, diffuse, specular, shininess);
     }
 
     return vec3(0.0f);
 }
 
 void main() {
-    vec3 normalizedNormal = normalize(fragmentNormal);
+    vec3 normalizedNormal = normalize(fragmentNormal); // :)
 
-    vec3 resultColor = material.ambient * 0.25f;
+    vec3 ambient = material.ambient;
+    vec3 diffuse = material.diffuse;
+    vec3 specular = material.specular;
+    float shininess = material.shininess;
+    float alpha = material.alpha;
 
+    if (textureData.useDiffuseMap) {
+        diffuse = texture(textureData.diffuseMap, fragTexCoord).rgb;
+        ambient = diffuse * 0.25; // if texture is present, set it to 1/4 of diffuse.
+    }
+    if (textureData.useSpecularMap) { specular = texture(textureData.specularMap, fragTexCoord).rgb; }
+    if (textureData.useShininessMap) { shininess = texture(textureData.shininessMap, fragTexCoord).r; }
+    if (textureData.useAlphaMap) { alpha = texture(textureData.alphaMap, fragTexCoord).r; }
+    
+    vec3 resultColor = ambient * worldAmbient; // default color is 1/4 of ambient
     for (int i = 0; i < numLights; ++i) {
-        resultColor += calculateLight(lights[i], fragmentPosition, normalizedNormal);
+        resultColor += calculateLight(lights[i], fragmentPosition, normalizedNormal, ambient, diffuse, specular, shininess);
     }
 
-    color = vec4(resultColor, material.alpha);
+    color = vec4(resultColor, alpha);
 }

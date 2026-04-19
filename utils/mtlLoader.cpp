@@ -2,6 +2,7 @@
 #include "objLoader.h"
 
 #include <fstream>
+#include "../shaders/shader.h"
 
 namespace copakond {
     MtlLoader::MtlLoader(std::string fileName) {
@@ -44,7 +45,7 @@ namespace copakond {
             }
             else if (data[0] == "Kd") {
                 _material->diffuse() = glm::vec3(std::stof(data[1]), std::stof(data[2]), std::stof(data[3]));
-                _material->ambient() = glm::vec3(std::stof(data[1]), std::stof(data[2]), std::stof(data[3])) * 0.25f; // ambient is 1/4 of diffuse
+                _material->ambient() = glm::vec3(std::stof(data[1]), std::stof(data[2]), std::stof(data[3])) * Shader::getWorldAmbient();
             }
             else if (data[0] == "Ks") {
                 _material->specular() = glm::vec3(std::stof(data[1]), std::stof(data[2]), std::stof(data[3]));

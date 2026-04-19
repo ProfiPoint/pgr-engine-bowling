@@ -5,7 +5,10 @@
 namespace copakond {
     static std::string getBasePath(const std::string& filepath) {
         size_t pos = filepath.find_last_of("\\/");
-        return (pos == std::string::npos) ? "" : filepath.substr(0, pos + 1);
+        if (pos == std::string::npos) {
+            return "";
+        }
+        return filepath.substr(0, pos + 1);
     }
 
     std::vector<std::string> ObjLoader::splitString(const std::string &str) {

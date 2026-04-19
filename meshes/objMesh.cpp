@@ -68,14 +68,15 @@ namespace copakond {
 
 
         // UVS
-        glBindBuffer(GL_ARRAY_BUFFER, _vboUvs);
-        glBufferData(GL_ARRAY_BUFFER, _uvs.size() * sizeof(float), _uvs.data(), GL_STATIC_DRAW);
+        if (!_uvs.empty()) {
+            glBindBuffer(GL_ARRAY_BUFFER, _vboUvs);
+            glBufferData(GL_ARRAY_BUFFER, _uvs.size() * sizeof(float), _uvs.data(), GL_STATIC_DRAW);
 
-        // TEXTURE
-        GLint textureCoord = glGetAttribLocation(_shaderProgram, "textureCoord");
-        glEnableVertexAttribArray(textureCoord);
-        glVertexAttribPointer(textureCoord, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
-
+            // TEXTURE
+            GLint textureCoord = glGetAttribLocation(_shaderProgram, "textureCoord");
+            glEnableVertexAttribArray(textureCoord);
+            glVertexAttribPointer(textureCoord, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+        }
 
         // EBO
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);

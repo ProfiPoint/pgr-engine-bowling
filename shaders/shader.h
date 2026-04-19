@@ -1,6 +1,8 @@
 #ifndef PGR_SEM_COPAKOND_SHADER_H
 #define PGR_SEM_COPAKOND_SHADER_H
 
+#define WORLD_AMBIENT glm::vec3(0.25f, 0.25f, 0.25f)
+
 #include "../pgr-portable.h"
 #include "../meshes/mesh.h"
 #include "../geometry/camera.h"
@@ -10,6 +12,8 @@ namespace copakond {
     class Shader {
     protected:
         GLuint _shaderProgram;
+
+        GLuint _worldAmbientUID;
 
         GLint _modelUID; // model matrix uniform index;
         GLint _viewUID; // view matrix uniform index;
@@ -36,16 +40,6 @@ namespace copakond {
         GLuint _useAlphaMapUID;
         GLuint _useNormalMapUID;
 
-        /*GLint _lightType;
-        GLint _lightPos;
-        GLint _lightDir;
-        GLint _lightAmb;
-        GLint _lightDiff;
-        GLint _lightSpec;
-        GLint _lightRange;
-        GLint _lightAngle;
-        GLint _lightExponent;
-        GLint _lightDim;*/
         GLint _numLights; // uniform id
         size_t totalNumLights; // actual counter
 
@@ -55,6 +49,8 @@ namespace copakond {
 
     public:
         Shader();
+
+        static glm::vec3 getWorldAmbient() { return WORLD_AMBIENT; }
 
         virtual void setLight(Light *light, int lightIndex);
         virtual void updateLight(Light* light);
