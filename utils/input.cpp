@@ -53,9 +53,14 @@ namespace copakond {
         float deltaX = static_cast<float>(x - centerX);
         float deltaY = static_cast<float>(centerY - y);
 
-        _camera.processMouseMovement(deltaX, deltaY);
-
         glutWarpPointer(centerX, centerY);
+
+        if (_firstMouseMovement == false) {
+            _firstMouseMovement = true;
+            return;
+        }
+
+        _camera.processMouseMovement(deltaX, deltaY);
         glutPostRedisplay();
     }
 }

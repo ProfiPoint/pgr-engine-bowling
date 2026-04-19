@@ -13,6 +13,7 @@ namespace copakond {
         int _winWidth;
         int _winHeight;
         bool _keysMap[512] = {false}; // 256 normal, 256 special
+        bool _firstMouseMovement = false;
 
     public:
         Input(Camera &cam, int winWidth, int winHeight);
