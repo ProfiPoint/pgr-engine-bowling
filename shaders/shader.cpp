@@ -1,5 +1,7 @@
 #include "shader.h"
 
+#include <memory>
+
 namespace copakond {
     Shader::Shader() {
     }
