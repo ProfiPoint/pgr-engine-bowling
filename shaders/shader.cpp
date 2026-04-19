@@ -32,17 +32,17 @@ namespace copakond {
         _shininess = glGetUniformLocation(_shaderProgram, "material.shininess");
         _alpha = glGetUniformLocation(_shaderProgram, "material.alpha");
 
-        _diffuseMapUID = glGetUniformLocation(_shaderProgram, "texture.diffuseMapUID");
-        _specularMapUID = glGetUniformLocation(_shaderProgram, "texture.specularMapUID");
-        _shininessMapUID = glGetUniformLocation(_shaderProgram, "texture.shininessMapUID");
-        _alphaMapUID = glGetUniformLocation(_shaderProgram, "texture.alphaMapUID");
-        _normalMapUID = glGetUniformLocation(_shaderProgram, "texture.normalMapUID");
+        _diffuseMapUID = glGetUniformLocation(_shaderProgram, "texture.diffuseMap");
+        _specularMapUID = glGetUniformLocation(_shaderProgram, "texture.specularMap");
+        _shininessMapUID = glGetUniformLocation(_shaderProgram, "texture.shininessMap");
+        _alphaMapUID = glGetUniformLocation(_shaderProgram, "texture.alphaMap");
+        _normalMapUID = glGetUniformLocation(_shaderProgram, "texture.normalMap");
 
-        _useDiffuseMapUID = glGetUniformLocation(_shaderProgram, "texture.useDiffuseMapUID");
-        _useSpecularMapUID = glGetUniformLocation(_shaderProgram, "texture.useSpecularMapUID");
-        _useShininessMapUID = glGetUniformLocation(_shaderProgram, "texture.useShininessMapUID");
-        _useAlphaMapUID = glGetUniformLocation(_shaderProgram, "texture.useAlphaMapUID");
-        _useNormalMapUID = glGetUniformLocation(_shaderProgram, "texture.useNormalMapUID");
+        _useDiffuseMapUID = glGetUniformLocation(_shaderProgram, "texture.useDiffuseMap");
+        _useSpecularMapUID = glGetUniformLocation(_shaderProgram, "texture.useSpecularMap");
+        _useShininessMapUID = glGetUniformLocation(_shaderProgram, "texture.useShininessMap");
+        _useAlphaMapUID = glGetUniformLocation(_shaderProgram, "texture.useAlphaMap");
+        _useNormalMapUID = glGetUniformLocation(_shaderProgram, "texture.useNormalMap");
 
         _numLights = glGetUniformLocation(_shaderProgram, "numLights");
         totalNumLights = 0;
@@ -128,9 +128,9 @@ namespace copakond {
         // SET SPECULAR TEXTURE / SPECULAR VECTOR
         if (mat->hasSpecularTexture()) {
             glUniform1i(_useSpecularMapUID, 1);
-            glActiveTexture(GL_TEXTURE0);
+            glActiveTexture(GL_TEXTURE1);
             glBindTexture(GL_TEXTURE_2D, mat->specularTextureUniform());
-            glUniform1i(_specularMapUID, 0);
+            glUniform1i(_specularMapUID, 1);
         } else {
             glUniform3fv(_specular, 1, glm::value_ptr(mat->specular()));
             glUniform1i(_useSpecularMapUID, 0);
@@ -139,9 +139,9 @@ namespace copakond {
         // SET SHININESS TEXTURE / SHININESS FLOAT
         if (mat->hasShininessTexture()) {
             glUniform1i(_useShininessMapUID, 1);
-            glActiveTexture(GL_TEXTURE0);
+            glActiveTexture(GL_TEXTURE2);
             glBindTexture(GL_TEXTURE_2D, mat->shininessTextureUniform());
-            glUniform1i(_shininessMapUID, 0);
+            glUniform1i(_shininessMapUID, 2);
         } else {
             glUniform1f(_shininess, mat->shininess());
             glUniform1i(_useShininessMapUID, 0);
@@ -150,9 +150,9 @@ namespace copakond {
         // SET ALPHA TEXTURE / ALPHA FLOAT
         if (mat->hasAlphaTexture()) {
             glUniform1i(_useAlphaMapUID, 1);
-            glActiveTexture(GL_TEXTURE0);
+            glActiveTexture(GL_TEXTURE3);
             glBindTexture(GL_TEXTURE_2D, mat->alphaTextureUniform());
-            glUniform1i(_alphaMapUID, 0);
+            glUniform1i(_alphaMapUID, 3);
         } else {
             glUniform1f(_alpha, mat->alpha());
             glUniform1i(_useAlphaMapUID, 0);
@@ -161,10 +161,10 @@ namespace copakond {
         // SET NORMAL TEXTURE / NORMAL VECTOR
         if (mat->hasNormalTexture()) {
             glUniform1i(_useNormalMapUID, 1);
-            glActiveTexture(GL_TEXTURE0);
+            glActiveTexture(GL_TEXTURE4);
             glBindTexture(GL_TEXTURE_2D, mat->normalTextureUniform());
         } else {
-            glUniform1i(_useNormalMapUID, 0);
+            glUniform1i(_useNormalMapUID, 4);
         }
 
 
