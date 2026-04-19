@@ -1,9 +1,4 @@
 #include "objLoader.h"
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <limits>
 
 // implemented .obj parser from: MIT https://github.com/dartzon/dotObj-parser (the remapBuffers)
 namespace copakond {
@@ -100,6 +95,10 @@ namespace copakond {
         }
 
         remapBuffers(vertices, normals, faces);
+    }
+
+     bool ObjLoader::loadMtl(std::string fileName) {
+        return true;
     }
 
     // reorders the vertices and normals, so each index has the same data. Implementation of dartzon's obj parser.

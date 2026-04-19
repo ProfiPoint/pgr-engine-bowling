@@ -24,6 +24,8 @@ add_executable(${PROJECT_NAME} main.cpp
         light/light.cpp
         light/light.h
         pgr-portable.h
+        utils/mtlLoader.cpp
+        utils/mtlLoader.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION

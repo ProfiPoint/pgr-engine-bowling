@@ -3,11 +3,11 @@
 
 #include "../pgr-portable.h"
 
-#define DEFAULT_AMBIENT glm::vec3(0.25f, 0.25f, 0.25f)
+#define DEFAULT_AMBIENT glm::vec3(1.0f, 1.0f, 1.0f)
 #define DEFAULT_DIFFUSE glm::vec3(1.0f, 1.0f, 1.0f)
-#define DEFAULT_SPECULAR glm::vec3(1.0f, 1.0f, 1.0f)
+#define DEFAULT_SPECULAR glm::vec3(0.0f, 0.0f, 0.0f)
 #define DEFAULT_ALPHA 1.0f
-#define DEFAULT_SHININESS 64.0f
+#define DEFAULT_SHININESS 32.0f
 
 namespace copakond {
     class Material {
@@ -18,26 +18,27 @@ namespace copakond {
         float _shininess;
         float _alpha;
 
-        GLuint _texture;
-        bool _hasTexture;
+        GLuint _ambientTexture;
+        GLuint _diffuseTexture;
+        GLuint _specularTexture;
+        GLuint _alphaTexture;
+        GLuint _normalTexture;
 
-        void constructor(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess, float alpha,
-                         const std::string &textureFile);
+        bool _hasAmbientTexture;
+        bool _hasDiffuseTexture;
+        bool _hasSpecularTexture;
+        bool _hasAlphaTexture;
+        bool _hasNormalTexture;
+
+        void constructor(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess, float alpha);
 
         void _setMaterial(const Material &material);
 
     public:
-        // color
         Material();
         Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular);
         Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess);
         Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess, float alpha);
-
-        // texture
-        Material(const std::string &textureFile);
-        Material(const std::string &textureFile, const glm::vec3 &specular);
-        Material(const std::string &textureFile, const glm::vec3 &specular, float shininess);
-        Material(const std::string &textureFile, const glm::vec3 &specular, float shininess, float alpha);
 
         // getters and setters
         glm::vec3 &ambient() { return _ambient; }
@@ -47,9 +48,26 @@ namespace copakond {
         float &alpha() { return _alpha; }
 
         // texture managers
-        void setTexture(const std::string &textureFile);
-        bool hasTexture() { return _hasTexture; }
-        void clearTexture() { _hasTexture = false; }
+        void setAmbientTexture(const std::string &textureFile);
+        bool hasAmbientTexture() { return _hasAmbientTexture; }
+        void clearAmbientTexture() { _hasAmbientTexture = false; }
+
+        void setDiffuseTexture(const std::string &textureFile);
+        bool hasDiffuseTexture() { return _hasAmbientTexture; }
+        void clearDiffuseTexture() { _hasAmbientTexture = false; }
+
+        void setSpecularTexture(const std::string &textureFile);
+        bool hasSpecularTexture() { return _hasSpecularTexture; }
+        void clearSpecularTexture() { _hasSpecularTexture = false; }
+
+        void setAlphaTexture(const std::string &textureFile);
+        bool hasAlphaTexture() { return _hasAlphaTexture; }
+        void clearAlphaTexture() { _hasAlphaTexture = false; }
+
+        void setNormalTexture(const std::string &textureFile);
+        bool hasNormalTexture() { return _hasNormalTexture; }
+        void clearNormalTexture() { _hasNormalTexture = false; }
+
     };
 }
 
