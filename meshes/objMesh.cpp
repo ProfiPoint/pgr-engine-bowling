@@ -10,7 +10,7 @@ namespace copakond {
         _numVertices = _faces.size();
         _uvs = objLoader.getUvs();
 
-        setMaterial(objLoader.getMaterial());
+        _subMeshes = objLoader.getSubMeshes();
     }
 
     ObjMesh::ObjMesh(const std::string &objFileLocation)

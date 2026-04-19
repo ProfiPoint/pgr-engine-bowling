@@ -1,17 +1,19 @@
 #ifndef PGR_SEM_COPAKOND_MTLLOADER_H
 #define PGR_SEM_COPAKOND_MTLLOADER_H
 
+#include <map>
+
 #include "../geometry/material.h"
 
 namespace copakond {
 
 class MtlLoader {
 private:
-    std::shared_ptr<Material> _material = std::make_shared<Material>();
+    std::map<std::string, std::shared_ptr<Material>> _materials;
 
 public:
     MtlLoader(std::string fileName);
-    std::shared_ptr<Material>& material() { return _material; }
+    std::map<std::string, std::shared_ptr<Material>> getMaterials() { return _materials; }
 };
 
 }

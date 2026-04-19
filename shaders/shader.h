@@ -52,6 +52,7 @@ namespace copakond {
 
         static glm::vec3 getWorldAmbient() { return WORLD_AMBIENT; }
 
+        virtual void applyMaterialUniforms(std::shared_ptr<Material> mat);
         virtual void setLight(Light *light, int lightIndex);
         virtual void updateLight(Light* light);
 

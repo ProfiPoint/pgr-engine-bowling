@@ -8,6 +8,12 @@
 #include "../geometry/geometry.h"
 
 namespace copakond {
+    struct SubMesh {
+        std::shared_ptr<Material> material;
+        unsigned int indexOffset;
+        unsigned int indexCount;
+    };
+
     class Mesh : public Geometry {
     protected:
         GLuint _shaderProgram;
@@ -17,6 +23,7 @@ namespace copakond {
         GLsizei _numVertices;
 
         std::shared_ptr<Material> _material = std::make_shared<Material>();
+        std::vector<SubMesh> _subMeshes;
 
     public:
         Mesh();
@@ -25,7 +32,11 @@ namespace copakond {
         Mesh(const glm::vec3 &translation, const glm::vec3 &rotation, const glm::vec3 &scale);
 
         void setMaterial(const std::shared_ptr<Material> &material);
+        const std::vector<SubMesh>& getSubMeshes() const { return _subMeshes; }
         std::shared_ptr<Material> getMaterial();
+
+        GLuint getVao() const { return _vao; }
+        GLsizei getNumVertices() const { return _numVertices; }
 
         virtual void init(GLuint shader);
         virtual void draw();

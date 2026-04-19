@@ -2,6 +2,7 @@
 #define PGR_SEM_COPAKOND_OBJLOADER_H
 
 #include "../geometry/material.h"
+#include "../meshes/mesh.h"
 
 #include <string>
 #include <vector>
@@ -19,7 +20,8 @@ namespace copakond {
         std::vector<float> _normals;
         std::vector<float> _uvs;
         std::vector<unsigned int> _faces;
-        std::shared_ptr<Material> _material = std::make_shared<Material>();
+        std::map<std::string, std::shared_ptr<Material>> _materialDict;
+        std::vector<SubMesh> _subMeshes;
 
         void remapBuffers(const std::vector<float> &vertices, const std::vector<float> &normals, const std::vector<float> &tempUvs, const
             std::vector<std::string> &faces);
@@ -27,10 +29,11 @@ namespace copakond {
     public:
         ObjLoader(const std::string &fileName, bool normalizeCoord);
 
-        static std::shared_ptr<Material> ObjLoader::loadMtl(std::string fileName);
         static std::vector<std::string> ObjLoader::splitString(const std::string &str);
 
-        std::shared_ptr<Material> getMaterial() const { return _material; }
+
+
+        const std::vector<SubMesh>& getSubMeshes() const { return _subMeshes; }
         const std::vector<float> &ObjLoader::getVertices() const { return _vertices; }
         const std::vector<float> &ObjLoader::getNormals() const { return _normals; }
         const std::vector<float>& getUvs() const { return _uvs; }

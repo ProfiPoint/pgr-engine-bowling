@@ -72,9 +72,13 @@ namespace copakond {
         //teddyMesh->setMaterial(teddyMaterial);
         //meshes.push_back(teddyMesh);
 
-        Mesh *shipMesh = new ObjMesh("meshes/models/ship.obj", true, glm::vec3(-8.0f, 0.0f, 0.0f),
+        Mesh *oldShipMesh = new ObjMesh("meshes/models/ship.obj", true, glm::vec3(-10.0f, 0.0f, 0.0f),
                                        glm::vec3(0.0f, -glm::pi<float>()/2, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f));
-        //shipMesh->setMaterial(teddyMaterial);
+        oldShipMesh->setMaterial(teddyMaterial);
+        meshes.push_back(oldShipMesh);
+
+        Mesh *shipMesh = new ObjMesh("meshes/models/ship2.obj", false, glm::vec3(-5.0f, 0.0f, 0.0f),
+                                       glm::vec3(0.0f, glm::pi<float>(), 0.0f), glm::vec3(0.125f, 0.125f, 0.125f));
         meshes.push_back(shipMesh);
 
         Mesh *bodyMesh = new ObjMesh("meshes/models/characters/character-a.obj", false, glm::vec3(0.0f, -1.0f, 0.0f),

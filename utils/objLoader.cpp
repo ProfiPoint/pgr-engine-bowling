@@ -62,9 +62,30 @@ namespace copakond {
             } else if (data[0] == "mtllib") {
                 std::string basePath = getBasePath(fileName);
                 std::string mtlPath = basePath + data[1];
-                _material = loadMtl(mtlPath);
+                MtlLoader mtlLoader(mtlPath); // load all of the materials
+                _materialDict = mtlLoader.getMaterials();
+            } else if (data[0] == "usemtl") {
+                // first material
+                if (!_subMeshes.empty()) {
+                    _subMeshes.back().indexCount = faces.size() - _subMeshes.back().indexOffset;
+                }
+
+                SubMesh sm; // create the submesh with the givem material
+                sm.material = _materialDict[data[1]];
+
+                // save the count and offset
+                sm.indexOffset = faces.size();
+                sm.indexCount = 0;
+                _subMeshes.push_back(sm);
             }
         }
+
+        // save the offset of the last submesh
+        if (!_subMeshes.empty()) {
+            _subMeshes.back().indexCount = faces.size() - _subMeshes.back().indexOffset;
+        }
+
+        std::cout << "loaded .OBJ file: " << fileName << std::endl;
 
         if (normalizeCoord) {
             float min[3] = {std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max()};
@@ -112,11 +133,6 @@ namespace copakond {
         }
 
         remapBuffers(vertices, normals, uvs, faces);
-    }
-
-     std::shared_ptr<Material> ObjLoader::loadMtl(std::string fileName) {
-        MtlLoader mtl(fileName.substr(0, fileName.find_last_of(".")) + ".mtl");
-        return mtl.material();
     }
 
     // reorders the vertices and normals, so each index has the same data. Implementation of dartzon's obj parser.

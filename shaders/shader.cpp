@@ -103,24 +103,10 @@ namespace copakond {
         glUniform3fv(_worldAmbientUID, 1, glm::value_ptr(getWorldAmbient()));
     }
 
-    void Shader::draw(Mesh &mesh) {
-        glm::mat4 modelM = mesh.getModelMatrix();
-        glm::mat4 PVM = _projectionM * _viewM * modelM;
-        glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelM)); // correct matrix for non-rigid transform
-        std::shared_ptr<Material> mat = mesh.getMaterial();
-
-        if (!mat) {
-            std::cerr << "ERROR: Mesh doesn't have any materials" << std::endl;
-            exit(0);
-        }
-
-        // UNIFORM APPLY
-        glUniformMatrix4fv(_modelUID, 1, GL_FALSE, glm::value_ptr(modelM)); // TRUE: M -> M^t, opengl accepts vectors by rows.
-        glUniformMatrix4fv(_pvmUID, 1, GL_FALSE, glm::value_ptr(PVM));
-        glUniformMatrix4fv(_normalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+    void Shader::applyMaterialUniforms(std::shared_ptr<Material> mat) {
+        if (!mat) return;
 
         glUniform3fv(_ambient, 1, glm::value_ptr(mat->ambient()));
-
 
         // SET DIFFUSE TEXTURE / DIFFUSE VECTOR
         if (mat->hasDiffuseTexture()) {
@@ -174,12 +160,36 @@ namespace copakond {
         } else {
             glUniform1i(_useNormalMapUID, 4);
         }
+    }
 
+    void Shader::draw(Mesh &mesh) {
+        glm::mat4 modelM = mesh.getModelMatrix();
+        glm::mat4 PVM = _projectionM * _viewM * modelM;
+        glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelM)); // correct matrix for non-rigid transform
+        std::shared_ptr<Material> mat = mesh.getMaterial();
 
+        if (!mat) {
+            std::cerr << "ERROR: Mesh doesn't have any materials" << std::endl;
+            exit(0);
+        }
 
+        // UNIFORM APPLY
+        glUniformMatrix4fv(_modelUID, 1, GL_FALSE, glm::value_ptr(modelM)); // TRUE: M -> M^t, opengl accepts vectors by rows.
+        glUniformMatrix4fv(_pvmUID, 1, GL_FALSE, glm::value_ptr(PVM));
+        glUniformMatrix4fv(_normalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
 
+        glBindVertexArray(mesh.getVao());
 
+        if (mesh.getSubMeshes().empty()) { // has only one material
+            applyMaterialUniforms(mesh.getMaterial());
+            mesh.draw();
+        } else {
+            for (const auto& subMesh : mesh.getSubMeshes()) { // has multiple materials => iterating over subMeshes
+                applyMaterialUniforms(subMesh.material);
 
-        mesh.draw();
+                void* offset = (void*)(subMesh.indexOffset * sizeof(unsigned int));
+                glDrawElements(GL_TRIANGLES, subMesh.indexCount, GL_UNSIGNED_INT, offset);
+            }
+        }
     };
 }
