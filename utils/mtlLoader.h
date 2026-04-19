@@ -2,6 +2,7 @@
 #define PGR_SEM_COPAKOND_MTLLOADER_H
 
 #include <map>
+#include <memory>
 
 #include "../geometry/material.h"
 

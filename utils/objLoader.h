@@ -29,15 +29,15 @@ namespace copakond {
     public:
         ObjLoader(const std::string &fileName, bool normalizeCoord);
 
-        static std::vector<std::string> ObjLoader::splitString(const std::string &str);
+        static std::vector<std::string> splitString(const std::string &str);
 
 
 
         const std::vector<SubMesh>& getSubMeshes() const { return _subMeshes; }
-        const std::vector<float> &ObjLoader::getVertices() const { return _vertices; }
-        const std::vector<float> &ObjLoader::getNormals() const { return _normals; }
+        const std::vector<float> &getVertices() const { return _vertices; }
+        const std::vector<float> &getNormals() const { return _normals; }
         const std::vector<float>& getUvs() const { return _uvs; }
-        const std::vector<unsigned int> &ObjLoader::getFaces() const { return _faces; }
+        const std::vector<unsigned int> &getFaces() const { return _faces; }
     };
 }
 
