@@ -40,8 +40,8 @@ namespace copakond {
         glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 
         GLuint shaderPrg = shader.init(
-            "shaders/shaders/vertexShader.vert",
-            "shaders/shaders/fragmentShader.frag"
+            "shaders/shaders/shader.vert",
+            "shaders/shaders/shader.frag"
         );
 
         std::shared_ptr<Material> teddyMaterial = std::make_shared<Material>(
@@ -97,9 +97,16 @@ namespace copakond {
             shader.setLight(lights[i], i);
         }
 
+
+
+
+
+
+
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glCullFace( GL_BACK);
         glEnable(GL_CULL_FACE);
+
     }
 
     void draw() {
@@ -110,7 +117,7 @@ namespace copakond {
 
         shader.update(camera, winWidth, winHeight);
 
-        // sort all meshes, from the furthest to the nearest (for transparent meshes)
+        // sort all meshes, from the furthest to the nearest (for transparent meshes), all meshes, could be optimized more...
         glm::vec3 camPos = camera.getPosition();
         std::sort(meshes.begin(), meshes.end(), [&camPos](Mesh* a, Mesh* b) {
                 glm::vec3 pos1 = glm::vec3(a->getModelMatrix()[3]); // translation

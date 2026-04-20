@@ -26,6 +26,8 @@ add_executable(${PROJECT_NAME} main.cpp
         pgr-portable.h
         utils/mtlLoader.cpp
         utils/mtlLoader.h
+        skybox/skybox.cpp
+        skybox/skybox.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION
