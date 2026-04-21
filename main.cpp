@@ -8,6 +8,8 @@
 #include "shaders/shader.h"
 #include <algorithm>
 
+#include "skybox/skybox.h"
+
 namespace copakond {
     const char *WIN_TITLE = "PGR Semestral Work Copakond";
     int winWidth = 1280;
@@ -24,6 +26,7 @@ namespace copakond {
         100.0f
     );
     Input input = Input(camera, winWidth, winHeight);
+    Skybox *skybox;
 
     float updateTime() {
         int currentFrameTime = glutGet(GLUT_ELAPSED_TIME);
@@ -72,6 +75,8 @@ namespace copakond {
         //Mesh *teddyMesh = new ObjMesh("meshes/models/teddy.obj", true);
         //teddyMesh->setMaterial(teddyMaterial);
         //meshes.push_back(teddyMesh);
+
+        skybox = new Skybox();
 
         Mesh *oldShipMesh = new ObjMesh("meshes/models/ship.obj", true, glm::vec3(-10.0f, 0.0f, 0.0f),
                                        glm::vec3(0.0f, -glm::pi<float>()/2, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f));
@@ -130,6 +135,9 @@ namespace copakond {
             //mesh->rotation().x += deltaTime * 1.0f;
             shader.draw(*mesh);
         }
+
+        skybox->update(camera, winWidth, winHeight);
+        skybox->draw();
 
         lights[0]->position() = camera.getPosition();
         shader.updateLight(lights[0]);

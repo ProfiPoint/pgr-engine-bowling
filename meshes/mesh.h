@@ -15,6 +15,9 @@ namespace copakond {
     };
 
     class Mesh : public Geometry {
+    private:
+        std::vector<float> _vertices = std::vector<float>();
+
     protected:
         GLuint _shaderProgram;
         GLuint _vboVertices;
@@ -31,6 +34,7 @@ namespace copakond {
         Mesh(const glm::vec3 &translation, const glm::vec3 &rotation);
         Mesh(const glm::vec3 &translation, const glm::vec3 &rotation, const glm::vec3 &scale);
 
+        void setVertices(const std::vector<float> &vertices);
         void setMaterial(const std::shared_ptr<Material> &material);
         const std::vector<SubMesh>& getSubMeshes() const { return _subMeshes; }
         std::shared_ptr<Material> getMaterial();

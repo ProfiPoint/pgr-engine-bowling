@@ -3,6 +3,8 @@
 
 namespace copakond {
     Skybox::Skybox() {
+        Skybox::Mesh();
+
         glGenTextures(1, &_skyboxTextureUID);
         glBindTexture(GL_TEXTURE_CUBE_MAP, _skyboxTextureUID);
 
@@ -26,5 +28,90 @@ namespace copakond {
         };
 
         _shaderProgram = pgr::createProgram(shaders);
+
+        std::vector<float> vertices = {
+            // back
+            1.0f,  1.0f, -1.0f,
+           -1.0f,  1.0f, -1.0f,
+           -1.0f, -1.0f, -1.0f,
+
+           -1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f,  1.0f, -1.0f,
+
+           // front
+            1.0f,  1.0f,  1.0f,
+            1.0f, -1.0f,  1.0f,
+           -1.0f, -1.0f,  1.0f,
+
+           -1.0f, -1.0f,  1.0f,
+           -1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+
+           // left
+           -1.0f, -1.0f, -1.0f,
+           -1.0f,  1.0f, -1.0f,
+           -1.0f,  1.0f,  1.0f,
+
+           -1.0f,  1.0f,  1.0f,
+           -1.0f, -1.0f,  1.0f,
+           -1.0f, -1.0f, -1.0f,
+
+           // right
+            1.0f,  1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f,  1.0f,  1.0f,
+
+            1.0f, -1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f, -1.0f, -1.0f,
+
+           // bottom
+            1.0f, -1.0f,  1.0f,
+            1.0f, -1.0f, -1.0f,
+           -1.0f, -1.0f, -1.0f,
+
+           -1.0f, -1.0f, -1.0f,
+           -1.0f, -1.0f,  1.0f,
+            1.0f, -1.0f,  1.0f,
+
+           // top
+            1.0f,  1.0f,  1.0f,
+           -1.0f,  1.0f,  1.0f,
+           -1.0f,  1.0f, -1.0f,
+
+           -1.0f,  1.0f, -1.0f,
+            1.0f,  1.0f, -1.0f,
+            1.0f,  1.0f,  1.0f
+       };
+
+        setVertices(vertices);
+        init(_shaderProgram);
+
+        _viewUID = glGetUniformLocation(_shaderProgram, "view");
+        _projectionUID = glGetUniformLocation(_shaderProgram, "projection");
     }
+
+    void Skybox::update(Camera &camera, int winWidth, int winHeight) {
+        glUseProgram(_shaderProgram);
+        glm::mat4 projectionM = camera.getProjectionMatrix((float)winWidth, (float)winHeight);
+        glm::mat4 viewM = camera.getViewMatrix();
+        viewM = glm::mat4(glm::mat3(viewM)); // removing translation
+
+        glUniformMatrix4fv(_viewUID, 1, GL_FALSE, glm::value_ptr(viewM));
+        glUniformMatrix4fv(_projectionUID, 1, GL_FALSE, glm::value_ptr(projectionM));
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, _skyboxTextureUID);
+        glUniform1i(glGetUniformLocation(_shaderProgram, "skybox"), 0);
+
+        Mesh::draw();
+    }
+
+    void Skybox::draw() {
+        glBindVertexArray(_vao);
+        glDrawArrays(GL_TRIANGLES, 0, _numVertices);
+        glBindVertexArray(0);
+    }
+
 }
