@@ -58,7 +58,7 @@ namespace copakond {
 
         virtual GLuint init(std::string vertShaderLocation, std::string fragShaderLocation);
         virtual void update(Camera &camera, int winWidth, int winHeight);
-        virtual void draw(Mesh &mesh);
+        virtual void draw(Mesh &mesh, bool drawTransparent);
     };
 }
 

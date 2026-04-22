@@ -37,9 +37,9 @@ namespace copakond {
 
     void init() {
         glClearColor(0.2f, 0.1f, 0.3f, 1.0f);
-        glEnable(GL_BLEND); // enable transparent colors
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_DEPTH_TEST);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 
         GLuint shaderPrg = shader.init(
@@ -120,8 +120,6 @@ namespace copakond {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        shader.update(camera, winWidth, winHeight);
-
         // sort all meshes, from the furthest to the nearest (for transparent meshes), all meshes, could be optimized more...
         glm::vec3 camPos = camera.getPosition();
         std::sort(meshes.begin(), meshes.end(), [&camPos](Mesh* a, Mesh* b) {
@@ -131,13 +129,28 @@ namespace copakond {
                 return glm::distance(camPos, pos1) > glm::distance(camPos, pos2);
         });
 
+        // Draw Non-transparent Meshes
+        shader.update(camera, winWidth, winHeight); // use main shader
         for (Mesh *mesh: meshes) {
-            //mesh->rotation().x += deltaTime * 1.0f;
-            shader.draw(*mesh);
+            shader.draw(*mesh, false); // drawing non-transparent objects
         }
 
-        skybox->update(camera, winWidth, winHeight);
+        // Draw skybox
+        skybox->update(camera, winWidth, winHeight); // use skybox shader
         skybox->draw();
+
+        // Draw Transparent Meshes
+        glEnable(GL_BLEND);
+        glDepthMask(GL_FALSE); // if the front triangle would render before the back it would fail
+
+        shader.update(camera, winWidth, winHeight); // use main shader
+        for (Mesh *mesh: meshes) {
+            shader.draw(*mesh, true); // drawing transparent objects
+        }
+
+        glDepthMask(GL_TRUE); // restore
+        glDisable(GL_BLEND);
+
 
         lights[0]->position() = camera.getPosition();
         shader.updateLight(lights[0]);

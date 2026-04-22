@@ -162,7 +162,7 @@ namespace copakond {
         }
     }
 
-    void Shader::draw(Mesh &mesh) {
+    void Shader::draw(Mesh &mesh, bool drawTransparent) {
         glm::mat4 modelM = mesh.getModelMatrix();
         glm::mat4 PVM = _projectionM * _viewM * modelM;
         glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelM)); // correct matrix for non-rigid transform
@@ -181,14 +181,18 @@ namespace copakond {
         glBindVertexArray(mesh.getVao());
 
         if (mesh.getSubMeshes().empty()) { // has only one material
-            applyMaterialUniforms(mesh.getMaterial());
-            mesh.draw();
-        } else { // TODO: double passing (glDepthMask) to ensure each object has the same transparency, (more triangles in same z makes it less transparent)
+            if ((mesh.getMaterial()->alpha() != 1.0f) == drawTransparent) { // draw if it should draw the correct mode non / transparent
+                applyMaterialUniforms(mesh.getMaterial());
+                mesh.draw();
+            }
+        } else {
             for (const auto& subMesh : mesh.getSubMeshes()) { // has multiple materials => iterating over subMeshes
-                applyMaterialUniforms(subMesh.material);
+                if ((subMesh.material->alpha() != 1.0f) == drawTransparent) { // draw if it should draw the correct mode non / transparent
+                    applyMaterialUniforms(subMesh.material);
 
-                void* offset = (void*)(subMesh.indexOffset * sizeof(unsigned int));
-                glDrawElements(GL_TRIANGLES, subMesh.indexCount, GL_UNSIGNED_INT, offset);
+                    void* offset = (void*)(subMesh.indexOffset * sizeof(unsigned int));
+                    glDrawElements(GL_TRIANGLES, subMesh.indexCount, GL_UNSIGNED_INT, offset);
+                }
             }
         }
     };
