@@ -18,7 +18,7 @@ private:
 public:
     Skybox();
     void draw();
-    void Skybox::update(Camera &camera, int winWidth, int winHeight);
+    void update(Camera &camera, int winWidth, int winHeight);
 };
 
 }
