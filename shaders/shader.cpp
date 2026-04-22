@@ -94,7 +94,7 @@ namespace copakond {
         glUseProgram(_shaderProgram);
         _viewM = camera.getViewMatrix();
         _projectionM = camera.getProjectionMatrix((float)winWidth, (float)winHeight);
-        _position = camera.getPosition();
+        _position = camera.getTranslation();
 
         // UNIFORM APPLY
         glUniform3fv(_camPos, 1, glm::value_ptr(_position));

@@ -121,7 +121,7 @@ namespace copakond {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // sort all meshes, from the furthest to the nearest (for transparent meshes), all meshes, could be optimized more...
-        glm::vec3 camPos = camera.getPosition();
+        glm::vec3 camPos = camera.getTranslation();
         std::sort(meshes.begin(), meshes.end(), [&camPos](Mesh* a, Mesh* b) {
                 glm::vec3 pos1 = glm::vec3(a->getModelMatrix()[3]); // translation
                 glm::vec3 pos2 = glm::vec3(b->getModelMatrix()[3]); // translation
@@ -152,7 +152,7 @@ namespace copakond {
         glDisable(GL_BLEND);
 
 
-        lights[0]->position() = camera.getPosition();
+        lights[0]->position() = camera.getTranslation();
         shader.updateLight(lights[0]);
 
         glutSwapBuffers(); // swap front and back screen buffer

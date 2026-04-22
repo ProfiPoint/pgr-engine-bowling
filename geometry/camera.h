@@ -2,6 +2,7 @@
 #define PGR_SEM_COPAKOND_CAMERA_H
 
 #include "../pgr-portable.h"
+#include "geometry.h"
 
 #define FRONT 0
 #define BACK 1
@@ -11,11 +12,10 @@
 #define DOWN 5
 
 namespace copakond {
-    class Camera {
+    class Camera : Geometry {
     private:
         const glm::vec3 _worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-        glm::vec3 _position;
         glm::vec3 _front;
         glm::vec3 _up;
         glm::vec3 _right;
@@ -28,8 +28,6 @@ namespace copakond {
         float _farZ;
 
         float _fov; // fovY
-        float _yaw;
-        float _pitch;
 
         void updateCameraVectors(); // calculates front, up based off of yaw and pitch and position
 
@@ -37,10 +35,12 @@ namespace copakond {
         Camera(const glm::vec3 &startPosition, const glm::vec3 &startLookPoint, float distance);
 
         void lookToPoint(const glm::vec3 &point);
+        void setRotation(const glm::vec3& rotation) override;
+        void setRotationDegrees(const glm::vec3& rotationDegrees) override;
 
         glm::mat4 getViewMatrix();
         glm::mat4 getProjectionMatrix(float aspectWidth, float aspectHeight);
-        glm::vec3 getPosition() { return _position; }
+        glm::vec3 getTranslation() { return _translation; }
 
         void processKeyboard(int direction, float deltaTime);
         void processMouseMovement(float deltaX, float deltaY);

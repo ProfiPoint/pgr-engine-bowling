@@ -2,7 +2,7 @@
 
 namespace copakond {
     Camera::Camera(const glm::vec3 &startPosition, const glm::vec3 &startLookPoint, float distance) {
-        _position = startPosition;
+        _translation = startPosition;
         _farZ = distance;
         _nearZ = 0.1f;
         _fov = 45.0f;
@@ -14,15 +14,22 @@ namespace copakond {
         updateCameraVectors();
     }
 
-    void Camera::updateCameraVectors() {
-        float yawRad = glm::radians(_yaw);
-        float pitchRad = glm::radians(_pitch);
+    void Camera::setRotation(const glm::vec3& rotation) {
+        Geometry::setRotation(rotation);
+        updateCameraVectors();
+    }
 
-        // update yaw pitch, (+90 pitch should be up, -90 down) from: https://learnopengl.com/Getting-started/Camera
+    void Camera::setRotationDegrees(const glm::vec3& rotationDegrees) {
+        Geometry::setRotationDegrees(rotationDegrees);
+        updateCameraVectors();
+    }
+
+    void Camera::updateCameraVectors() {
+        //https://learnopengl.com/Getting-started/Camera
         _front = glm::vec3(
-            cos(yawRad) * cos(pitchRad),
-            sin(pitchRad),
-            sin(yawRad) * cos(pitchRad)
+            cos(_rotation.y) * cos(_rotation.x),
+            sin(_rotation.x),
+            sin(_rotation.y) * cos(_rotation.x)
         );
 
         _front = glm::normalize(_front);
@@ -33,14 +40,16 @@ namespace copakond {
     // sets yaw and pitch based off of position and look point
     void Camera::lookToPoint(const glm::vec3 &point) {
         // https://learnopengl.com/Getting-started/Camera
-        glm::vec3 direction = glm::normalize(point - _position);
+        _front = glm::normalize(point - _translation);
 
-        _pitch = glm::degrees(asin(direction.y));
-        _yaw = glm::degrees(atan2(direction.z, direction.x));
+        float pitch = glm::degrees(asin(_front.y));
+        float yaw = glm::degrees(atan2(_front.z, _front.x));
+
+        setRotationDegrees(glm::vec3(pitch, yaw, 0.0f));
     }
 
     glm::mat4 Camera::getViewMatrix() {
-        return glm::lookAt(_position, _position + _front, _up);
+        return glm::lookAt(_translation, _translation + _front, _up);
     }
 
     glm::mat4 Camera::getProjectionMatrix(float winWidth, float winHeight) {
@@ -53,30 +62,36 @@ namespace copakond {
 
         switch (direction) {
             case FRONT:
-                _position += frontNorm * _movementSpeed * deltaTime;
+                _translation += frontNorm * _movementSpeed * deltaTime;
                 break;
             case BACK:
-                _position -= frontNorm * _movementSpeed * deltaTime;
+                _translation -= frontNorm * _movementSpeed * deltaTime;
                 break;
             case LEFT:
-                _position -= _right * _movementSpeed * deltaTime;
+                _translation -= _right * _movementSpeed * deltaTime;
                 break;
             case RIGHT:
-                _position += _right * _movementSpeed * deltaTime;
+                _translation += _right * _movementSpeed * deltaTime;
                 break;
             case UP:
-                _position += _worldUp * _movementSpeed * deltaTime;
+                _translation += _worldUp * _movementSpeed * deltaTime;
                 break;
             case DOWN:
-                _position -= _worldUp * _movementSpeed * deltaTime;
+                _translation -= _worldUp * _movementSpeed * deltaTime;
         }
     }
 
     void Camera::processMouseMovement(float deltaX, float deltaY) {
-        _yaw += deltaX * _mouseSensitivity;
-        _pitch += deltaY * _mouseSensitivity;
-        _yaw = fmod(_yaw, 360.0f);
-        _pitch = glm::clamp(_pitch, -_maxPitch, _maxPitch);
-        updateCameraVectors();
+        glm::vec3 currentRotDeg = getRotationDegrees();
+
+        currentRotDeg.y += deltaX * _mouseSensitivity; // Yaw
+        currentRotDeg.x += deltaY * _mouseSensitivity; // Pitch
+
+        currentRotDeg.y = fmod(currentRotDeg.y, 360.0f);
+
+        if (currentRotDeg.x > _maxPitch) currentRotDeg.x = _maxPitch;
+        if (currentRotDeg.x < -_maxPitch) currentRotDeg.x = -_maxPitch;
+
+        setRotationDegrees(currentRotDeg);
     }
 }
