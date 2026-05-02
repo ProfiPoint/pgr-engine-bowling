@@ -12,6 +12,9 @@
 #define UP 4
 #define DOWN 5
 
+#define MAX_FOV 359.0f
+#define MIN_FOV 1.0f
+
 namespace copakond {
     class Camera : Geometry {
     private:
@@ -39,6 +42,7 @@ namespace copakond {
         void lookToPoint(const glm::vec3 &point);
         void setRotation(const glm::vec3& rotation) override;
         void setRotationDegrees(const glm::vec3& rotationDegrees) override;
+        void addFov(float fov);
 
         glm::mat4 getViewMatrix();
         glm::mat4 getProjectionMatrix(float aspectWidth, float aspectHeight);

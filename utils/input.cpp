@@ -1,5 +1,7 @@
 #include "input.h"
 
+#include <iostream>
+
 #define SHIFT_BOOST 1.5f;
 
 namespace copakond {
@@ -100,6 +102,16 @@ namespace copakond {
         }
 
         _camera.processMouseMovement(deltaX, deltaY);
+        glutPostRedisplay();
+    }
+
+    void Input::mouseWheelEvent(int wheel, int direction, int x, int y) {
+        if (direction > 0) {
+            _camera.addFov(-3.0f);
+        } else {
+            _camera.addFov(3.0f);
+        }
+
         glutPostRedisplay();
     }
 }

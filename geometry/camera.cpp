@@ -81,6 +81,11 @@ namespace copakond {
         }
     }
 
+    void Camera::addFov(float fovOffset) {
+        _fov += fovOffset;
+        _fov = glm::clamp(_fov, MIN_FOV, MAX_FOV);
+    }
+
     void Camera::processMouseMovement(float deltaX, float deltaY) {
         glm::vec3 currentRotDeg = getRotationDegrees();
 

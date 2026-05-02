@@ -31,6 +31,7 @@ namespace copakond {
 
         void keyInput(float deltaTime);
         void mouseMoveEvent(int x, int y);
+        void mouseWheelEvent(int wheel, int direction, int x, int y);
     };
 }
 

@@ -211,6 +211,10 @@ namespace copakond {
         input.mouseMoveEvent(x, y);
     }
 
+    void mouseWheelEvent(int wheel, int direction, int x, int y) {
+        input.mouseWheelEvent(wheel, direction, x, y);
+    }
+
     void screenResizeEvent(int width, int height) {
         if (width == 0) width = 1; // sadly it can be 0 for some reason.
         if (height == 0) height = 1;
@@ -240,6 +244,7 @@ int main(int argc, char **argv) {
     glutSpecialUpFunc(copakond::specKeyboardUpInputEvent);
 
     glutPassiveMotionFunc(copakond::mouseMoveEvent);
+    glutMouseWheelFunc(copakond::mouseWheelEvent);
     glutSetCursor(GLUT_CURSOR_NONE); // hide cursor
 
     // SET DRAW CALLBACK
