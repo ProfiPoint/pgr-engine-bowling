@@ -6,6 +6,7 @@
 #include "light/light.h"
 #include "utils/input.h"
 #include "shaders/shader.h"
+#include "animation/spline.h"
 #include <algorithm>
 
 #include "skybox/skybox.h"
@@ -27,6 +28,8 @@ namespace copakond {
     );
     Input input = Input(camera, winWidth, winHeight);
     Skybox *skybox;
+
+    std::vector<Spline *> splines = {};
 
     float updateTime() {
         int currentFrameTime = glutGet(GLUT_ELAPSED_TIME);
@@ -102,8 +105,22 @@ namespace copakond {
             shader.setLight(lights[i], i);
         }
 
+        std::vector<glm::vec3> camera_spline_points = {
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(5.0f, 2.0f, 5.0f),
+            glm::vec3(10.0f, 0.0f, 10.0f),
+            glm::vec3(15.0f, 5.0f, 0.0f),
+            glm::vec3(7.0f, 13.0f, -5.0f),
+            glm::vec3(10.0f, 100.0f, 10.0f),
+        };
 
+        Spline *camera_spline = new Spline(
+            20.0f,
+            camera_spline_points,
+            camera.getTranslationRef()
+        );
 
+        splines.push_back(camera_spline);
 
 
 
@@ -117,6 +134,11 @@ namespace copakond {
     void draw() {
         float deltaTime = updateTime(); // calculate delta time
         input.keyInput(deltaTime); // process input
+
+        // update spline animations
+        for (Spline *spline: splines) {
+            spline->update(deltaTime);
+        }
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

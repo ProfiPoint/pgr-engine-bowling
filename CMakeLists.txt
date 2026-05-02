@@ -28,6 +28,8 @@ add_executable(${PROJECT_NAME} main.cpp
         parser/mtlLoader.h
         skybox/skybox.cpp
         skybox/skybox.h
+        animation/spline.cpp
+        animation/spline.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION

@@ -35,6 +35,10 @@ namespace copakond {
         glm::vec3 getRotation() const { return _rotation; }
         glm::vec3 getScale() const { return _scale; }
         glm::vec3 getRotationDegrees() const { return glm::degrees(_rotation); }
+
+        glm::vec3& getTranslationRef() { return _translation; }
+        glm::vec3& getRotationRef() { return _rotation; }
+        glm::vec3& getScaleRef() { return _scale; }
     };
 }
 
