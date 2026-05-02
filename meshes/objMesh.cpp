@@ -1,5 +1,5 @@
 #include "objMesh.h"
-#include "../utils/objLoader.h"
+#include "../parser/objLoader.h"
 
 namespace copakond {
     void ObjMesh::constructor(const std::string &objFileLocation, bool normalizeCoord) {

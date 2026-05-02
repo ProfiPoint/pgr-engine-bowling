@@ -13,8 +13,8 @@ add_executable(${PROJECT_NAME} main.cpp
         shaders/shader.h
         utils/input.h
         utils/input.cpp
-        utils/objLoader.cpp
-        utils/objLoader.h
+        parser/objLoader.cpp
+        parser/objLoader.h
         meshes/objMesh.cpp
         meshes/objMesh.h
         geometry/geometry.cpp
@@ -24,8 +24,8 @@ add_executable(${PROJECT_NAME} main.cpp
         light/light.cpp
         light/light.h
         pgr-portable.h
-        utils/mtlLoader.cpp
-        utils/mtlLoader.h
+        parser/mtlLoader.cpp
+        parser/mtlLoader.h
         skybox/skybox.cpp
         skybox/skybox.h
 )
