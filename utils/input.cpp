@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-#define SHIFT_BOOST 1.5f;
+#define SHIFT_BOOST 1.5f
+#define MOUSE_DRAG_COEFF 0.05f
 
 namespace copakond {
     Input::Input(Camera &cam, int winWidth, int winHeight) : _camera(cam), _winWidth(winWidth), _winHeight(winHeight) {
@@ -84,6 +85,17 @@ namespace copakond {
         }
     }
 
+    // LMB, RMB, MMB
+    void Input::mouseButtonEvent(int button, int state, int x, int y) {
+        if (button == GLUT_RIGHT_BUTTON) {
+            if (state == GLUT_DOWN) {
+                _keysMap[MOUSE_BUTTON_RIGHT] = true;
+            } else if (state == GLUT_UP) {
+                _keysMap[MOUSE_BUTTON_RIGHT] = false;
+            }
+        }
+    }
+
     // mouse movement - changing yaw and pitch
     void Input::mouseMoveEvent(int x, int y) {
         int centerX = _winWidth / 2;
@@ -101,7 +113,13 @@ namespace copakond {
             return;
         }
 
-        _camera.processMouseMovement(deltaX, deltaY);
+        // if RMB pressed then drag, otherwise move around
+        if (_keysMap[MOUSE_BUTTON_RIGHT]) {
+            _camera.processMouseDrag(deltaX*MOUSE_DRAG_COEFF, deltaY*MOUSE_DRAG_COEFF);
+        } else {
+            _camera.processMouseMovement(deltaX, deltaY);
+        }
+
         glutPostRedisplay();
     }
 

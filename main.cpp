@@ -207,6 +207,10 @@ namespace copakond {
         input.specKeyboardUpInputEvent(key, x, y);
     }
 
+    void mouseButtonEvent(int button, int state, int x, int y) {
+        input.mouseButtonEvent(button, state, x, y);
+    }
+
     void mouseMoveEvent(int x, int y) {
         input.mouseMoveEvent(x, y);
     }
@@ -243,7 +247,9 @@ int main(int argc, char **argv) {
     glutKeyboardUpFunc(copakond::keyboardUpInputEvent);
     glutSpecialUpFunc(copakond::specKeyboardUpInputEvent);
 
+    glutMouseFunc(copakond::mouseButtonEvent);
     glutPassiveMotionFunc(copakond::mouseMoveEvent);
+    glutMotionFunc(copakond::mouseMoveEvent);
     glutMouseWheelFunc(copakond::mouseWheelEvent);
     glutSetCursor(GLUT_CURSOR_NONE); // hide cursor
 

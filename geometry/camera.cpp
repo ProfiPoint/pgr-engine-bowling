@@ -99,4 +99,11 @@ namespace copakond {
 
         setRotationDegrees(currentRotDeg);
     }
+
+    void Camera::processMouseDrag(float deltaX, float deltaY) {
+        float velocityX = deltaX * _mouseSensitivity;
+        float velocityY = deltaY * _mouseSensitivity;
+        _translation += _right * velocityX;
+        _translation += _up * velocityY;
+    }
 }

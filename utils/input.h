@@ -5,6 +5,9 @@
 
 #define KEY_ESC 27
 #define KEY_SHIFT 513
+#define MOUSE_BUTTON_LEFT 514
+#define MOUSE_BUTTON_RIGHT 515
+#define MOUSE_BUTTON_MIDDLE 516
 
 #include "../pgr-portable.h"
 #include "../geometry/camera.h"
@@ -30,6 +33,7 @@ namespace copakond {
         void specKeyboardUpInputEvent(int key, int x, int y);
 
         void keyInput(float deltaTime);
+        void mouseButtonEvent(int button, int state, int x, int y);
         void mouseMoveEvent(int x, int y);
         void mouseWheelEvent(int wheel, int direction, int x, int y);
     };

@@ -54,6 +54,7 @@ namespace copakond {
 
         void processKeyboard(int direction, float deltaTime);
         void processMouseMovement(float deltaX, float deltaY);
+        void processMouseDrag(float deltaX, float deltaY);
 
         void setFog(const Fog &fog) { _fog = fog; }
         Fog getFog() const { return _fog; }
