@@ -46,11 +46,19 @@ struct Light {
     bool dim;
 };
 
+struct Fog {
+    int enabled;
+    float start;
+    float end;
+    vec4 color;
+};
+
 uniform vec3 worldAmbient;
 uniform Material material;
 uniform TextureData textureData;
 uniform Light lights[MAX_LIGHTS];
 uniform int numLights;
+uniform Fog fog;
 
 vec3 calculateDirectionalL(Light light, vec3 fragmentPosition, vec3 fragmentNormal, vec3 ambient, vec3 diffuse, vec3 specular, float shininess) {
     vec3 L = normalize(-light.direction);
@@ -140,6 +148,15 @@ vec3 calculateLight(Light light, vec3 fragmentPosition, vec3 fragmentNormal, vec
     return vec3(0.0f);
 }
 
+vec4 applyFog(vec4 color) {
+    float dist = length(camPosition-fragmentPosition);
+
+    float fogCoeff = (fog.end - dist) / (fog.end - fog.start);
+    fogCoeff = clamp(fogCoeff, 0.0, 1.0);
+
+    return mix(fog.color, color, fogCoeff);
+}
+
 void main() {
     vec3 normalizedNormal = normalize(fragmentNormal); // :)
 
@@ -163,4 +180,6 @@ void main() {
     }
 
     color = vec4(resultColor, alpha);
+
+    if (fog.enabled == 1) { color = applyFog(color); }
 }

@@ -26,6 +26,11 @@ namespace copakond {
         _camPos = glGetUniformLocation(_shaderProgram, "camPosition");
         _normalMatrix = glGetUniformLocation(_shaderProgram, "normalMatrix");
 
+        _fogEnabled = glGetUniformLocation(_shaderProgram, "fog.enabled");
+        _fogStart = glGetUniformLocation(_shaderProgram, "fog.start");
+        _fogEnd = glGetUniformLocation(_shaderProgram, "fog.end");
+        _fogColor = glGetUniformLocation(_shaderProgram, "fog.color");
+
         _worldAmbientUID = glGetUniformLocation(_shaderProgram, "worldAmbient");
 
         _ambient = glGetUniformLocation(_shaderProgram, "material.ambient");
@@ -95,6 +100,14 @@ namespace copakond {
         _viewM = camera.getViewMatrix();
         _projectionM = camera.getProjectionMatrix((float)winWidth, (float)winHeight);
         _position = camera.getTranslation();
+
+        // APPLY FOG
+        glUniform1i(_fogEnabled, camera.getFog().enabled);
+        if (camera.getFog().enabled) {
+            glUniform1f(_fogStart, camera.getFog().start);
+            glUniform1f(_fogEnd, camera.getFog().end);
+            glUniform4fv(_fogColor, 1, glm::value_ptr(camera.getFog().color));
+        }
 
         // UNIFORM APPLY
         glUniform3fv(_camPos, 1, glm::value_ptr(_position));

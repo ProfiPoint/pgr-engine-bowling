@@ -30,6 +30,7 @@ add_executable(${PROJECT_NAME} main.cpp
         skybox/skybox.h
         animation/spline.cpp
         animation/spline.h
+        light/fog.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION

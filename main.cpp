@@ -24,7 +24,7 @@ namespace copakond {
     Camera camera(
         glm::vec3(0.0f, 0.0f, 5.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
-        100.0f
+        1000.0f
     );
     Input input = Input(camera, winWidth, winHeight);
     Skybox *skybox;
@@ -65,7 +65,7 @@ namespace copakond {
 
         //Light *light = new SpotLight(lightPosition, lightDirection, lightAmbient, lightDiffuse, lightSpecular, 20.0f, 30.0f, 5.0f, false);
         //lights.push_back(light);
-        Light *light1 = new PointLight(lightPosition, lightAmbient, lightDiffuse, lightSpecular, 10.0f, true);
+        Light *light1 = new PointLight(lightPosition, lightAmbient, lightDiffuse, lightSpecular, 50.0f, true);
         lights.push_back(light1);
         //Light *light2 = new DirectionalLight(-lightDirection, lightAmbient, lightDiffuse, lightSpecular);
         //lights.push_back(light2);
@@ -126,8 +126,11 @@ namespace copakond {
         );
 
         splines.push_back(camera_spline);
+        camera_spline->pause();
 
 
+        Fog fog = Fog(15.0f, 40.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+        camera.setFog(fog);
 
 
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -179,8 +182,10 @@ namespace copakond {
         glDisable(GL_BLEND);
 
 
-        lights[0]->position() = camera.getTranslation();
-        shader.updateLight(lights[0]);
+        if (!lights.empty()) {
+            lights[0]->position() = camera.getTranslation();
+            shader.updateLight(lights[0]);
+        }
 
         glutSwapBuffers(); // swap front and back screen buffer
         glutPostRedisplay(); // !!!!!!!!! schedules display, doesnt stack!!!

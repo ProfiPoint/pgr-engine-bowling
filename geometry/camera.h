@@ -3,6 +3,7 @@
 
 #include "../pgr-portable.h"
 #include "geometry.h"
+#include "../light/fog.h"
 
 #define FRONT 0
 #define BACK 1
@@ -26,8 +27,9 @@ namespace copakond {
 
         float _nearZ;
         float _farZ;
-
         float _fov; // fovY
+
+        Fog _fog = Fog();
 
         void updateCameraVectors(); // calculates front, up based off of yaw and pitch and position
 
@@ -48,6 +50,9 @@ namespace copakond {
 
         void processKeyboard(int direction, float deltaTime);
         void processMouseMovement(float deltaX, float deltaY);
+
+        void setFog(const Fog &fog) { _fog = fog; }
+        Fog getFog() const { return _fog; }
     };
 }
 #endif //PGR_SEM_COPAKOND_CAMERA_H

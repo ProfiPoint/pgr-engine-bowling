@@ -22,6 +22,11 @@ namespace copakond {
         GLint _camPos; // position of camera eye position uniform index;
         GLint _normalMatrix; // correct matrix for non-rigid transform uniform index;
 
+        GLint _fogEnabled;
+        GLint _fogStart;
+        GLint _fogEnd;
+        GLint _fogColor;
+
         GLint _ambient;
         GLint _diffuse;
         GLint _specular;
