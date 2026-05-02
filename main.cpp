@@ -117,7 +117,12 @@ namespace copakond {
         Spline *camera_spline = new Spline(
             20.0f,
             camera_spline_points,
-            camera.getTranslationRef()
+            camera.getTranslationRef(),
+            [](glm::vec3 derivative) {
+                if (glm::length(derivative) > 0.0001f) {  // prevent on screen glitching
+                    camera.lookToPoint(camera.getTranslation() + derivative);
+                }
+            }
         );
 
         splines.push_back(camera_spline);
