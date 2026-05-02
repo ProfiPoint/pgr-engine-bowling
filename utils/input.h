@@ -3,6 +3,9 @@
 
 #define IS_SPECIAL_KEY 256
 
+#define KEY_ESC 27
+#define KEY_SHIFT 513
+
 #include "../pgr-portable.h"
 #include "../geometry/camera.h"
 
@@ -12,8 +15,9 @@ namespace copakond {
         Camera &_camera;
         int _winWidth;
         int _winHeight;
-        bool _keysMap[512] = {false}; // 256 normal, 256 special
+        bool _keysMap[1024] = {false}; // 256 normal, 256 special
         bool _firstMouseMovement = false;
+        float shiftSpeedBoost = 1.0f;
 
     public:
         Input(Camera &cam, int winWidth, int winHeight);
