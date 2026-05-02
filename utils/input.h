@@ -13,11 +13,15 @@
 #include "../geometry/camera.h"
 
 namespace copakond {
+    class Spline;
+
     class Input {
     private:
         Camera &_camera;
+        Spline *_spline = nullptr;
         int _winWidth;
         int _winHeight;
+        bool _canMove = true;
         bool _keysMap[1024] = {false}; // 256 normal, 256 special
         bool _firstMouseMovement = false;
         float shiftSpeedBoost = 1.0f;
@@ -26,6 +30,7 @@ namespace copakond {
         Input(Camera &cam, int winWidth, int winHeight);
 
         void update(int winWidth, int winHeight);
+        void setCameraSpline(Spline *spline);
 
         void keyboardInputEvent(unsigned char key, int x, int y);
         void specKeyboardInputEvent(int key, int x, int y);

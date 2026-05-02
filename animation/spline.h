@@ -40,6 +40,7 @@ namespace copakond {
         void update(float delta_time);
         void pause() { paused = true; }
         void unpause() { paused = false; }
+        void reset() { t = 0.0f; }
     };
 }
 

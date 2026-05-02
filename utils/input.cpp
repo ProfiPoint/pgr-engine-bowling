@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "../animation/spline.h"
+
 #define SHIFT_BOOST 1.5f
 #define MOUSE_DRAG_COEFF 0.05f
 
@@ -23,7 +25,32 @@ namespace copakond {
     }
 
     void Input::specKeyboardInputEvent(int key, int x, int y) {
-        _keysMap[key + 256] = true;
+        _keysMap[key + IS_SPECIAL_KEY] = true;
+
+        if (_keysMap[GLUT_KEY_F1 + IS_SPECIAL_KEY]) {
+            _canMove = true;
+            _spline->pause();
+        }
+
+        if (_keysMap[GLUT_KEY_F2 + IS_SPECIAL_KEY]) {
+            _canMove = false;
+            _spline->reset();
+            _spline->unpause();
+        }
+
+        if (_keysMap[GLUT_KEY_F3 + IS_SPECIAL_KEY]) {
+            _canMove = false;
+            _spline->pause();
+            _camera.getTranslationRef() = glm::vec3(5.0f, 0.0f, 20.0f);
+            _camera.lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
+        }
+
+        if (_keysMap[GLUT_KEY_F4 + IS_SPECIAL_KEY]) {
+            _canMove = false;
+            _spline->pause();
+            _camera.getTranslationRef() = glm::vec3(5.0f, 0.0f, -20.0f);
+            _camera.lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
+        }
 
         if (glutGetModifiers() & GLUT_ACTIVE_SHIFT) _keysMap[KEY_SHIFT] = true;
     }
@@ -38,7 +65,7 @@ namespace copakond {
     }
 
     void Input::specKeyboardUpInputEvent(int key, int x, int y) {
-        _keysMap[key + 256] = false;
+        _keysMap[key + IS_SPECIAL_KEY] = false;
 
         if (!(glutGetModifiers() & GLUT_ACTIVE_SHIFT)) {
             _keysMap[KEY_SHIFT] = false;
@@ -58,7 +85,7 @@ namespace copakond {
         if (_keysMap['e']) { direction.y += 1.0f; }
         if (_keysMap['q']) { direction.y -= 1.0f; }
 
-        if (glm::length(direction) > 0.0f) {
+        if (glm::length(direction) > 0.0f && _canMove) {
             direction = glm::normalize(direction);
 
             if (direction.z > 0.0f) {
@@ -131,5 +158,9 @@ namespace copakond {
         }
 
         glutPostRedisplay();
+    }
+
+    void Input::setCameraSpline(Spline *spline) {
+        _spline = spline;
     }
 }

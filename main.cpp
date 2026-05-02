@@ -127,6 +127,7 @@ namespace copakond {
 
         splines.push_back(camera_spline);
         camera_spline->pause();
+        input.setCameraSpline(camera_spline);
 
 
         Fog fog = Fog(15.0f, 40.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
