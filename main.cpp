@@ -81,7 +81,16 @@ namespace copakond {
         //teddyMesh->setMaterial(teddyMaterial);
         //meshes.push_back(teddyMesh);
 
-        skybox = new Skybox();
+        skybox = new Skybox(
+            "assets/skybox/right.jpg",
+            "assets/skybox/left.jpg",
+            "assets/skybox/top.jpg",
+            "assets/skybox/bottom.jpg",
+            "assets/skybox/front.jpg",
+            "assets/skybox/back.jpg",
+            "shaders/shaders/skybox.vert",
+            "shaders/shaders/skybox.frag"
+        );
 
         Mesh *oldShipMesh = new ObjMesh("assets/models/ship.obj", true, glm::vec3(-10.0f, 0.0f, 0.0f),
                                        glm::vec3(0.0f, -glm::pi<float>()/2, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f));

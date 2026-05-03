@@ -2,18 +2,19 @@
 #include "../pgr-portable.h"
 
 namespace copakond {
-    Skybox::Skybox() {
+    Skybox::Skybox(std::string file_right, std::string file_left, std::string file_top, std::string file_bottom, std::string file_front,
+        std::string file_back, std::string file_skybox_vertex_shader, std::string file_skybox_fragment_shader) {
         Skybox::Mesh();
 
         glGenTextures(1, &_skyboxTextureUID);
         glBindTexture(GL_TEXTURE_CUBE_MAP, _skyboxTextureUID);
 
-        pgr::loadTexImage2D("assets/skybox/right.jpg",  GL_TEXTURE_CUBE_MAP_POSITIVE_X);
-        pgr::loadTexImage2D("assets/skybox/left.jpg", GL_TEXTURE_CUBE_MAP_NEGATIVE_X);
-        pgr::loadTexImage2D("assets/skybox/top.jpg", GL_TEXTURE_CUBE_MAP_POSITIVE_Y);
-        pgr::loadTexImage2D("assets/skybox/bottom.jpg", GL_TEXTURE_CUBE_MAP_NEGATIVE_Y);
-        pgr::loadTexImage2D("assets/skybox/front.jpg", GL_TEXTURE_CUBE_MAP_POSITIVE_Z);
-        pgr::loadTexImage2D("assets/skybox/back.jpg", GL_TEXTURE_CUBE_MAP_NEGATIVE_Z);
+        pgr::loadTexImage2D(file_right,  GL_TEXTURE_CUBE_MAP_POSITIVE_X);
+        pgr::loadTexImage2D(file_left, GL_TEXTURE_CUBE_MAP_NEGATIVE_X);
+        pgr::loadTexImage2D(file_top, GL_TEXTURE_CUBE_MAP_POSITIVE_Y);
+        pgr::loadTexImage2D(file_bottom, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y);
+        pgr::loadTexImage2D(file_front, GL_TEXTURE_CUBE_MAP_POSITIVE_Z);
+        pgr::loadTexImage2D(file_back, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z);
 
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -22,8 +23,8 @@ namespace copakond {
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
         GLuint shaders[] = {
-            pgr::createShaderFromFile(GL_VERTEX_SHADER, "shaders/shaders/skybox.vert"),
-            pgr::createShaderFromFile(GL_FRAGMENT_SHADER, "shaders/shaders/skybox.frag"),
+            pgr::createShaderFromFile(GL_VERTEX_SHADER, file_skybox_vertex_shader),
+            pgr::createShaderFromFile(GL_FRAGMENT_SHADER, file_skybox_fragment_shader),
             0
         };
 
