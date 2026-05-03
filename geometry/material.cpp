@@ -16,6 +16,14 @@ namespace copakond {
         _hasNormalTexture = false;
     }
 
+    Material::~Material() {
+        if (_hasDiffuseTexture) glDeleteTextures(1, &_diffuseTexture);
+        if (_hasSpecularTexture) glDeleteTextures(1, &_specularTexture);
+        if (_hasShininessTexture) glDeleteTextures(1, &_shininessTexture);
+        if (_hasAlphaTexture) glDeleteTextures(1, &_alphaTexture);
+        if (_hasNormalTexture) glDeleteTextures(1, &_normalTexture);
+    }
+
     void Material::setDiffuseTexture(const std::string &textureFile) {
         if (textureFile == "") { return; }
         _diffuseTexture = pgr::createTexture(textureFile);

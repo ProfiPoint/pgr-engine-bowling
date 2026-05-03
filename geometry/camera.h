@@ -16,7 +16,7 @@
 #define MIN_FOV 1.0f
 
 namespace copakond {
-    class Camera : Geometry {
+    class Camera : public Geometry {
     private:
         const glm::vec3 _worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -47,7 +47,7 @@ namespace copakond {
         glm::mat4 getViewMatrix();
         glm::mat4 getProjectionMatrix(float aspectWidth, float aspectHeight);
 
-        glm::vec3 getPosition() { return _position; }
+        glm::vec3 getPosition() const { return _position; }
 
         glm::vec3& position() { return _position; }
         glm::vec3& rotation() { return _rotation; }

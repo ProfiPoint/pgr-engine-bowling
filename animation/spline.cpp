@@ -68,7 +68,7 @@ namespace copakond {
         t = fmod(t, duration);
 
         float segment_duration = duration / points_count;
-        float local_t = fmod(t, segment_duration) / segment_duration;
+        float localT = fmod(t, segment_duration) / segment_duration;
         int offset_index = floor(t / segment_duration);
 
         size_t p0_i = (offset_index - 1 + points_count) % points_count;
@@ -81,7 +81,7 @@ namespace copakond {
         _P2 = points[p2_i];
         _P3 = points[p3_i];
 
-        glm::vec3 normal_result = evaluateNormal(local_t);
+        glm::vec3 normal_result = evaluateNormal(localT);
         if (has_function_vector) {
             if (apply_vector) { apply_vector(normal_result); }
         } else {
@@ -89,7 +89,7 @@ namespace copakond {
         }
 
         if (has_derivative) {
-            glm::vec3 derivative_result = evaluateDerivative(local_t);
+            glm::vec3 derivative_result = evaluateDerivative(localT);
             if (has_function_vector_derivative) {
                 if (apply_vector_derivative) { apply_vector_derivative(derivative_result); }
             } else {

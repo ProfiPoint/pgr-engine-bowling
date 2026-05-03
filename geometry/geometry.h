@@ -19,6 +19,7 @@ namespace copakond {
         Geometry(const glm::vec3 &position);
         Geometry(const glm::vec3 &position, const glm::vec3 &rotation);
         Geometry(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale);
+        virtual ~Geometry();
 
         // getters and setters in one
         virtual void setPosition(const glm::vec3& position) { _position = position; }

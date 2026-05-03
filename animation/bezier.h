@@ -6,8 +6,8 @@
 namespace copakond {
     class Bezier : public Spline {
     protected:
-        glm::vec3 evaluateNormal(float local_t) override;
-        glm::vec3 evaluateDerivative(float local_t) override;
+        glm::vec3 evaluateNormal(float localT) override;
+        glm::vec3 evaluateDerivative(float localT) override;
 
     public:
         using Spline::Spline;

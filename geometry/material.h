@@ -32,13 +32,12 @@ namespace copakond {
 
         void constructor(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess, float alpha);
 
-        void _setMaterial(const Material &material);
-
     public:
         Material();
         Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular);
         Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess);
         Material(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess, float alpha);
+        ~Material();
 
         // getters and setters
         glm::vec3 &ambient() { return _ambient; }
@@ -49,23 +48,23 @@ namespace copakond {
 
         // texture managers
         void setDiffuseTexture(const std::string &textureFile);
-        bool hasDiffuseTexture() { return _hasDiffuseTexture; }
+        bool hasDiffuseTexture() const { return _hasDiffuseTexture; }
         void clearDiffuseTexture() { _hasDiffuseTexture = false; }
 
         void setSpecularTexture(const std::string &textureFile);
-        bool hasSpecularTexture() { return _hasSpecularTexture; }
+        bool hasSpecularTexture() const { return _hasSpecularTexture; }
         void clearSpecularTexture() { _hasSpecularTexture = false; }
 
         void setShininessTexture(const std::string &textureFile);
-        bool hasShininessTexture() { return _hasShininessTexture; }
+        bool hasShininessTexture() const { return _hasShininessTexture; }
         void clearShininessTexture() { _hasShininessTexture = false; }
 
         void setAlphaTexture(const std::string &textureFile);
-        bool hasAlphaTexture() { return _hasAlphaTexture; }
+        bool hasAlphaTexture() const { return _hasAlphaTexture; }
         void clearAlphaTexture() { _hasAlphaTexture = false; }
 
         void setNormalTexture(const std::string &textureFile);
-        bool hasNormalTexture() { return _hasNormalTexture; }
+        bool hasNormalTexture() const { return _hasNormalTexture; }
         void clearNormalTexture() { _hasNormalTexture = false; }
 
         GLuint diffuseTextureUniform() const { return _diffuseTexture; }

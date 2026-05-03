@@ -25,6 +25,13 @@ namespace copakond {
         _scale = scale;
     }
 
+    Geometry::~Geometry() {
+        setParent(nullptr);
+        for (auto& child : children) {
+            child->parent = nullptr;
+        }
+    }
+
     bool Geometry::setParent(Geometry *newParent) {
         if (newParent == this) { // newParent cant be self
             std::cerr << "Can't set parent to itself" << std::endl;

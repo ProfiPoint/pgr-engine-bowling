@@ -7,7 +7,7 @@
 
 namespace copakond {
 
-class Skybox : Mesh {
+class Skybox : public Mesh {
 private:
     GLuint _shaderProgram;
     GLuint _skyboxTextureUID;
@@ -17,7 +17,7 @@ private:
 
 public:
     Skybox();
-    void draw();
+    void draw() override;
     void update(Camera &camera, int winWidth, int winHeight);
 };
 

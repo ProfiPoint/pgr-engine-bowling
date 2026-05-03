@@ -27,9 +27,11 @@ namespace copakond {
         glm::vec3 _P2;
         glm::vec3 _P3;
 
-        virtual glm::vec3 evaluateNormal(float local_t) = 0; // = 0 no body implementation
-        virtual glm::vec3 evaluateDerivative(float local_t) = 0;
+        virtual glm::vec3 evaluateNormal(float localT) = 0; // = 0 no body implementation
+        virtual glm::vec3 evaluateDerivative(float localT) = 0;
     public:
+        virtual ~Spline() = default;
+
         Spline(float duration, std::vector<glm::vec3> &points, glm::vec3 &vector);
         Spline(float duration, std::vector<glm::vec3> &points, std::function<void(glm::vec3)> apply_vector);
 
