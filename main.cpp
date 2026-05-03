@@ -271,6 +271,8 @@ namespace copakond {
         if (option == 6) {
             glutLeaveMainLoop();
         }
+
+        input.resetMouseTarget();
     }
 
     void handleMouseClickedOnObject(int id) {

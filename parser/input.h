@@ -37,6 +37,7 @@ namespace copakond {
         Input(Camera &cam, int winWidth, int winHeight);
 
         void update(int winWidth, int winHeight);
+        void resetMouseTarget() { _firstMouseMovement = false; }
         void setCameraSpline(Spline *spline);
 
         void keyboardInputEvent(unsigned char key, int x, int y);
