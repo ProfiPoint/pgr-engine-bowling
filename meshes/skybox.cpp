@@ -8,12 +8,12 @@ namespace copakond {
         glGenTextures(1, &_skyboxTextureUID);
         glBindTexture(GL_TEXTURE_CUBE_MAP, _skyboxTextureUID);
 
-        pgr::loadTexImage2D("skybox/right.jpg",  GL_TEXTURE_CUBE_MAP_POSITIVE_X);
-        pgr::loadTexImage2D("skybox/left.jpg", GL_TEXTURE_CUBE_MAP_NEGATIVE_X);
-        pgr::loadTexImage2D("skybox/top.jpg", GL_TEXTURE_CUBE_MAP_POSITIVE_Y);
-        pgr::loadTexImage2D("skybox/bottom.jpg", GL_TEXTURE_CUBE_MAP_NEGATIVE_Y);
-        pgr::loadTexImage2D("skybox/front.jpg", GL_TEXTURE_CUBE_MAP_POSITIVE_Z);
-        pgr::loadTexImage2D("skybox/back.jpg", GL_TEXTURE_CUBE_MAP_NEGATIVE_Z);
+        pgr::loadTexImage2D("assets/skybox/right.jpg",  GL_TEXTURE_CUBE_MAP_POSITIVE_X);
+        pgr::loadTexImage2D("assets/skybox/left.jpg", GL_TEXTURE_CUBE_MAP_NEGATIVE_X);
+        pgr::loadTexImage2D("assets/skybox/top.jpg", GL_TEXTURE_CUBE_MAP_POSITIVE_Y);
+        pgr::loadTexImage2D("assets/skybox/bottom.jpg", GL_TEXTURE_CUBE_MAP_NEGATIVE_Y);
+        pgr::loadTexImage2D("assets/skybox/front.jpg", GL_TEXTURE_CUBE_MAP_POSITIVE_Z);
+        pgr::loadTexImage2D("assets/skybox/back.jpg", GL_TEXTURE_CUBE_MAP_NEGATIVE_Z);
 
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

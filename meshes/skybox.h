@@ -2,7 +2,7 @@
 #define PGR_SEM_COPAKOND_SKYBOX_H
 
 #include "../pgr-portable.h"
-#include "../meshes/mesh.h"
+#include "mesh.h"
 #include "../geometry/camera.h"
 
 namespace copakond {

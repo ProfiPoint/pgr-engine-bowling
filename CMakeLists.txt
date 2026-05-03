@@ -26,8 +26,8 @@ add_executable(${PROJECT_NAME} main.cpp
         pgr-portable.h
         parser/mtlLoader.cpp
         parser/mtlLoader.h
-        skybox/skybox.cpp
-        skybox/skybox.h
+        meshes/skybox.cpp
+        meshes/skybox.h
         animation/spline.cpp
         animation/spline.h
         light/fog.h

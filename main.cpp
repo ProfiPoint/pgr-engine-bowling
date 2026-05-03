@@ -11,7 +11,7 @@
 #include "animation/bezier.h"
 #include <algorithm>
 
-#include "skybox/skybox.h"
+#include "meshes/skybox.h"
 
 namespace copakond {
     const char *WIN_TITLE = "PGR Semestral Work Copakond";
@@ -83,20 +83,20 @@ namespace copakond {
 
         skybox = new Skybox();
 
-        Mesh *oldShipMesh = new ObjMesh("meshes/models/ship.obj", true, glm::vec3(-10.0f, 0.0f, 0.0f),
+        Mesh *oldShipMesh = new ObjMesh("assets/models/ship.obj", true, glm::vec3(-10.0f, 0.0f, 0.0f),
                                        glm::vec3(0.0f, -glm::pi<float>()/2, 0.0f), glm::vec3(2.0f, 2.0f, 2.0f));
         oldShipMesh->setMaterial(teddyMaterial);
         meshes.push_back(oldShipMesh);
 
-        Mesh *shipMesh = new ObjMesh("meshes/models/ship2.obj", false, glm::vec3(-5.0f, 0.0f, 0.0f),
+        Mesh *shipMesh = new ObjMesh("assets/models/ship2.obj", false, glm::vec3(-5.0f, 0.0f, 0.0f),
                                        glm::vec3(0.0f, glm::pi<float>(), 0.0f), glm::vec3(0.125f, 0.125f, 0.125f));
         meshes.push_back(shipMesh);
 
-        Mesh *bodyMesh = new ObjMesh("meshes/models/characters/character-a.obj", false, glm::vec3(0.0f, -1.0f, 0.0f),
+        Mesh *bodyMesh = new ObjMesh("assets/models/characters/character-a.obj", false, glm::vec3(0.0f, -1.0f, 0.0f),
                                        glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
         meshes.push_back(bodyMesh);
 
-        Mesh *body2Mesh = new ObjMesh("meshes/models/characters/character-f.obj", false, glm::vec3(2.0f, 0.0f, 0.0f),
+        Mesh *body2Mesh = new ObjMesh("assets/models/characters/character-f.obj", false, glm::vec3(2.0f, 0.0f, 0.0f),
                                        glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
         meshes.push_back(body2Mesh);
 
