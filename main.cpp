@@ -4,7 +4,7 @@
 #include "meshes/objMesh.h"
 #include "geometry/camera.h"
 #include "light/light.h"
-#include "utils/input.h"
+#include "parser/input.h"
 #include "shaders/shader.h"
 #include "animation/spline.h"
 #include "animation/catmullroll.h"
