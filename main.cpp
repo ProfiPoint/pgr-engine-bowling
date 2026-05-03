@@ -140,6 +140,9 @@ namespace copakond {
         glCullFace( GL_BACK);
         glEnable(GL_CULL_FACE);
 
+        // enable stencil test for mouse clicking
+        glEnable(GL_STENCIL_TEST);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
     }
 
     void draw() {
@@ -151,7 +154,7 @@ namespace copakond {
             spline->update(deltaTime);
         }
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         // sort all meshes, from the furthest to the nearest (for transparent meshes), all meshes, could be optimized more...
         glm::vec3 camPos = camera.getTranslation();
@@ -165,10 +168,12 @@ namespace copakond {
         // Draw Non-transparent Meshes
         shader.update(camera, winWidth, winHeight); // use main shader
         for (Mesh *mesh: meshes) {
+            glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
             shader.draw(*mesh, false); // drawing non-transparent objects
         }
 
         // Draw skybox
+        glStencilFunc(GL_ALWAYS, 1, 0); // id = 1 is for skybox
         skybox->update(camera, winWidth, winHeight); // use skybox shader
         skybox->draw();
 
@@ -178,6 +183,7 @@ namespace copakond {
 
         shader.update(camera, winWidth, winHeight); // use main shader
         for (Mesh *mesh: meshes) {
+            glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
             shader.draw(*mesh, true); // drawing transparent objects
         }
 
@@ -192,6 +198,10 @@ namespace copakond {
 
         glutSwapBuffers(); // swap front and back screen buffer
         glutPostRedisplay(); // !!!!!!!!! schedules display, doesnt stack!!!
+    }
+
+    void handleMouseClickedOnObject(int id) {
+        std::cout << "Clicked on object: " << id << std::endl;
     }
 
     void keyboardInputEvent(unsigned char key, int x, int y) {
@@ -211,7 +221,8 @@ namespace copakond {
     }
 
     void mouseButtonEvent(int button, int state, int x, int y) {
-        input.mouseButtonEvent(button, state, x, y);
+        int objectClickedId = (int)input.mouseButtonEvent(button, state, x, y);
+        if (objectClickedId > 0) { handleMouseClickedOnObject(objectClickedId); }
     }
 
     void mouseMoveEvent(int x, int y) {
@@ -240,7 +251,7 @@ int main(int argc, char **argv) {
     glutInitContextVersion(pgr::OGL_VER_MAJOR, pgr::OGL_VER_MINOR);
     glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
 
-    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_STENCIL);
     glutInitWindowSize(copakond::winWidth, copakond::winHeight);
     glutCreateWindow(copakond::WIN_TITLE);
 

@@ -16,9 +16,13 @@ namespace copakond {
 
     class Mesh : public Geometry {
     private:
+
         std::vector<float> _vertices = std::vector<float>();
 
     protected:
+        static int globalMeshCounter;
+        int id;
+
         GLuint _shaderProgram;
         GLuint _vboVertices;
         GLuint _vboNormals;
@@ -27,6 +31,8 @@ namespace copakond {
 
         std::shared_ptr<Material> _material = std::make_shared<Material>();
         std::vector<SubMesh> _subMeshes;
+
+        void _SetId();
 
     public:
         Mesh();
@@ -44,6 +50,7 @@ namespace copakond {
 
         virtual void init(GLuint shader);
         virtual void draw();
+        int getId() const { return id; }
     };
 }
 

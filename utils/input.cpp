@@ -113,7 +113,9 @@ namespace copakond {
     }
 
     // LMB, RMB, MMB
-    void Input::mouseButtonEvent(int button, int state, int x, int y) {
+    unsigned char Input::mouseButtonEvent(int button, int state, int x, int y) {
+        unsigned char objectClickedId = 0;
+
         if (button == GLUT_RIGHT_BUTTON) {
             if (state == GLUT_DOWN) {
                 _keysMap[MOUSE_BUTTON_RIGHT] = true;
@@ -121,6 +123,14 @@ namespace copakond {
                 _keysMap[MOUSE_BUTTON_RIGHT] = false;
             }
         }
+
+        if (button == GLUT_LEFT_BUTTON) {
+            if (state == GLUT_DOWN) {
+                glReadPixels(x, _winHeight - y - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &objectClickedId);
+            }
+        }
+
+        return objectClickedId;
     }
 
     // mouse movement - changing yaw and pitch
