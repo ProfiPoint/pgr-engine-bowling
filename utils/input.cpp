@@ -112,9 +112,15 @@ namespace copakond {
         }
     }
 
+    unsigned char Input::raycast(int x, int y) const {
+        unsigned char objectClickedId = 0;
+        glReadPixels(x, _winHeight - y - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &objectClickedId);
+        return objectClickedId;
+    }
+
     // LMB, RMB, MMB
     unsigned char Input::mouseButtonEvent(int button, int state, int x, int y) {
-        unsigned char objectClickedId = 0;
+
 
         if (button == GLUT_RIGHT_BUTTON) {
             if (state == GLUT_DOWN) {
@@ -126,11 +132,11 @@ namespace copakond {
 
         if (button == GLUT_LEFT_BUTTON) {
             if (state == GLUT_DOWN) {
-                glReadPixels(x, _winHeight - y - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &objectClickedId);
+                return raycast(x, y);
             }
         }
 
-        return objectClickedId;
+        return 0;
     }
 
     // mouse movement - changing yaw and pitch

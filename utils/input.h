@@ -38,6 +38,7 @@ namespace copakond {
         void specKeyboardUpInputEvent(int key, int x, int y);
 
         void keyInput(float deltaTime);
+        unsigned char raycast(int x, int y) const; // returns object id of the given pixel
         unsigned char mouseButtonEvent(int button, int state, int x, int y);
         void mouseMoveEvent(int x, int y);
         void mouseWheelEvent(int wheel, int direction, int x, int y);
