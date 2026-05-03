@@ -176,7 +176,7 @@ namespace copakond {
     }
 
     void Shader::draw(Mesh &mesh, bool drawTransparent) {
-        glm::mat4 modelM = mesh.getModelMatrix();
+        glm::mat4 modelM = mesh.getWorldModelMatrix(); // matrix but in the world coordinates
         glm::mat4 PVM = _projectionM * _viewM * modelM;
         glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelM)); // correct matrix for non-rigid transform
         std::shared_ptr<Material> mat = mesh.getMaterial();

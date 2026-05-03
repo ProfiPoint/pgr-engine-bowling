@@ -11,7 +11,7 @@ namespace copakond {
         std::vector<Geometry*> children;
 
         glm::vec3 _position;
-        glm::vec3 _rotation; // radiant
+        glm::vec3 _rotation; // radiants
         glm::vec3 _scale;
 
     public:
@@ -33,19 +33,21 @@ namespace copakond {
         glm::mat4 getPositionMatrix() const;
         glm::mat4 getRotationMatrix() const;
         glm::mat4 getScaleMatrix() const;
-        glm::mat4 getModelMatrix() const;
+        glm::mat4 getModelMatrix() const; // local matrix
+        glm::mat4 getWorldModelMatrix() const; // used for shader (all matrixes of all ancestors multiplied)
 
         glm::vec3 getPosition() const { return _position; }
         glm::vec3 getRotation() const { return _rotation; }
         glm::vec3 getScale() const { return _scale; }
         glm::vec3 getRotationDegrees() const { return glm::degrees(_rotation); }
 
-        glm::vec3& getPositionRef() { return _position; }
-        glm::vec3& getRotationRef() { return _rotation; }
-        glm::vec3& getScaleRef() { return _scale; }
+        glm::vec3& position() { return _position; }
+        glm::vec3& rotation() { return _rotation; }
+        glm::vec3& scale() { return _scale; }
 
         bool setParent(Geometry *newParent);
         Geometry* getParent() const { return parent; }
+        std::vector<Geometry*> getChildren() const { return children; }
     };
 }
 

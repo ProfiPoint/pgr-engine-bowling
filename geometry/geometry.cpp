@@ -26,11 +26,12 @@ namespace copakond {
     }
 
     bool Geometry::setParent(Geometry *newParent) {
-        if (newParent == this) {
+        if (newParent == this) { // newParent cant be self
             std::cerr << "Can't set parent to itself" << std::endl;
             return false;
         }
 
+        // cycle detection
         Geometry *ancestor = newParent;
         while (ancestor != nullptr) {
             if (ancestor == this) {
@@ -40,7 +41,19 @@ namespace copakond {
             ancestor = ancestor->parent;
         }
 
-        this->parent = newParent;
+        // remove self from children of the prev parent
+        if (this->parent != nullptr) {
+            auto& oldChildren = this->parent->children;
+            oldChildren.erase(std::remove(oldChildren.begin(), oldChildren.end(), this), oldChildren.end());
+        }
+
+        this->parent = newParent; // set new parent
+
+        // adds self to a children of new parent
+        if (this->parent != nullptr) {
+            this->parent->children.push_back(this);
+        }
+
         return true;
     }
 
@@ -70,5 +83,16 @@ namespace copakond {
 
     glm::mat4 Geometry::getModelMatrix() const {
         return getPositionMatrix() * getRotationMatrix() * getScaleMatrix();
+    }
+
+    glm::mat4 Geometry::getWorldModelMatrix() const {
+        glm::mat4 localModelMatrix = getModelMatrix();
+
+        // recursion (not tail recursive!!!)
+        if (parent != nullptr) {
+            return parent->getWorldModelMatrix() * localModelMatrix;
+        }
+
+        return localModelMatrix; // if no parent
     }
 }

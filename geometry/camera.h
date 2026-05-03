@@ -49,8 +49,8 @@ namespace copakond {
 
         glm::vec3 getPosition() { return _position; }
 
-        glm::vec3& getPositionRef() { return _position; }
-        glm::vec3& getRotationRef() { return _rotation; }
+        glm::vec3& position() { return _position; }
+        glm::vec3& rotation() { return _rotation; }
 
         void processKeyboard(int direction, float deltaTime);
         void processMouseMovement(float deltaX, float deltaY);

@@ -41,14 +41,14 @@ namespace copakond {
         if (_keysMap[GLUT_KEY_F3 + IS_SPECIAL_KEY]) {
             _canMove = false;
             _spline->pause();
-            _camera.getPositionRef() = glm::vec3(5.0f, 0.0f, 20.0f);
+            _camera.position() = glm::vec3(5.0f, 0.0f, 20.0f);
             _camera.lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
         }
 
         if (_keysMap[GLUT_KEY_F4 + IS_SPECIAL_KEY]) {
             _canMove = false;
             _spline->pause();
-            _camera.getPositionRef() = glm::vec3(5.0f, 0.0f, -20.0f);
+            _camera.position() = glm::vec3(5.0f, 0.0f, -20.0f);
             _camera.lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
         }
 

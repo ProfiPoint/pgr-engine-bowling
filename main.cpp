@@ -96,7 +96,7 @@ namespace copakond {
                                        glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
         meshes.push_back(bodyMesh);
 
-        Mesh *body2Mesh = new ObjMesh("meshes/models/characters/character-f.obj", false, glm::vec3(2.0f, -1.0f, 0.0f),
+        Mesh *body2Mesh = new ObjMesh("meshes/models/characters/character-f.obj", false, glm::vec3(2.0f, 0.0f, 0.0f),
                                        glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
         meshes.push_back(body2Mesh);
 
@@ -122,7 +122,7 @@ namespace copakond {
         Spline *camera_spline = new CatmullRoll(
             20.0f,
             camera_spline_points,
-            camera.getPositionRef(),
+            camera.position(),
             [](glm::vec3 derivative) {
                 if (glm::length(derivative) > 0.0001f) {  // prevent on screen glitching
                     camera.lookToPoint(camera.getPosition() + derivative);
@@ -189,6 +189,8 @@ namespace copakond {
             glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
             shader.draw(*mesh, true); // drawing transparent objects
         }
+
+        meshes[3]->rotation().x += deltaTime;
 
         glDepthMask(GL_TRUE); // restore
         glDisable(GL_BLEND);
