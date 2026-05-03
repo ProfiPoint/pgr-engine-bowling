@@ -99,7 +99,7 @@ namespace copakond {
         glUseProgram(_shaderProgram);
         _viewM = camera.getViewMatrix();
         _projectionM = camera.getProjectionMatrix((float)winWidth, (float)winHeight);
-        _position = camera.getTranslation();
+        _position = camera.getPosition();
 
         // APPLY FOG
         glUniform1i(_fogEnabled, camera.getFog().enabled);

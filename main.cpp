@@ -122,10 +122,10 @@ namespace copakond {
         Spline *camera_spline = new CatmullRoll(
             20.0f,
             camera_spline_points,
-            camera.getTranslationRef(),
+            camera.getPositionRef(),
             [](glm::vec3 derivative) {
                 if (glm::length(derivative) > 0.0001f) {  // prevent on screen glitching
-                    camera.lookToPoint(camera.getTranslation() + derivative);
+                    camera.lookToPoint(camera.getPosition() + derivative);
                 }
             }
         );
@@ -160,10 +160,10 @@ namespace copakond {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         // sort all meshes, from the furthest to the nearest (for transparent meshes), all meshes, could be optimized more...
-        glm::vec3 camPos = camera.getTranslation();
+        glm::vec3 camPos = camera.getPosition();
         std::sort(meshes.begin(), meshes.end(), [&camPos](Mesh* a, Mesh* b) {
-                glm::vec3 pos1 = glm::vec3(a->getModelMatrix()[3]); // translation
-                glm::vec3 pos2 = glm::vec3(b->getModelMatrix()[3]); // translation
+                glm::vec3 pos1 = glm::vec3(a->getModelMatrix()[3]); // position
+                glm::vec3 pos2 = glm::vec3(b->getModelMatrix()[3]); // position
 
                 return glm::distance(camPos, pos1) > glm::distance(camPos, pos2);
         });
@@ -195,7 +195,7 @@ namespace copakond {
 
 
         if (!lights.empty()) {
-            lights[0]->position() = camera.getTranslation();
+            lights[0]->position() = camera.getPosition();
             shader.updateLight(lights[0]);
         }
 

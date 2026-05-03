@@ -16,27 +16,27 @@ namespace copakond {
     ObjMesh::ObjMesh(const std::string &objFileLocation)
         : Mesh(), _fileLocation(objFileLocation) { constructor(objFileLocation, false); }
 
-    ObjMesh::ObjMesh(const std::string &objFileLocation, const glm::vec3 &translation)
-        : Mesh(translation), _fileLocation(objFileLocation) { constructor(objFileLocation, false); }
+    ObjMesh::ObjMesh(const std::string &objFileLocation, const glm::vec3 &position)
+        : Mesh(position), _fileLocation(objFileLocation) { constructor(objFileLocation, false); }
 
-    ObjMesh::ObjMesh(const std::string &objFileLocation, const glm::vec3 &translation, const glm::vec3 &rotation)
-        : Mesh(translation, rotation), _fileLocation(objFileLocation) { constructor(objFileLocation, false); }
+    ObjMesh::ObjMesh(const std::string &objFileLocation, const glm::vec3 &position, const glm::vec3 &rotation)
+        : Mesh(position, rotation), _fileLocation(objFileLocation) { constructor(objFileLocation, false); }
 
-    ObjMesh::ObjMesh(const std::string &objFileLocation, const glm::vec3 &translation, const glm::vec3 &rotation, const glm::vec3 &scale)
-        : Mesh(translation, rotation, scale), _fileLocation(objFileLocation) { constructor(objFileLocation, false); }
+    ObjMesh::ObjMesh(const std::string &objFileLocation, const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale)
+        : Mesh(position, rotation, scale), _fileLocation(objFileLocation) { constructor(objFileLocation, false); }
 
     ObjMesh::ObjMesh(const std::string &objFileLocation, bool normalizeCoord)
         : Mesh(), _fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
 
-    ObjMesh::ObjMesh(const std::string &objFileLocation, bool normalizeCoord, const glm::vec3 &translation)
-        : Mesh(translation), _fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
+    ObjMesh::ObjMesh(const std::string &objFileLocation, bool normalizeCoord, const glm::vec3 &position)
+        : Mesh(position), _fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
 
-    ObjMesh::ObjMesh(const std::string &objFileLocation, bool normalizeCoord, const glm::vec3 &translation, const glm::vec3 &rotation)
-        : Mesh(translation, rotation), _fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
+    ObjMesh::ObjMesh(const std::string &objFileLocation, bool normalizeCoord, const glm::vec3 &position, const glm::vec3 &rotation)
+        : Mesh(position, rotation), _fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
 
-    ObjMesh::ObjMesh(const std::string &objFileLocation, bool normalizeCoord, const glm::vec3 &translation, const glm::vec3 &rotation,
+    ObjMesh::ObjMesh(const std::string &objFileLocation, bool normalizeCoord, const glm::vec3 &position, const glm::vec3 &rotation,
                      const glm::vec3 &scale)
-        : Mesh(translation, rotation, scale), _fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
+        : Mesh(position, rotation, scale), _fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
 
     void ObjMesh::init(GLuint shader) {
         _shaderProgram = shader;

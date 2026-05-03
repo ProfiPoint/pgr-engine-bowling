@@ -2,7 +2,7 @@
 
 namespace copakond {
     Camera::Camera(const glm::vec3 &startPosition, const glm::vec3 &startLookPoint, float distance) {
-        _translation = startPosition;
+        _position = startPosition;
         _farZ = distance;
         _nearZ = 0.1f;
         _fov = 45.0f;
@@ -40,7 +40,7 @@ namespace copakond {
     // sets yaw and pitch based off of position and look point
     void Camera::lookToPoint(const glm::vec3 &point) {
         // https://learnopengl.com/Getting-started/Camera
-        _front = glm::normalize(point - _translation);
+        _front = glm::normalize(point - _position);
 
         float pitch = glm::degrees(asin(_front.y));
         float yaw = glm::degrees(atan2(_front.z, _front.x));
@@ -49,7 +49,7 @@ namespace copakond {
     }
 
     glm::mat4 Camera::getViewMatrix() {
-        return glm::lookAt(_translation, _translation + _front, _up);
+        return glm::lookAt(_position, _position + _front, _up);
     }
 
     glm::mat4 Camera::getProjectionMatrix(float winWidth, float winHeight) {
@@ -62,22 +62,22 @@ namespace copakond {
 
         switch (direction) {
             case FRONT:
-                _translation += frontNorm * _movementSpeed * deltaTime;
+                _position += frontNorm * _movementSpeed * deltaTime;
                 break;
             case BACK:
-                _translation -= frontNorm * _movementSpeed * deltaTime;
+                _position -= frontNorm * _movementSpeed * deltaTime;
                 break;
             case LEFT:
-                _translation -= _right * _movementSpeed * deltaTime;
+                _position -= _right * _movementSpeed * deltaTime;
                 break;
             case RIGHT:
-                _translation += _right * _movementSpeed * deltaTime;
+                _position += _right * _movementSpeed * deltaTime;
                 break;
             case UP:
-                _translation += _worldUp * _movementSpeed * deltaTime;
+                _position += _worldUp * _movementSpeed * deltaTime;
                 break;
             case DOWN:
-                _translation -= _worldUp * _movementSpeed * deltaTime;
+                _position -= _worldUp * _movementSpeed * deltaTime;
         }
     }
 
@@ -103,7 +103,7 @@ namespace copakond {
     void Camera::processMouseDrag(float deltaX, float deltaY) {
         float velocityX = deltaX * _mouseSensitivity;
         float velocityY = deltaY * _mouseSensitivity;
-        _translation += _right * velocityX;
-        _translation += _up * velocityY;
+        _position += _right * velocityX;
+        _position += _up * velocityY;
     }
 }

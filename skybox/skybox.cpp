@@ -96,7 +96,7 @@ namespace copakond {
         glUseProgram(_shaderProgram);
         glm::mat4 projectionM = camera.getProjectionMatrix((float)winWidth, (float)winHeight);
         glm::mat4 viewM = camera.getViewMatrix();
-        viewM = glm::mat4(glm::mat3(viewM)); // removing translation
+        viewM = glm::mat4(glm::mat3(viewM)); // removing position
 
         glUniformMatrix4fv(_viewUID, 1, GL_FALSE, glm::value_ptr(viewM));
         glUniformMatrix4fv(_projectionUID, 1, GL_FALSE, glm::value_ptr(projectionM));

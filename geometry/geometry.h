@@ -8,19 +8,20 @@ namespace copakond {
     class Geometry {
     protected:
         Geometry *parent = nullptr;
+        std::vector<Geometry*> children;
 
-        glm::vec3 _translation;
+        glm::vec3 _position;
         glm::vec3 _rotation; // radiant
         glm::vec3 _scale;
 
     public:
         Geometry();
-        Geometry(const glm::vec3 &translation);
-        Geometry(const glm::vec3 &translation, const glm::vec3 &rotation);
-        Geometry(const glm::vec3 &translation, const glm::vec3 &rotation, const glm::vec3 &scale);
+        Geometry(const glm::vec3 &position);
+        Geometry(const glm::vec3 &position, const glm::vec3 &rotation);
+        Geometry(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale);
 
         // getters and setters in one
-        virtual void setTranslation(const glm::vec3& translation) { _translation = translation; }
+        virtual void setPosition(const glm::vec3& position) { _position = position; }
         virtual void setRotation(const glm::vec3& rotation) { _rotation = rotation; }
         virtual void setScale(const glm::vec3& scale) { _scale = scale; }
         virtual void setRotationDegrees(const glm::vec3 &rotationDegrees) { _rotation = glm::radians(rotationDegrees); }
@@ -29,17 +30,17 @@ namespace copakond {
         glm::mat4 getRotationYMatrix() const;
         glm::mat4 getRotationZMatrix() const;
 
-        glm::mat4 getTranslationMatrix() const;
+        glm::mat4 getPositionMatrix() const;
         glm::mat4 getRotationMatrix() const;
         glm::mat4 getScaleMatrix() const;
         glm::mat4 getModelMatrix() const;
 
-        glm::vec3 getTranslation() const { return _translation; }
+        glm::vec3 getPosition() const { return _position; }
         glm::vec3 getRotation() const { return _rotation; }
         glm::vec3 getScale() const { return _scale; }
         glm::vec3 getRotationDegrees() const { return glm::degrees(_rotation); }
 
-        glm::vec3& getTranslationRef() { return _translation; }
+        glm::vec3& getPositionRef() { return _position; }
         glm::vec3& getRotationRef() { return _rotation; }
         glm::vec3& getScaleRef() { return _scale; }
 

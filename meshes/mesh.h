@@ -36,9 +36,9 @@ namespace copakond {
 
     public:
         Mesh();
-        Mesh(const glm::vec3 &translation);
-        Mesh(const glm::vec3 &translation, const glm::vec3 &rotation);
-        Mesh(const glm::vec3 &translation, const glm::vec3 &rotation, const glm::vec3 &scale);
+        Mesh(const glm::vec3 &position);
+        Mesh(const glm::vec3 &position, const glm::vec3 &rotation);
+        Mesh(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale);
 
         void setVertices(const std::vector<float> &vertices);
         void setMaterial(const std::shared_ptr<Material> &material);

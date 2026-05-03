@@ -11,11 +11,11 @@ namespace copakond {
 
     Mesh::Mesh() : Geometry() { _SetId(); }
 
-    Mesh::Mesh(const glm::vec3 &translation) : Geometry(translation) { _SetId(); }
+    Mesh::Mesh(const glm::vec3 &position) : Geometry(position) { _SetId(); }
 
-    Mesh::Mesh(const glm::vec3 &translation, const glm::vec3 &rotation) : Geometry(translation, rotation) { _SetId(); }
+    Mesh::Mesh(const glm::vec3 &position, const glm::vec3 &rotation) : Geometry(position, rotation) { _SetId(); }
 
-    Mesh::Mesh(const glm::vec3 &translation, const glm::vec3 &rotation, const glm::vec3 &scale) : Geometry(translation, rotation, scale) { _SetId(); }
+    Mesh::Mesh(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale) : Geometry(position, rotation, scale) { _SetId(); }
 
     void Mesh::setVertices(const std::vector<float> &vertices) {
         _vertices = vertices;
