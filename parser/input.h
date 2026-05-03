@@ -16,17 +16,24 @@ namespace copakond {
     class Spline;
 
     class Input {
-    private:
+    public:
         Camera &_camera;
         Spline *_spline = nullptr;
         int _winWidth;
         int _winHeight;
         bool _canMove = true;
-        bool _keysMap[1024] = {false}; // 256 normal, 256 special
+
         bool _firstMouseMovement = false;
         float shiftSpeedBoost = 1.0f;
 
-    public:
+        bool _isFullScreen = false;
+        int _windowWidth = 0;
+        int _windowHeight = 0;
+        int _windowPosX = 0;
+        int _windowPosY = 0;
+
+        bool keysMap[1024] = {false}; // 256 normal, 256 special
+
         Input(Camera &cam, int winWidth, int winHeight);
 
         void update(int winWidth, int winHeight);

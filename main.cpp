@@ -14,6 +14,8 @@
 #include "meshes/skybox.h"
 
 namespace copakond {
+    void menuCallback(int option);
+
     const char *WIN_TITLE = "PGR Semestral Work Copakond";
     int winWidth = 1280;
     int winHeight = 720;
@@ -155,6 +157,15 @@ namespace copakond {
         // enable stencil test for mouse clicking
         glEnable(GL_STENCIL_TEST);
         glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+
+        glutCreateMenu(menuCallback);
+        glutAddMenuEntry("Player Cam", 1);
+        glutAddMenuEntry("Catmull Roll Cam", 2);
+        glutAddMenuEntry("Static Cam 1", 3);
+        glutAddMenuEntry("Static Cam 2", 4);
+        glutAddMenuEntry("Full Screen", 5);
+        glutAddMenuEntry("Exit Game", 6);
+        glutAttachMenu(GLUT_RIGHT_BUTTON);
     }
 
     void draw() {
@@ -212,6 +223,54 @@ namespace copakond {
 
         glutSwapBuffers(); // swap front and back screen buffer
         glutPostRedisplay(); // !!!!!!!!! schedules display, doesnt stack!!!
+    }
+
+    // TODO take the logic away from the input into different class
+    void menuCallback(int option) {
+        if (option == 1) {
+            input._canMove = true;
+            input._spline->pause();
+        }
+
+        if (option == 2) {
+            input._canMove = false;
+            input._spline->reset();
+            input._spline->unpause();
+        }
+
+        if (option == 3) {
+            input._canMove = false;
+            input._spline->pause();
+            input._camera.position() = glm::vec3(5.0f, 0.0f, 20.0f);
+            input._camera.lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
+        }
+
+        if (option == 4) {
+            input._canMove = false;
+            input._spline->pause();
+            input._camera.position() = glm::vec3(5.0f, 0.0f, -20.0f);
+            input._camera.lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
+        }
+
+        if (option == 5) {
+            if (input._isFullScreen) {
+                glutReshapeWindow(input._windowWidth, input._windowHeight);
+                glutPositionWindow(input._windowPosX, input._windowPosY);
+                input._isFullScreen = false;
+            } else {
+                input._windowWidth = glutGet(GLUT_WINDOW_WIDTH);
+                input._windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
+                input._windowPosX = glutGet(GLUT_WINDOW_X);
+                input._windowPosY = glutGet(GLUT_WINDOW_Y);
+
+                glutFullScreen();
+                input._isFullScreen = true;
+            }
+        }
+
+        if (option == 6) {
+            glutLeaveMainLoop();
+        }
     }
 
     void handleMouseClickedOnObject(int id) {

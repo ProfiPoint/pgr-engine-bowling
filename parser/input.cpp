@@ -7,6 +7,8 @@
 #define SHIFT_BOOST 1.5f
 #define MOUSE_DRAG_COEFF 0.05f
 
+// TODO move this all into some other script, the logic
+
 namespace copakond {
     Input::Input(Camera &cam, int winWidth, int winHeight) : _camera(cam), _winWidth(winWidth), _winHeight(winHeight) {
     }
@@ -18,72 +20,88 @@ namespace copakond {
 
     // saving input to key map once some key is pressed and unpressed
     void Input::keyboardInputEvent(unsigned char key, int x, int y) {
-        _keysMap[std::tolower(key)] = true;
-        _keysMap[std::toupper(key)] = true;
+        keysMap[std::tolower(key)] = true;
+        keysMap[std::toupper(key)] = true;
 
-        if (glutGetModifiers() & GLUT_ACTIVE_SHIFT) _keysMap[KEY_SHIFT] = true;
+        if (glutGetModifiers() & GLUT_ACTIVE_SHIFT) keysMap[KEY_SHIFT] = true;
     }
 
     void Input::specKeyboardInputEvent(int key, int x, int y) {
-        _keysMap[key + IS_SPECIAL_KEY] = true;
+        keysMap[key + IS_SPECIAL_KEY] = true;
 
-        if (_keysMap[GLUT_KEY_F1 + IS_SPECIAL_KEY]) {
+        if (keysMap[GLUT_KEY_F1 + IS_SPECIAL_KEY]) {
             _canMove = true;
             _spline->pause();
         }
 
-        if (_keysMap[GLUT_KEY_F2 + IS_SPECIAL_KEY]) {
+        if (keysMap[GLUT_KEY_F2 + IS_SPECIAL_KEY]) {
             _canMove = false;
             _spline->reset();
             _spline->unpause();
         }
 
-        if (_keysMap[GLUT_KEY_F3 + IS_SPECIAL_KEY]) {
+        if (keysMap[GLUT_KEY_F3 + IS_SPECIAL_KEY]) {
             _canMove = false;
             _spline->pause();
             _camera.position() = glm::vec3(5.0f, 0.0f, 20.0f);
             _camera.lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
         }
 
-        if (_keysMap[GLUT_KEY_F4 + IS_SPECIAL_KEY]) {
+        if (keysMap[GLUT_KEY_F4 + IS_SPECIAL_KEY]) {
             _canMove = false;
             _spline->pause();
             _camera.position() = glm::vec3(5.0f, 0.0f, -20.0f);
             _camera.lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
         }
 
-        if (glutGetModifiers() & GLUT_ACTIVE_SHIFT) _keysMap[KEY_SHIFT] = true;
+        if (keysMap[GLUT_KEY_F11 + IS_SPECIAL_KEY]) {
+            if (_isFullScreen) {
+                glutReshapeWindow(_windowWidth, _windowHeight);
+                glutPositionWindow(_windowPosX, _windowPosY);
+                _isFullScreen = false;
+            } else {
+                _windowWidth = glutGet(GLUT_WINDOW_WIDTH);
+                _windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
+                _windowPosX = glutGet(GLUT_WINDOW_X);
+                _windowPosY = glutGet(GLUT_WINDOW_Y);
+
+                glutFullScreen();
+                _isFullScreen = true;
+            }
+        }
+
+        if (glutGetModifiers() & GLUT_ACTIVE_SHIFT) keysMap[KEY_SHIFT] = true;
     }
 
     void Input::keyboardUpInputEvent(unsigned char key, int x, int y) {
-        _keysMap[std::tolower(key)] = false;
-        _keysMap[std::toupper(key)] = false;
+        keysMap[std::tolower(key)] = false;
+        keysMap[std::toupper(key)] = false;
 
         if (!(glutGetModifiers() & GLUT_ACTIVE_SHIFT)) {
-            _keysMap[KEY_SHIFT] = false;
+            keysMap[KEY_SHIFT] = false;
         }
     }
 
     void Input::specKeyboardUpInputEvent(int key, int x, int y) {
-        _keysMap[key + IS_SPECIAL_KEY] = false;
+        keysMap[key + IS_SPECIAL_KEY] = false;
 
         if (!(glutGetModifiers() & GLUT_ACTIVE_SHIFT)) {
-            _keysMap[KEY_SHIFT] = false;
+            keysMap[KEY_SHIFT] = false;
         }
     }
 
     // parsing key movement WASD / arrows
     void Input::keyInput(float deltaTime) {
-        if (_keysMap[KEY_SHIFT]) { shiftSpeedBoost = SHIFT_BOOST;  } else { shiftSpeedBoost = 1.0f; }
+        if (keysMap[KEY_SHIFT]) { shiftSpeedBoost = SHIFT_BOOST;  } else { shiftSpeedBoost = 1.0f; }
         float speed = deltaTime * shiftSpeedBoost;
         glm::vec3 direction(0.0f);
 
-        if (_keysMap['w'] || _keysMap[GLUT_KEY_UP + IS_SPECIAL_KEY]) { direction.z += 1.0f; }
-        if (_keysMap['s'] || _keysMap[GLUT_KEY_DOWN + IS_SPECIAL_KEY]) { direction.z -= 1.0f; }
-        if (_keysMap['a'] || _keysMap[GLUT_KEY_LEFT + IS_SPECIAL_KEY]) { direction.x -= 1.0f; }
-        if (_keysMap['d'] || _keysMap[GLUT_KEY_RIGHT + IS_SPECIAL_KEY]) { direction.x += 1.0f; }
-        if (_keysMap['e']) { direction.y += 1.0f; }
-        if (_keysMap['q']) { direction.y -= 1.0f; }
+        if (keysMap['w'] || keysMap[GLUT_KEY_UP + IS_SPECIAL_KEY]) { direction.z += 1.0f; }
+        if (keysMap['s'] || keysMap[GLUT_KEY_DOWN + IS_SPECIAL_KEY]) { direction.z -= 1.0f; }
+        if (keysMap['a'] || keysMap[GLUT_KEY_LEFT + IS_SPECIAL_KEY]) { direction.x -= 1.0f; }
+        if (keysMap['d'] || keysMap[GLUT_KEY_RIGHT + IS_SPECIAL_KEY]) { direction.x += 1.0f; }
+        if (keysMap['e']) { direction.y += 1.0f; }
+        if (keysMap['q']) { direction.y -= 1.0f; }
 
         if (glm::length(direction) > 0.0f && _canMove) {
             direction = glm::normalize(direction);
@@ -107,7 +125,7 @@ namespace copakond {
             }
         }
 
-        if (_keysMap[KEY_ESC]) {
+        if (keysMap[KEY_ESC]) {
             glutLeaveMainLoop();
         }
     }
@@ -122,11 +140,11 @@ namespace copakond {
     unsigned char Input::mouseButtonEvent(int button, int state, int x, int y) {
 
 
-        if (button == GLUT_RIGHT_BUTTON) {
+        if (button == GLUT_MIDDLE_BUTTON) {
             if (state == GLUT_DOWN) {
-                _keysMap[MOUSE_BUTTON_RIGHT] = true;
+                keysMap[MOUSE_BUTTON_RIGHT] = true;
             } else if (state == GLUT_UP) {
-                _keysMap[MOUSE_BUTTON_RIGHT] = false;
+                keysMap[MOUSE_BUTTON_RIGHT] = false;
             }
         }
 
@@ -157,7 +175,7 @@ namespace copakond {
         }
 
         // if RMB pressed then drag, otherwise move around
-        if (_keysMap[MOUSE_BUTTON_RIGHT]) {
+        if (keysMap[MOUSE_BUTTON_RIGHT]) {
             _camera.processMouseDrag(deltaX*MOUSE_DRAG_COEFF, deltaY*MOUSE_DRAG_COEFF);
         } else {
             _camera.processMouseMovement(deltaX, deltaY);

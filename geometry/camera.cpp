@@ -5,7 +5,7 @@ namespace copakond {
         _position = startPosition;
         _farZ = distance;
         _nearZ = 0.1f;
-        _fov = 45.0f;
+        _fov = 75.0f;
         _maxPitch = 89.0f;
         _movementSpeed = 2.0f;
         _mouseSensitivity = 0.1f;
