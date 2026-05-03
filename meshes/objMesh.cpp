@@ -38,6 +38,11 @@ namespace copakond {
                      const glm::vec3 &scale)
         : Mesh(position, rotation, scale), _fileLocation(objFileLocation) { constructor(objFileLocation, normalizeCoord); }
 
+    ObjMesh::~ObjMesh() {
+        glDeleteBuffers(1, &_vboUvs);
+        glDeleteBuffers(1, &_ebo);
+    }
+
     void ObjMesh::init(GLuint shader) {
         _shaderProgram = shader;
 

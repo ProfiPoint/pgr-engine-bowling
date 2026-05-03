@@ -11,42 +11,42 @@
 namespace copakond {
     class Shader {
     protected:
-        GLuint _shaderProgram;
+        GLuint _shaderProgram = 0;
 
-        GLuint _worldAmbientUID;
+        GLuint _worldAmbientUID = 0;
 
-        GLint _modelUID; // model matrix uniform index;
-        GLint _viewUID; // view matrix uniform index;
-        GLint _projectionUID; // projection matrix uniform index;
-        GLint _pvmUID; // PVM matrix uniform index;
-        GLint _camPos; // position of camera eye position uniform index;
-        GLint _normalMatrix; // correct matrix for non-rigid transform uniform index;
+        GLint _modelUID = 0; // model matrix uniform index;
+        GLint _viewUID = 0; // view matrix uniform index;
+        GLint _projectionUID = 0; // projection matrix uniform index;
+        GLint _pvmUID = 0; // PVM matrix uniform index;
+        GLint _camPos = 0; // position of camera eye position uniform index;
+        GLint _normalMatrix = 0; // correct matrix for non-rigid transform uniform index;
 
-        GLint _fogEnabled;
-        GLint _fogStart;
-        GLint _fogEnd;
-        GLint _fogColor;
+        GLint _fogEnabled = 0;
+        GLint _fogStart = 0;
+        GLint _fogEnd = 0;
+        GLint _fogColor = 0;
 
-        GLint _ambient;
-        GLint _diffuse;
-        GLint _specular;
-        GLint _shininess;
-        GLint _alpha;
+        GLint _ambient = 0;
+        GLint _diffuse = 0;
+        GLint _specular = 0;
+        GLint _shininess = 0;
+        GLint _alpha = 0;
 
-        GLuint _diffuseMapUID;
-        GLuint _specularMapUID;
-        GLuint _shininessMapUID;
-        GLuint _alphaMapUID;
-        GLuint _normalMapUID;
+        GLuint _diffuseMapUID = 0;
+        GLuint _specularMapUID = 0;
+        GLuint _shininessMapUID = 0;
+        GLuint _alphaMapUID = 0;
+        GLuint _normalMapUID = 0;
 
-        GLuint _useDiffuseMapUID;
-        GLuint _useSpecularMapUID;
-        GLuint _useShininessMapUID;
-        GLuint _useAlphaMapUID;
-        GLuint _useNormalMapUID;
+        GLuint _useDiffuseMapUID = 0;
+        GLuint _useSpecularMapUID = 0;
+        GLuint _useShininessMapUID = 0;
+        GLuint _useAlphaMapUID = 0;
+        GLuint _useNormalMapUID = 0;
 
-        GLint _numLights; // uniform id
-        size_t totalNumLights; // actual counter
+        GLint _numLights = 0; // uniform id
+        size_t totalNumLights = 0; // actual counter
 
         glm::mat4 _viewM; // camera view matrix
         glm::mat4 _projectionM; // perspective projection matrix

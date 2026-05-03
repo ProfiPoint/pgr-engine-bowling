@@ -18,11 +18,11 @@ namespace copakond {
         float _shininess;
         float _alpha;
 
-        GLuint _diffuseTexture;
-        GLuint _specularTexture;
-        GLuint _shininessTexture;
-        GLuint _alphaTexture;
-        GLuint _normalTexture;
+        GLuint _diffuseTexture = 0;
+        GLuint _specularTexture = 0;
+        GLuint _shininessTexture = 0;
+        GLuint _alphaTexture = 0;
+        GLuint _normalTexture = 0;
 
         bool _hasDiffuseTexture;
         bool _hasSpecularTexture;

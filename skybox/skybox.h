@@ -9,11 +9,11 @@ namespace copakond {
 
 class Skybox : public Mesh {
 private:
-    GLuint _shaderProgram;
-    GLuint _skyboxTextureUID;
+    GLuint _shaderProgram = 0;
+    GLuint _skyboxTextureUID = 0;
 
-    GLuint _viewUID;
-    GLuint _projectionUID;
+    GLuint _viewUID = 0;
+    GLuint _projectionUID = 0;
 
 public:
     Skybox();

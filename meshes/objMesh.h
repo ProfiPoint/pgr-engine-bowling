@@ -12,8 +12,8 @@ namespace copakond {
         std::vector<float> _normals;
         std::vector<float> _uvs;
 
-        GLuint _vboUvs;
-        GLuint _ebo;
+        GLuint _vboUvs = 0;
+        GLuint _ebo = 0;
 
         void constructor(const std::string &objFileLocation, bool normalizeCoord);
 
@@ -28,6 +28,8 @@ namespace copakond {
         ObjMesh(const std::string &objFileLocation, bool normalizeCoord, const glm::vec3 &position, const glm::vec3 &rotation);
         ObjMesh(const std::string &objFileLocation, bool normalizeCoord, const glm::vec3 &position, const glm::vec3 &rotation,
                 const glm::vec3 &scale);
+
+        ~ObjMesh() override;
 
         void init(GLuint shader) override;
         void draw() override;

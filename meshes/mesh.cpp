@@ -17,6 +17,12 @@ namespace copakond {
 
     Mesh::Mesh(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale) : Geometry(position, rotation, scale) { _SetId(); }
 
+    Mesh::~Mesh() { // free vram
+        glDeleteVertexArrays(1, &_vao);
+        glDeleteBuffers(1, &_vboVertices);
+        glDeleteBuffers(1, &_vboNormals);
+    }
+
     void Mesh::setVertices(const std::vector<float> &vertices) {
         _vertices = vertices;
     }

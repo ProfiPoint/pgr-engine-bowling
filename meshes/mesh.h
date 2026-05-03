@@ -23,11 +23,11 @@ namespace copakond {
         static int globalMeshCounter;
         int id;
 
-        GLuint _shaderProgram;
-        GLuint _vboVertices;
-        GLuint _vboNormals;
-        GLuint _vao;
-        GLsizei _numVertices;
+        GLuint _shaderProgram = 0;
+        GLuint _vboVertices = 0;
+        GLuint _vboNormals = 0;
+        GLuint _vao = 0;
+        GLsizei _numVertices = 0;
 
         std::shared_ptr<Material> _material = std::make_shared<Material>();
         std::vector<SubMesh> _subMeshes;
@@ -39,6 +39,7 @@ namespace copakond {
         Mesh(const glm::vec3 &position);
         Mesh(const glm::vec3 &position, const glm::vec3 &rotation);
         Mesh(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale);
+        virtual ~Mesh();
 
         void setVertices(const std::vector<float> &vertices);
         void setMaterial(const std::shared_ptr<Material> &material);
