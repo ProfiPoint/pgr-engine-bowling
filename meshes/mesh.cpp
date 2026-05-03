@@ -1,5 +1,7 @@
 #include "mesh.h"
 
+#include <iostream>
+
 namespace copakond {
     int Mesh::globalMeshCounter = 0;
 

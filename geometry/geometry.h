@@ -2,10 +2,13 @@
 #define PGR_SEM_COPAKOND_GEOMETRY_H
 
 #include "../pgr-portable.h"
+#include <iostream>
 
 namespace copakond {
     class Geometry {
     protected:
+        Geometry *parent = nullptr;
+
         glm::vec3 _translation;
         glm::vec3 _rotation; // radiant
         glm::vec3 _scale;
@@ -39,6 +42,9 @@ namespace copakond {
         glm::vec3& getTranslationRef() { return _translation; }
         glm::vec3& getRotationRef() { return _rotation; }
         glm::vec3& getScaleRef() { return _scale; }
+
+        bool setParent(Geometry *newParent);
+        Geometry* getParent() const { return parent; }
     };
 }
 

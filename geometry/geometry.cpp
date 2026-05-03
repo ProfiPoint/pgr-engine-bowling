@@ -25,6 +25,25 @@ namespace copakond {
         _scale = scale;
     }
 
+    bool Geometry::setParent(Geometry *newParent) {
+        if (newParent == this) {
+            std::cerr << "Can't set parent to itself" << std::endl;
+            return false;
+        }
+
+        Geometry *ancestor = newParent;
+        while (ancestor != nullptr) {
+            if (ancestor == this) {
+                std::cerr << "Cycle detected: Cannot set self-descendant as a parent." << std::endl;
+                return false;
+            }
+            ancestor = ancestor->parent;
+        }
+
+        this->parent = newParent;
+        return true;
+    }
+
     glm::mat4 Geometry::getRotationXMatrix() const {
         return glm::rotate(glm::mat4(1.0f), _rotation.x, glm::vec3(1, 0, 0));
     }

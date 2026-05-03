@@ -100,6 +100,9 @@ namespace copakond {
                                        glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
         meshes.push_back(body2Mesh);
 
+        body2Mesh->setParent(bodyMesh);
+
+
         for (Mesh *mesh: meshes) {
             mesh->init(shaderPrg);
         }
