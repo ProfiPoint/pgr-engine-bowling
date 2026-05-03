@@ -7,6 +7,8 @@
 #include "utils/input.h"
 #include "shaders/shader.h"
 #include "animation/spline.h"
+#include "animation/catmullroll.h"
+#include "animation/bezier.h"
 #include <algorithm>
 
 #include "skybox/skybox.h"
@@ -114,7 +116,7 @@ namespace copakond {
             glm::vec3(10.0f, 100.0f, 10.0f),
         };
 
-        Spline *camera_spline = new Spline(
+        Spline *camera_spline = new CatmullRoll(
             20.0f,
             camera_spline_points,
             camera.getTranslationRef(),

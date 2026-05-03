@@ -31,6 +31,10 @@ add_executable(${PROJECT_NAME} main.cpp
         animation/spline.cpp
         animation/spline.h
         light/fog.h
+        animation/catmullroll.cpp
+        animation/catmullroll.h
+        animation/bezier.cpp
+        animation/bezier.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION

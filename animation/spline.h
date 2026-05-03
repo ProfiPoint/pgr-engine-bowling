@@ -6,7 +6,7 @@
 
 namespace copakond {
     class Spline {
-    private:
+    protected:
         float t = 0.0f;
         float duration;
         size_t points_count;
@@ -26,8 +26,9 @@ namespace copakond {
         glm::vec3 _P1;
         glm::vec3 _P2;
         glm::vec3 _P3;
-        glm::vec3 _catmullRollNormal(float local_t);
-        glm::vec3 _catmullRollDerivative(float local_t);
+
+        virtual glm::vec3 evaluateNormal(float local_t) = 0; // = 0 no body implementation
+        virtual glm::vec3 evaluateDerivative(float local_t) = 0;
     public:
         Spline(float duration, std::vector<glm::vec3> &points, glm::vec3 &vector);
         Spline(float duration, std::vector<glm::vec3> &points, std::function<void(glm::vec3)> apply_vector);
