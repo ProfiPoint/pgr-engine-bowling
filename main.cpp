@@ -211,8 +211,8 @@ namespace copakond {
         // Draw Non-transparent Meshes
         shader.update(camera, winWidth, winHeight); // use main shader
         for (Mesh *mesh: meshes) {
-            //if (mesh->getMaterial()->getAlpha() < 1.0f) { continue; }
-            //if (dynamic_cast<const TextLabelMesh*>(mesh) != nullptr) { continue; }
+            if (mesh->getMaterial()->getAlpha() <= 0.999f) { continue; }
+            if (dynamic_cast<const TextLabelMesh*>(mesh) != nullptr) { continue; }
             glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
             shader.draw(*mesh, false); // drawing non-transparent objects
         }
@@ -228,7 +228,7 @@ namespace copakond {
 
         shader.update(camera, winWidth, winHeight); // use main shader
         for (Mesh *mesh: meshes) {
-            //if (mesh->getMaterial()->getAlpha() == 1.0f) { continue; }
+            if (mesh->getMaterial()->getAlpha() > 0.9999f) { continue; }
             glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
             shader.draw(*mesh, true); // drawing transparent objects
         }
