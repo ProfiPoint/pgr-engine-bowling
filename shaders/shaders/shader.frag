@@ -156,7 +156,11 @@ vec4 applyFog(vec4 color) {
     float fogCoeff = (fog.end - dist) / (fog.end - fog.start);
     fogCoeff = clamp(fogCoeff, 0.0, 1.0);
 
-    return mix(fog.color, color, fogCoeff);
+    if (isTextLabel) {
+        return vec4(mix(fog.color.rgb, color.rgb, fogCoeff), color.a); // text wont convert it to transparent
+    }
+
+    return mix(fog.color, color, fogCoeff); // fog will make it fully non-transparent
 }
 
 void main() {
