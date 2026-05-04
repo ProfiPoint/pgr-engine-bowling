@@ -40,6 +40,7 @@ namespace copakond {
         _material->diffuse() = color;
     }
 
+    // correctly map each character to make is streached for the enitre character
     void TextLabelMesh::_generateGeometry() {
         _vertices.clear();
         _normals.clear();
@@ -59,49 +60,47 @@ namespace copakond {
 
             // searching for the given character in the loop
             size_t foundIndex = 0; // if character not found, use space (space is always the first character in that img!)
-            bool characterExists = false;
-
             for (size_t j = 0; j < _alphabet.size(); ++j) {
                 if (_alphabet[j] == currentCharacter) {
                     foundIndex = j;
-                    characterExists = true;
                     break;
                 }
             }
 
+            // world coordinates
             float x_left = -0.5f + (i * charWidth);
             float x_right = x_left + charWidth;
             float y_bottom = -0.5f;
             float y_top = 0.5f;
-            float z = 0.0f;
 
+            // UV coordinates
             float u_left = foundIndex * uvWidth;
             float u_right = u_left + uvWidth;
             float v_bottom = 0.0f;
             float v_top = 1.0f;
 
-            _vertices.insert(_vertices.end(), {x_left, y_bottom, z});
+            // fill vertices, uvs and normals
+            _vertices.insert(_vertices.end(), {x_left, y_bottom, 0.0f});
             _uvs.insert(_uvs.end(), {u_left, v_bottom});
-            _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f});
+            _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f}); // world coordinates
 
-            _vertices.insert(_vertices.end(), {x_right, y_bottom, z});
+            _vertices.insert(_vertices.end(), {x_right, y_bottom, 0.0f});
             _uvs.insert(_uvs.end(), {u_right, v_bottom});
             _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f});
 
-            _vertices.insert(_vertices.end(), {x_left, y_top, z});
+            _vertices.insert(_vertices.end(), {x_left, y_top, 0.0f});
             _uvs.insert(_uvs.end(), {u_left, v_top});
             _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f});
 
-
-            _vertices.insert(_vertices.end(), {x_left, y_top, z});
+            _vertices.insert(_vertices.end(), {x_left, y_top, 0.0f});
             _uvs.insert(_uvs.end(), {u_left, v_top});
             _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f});
 
-            _vertices.insert(_vertices.end(), {x_right, y_bottom, z});
+            _vertices.insert(_vertices.end(), {x_right, y_bottom, 0.0f});
             _uvs.insert(_uvs.end(), {u_right, v_bottom});
             _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f});
 
-            _vertices.insert(_vertices.end(), {x_right, y_top, z});
+            _vertices.insert(_vertices.end(), {x_right, y_top, 0.0f});
             _uvs.insert(_uvs.end(), {u_right, v_top});
             _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f});
         }

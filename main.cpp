@@ -121,7 +121,7 @@ namespace copakond {
         body2Mesh->setParent(bodyMesh);
 
         TextLabelMesh * textLabel1 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);
-        textLabel1->scale() = glm::vec3(4.0f,1.0f,1.0f);
+        textLabel1->scale() = glm::vec3(6.0f,1.0f,1.0f);
         textLabel1->position() = glm::vec3(0.0f, 6.0f, 0.0f);
         textLabel1->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
         textLabel1->setText("Hello World!");
