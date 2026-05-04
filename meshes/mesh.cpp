@@ -73,7 +73,7 @@ namespace copakond {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    void Mesh::draw() {
+    void Mesh::draw(float deltaTime) {
         glBindVertexArray(_vao);
         glDrawArrays(GL_TRIANGLES, 0, _numVertices);
         glBindVertexArray(0);

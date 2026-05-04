@@ -178,7 +178,7 @@ namespace copakond {
         }
     }
 
-    void Shader::draw(Mesh &mesh, bool drawTransparent) {
+    void Shader::draw(Mesh &mesh, bool drawTransparent, float deltaTime) {
         glm::mat4 modelM = mesh.getWorldModelMatrix(); // matrix but in the world coordinates
         glm::mat4 PVM = _projectionM * _viewM * modelM;
         glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelM)); // correct matrix for non-rigid transform
@@ -199,7 +199,7 @@ namespace copakond {
         if (mesh.getSubMeshes().empty()) { // has only one material
             if ((mesh.getMaterial()->alpha() != 1.0f) == drawTransparent) { // draw if it should draw the correct mode non / transparent
                 applyMaterialUniforms(mesh.getMaterial());
-                mesh.draw();
+                mesh.draw(deltaTime);
             }
         } else {
             for (const auto& subMesh : mesh.getSubMeshes()) { // has multiple materials => iterating over subMeshes

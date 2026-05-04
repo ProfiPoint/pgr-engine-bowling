@@ -18,8 +18,8 @@ private:
 public:
     Skybox(std::string fileRight, std::string fileLeft, std::string fileTop, std::string fileBottom, std::string fileFront,
         std::string fileBack, std::string fileSkyboxVertexShader, std::string fileSkyboxFragmentShader);
-    void draw() override;
-    void update(Camera &camera, int winWidth, int winHeight);
+    void draw(float deltaTime) override;
+    void update(Camera &camera, int winWidth, int winHeight, float deltaTime);
 };
 
 }

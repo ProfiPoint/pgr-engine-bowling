@@ -47,7 +47,7 @@ namespace copakond {
         GLsizei getNumVertices() const { return _numVertices; }
 
         virtual void init(GLuint shader);
-        virtual void draw();
+        virtual void draw(float deltaTime);
         int getId() const { return id; }
     };
 }

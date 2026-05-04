@@ -28,7 +28,7 @@ namespace copakond {
         void setColor(const glm::vec3 &color) const;
 
         void init(GLuint shader) override;
-        void draw() override;
+        void draw(float deltaTime) override;
     };
 }
 

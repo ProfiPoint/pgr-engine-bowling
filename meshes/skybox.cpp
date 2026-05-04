@@ -93,7 +93,7 @@ namespace copakond {
         _projectionUID = glGetUniformLocation(_shaderProgram, "projection");
     }
 
-    void Skybox::update(Camera &camera, int winWidth, int winHeight) {
+    void Skybox::update(Camera &camera, int winWidth, int winHeight, float deltaTime) {
         glUseProgram(_shaderProgram);
         glm::mat4 projectionM = camera.getProjectionMatrix((float)winWidth, (float)winHeight);
         glm::mat4 viewM = camera.getViewMatrix();
@@ -106,10 +106,10 @@ namespace copakond {
         glBindTexture(GL_TEXTURE_CUBE_MAP, _skyboxTextureUID);
         glUniform1i(glGetUniformLocation(_shaderProgram, "skybox"), 0);
 
-        Mesh::draw();
+        Mesh::draw(deltaTime);
     }
 
-    void Skybox::draw() {
+    void Skybox::draw(float deltaTime) {
         glBindVertexArray(_vao);
         glDrawArrays(GL_TRIANGLES, 0, _numVertices);
         glBindVertexArray(0);

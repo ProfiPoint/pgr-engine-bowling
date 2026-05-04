@@ -37,6 +37,8 @@ add_executable(${PROJECT_NAME} main.cpp
         animation/bezier.h
         meshes/textLabelMesh.cpp
         meshes/textLabelMesh.h
+        meshes/imageSequenceLabel.cpp
+        meshes/imageSequenceLabel.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION

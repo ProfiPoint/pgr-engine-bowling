@@ -59,13 +59,13 @@ namespace copakond {
 
         static glm::vec3 getWorldAmbient() { return WORLD_AMBIENT; }
 
-        virtual void applyMaterialUniforms(std::shared_ptr<Material> mat);
-        virtual void setLight(Light *light, int lightIndex);
-        virtual void updateLight(Light* light);
+        void applyMaterialUniforms(std::shared_ptr<Material> mat);
+        void setLight(Light *light, int lightIndex);
+        void updateLight(Light* light);
 
-        virtual GLuint init(std::string vertShaderLocation, std::string fragShaderLocation);
-        virtual void update(Camera &camera, int winWidth, int winHeight);
-        virtual void draw(Mesh &mesh, bool drawTransparent);
+        GLuint init(std::string vertShaderLocation, std::string fragShaderLocation);
+        void update(Camera &camera, int winWidth, int winHeight);
+        void draw(Mesh &mesh, bool drawTransparent, float deltaTime);
     };
 }
 

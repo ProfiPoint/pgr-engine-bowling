@@ -32,7 +32,7 @@ namespace copakond {
         ~ObjMesh() override;
 
         void init(GLuint shader) override;
-        void draw() override;
+        void draw(float deltaTime) override;
     };
 }
 

@@ -134,6 +134,7 @@ namespace copakond {
         textLabel2->setText("copakond Presents super fun project :D 3257 &*@!#$ 131 13 13a1 d3a1wda51d65aww11d65a1d");
         meshes.push_back(textLabel2);
 
+
         for (Mesh *mesh: meshes) {
             mesh->init(shaderPrg);
         }
@@ -214,13 +215,13 @@ namespace copakond {
             if (mesh->getMaterial()->getAlpha() <= 0.999f) { continue; }
             if (dynamic_cast<const TextLabelMesh*>(mesh) != nullptr) { continue; }
             glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
-            shader.draw(*mesh, false); // drawing non-transparent objects
+            shader.draw(*mesh, false, deltaTime); // drawing non-transparent objects
         }
 
         // Draw skybox
         glStencilFunc(GL_ALWAYS, 1, 0); // id = 1 is for skybox
-        skybox->update(camera, winWidth, winHeight); // use skybox shader
-        skybox->draw();
+        skybox->update(camera, winWidth, winHeight, deltaTime); // use skybox shader
+        skybox->draw(deltaTime);
 
         // Draw Transparent Meshes
         glEnable(GL_BLEND);
@@ -230,7 +231,7 @@ namespace copakond {
         for (Mesh *mesh: meshes) {
             if (mesh->getMaterial()->getAlpha() > 0.9999f) { continue; }
             glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
-            shader.draw(*mesh, true); // drawing transparent objects
+            shader.draw(*mesh, true, deltaTime); // drawing transparent objects
         }
 
         //meshes[3]->rotation().x += deltaTime;

@@ -167,7 +167,7 @@ namespace copakond {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    void TextLabelMesh::draw() {
+    void TextLabelMesh::draw(float deltaTime) {
         if (_numVertices == 0) { return; }
 
         glBindVertexArray(_vao);
