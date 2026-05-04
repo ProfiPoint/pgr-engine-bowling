@@ -125,13 +125,13 @@ namespace copakond {
         glUniform1i(_isTextLabelUID, (int)mat->isTextLabel());
 
         // SET DIFFUSE TEXTURE / DIFFUSE VECTOR
+        glUniform3fv(_diffuse, 1, glm::value_ptr(mat->diffuse()));
         if (mat->hasDiffuseTexture()) {
             glUniform1i(_useDiffuseMapUID, 1);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, mat->diffuseTextureUniform());
             glUniform1i(_diffuseMapUID, 0);
         } else {
-            glUniform3fv(_diffuse, 1, glm::value_ptr(mat->diffuse()));
             glUniform1i(_useDiffuseMapUID, 0);
         }
 
