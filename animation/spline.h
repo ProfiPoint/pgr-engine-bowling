@@ -9,18 +9,18 @@ namespace copakond {
     protected:
         float t = 0.0f;
         float duration;
-        size_t points_count;
-        bool has_derivative;
+        size_t pointsCount;
+        bool hasDerivative;
         bool paused = false;
 
-        bool has_function_vector = false;
-        bool has_function_vector_derivative = false;
-        std::function<void(glm::vec3)> apply_vector;
-        std::function<void(glm::vec3)> apply_vector_derivative;
+        bool hasFunctionVector = false;
+        bool hasFunctionVectorDerivative = false;
+        std::function<void(glm::vec3)> applyVector;
+        std::function<void(glm::vec3)> applyVectorDerivative;
 
         std::vector<glm::vec3> points;
         glm::vec3 &vector;
-        glm::vec3 &vector_derivative;
+        glm::vec3 &vectorDerivative;
 
         glm::vec3 _P0;
         glm::vec3 _P1;
@@ -33,14 +33,14 @@ namespace copakond {
         virtual ~Spline() = default;
 
         Spline(float duration, std::vector<glm::vec3> &points, glm::vec3 &vector);
-        Spline(float duration, std::vector<glm::vec3> &points, std::function<void(glm::vec3)> apply_vector);
+        Spline(float duration, std::vector<glm::vec3> &points, std::function<void(glm::vec3)> applyVector);
 
-        Spline(float duration, std::vector<glm::vec3> &points, glm::vec3 &vector, glm::vec3 &vector_derivative);
-        Spline(float duration, std::vector<glm::vec3> &points, std::function<void(glm::vec3)> apply_vector, glm::vec3 &vector_derivative);
-        Spline(float duration, std::vector<glm::vec3> &points, glm::vec3 &vector, std::function<void(glm::vec3)> apply_vector_derivative);
-        Spline(float duration, std::vector<glm::vec3> &points, std::function<void(glm::vec3)> apply_vector, std::function<void(glm::vec3)> apply_vector_derivative);
+        Spline(float duration, std::vector<glm::vec3> &points, glm::vec3 &vector, glm::vec3 &vectorDerivative);
+        Spline(float duration, std::vector<glm::vec3> &points, std::function<void(glm::vec3)> applyVector, glm::vec3 &vectorDerivative);
+        Spline(float duration, std::vector<glm::vec3> &points, glm::vec3 &vector, std::function<void(glm::vec3)> applyVectorDerivative);
+        Spline(float duration, std::vector<glm::vec3> &points, std::function<void(glm::vec3)> applyVector, std::function<void(glm::vec3)> applyVectorDerivative);
 
-        void update(float delta_time);
+        void update(float deltaTime);
         void pause() { paused = true; }
         void unpause() { paused = false; }
         void reset() { t = 0.0f; }

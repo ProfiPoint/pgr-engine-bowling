@@ -147,7 +147,7 @@ namespace copakond {
             shader.setLight(lights[i], i);
         }
 
-        std::vector<glm::vec3> camera_spline_points = {
+        std::vector<glm::vec3> cameraSplinePoints = {
             glm::vec3(0.0f, 0.0f, 0.0f),
             glm::vec3(5.0f, 2.0f, 5.0f),
             glm::vec3(10.0f, 0.0f, 10.0f),
@@ -156,9 +156,9 @@ namespace copakond {
             glm::vec3(10.0f, 100.0f, 10.0f),
         };
 
-        Spline *camera_spline = new CatmullRoll(
+        Spline *cameraSpline = new CatmullRoll(
             20.0f,
-            camera_spline_points,
+            cameraSplinePoints,
             camera.position(),
             [](glm::vec3 derivative) {
                 if (glm::length(derivative) > 0.0001f) {  // prevent on screen glitching
@@ -167,9 +167,9 @@ namespace copakond {
             }
         );
 
-        splines.push_back(camera_spline);
-        camera_spline->pause();
-        input.setCameraSpline(camera_spline);
+        splines.push_back(cameraSpline);
+        cameraSpline->pause();
+        input.setCameraSpline(cameraSpline);
 
 
         Fog fog = Fog(30.0f, 50.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));

@@ -16,8 +16,8 @@ private:
     GLuint _projectionUID = 0;
 
 public:
-    Skybox(std::string fileRight, std::string fileLeft, std::string fileTop, std::string fileBottom, std::string fileFront,
-        std::string fileBack, std::string fileSkyboxVertexShader, std::string fileSkyboxFragmentShader);
+    Skybox(const std::string &fileRight, const std::string &fileLeft, const std::string &fileTop, const std::string &fileBottom, const std::string &fileFront,
+        const std::string &fileBack, const std::string &fileSkyboxVertexShader, const std::string &fileSkyboxFragmentShader);
     void draw(float deltaTime) override;
     void update(Camera &camera, int winWidth, int winHeight, float deltaTime);
 };

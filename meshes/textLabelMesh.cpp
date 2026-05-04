@@ -68,40 +68,40 @@ namespace copakond {
             }
 
             // world coordinates
-            float x_left = -0.5f + (i * charWidth);
-            float x_right = x_left + charWidth;
-            float y_bottom = -0.5f;
-            float y_top = 0.5f;
+            float xLeft = -0.5f + (i * charWidth);
+            float xRight = xLeft + charWidth;
+            float yDown = -0.5f;
+            float yUp = 0.5f;
 
             // UV coordinates
-            float u_left = foundIndex * uvWidth;
-            float u_right = u_left + uvWidth;
-            float v_bottom = 0.0f;
-            float v_top = 1.0f;
+            float uLeft = foundIndex * uvWidth;
+            float uRight = uLeft + uvWidth;
+            float vDown = 0.0f;
+            float vUp = 1.0f;
 
             // fill vertices, uvs and normals (instead of telling the shader idnexes of the characteres, remap the uv map instead)
-            _vertices.insert(_vertices.end(), {x_left, y_bottom, 0.0f});
-            _uvs.insert(_uvs.end(), {u_left, v_bottom});
+            _vertices.insert(_vertices.end(), {xLeft, yDown, 0.0f});
+            _uvs.insert(_uvs.end(), {uLeft, vDown});
             _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f}); // world coordinates
 
-            _vertices.insert(_vertices.end(), {x_right, y_bottom, 0.0f});
-            _uvs.insert(_uvs.end(), {u_right, v_bottom});
+            _vertices.insert(_vertices.end(), {xRight, yDown, 0.0f});
+            _uvs.insert(_uvs.end(), {uRight, vDown});
             _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f});
 
-            _vertices.insert(_vertices.end(), {x_left, y_top, 0.0f});
-            _uvs.insert(_uvs.end(), {u_left, v_top});
+            _vertices.insert(_vertices.end(), {xLeft, yUp, 0.0f});
+            _uvs.insert(_uvs.end(), {uLeft, vUp});
             _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f});
 
-            _vertices.insert(_vertices.end(), {x_left, y_top, 0.0f});
-            _uvs.insert(_uvs.end(), {u_left, v_top});
+            _vertices.insert(_vertices.end(), {xLeft, yUp, 0.0f});
+            _uvs.insert(_uvs.end(), {uLeft, vUp});
             _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f});
 
-            _vertices.insert(_vertices.end(), {x_right, y_bottom, 0.0f});
-            _uvs.insert(_uvs.end(), {u_right, v_bottom});
+            _vertices.insert(_vertices.end(), {xRight, yDown, 0.0f});
+            _uvs.insert(_uvs.end(), {uRight, vDown});
             _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f});
 
-            _vertices.insert(_vertices.end(), {x_right, y_top, 0.0f});
-            _uvs.insert(_uvs.end(), {u_right, v_top});
+            _vertices.insert(_vertices.end(), {xRight, yUp, 0.0f});
+            _uvs.insert(_uvs.end(), {uRight, vUp});
             _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f});
         }
 

@@ -1,13 +1,13 @@
 #include "imageSequenceLabel.h"
 
 namespace copakond {
-    ImageSequenceLabel::ImageSequenceLabel(const std::string& imageSequencePath, int fps, int total_frames, int images_per_width, int
-        images_per_height) {
+    ImageSequenceLabel::ImageSequenceLabel(const std::string& imageSequencePath, int fps, int totalFrames, int imagesPerWidth, int
+        imagesPerHeight) {
 
         _fps = fps;
-        _totalFrames = total_frames;
-        _imagesPerWidth = images_per_width;
-        _imagesPerHeight = images_per_height;
+        _totalFrames = totalFrames;
+        _imagesPerWidth = imagesPerWidth;
+        _imagesPerHeight = imagesPerHeight;
 
         _material = std::make_shared<Material>();
         _material->ambient() = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -16,13 +16,13 @@ namespace copakond {
         _material->setDiffuseTexture(imageSequencePath);
     }
 
-    ImageSequenceLabel::ImageSequenceLabel(const std::string& imageSequencePath, int fps, int total_frames, int images_per_width, int
-        images_per_height, std::shared_ptr<Material> material) {
+    ImageSequenceLabel::ImageSequenceLabel(const std::string& imageSequencePath, int fps, int totalFrames, int imagesPerWidth, int
+        imagesPerHeight, std::shared_ptr<Material> material) {
 
         _fps = fps;
-        _totalFrames = total_frames;
-        _imagesPerWidth = images_per_width;
-        _imagesPerHeight = images_per_height;
+        _totalFrames = totalFrames;
+        _imagesPerWidth = imagesPerWidth;
+        _imagesPerHeight = imagesPerHeight;
 
         _material = material;
         _material->setDiffuseTexture(imageSequencePath);
