@@ -79,7 +79,7 @@ namespace copakond {
             float v_bottom = 0.0f;
             float v_top = 1.0f;
 
-            // fill vertices, uvs and normals
+            // fill vertices, uvs and normals (instead of telling the shader idnexes of the characteres, remap the uv map instead)
             _vertices.insert(_vertices.end(), {x_left, y_bottom, 0.0f});
             _uvs.insert(_uvs.end(), {u_left, v_bottom});
             _normals.insert(_normals.end(), {0.0f, 0.0f, 1.0f}); // world coordinates

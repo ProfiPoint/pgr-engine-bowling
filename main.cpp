@@ -4,6 +4,7 @@
 #include "meshes/mesh.h"
 #include "meshes/objMesh.h"
 #include "meshes/textLabelMesh.h"
+#include "meshes/imageSequenceLabel.h"
 #include "geometry/camera.h"
 #include "light/light.h"
 #include "parser/input.h"
@@ -120,20 +121,24 @@ namespace copakond {
 
         body2Mesh->setParent(bodyMesh);
 
-        TextLabelMesh * textLabel1 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);
+        TextLabelMesh *textLabel1 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);
         textLabel1->scale() = glm::vec3(6.0f,1.0f,1.0f);
         textLabel1->position() = glm::vec3(0.0f, 6.0f, 0.0f);
         textLabel1->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
         textLabel1->setText("Hello World!");
         meshes.push_back(textLabel1);
 
-        TextLabelMesh * textLabel2 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone2.png");
+        TextLabelMesh *textLabel2 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone2.png");
         textLabel2->scale() = glm::vec3(50.0f,1.0f,1.0f);
         textLabel2->position() = glm::vec3(0.0f, 10.0f, 0.0f);
         textLabel2->setColor(glm::vec3(1.0f, 0.5f, 0.0f));
         textLabel2->setText("copakond Presents super fun project :D 3257 &*@!#$ 131 13 13a1 d3a1wda51d65aww11d65a1d");
         meshes.push_back(textLabel2);
 
+        ImageSequenceLabel *imageSequenceLabel = new ImageSequenceLabel("assets/decals/cara_mia_portal2.jpg", 20, 40*40, 40, 40);
+        imageSequenceLabel->position() = glm::vec3(0.0f, 0.0f, -20.0f);
+        imageSequenceLabel->scale() = glm::vec3(16*2.0f,9*2.0f,1.0f);
+        meshes.push_back(imageSequenceLabel);
 
         for (Mesh *mesh: meshes) {
             mesh->init(shaderPrg);
@@ -167,7 +172,7 @@ namespace copakond {
         input.setCameraSpline(camera_spline);
 
 
-        Fog fog = Fog(15.0f, 40.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+        Fog fog = Fog(30.0f, 50.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
         camera.setFog(fog);
 
 
