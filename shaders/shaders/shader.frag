@@ -171,13 +171,13 @@ void main() {
     if (textureData.useDiffuseMap) {
         if (isTextLabel) {
             vec4 textTextureColor = texture(textureData.diffuseMap, fragTexCoord);
+            float alphaTexure = textTextureColor.a; // remove transparent bgr
 
-            if (textTextureColor.a < 0.1) { discard; }
+            if (alphaTexure < 0.01) { discard; }
 
             diffuse = textTextureColor.rgb * material.diffuse;
             ambient = diffuse * 0.25;
-            alpha = textTextureColor.a;
-
+            alpha = textTextureColor.r;
         } else {
             diffuse = texture(textureData.diffuseMap, fragTexCoord).rgb;
             ambient = diffuse * 0.25; // if texture is present, set it to 1/4 of diffuse.

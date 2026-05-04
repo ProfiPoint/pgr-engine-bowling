@@ -61,6 +61,13 @@ namespace copakond {
             16.0f, 0.5f
         );
 
+        std::shared_ptr<Material> labelMaterial = std::make_shared<Material>(
+            glm::vec3(0.5f, 0.33f, 0.2f) * 0.1f,
+            glm::vec3(0.5f, 0.33f, 0.2f),
+            glm::vec3(1.0f, 1.0f, 1.0f),
+            16.0f, 0.5f
+        );
+
         glm::vec3 lightPosition = glm::vec3(-8.0f, 0.0f, 5.0f);
         glm::vec3 lightDirection = glm::vec3(0.0f, 0.0f, -1.0f);
         glm::vec3 lightAmbient = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -113,13 +120,19 @@ namespace copakond {
 
         body2Mesh->setParent(bodyMesh);
 
-        TextLabelMesh * textLabel1 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone2.png", teddyMaterial);
+        TextLabelMesh * textLabel1 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);
         textLabel1->scale() = glm::vec3(4.0f,1.0f,1.0f);
-        textLabel1->position() = glm::vec3(0.0f, 0.0f, 0.0f);
+        textLabel1->position() = glm::vec3(0.0f, 6.0f, 0.0f);
         textLabel1->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
         textLabel1->setText("Hello World!");
         meshes.push_back(textLabel1);
 
+        TextLabelMesh * textLabel2 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone2.png");
+        textLabel2->scale() = glm::vec3(50.0f,1.0f,1.0f);
+        textLabel2->position() = glm::vec3(0.0f, 10.0f, 0.0f);
+        textLabel2->setColor(glm::vec3(1.0f, 0.5f, 0.0f));
+        textLabel2->setText("copakond Presents super fun project :D 3257 &*@!#$ 131 13 13a1 d3a1wda51d65aww11d65a1d");
+        meshes.push_back(textLabel2);
 
         for (Mesh *mesh: meshes) {
             mesh->init(shaderPrg);
@@ -198,8 +211,8 @@ namespace copakond {
         // Draw Non-transparent Meshes
         shader.update(camera, winWidth, winHeight); // use main shader
         for (Mesh *mesh: meshes) {
-            if (mesh->getMaterial()->getAlpha() < 1.0f) { continue; }
-            if (dynamic_cast<const TextLabelMesh*>(mesh) != nullptr) { continue; }
+            //if (mesh->getMaterial()->getAlpha() < 1.0f) { continue; }
+            //if (dynamic_cast<const TextLabelMesh*>(mesh) != nullptr) { continue; }
             glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
             shader.draw(*mesh, false); // drawing non-transparent objects
         }
@@ -215,12 +228,12 @@ namespace copakond {
 
         shader.update(camera, winWidth, winHeight); // use main shader
         for (Mesh *mesh: meshes) {
-            if (mesh->getMaterial()->getAlpha() == 1.0f) { continue; }
+            //if (mesh->getMaterial()->getAlpha() == 1.0f) { continue; }
             glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
             shader.draw(*mesh, true); // drawing transparent objects
         }
 
-        meshes[3]->rotation().x += deltaTime;
+        //meshes[3]->rotation().x += deltaTime;
 
         glDepthMask(GL_TRUE); // restore
         glDisable(GL_BLEND);

@@ -15,6 +15,7 @@ namespace copakond {
         _material->specular() = glm::vec3(0.0f, 0.0f, 0.0f);
         _material->setDiffuseTexture(fontImagePath);
         _material->setIsTextLabel(true);
+        _material->setAlpha(0.0f); // set the default ambient and diff to fully transparent
     }
 
     TextLabelMesh::TextLabelMesh(const std::string& fontImagePath, std::shared_ptr<Material> material) {
@@ -22,6 +23,7 @@ namespace copakond {
         _material = material;
         _material->setDiffuseTexture(fontImagePath);
         _material->setIsTextLabel(true);
+        _material->setAlpha(0.0f); // set the default ambient and diff to fully transparent
     }
 
     TextLabelMesh::~TextLabelMesh() {
