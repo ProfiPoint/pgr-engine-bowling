@@ -13,14 +13,14 @@ namespace copakond {
         _material->ambient() = glm::vec3(1.0f, 1.0f, 1.0f);
         _material->diffuse() = glm::vec3(1.0f, 1.0f, 1.0f);
         _material->specular() = glm::vec3(0.0f, 0.0f, 0.0f);
-        _material->setDiffuseTexture(fontImagePath, false);
+        _material->setDiffuseTexture(fontImagePath);
         _material->setIsTextLabel(true);
     }
 
     TextLabelMesh::TextLabelMesh(const std::string& fontImagePath, std::shared_ptr<Material> material) {
         _numCharacters = _alphabet.length();
         _material = material;
-        _material->setDiffuseTexture(fontImagePath, false);
+        _material->setDiffuseTexture(fontImagePath);
         _material->setIsTextLabel(true);
     }
 

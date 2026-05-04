@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "pgr-portable.h"
 #include "meshes/mesh.h"
 #include "meshes/objMesh.h"
@@ -10,8 +11,6 @@
 #include "animation/spline.h"
 #include "animation/catmullroll.h"
 #include "animation/bezier.h"
-#include <algorithm>
-
 #include "meshes/skybox.h"
 
 namespace copakond {
@@ -114,10 +113,11 @@ namespace copakond {
 
         body2Mesh->setParent(bodyMesh);
 
-        TextLabelMesh * textLabel1 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone.png");
-        textLabel1->position() = glm::vec3(0.0f, 15.0f, 0.0f);
+        TextLabelMesh * textLabel1 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone2.png", teddyMaterial);
+        textLabel1->scale() = glm::vec3(4.0f,1.0f,1.0f);
+        textLabel1->position() = glm::vec3(0.0f, 0.0f, 0.0f);
         textLabel1->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
-        textLabel1->setText("Hello World");
+        textLabel1->setText("Hello World!");
         meshes.push_back(textLabel1);
 
 
@@ -198,6 +198,8 @@ namespace copakond {
         // Draw Non-transparent Meshes
         shader.update(camera, winWidth, winHeight); // use main shader
         for (Mesh *mesh: meshes) {
+            if (mesh->getMaterial()->getAlpha() < 1.0f) { continue; }
+            if (dynamic_cast<const TextLabelMesh*>(mesh) != nullptr) { continue; }
             glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
             shader.draw(*mesh, false); // drawing non-transparent objects
         }
@@ -213,6 +215,7 @@ namespace copakond {
 
         shader.update(camera, winWidth, winHeight); // use main shader
         for (Mesh *mesh: meshes) {
+            if (mesh->getMaterial()->getAlpha() == 1.0f) { continue; }
             glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
             shader.draw(*mesh, true); // drawing transparent objects
         }

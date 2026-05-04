@@ -49,7 +49,7 @@ namespace copakond {
         float &alpha() { return _alpha; }
 
         // texture managers
-        void setDiffuseTexture(const std::string &textureFile, bool mipmap = true);
+        void setDiffuseTexture(const std::string &textureFile);
         bool hasDiffuseTexture() const { return _hasDiffuseTexture; }
         void clearDiffuseTexture() { _hasDiffuseTexture = false; }
 
@@ -74,6 +74,9 @@ namespace copakond {
         GLuint shininessTextureUniform() const { return _shininessTexture; }
         GLuint alphaTextureUniform() const { return _alphaTexture; }
         GLuint normalTextureUniform() const { return _normalTexture; }
+
+        void setAlpha(float alpha) { _alpha = alpha; }
+        float getAlpha() const { return _alpha; }
 
         void setIsTextLabel(bool state) { _isTextLabel = state; }
         bool isTextLabel() const { return _isTextLabel; }
