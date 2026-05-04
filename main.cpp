@@ -2,6 +2,7 @@
 #include "pgr-portable.h"
 #include "meshes/mesh.h"
 #include "meshes/objMesh.h"
+#include "meshes/textLabelMesh.h"
 #include "geometry/camera.h"
 #include "light/light.h"
 #include "parser/input.h"
@@ -112,6 +113,12 @@ namespace copakond {
         meshes.push_back(body2Mesh);
 
         body2Mesh->setParent(bodyMesh);
+
+        TextLabelMesh * textLabel1 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone.png");
+        textLabel1->position() = glm::vec3(0.0f, 15.0f, 0.0f);
+        textLabel1->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
+        textLabel1->setText("Hello World");
+        meshes.push_back(textLabel1);
 
 
         for (Mesh *mesh: meshes) {

@@ -45,6 +45,8 @@ namespace copakond {
         GLuint _useAlphaMapUID = 0;
         GLuint _useNormalMapUID = 0;
 
+        GLuint _isTextLabelUID = 0;
+
         GLint _numLights = 0; // uniform id
         size_t totalNumLights = 0; // actual counter
 

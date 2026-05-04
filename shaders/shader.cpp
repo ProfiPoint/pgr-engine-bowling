@@ -50,6 +50,8 @@ namespace copakond {
         _useShininessMapUID = glGetUniformLocation(_shaderProgram, "textureData.useShininessMap");
         _useAlphaMapUID = glGetUniformLocation(_shaderProgram, "textureData.useAlphaMap");
         _useNormalMapUID = glGetUniformLocation(_shaderProgram, "textureData.useNormalMap");
+        _isTextLabelUID = glGetUniformLocation(_shaderProgram, "isTextLabel");
+
 
         _numLights = glGetUniformLocation(_shaderProgram, "numLights");
         totalNumLights = 0;
@@ -120,6 +122,7 @@ namespace copakond {
         if (!mat) return;
 
         glUniform3fv(_ambient, 1, glm::value_ptr(mat->ambient()));
+        glUniform1i(_isTextLabelUID, (int)mat->isTextLabel());
 
         // SET DIFFUSE TEXTURE / DIFFUSE VECTOR
         if (mat->hasDiffuseTexture()) {

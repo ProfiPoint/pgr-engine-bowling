@@ -60,6 +60,8 @@ uniform Light lights[MAX_LIGHTS];
 uniform int numLights;
 uniform Fog fog;
 
+uniform bool isTextLabel;
+
 vec3 calculateDirectionalL(Light light, vec3 fragmentPosition, vec3 fragmentNormal, vec3 ambient, vec3 diffuse, vec3 specular, float shininess) {
     vec3 L = normalize(-light.direction);
     vec3 V = normalize(camPosition - fragmentPosition);
@@ -167,9 +169,21 @@ void main() {
     float alpha = material.alpha;
 
     if (textureData.useDiffuseMap) {
-        diffuse = texture(textureData.diffuseMap, fragTexCoord).rgb;
-        ambient = diffuse * 0.25; // if texture is present, set it to 1/4 of diffuse.
+        if (isTextLabel) {
+            vec4 textTextureColor = texture(textureData.diffuseMap, fragTexCoord);
+
+            if (textTextureColor.a < 0.1) { discard; }
+
+            diffuse = textTextureColor.rgb * material.diffuse;
+            ambient = diffuse * 0.25;
+            alpha = textTextureColor.a;
+
+        } else {
+            diffuse = texture(textureData.diffuseMap, fragTexCoord).rgb;
+            ambient = diffuse * 0.25; // if texture is present, set it to 1/4 of diffuse.
+        }
     }
+
     if (textureData.useSpecularMap) { specular = texture(textureData.specularMap, fragTexCoord).rgb; }
     if (textureData.useShininessMap) { shininess = texture(textureData.shininessMap, fragTexCoord).r; }
     if (textureData.useAlphaMap) { alpha = texture(textureData.alphaMap, fragTexCoord).r; }

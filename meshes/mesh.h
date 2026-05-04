@@ -15,10 +15,6 @@ namespace copakond {
     };
 
     class Mesh : public Geometry {
-    private:
-
-        std::vector<float> _vertices = std::vector<float>();
-
     protected:
         static int globalMeshCounter;
         int id;
@@ -29,6 +25,7 @@ namespace copakond {
         GLuint _vao = 0;
         GLsizei _numVertices = 0;
 
+        std::vector<float> _vertices = std::vector<float>();
         std::shared_ptr<Material> _material = std::make_shared<Material>();
         std::vector<SubMesh> _subMeshes;
 

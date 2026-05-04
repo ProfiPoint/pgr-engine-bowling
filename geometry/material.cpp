@@ -14,6 +14,8 @@ namespace copakond {
         _hasShininessTexture = false;
         _hasAlphaTexture = false;
         _hasNormalTexture = false;
+
+        _isTextLabel = false;
     }
 
     Material::~Material() {
@@ -24,9 +26,9 @@ namespace copakond {
         if (_hasNormalTexture) glDeleteTextures(1, &_normalTexture);
     }
 
-    void Material::setDiffuseTexture(const std::string &textureFile) {
+    void Material::setDiffuseTexture(const std::string &textureFile, bool mipmap) {
         if (textureFile == "") { return; }
-        _diffuseTexture = pgr::createTexture(textureFile);
+        _diffuseTexture = pgr::createTexture(textureFile, mipmap);
         _hasDiffuseTexture = true;
     }
 
