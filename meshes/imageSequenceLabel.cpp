@@ -121,6 +121,8 @@ namespace copakond {
     void ImageSequenceLabel::draw(float deltaTime) {
         if (_numVertices == 0) { return; }
 
+        int prevFrame = _frame;
+
         if (!_paused) {
             _frameTime += deltaTime;
 
@@ -132,7 +134,10 @@ namespace copakond {
             _frameTime = fmod(_frameTime, timePerFrame);
         }
 
-        _generateGeometry();
+        if (prevFrame != _frame) {
+            _generateGeometry();
+        }
+
         glBindVertexArray(_vao);
         glDrawArrays(GL_TRIANGLES, 0, _numVertices);
         glBindVertexArray(0);
