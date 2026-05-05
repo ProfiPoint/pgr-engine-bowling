@@ -144,6 +144,7 @@ namespace copakond {
                                        glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
         meshes.push_back(flagMesh);
         flagMesh->setVertexWave(true);
+        shipMesh->setVertexWave(true);
 
         TextLabel *textLabel1 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);
         textLabel1->scale() = glm::vec3(6.0f,1.0f,1.0f);

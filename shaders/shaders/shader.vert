@@ -26,9 +26,13 @@ void main() {
     vec3 _position = position;
 
     if (isVertexWave) {
-        _position.x += (cos(time * FLAG_SPEED + (_position.x + _position.y + _position.z) * FLAG_FREQUENCY) * FLAG_AMPLITUDE) * _position.y;
-        _position.y += -(cos(time * FLAG_SPEED + (_position.x + _position.y + _position.z) * FLAG_FREQUENCY) * FLAG_AMPLITUDE) * _position.y;
-        _position.z += (sin(time * FLAG_SPEED + (_position.x + _position.y + _position.z) * FLAG_FREQUENCY) * FLAG_AMPLITUDE) * _position.y;
+        float waveX = sin(time * FLAG_SPEED * 1.1 + _position.y * FLAG_FREQUENCY);
+        float waveY = cos(time * FLAG_SPEED * 1.3 + (_position.x + _position.z) * FLAG_FREQUENCY * 0.5);
+        float waveZ = sin(time * FLAG_SPEED * 0.9 + _position.y * FLAG_FREQUENCY * 1.2);
+
+        _position.x += waveX * FLAG_AMPLITUDE * _position.z;
+        _position.y += waveY * FLAG_AMPLITUDE * _position.x;
+        _position.z += waveZ * FLAG_AMPLITUDE * _position.y;
     }
 
     fragmentPosition = vec3(model * vec4(_position, 1.0f));
