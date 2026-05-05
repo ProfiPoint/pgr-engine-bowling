@@ -38,6 +38,12 @@ namespace copakond {
 
     std::vector<Spline *> splines = {};
 
+    ImageLabel *clockHandHour;
+    ImageLabel *clockHandMin;
+    ImageLabel *clockHandSec;
+
+    float clockTime[] = {03,58,30}; // hh:mm:ss
+
     float updateTime() {
         int currentFrameTime = glutGet(GLUT_ELAPSED_TIME);
         uint64_t prevTime = time;
@@ -142,15 +148,40 @@ namespace copakond {
         imageSequenceLabel->scale() = glm::vec3(16*2.0f,9*2.0f,1.0f);
         meshes.push_back(imageSequenceLabel);
 
-        ImageLabel *imageLabel = new ImageLabel("assets/decals/cara_mia_portal2.jpg");
+        /*ImageLabel *imageLabel = new ImageLabel("assets/decals/cara_mia_portal2.jpg");
         imageLabel->position() = glm::vec3(0.0f, 0.0f, -15.0f);
         imageLabel->scale() = glm::vec3(16*2.0f,9*2.0f,1.0f);
-        meshes.push_back(imageLabel);
+        meshes.push_back(imageLabel);*/
 
         ImageMoving *imageMoving = new ImageMoving("assets/decals/arrow.png", glm::vec2(0.0f, -1.0f), glm::vec2(1.0f, 8.0f));
-        imageMoving->position() = glm::vec3(0.0f, 0.0f, -12.0f);
+        imageMoving->position() = glm::vec3(0.0f, 0.0f, -14.0f);
         imageMoving->scale() = glm::vec3(3.0f, 3*8.0f,1.0f);
         meshes.push_back(imageMoving);
+
+
+        // clocks
+        ImageLabel *clock = new ImageLabel("assets/decals/clock.png");
+        clock->position() = glm::vec3(0.0f, 6.0f, 0.1f);
+        clock->scale() = glm::vec3(3.0f,3.0f,3.0f);
+        meshes.push_back(clock);
+
+        clockHandSec = new ImageLabel("assets/decals/handSeconds2.png");
+        clockHandSec->position() = glm::vec3(0.0f, 0.0f, 0.005f);
+        clockHandSec->scale() = glm::vec3(1.0f*0.05f, 1.0f, 1.0f*0.05f);
+        clockHandSec->setParent(clock);
+        meshes.push_back(clockHandSec);
+
+        clockHandMin = new ImageLabel("assets/decals/handMinutes2.png");
+        clockHandMin->position() = glm::vec3(0.0f, 0.0f, 0.01f);
+        clockHandMin->scale() = glm::vec3(1.0f*0.05f, 1.0f, 1.0f*0.05f);
+        clockHandMin->setParent(clock);
+        meshes.push_back(clockHandMin);
+
+        clockHandHour = new ImageLabel("assets/decals/handHours2.png");
+        clockHandHour->position() = glm::vec3(0.0f, 0.0f, 0.01f);
+        clockHandHour->scale() = glm::vec3(1.0f*0.05f, 1.0f, 1.0f*0.05f);
+        clockHandHour->setParent(clock);
+        meshes.push_back(clockHandHour);
 
         for (Mesh *mesh: meshes) {
             mesh->init(shaderPrg);
@@ -214,6 +245,31 @@ namespace copakond {
         for (Spline *spline: splines) {
             spline->update(deltaTime);
         }
+
+
+        // updating clocks time and hands:
+        clockHandHour->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[0]/12*(2*glm::pi<float>()));
+        clockHandMin->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[1]/60*(2*glm::pi<float>()));
+        clockHandSec->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[2]/60*(2*glm::pi<float>()));
+
+        clockTime[2] += deltaTime; // seconds are smooth
+        clockTime[0] += deltaTime / (3600); // hours are smooth
+
+        if (clockTime[2] >= 60.0f) { // update HH:MM:SS
+            clockTime[2] -= 60.0f;
+            clockTime[1] += 1.0f;
+
+            if (clockTime[1] >= 60.0f) {
+                clockTime[1] -= 60.0f;
+
+                if (clockTime[0] >= 24.0f) {
+                    clockTime[0] -= 24.0f;
+                }
+            }
+        }
+
+
+
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 

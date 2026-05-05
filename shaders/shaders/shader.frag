@@ -173,18 +173,17 @@ void main() {
     float alpha = material.alpha;
 
     if (textureData.useDiffuseMap) {
-        if (isTextLabel) {
-            vec4 textTextureColor = texture(textureData.diffuseMap, fragTexCoord);
-            float alphaTexure = textTextureColor.a; // remove transparent bgr
+        vec4 texColor = texture(textureData.diffuseMap, fragTexCoord);
+        if (texColor.a < 0.01) { discard; } // remove transparent bgr
 
-            if (alphaTexure < 0.01) { discard; }
-
-            diffuse = textTextureColor.rgb * material.diffuse;
+        if (isTextLabel) { // text label
+            diffuse = texColor.rgb * material.diffuse;
             ambient = diffuse * 0.25;
-            alpha = textTextureColor.r;
-        } else {
-            diffuse = texture(textureData.diffuseMap, fragTexCoord).rgb;
-            ambient = diffuse * 0.25; // if texture is present, set it to 1/4 of diffuse.
+            alpha = texColor.r;
+        } else { // images (image textures)
+            diffuse = texColor.rgb;
+            ambient = diffuse * 0.25;
+            alpha = texColor.a * material.alpha;
         }
     }
 
