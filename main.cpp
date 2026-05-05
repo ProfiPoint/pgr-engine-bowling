@@ -43,7 +43,8 @@ namespace copakond {
     ImageLabel *clockHandMin;
     ImageLabel *clockHandSec;
 
-    float clockTime[] = {03,58,30}; // hh:mm:ss
+    //float clockTime[] = {03,58,30}; // hh:mm:ss
+    float clockTime[] = {0,0,0}; // hh:mm:ss
 
     float updateTime() {
         int currentFrameTime = glutGet(GLUT_ELAPSED_TIME);
@@ -86,10 +87,10 @@ namespace copakond {
 
         //Light *light = new SpotLight(lightPosition, lightDirection, lightAmbient, lightDiffuse, lightSpecular, 20.0f, 30.0f, 5.0f, false);
         //lights.push_back(light);
-        Light *light1 = new PointLight(lightPosition, lightAmbient, lightDiffuse, lightSpecular, 50.0f, true);
-        lights.push_back(light1);
+        //Light *light1 = new PointLight(lightPosition, lightAmbient, lightDiffuse, lightSpecular, 50.0f, true);
+        //lights.push_back(light1);
         sun = new DirectionalLight(-lightDirection, lightAmbient, lightDiffuse, lightSpecular);
-        //lights.push_back(sun);
+        lights.push_back(sun);
 
         //Light *light3 = new DirectionalLight(lightDirection, lightAmbient, lightDiffuse, lightSpecular);
         //lights.push_back(light3);
@@ -256,21 +257,38 @@ namespace copakond {
         clockHandMin->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[1]/60*(2*glm::pi<float>()));
         clockHandSec->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[2]/60*(2*glm::pi<float>()));
 
-        clockTime[2] += deltaTime; // seconds are smooth
-        clockTime[0] += deltaTime / (3600); // hours are smooth
+        clockTime[2] += 600.0f * deltaTime; // smooth seconds
+        clockTime[0] += 600.0f * deltaTime / 3600.0f; // smooth hours
 
-        if (clockTime[2] >= 60.0f) { // update HH:MM:SS
+        if (clockTime[2] >= 60.0f) {
             clockTime[2] -= 60.0f;
             clockTime[1] += 1.0f;
 
             if (clockTime[1] >= 60.0f) {
                 clockTime[1] -= 60.0f;
-
-                if (clockTime[0] >= 24.0f) {
-                    clockTime[0] -= 24.0f;
-                }
             }
         }
+
+        if (clockTime[0] >= 24.0f) {
+            clockTime[0] -= 24.0f;
+        }
+
+        // update skybox, directional light,
+        // skybox day night blending
+        float currentHour = clockTime[0];
+        float skyboxBlending = 0.0f; // default day
+
+        if (currentHour >= 20.0f || currentHour <= 4.0f) { skyboxBlending = 1.0f; } // full night
+        else if (currentHour > 4.0f && currentHour < 8.0f) { skyboxBlending = 1.0f - ((currentHour - 4.0f) / 4.0f); } // night -> day
+        else if (currentHour > 16.0f && currentHour < 20.0f) { skyboxBlending = (currentHour - 16.0f) / 4.0f; } // day -> night
+
+        // update sunlight based of the time
+        // z stars at -1, middle 0, end 1 (pi/2, pi, 3pi/2)
+        // y stars at 0, middle 1, end 0 (pi/2, pi, 3pi/2)
+        float thetaSun = (2 * glm::pi<float>() * currentHour / 24.0f); // 0 is down, 12 is up, 24 down, 6 start, 18 end
+        sun->diffuse() = glm::vec3(0.5f, 0.5f, 0.5f) * (1-skyboxBlending); // set the intensity
+        sun->direction() = glm::vec3(0.0f, glm::cos(thetaSun), glm::sin(thetaSun));
+
 
 
 
@@ -297,7 +315,7 @@ namespace copakond {
 
         // Draw skybox
         glStencilFunc(GL_ALWAYS, 1, 0); // id = 1 is for skybox
-        skybox->update(camera, winWidth, winHeight, deltaTime, fmod(time/1000.0f/5.0f, 1.0f)); // use skybox shader
+        skybox->update(camera, winWidth, winHeight, deltaTime, skyboxBlending); // use skybox shader
         skybox->draw(deltaTime);
 
         // Draw Transparent Meshes
@@ -318,7 +336,7 @@ namespace copakond {
 
 
         if (!lights.empty()) {
-            lights[0]->position() = camera.getPosition();
+            //lights[0]->position() = camera.getPosition();
             shader.updateLight(lights[0]);
         }
 
