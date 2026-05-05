@@ -1,5 +1,7 @@
 #version 140
-#define MAX_LIGHTS 64
+#define FLAG_SPEED 5.0
+#define FLAG_FREQUENCY 3.0
+#define FLAG_AMPLITUDE 0.04
 
 in vec3 position;
 in vec3 normal;
@@ -24,11 +26,9 @@ void main() {
     vec3 _position = position;
 
     if (isVertexWave) {
-        float speed = 5.0;
-        float frequency = 3.0;
-        float amplitude = 0.04;
-
-        _position.x += (sin(time * speed + (_position.x + _position.y + _position.z) * frequency) * amplitude) * _position.y;
+        _position.x += (cos(time * FLAG_SPEED + (_position.x + _position.y + _position.z) * FLAG_FREQUENCY) * FLAG_AMPLITUDE) * _position.y;
+        _position.y += -(cos(time * FLAG_SPEED + (_position.x + _position.y + _position.z) * FLAG_FREQUENCY) * FLAG_AMPLITUDE) * _position.y;
+        _position.z += (sin(time * FLAG_SPEED + (_position.x + _position.y + _position.z) * FLAG_FREQUENCY) * FLAG_AMPLITUDE) * _position.y;
     }
 
     fragmentPosition = vec3(model * vec4(_position, 1.0f));
