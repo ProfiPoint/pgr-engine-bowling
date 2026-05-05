@@ -3,7 +3,7 @@
 #include "pgr-portable.h"
 #include "meshes/mesh.h"
 #include "meshes/objMesh.h"
-#include "meshes/textLabelMesh.h"
+#include "meshes/textLabel.h"
 #include "meshes/imageSequenceLabel.h"
 #include "geometry/camera.h"
 #include "light/light.h"
@@ -121,14 +121,14 @@ namespace copakond {
 
         body2Mesh->setParent(bodyMesh);
 
-        TextLabelMesh *textLabel1 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);
+        TextLabel *textLabel1 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);
         textLabel1->scale() = glm::vec3(6.0f,1.0f,1.0f);
         textLabel1->position() = glm::vec3(0.0f, 6.0f, 0.0f);
         textLabel1->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
         textLabel1->setText("Hello World!");
         meshes.push_back(textLabel1);
 
-        TextLabelMesh *textLabel2 = new TextLabelMesh("assets/fonts/fredoka-one/fredokaone2.png");
+        TextLabel *textLabel2 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png");
         textLabel2->scale() = glm::vec3(50.0f,1.0f,1.0f);
         textLabel2->position() = glm::vec3(0.0f, 10.0f, 0.0f);
         textLabel2->setColor(glm::vec3(1.0f, 0.5f, 0.0f));
@@ -218,7 +218,7 @@ namespace copakond {
         shader.update(camera, winWidth, winHeight); // use main shader
         for (Mesh *mesh: meshes) {
             if (mesh->getMaterial()->getAlpha() <= 0.999f) { continue; }
-            if (dynamic_cast<const TextLabelMesh*>(mesh) != nullptr) { continue; }
+            if (dynamic_cast<const TextLabel*>(mesh) != nullptr) { continue; }
             glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
             shader.draw(*mesh, false, deltaTime); // drawing non-transparent objects
         }

@@ -2,12 +2,12 @@
 // Created by profipoint on 5/4/2026.
 //
 
-#include "textLabelMesh.h"
+#include "textLabel.h"
 
 namespace copakond {
-    std::string TextLabelMesh::_alphabet = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,:;!@#$%^&*+-=()[]{}<>'\"\\`~|";
+    std::string TextLabel::_alphabet = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,:;!@#$%^&*+-=()[]{}<>'\"\\`~|";
 
-    TextLabelMesh::TextLabelMesh(const std::string& fontImagePath) {
+    TextLabel::TextLabel(const std::string& fontImagePath) {
         _numCharacters = _alphabet.length();
         _material = std::make_shared<Material>();
         _material->ambient() = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -18,7 +18,7 @@ namespace copakond {
         _material->setAlpha(0.0f); // set the default ambient and diff to fully transparent
     }
 
-    TextLabelMesh::TextLabelMesh(const std::string& fontImagePath, std::shared_ptr<Material> material) {
+    TextLabel::TextLabel(const std::string& fontImagePath, std::shared_ptr<Material> material) {
         _numCharacters = _alphabet.length();
         _material = material;
         _material->setDiffuseTexture(fontImagePath);
@@ -26,22 +26,22 @@ namespace copakond {
         _material->setAlpha(0.0f); // set the default ambient and diff to fully transparent
     }
 
-    TextLabelMesh::~TextLabelMesh() {
+    TextLabel::~TextLabel() {
         glDeleteBuffers(1, &_vboUvs);
     }
 
-    void TextLabelMesh::setText(const std::string& text) {
+    void TextLabel::setText(const std::string& text) {
         _text = text;
         _generateGeometry();
     }
 
-    void TextLabelMesh::setColor(const glm::vec3 &color) const {
+    void TextLabel::setColor(const glm::vec3 &color) const {
         _material->ambient() = color / 2.0f;
         _material->diffuse() = color;
     }
 
     // correctly map each character to make is streached for the enitre character
-    void TextLabelMesh::_generateGeometry() {
+    void TextLabel::_generateGeometry() {
         _vertices.clear();
         _normals.clear();
         _uvs.clear();
@@ -121,7 +121,7 @@ namespace copakond {
         }
     }
 
-    void TextLabelMesh::init(GLuint shader) {
+    void TextLabel::init(GLuint shader) {
         _shaderProgram = shader;
 
         //BINDING VAO
@@ -167,7 +167,7 @@ namespace copakond {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    void TextLabelMesh::draw(float deltaTime) {
+    void TextLabel::draw(float deltaTime) {
         if (_numVertices == 0) { return; }
 
         glBindVertexArray(_vao);

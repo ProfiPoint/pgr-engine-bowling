@@ -1,11 +1,11 @@
-#ifndef PGR_SEM_COPAKOND_TEXTLABELMESH_H
-#define PGR_SEM_COPAKOND_TEXTLABELMESH_H
+#ifndef PGR_SEM_COPAKOND_TextLabel_H
+#define PGR_SEM_COPAKOND_TextLabel_H
 
 #include "mesh.h"
 #include "../geometry/material.h"
 
 namespace copakond {
-    class TextLabelMesh : public Mesh {
+    class TextLabel : public Mesh {
     private:
         static std::string _alphabet;
 
@@ -20,9 +20,9 @@ namespace copakond {
         void _generateGeometry();
 
     public:
-        TextLabelMesh(const std::string& fontImagePath);
-        TextLabelMesh(const std::string& fontImagePath, std::shared_ptr<Material> material);
-        ~TextLabelMesh() override;
+        TextLabel(const std::string& fontImagePath);
+        TextLabel(const std::string& fontImagePath, std::shared_ptr<Material> material);
+        ~TextLabel() override;
 
         void setText(const std::string& text);
         void setColor(const glm::vec3 &color) const;
@@ -32,4 +32,4 @@ namespace copakond {
     };
 }
 
-#endif //PGR_SEM_COPAKOND_TEXTLABELMESH_H
+#endif //PGR_SEM_COPAKOND_TextLabel_H

@@ -35,10 +35,12 @@ add_executable(${PROJECT_NAME} main.cpp
         animation/catmullroll.h
         animation/bezier.cpp
         animation/bezier.h
-        meshes/textLabelMesh.cpp
-        meshes/textLabelMesh.h
+        meshes/textLabel.cpp
+        meshes/textLabel.h
         meshes/imageSequenceLabel.cpp
         meshes/imageSequenceLabel.h
+        meshes/imageLabel.cpp
+        meshes/imageLabel.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION
