@@ -10,6 +10,8 @@
 
 namespace copakond {
     class Shader {
+    private:
+        float _totalTime = 0.0f;
     protected:
         GLuint _shaderProgram = 0;
 
@@ -46,6 +48,8 @@ namespace copakond {
         GLuint _useNormalMapUID = 0;
 
         GLuint _isTextLabelUID = 0;
+        GLuint _isVertexWaveUID = 0;
+        GLuint _timeUID = 0;
 
         GLint _numLights = 0; // uniform id
         size_t totalNumLights = 0; // actual counter
@@ -64,7 +68,7 @@ namespace copakond {
         void updateLight(Light* light);
 
         GLuint init(std::string vertShaderLocation, std::string fragShaderLocation);
-        void update(Camera &camera, int winWidth, int winHeight);
+        void update(Camera &camera, int winWidth, int winHeight, float deltaTime);
         void draw(Mesh &mesh, bool drawTransparent, float deltaTime);
     };
 }

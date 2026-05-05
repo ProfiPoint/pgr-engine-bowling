@@ -18,11 +18,13 @@ namespace copakond {
     protected:
         static int globalMeshCounter;
         int id;
+        int _isVertexWave = false;
 
         GLuint _shaderProgram = 0;
         GLuint _vboVertices = 0;
         GLuint _vboNormals = 0;
         GLuint _vao = 0;
+
         GLsizei _numVertices = 0;
 
         std::vector<float> _vertices = std::vector<float>();
@@ -49,6 +51,9 @@ namespace copakond {
         virtual void init(GLuint shader);
         virtual void draw(float deltaTime);
         int getId() const { return id; }
+
+        void setVertexWave(bool isVertexWave) { _isVertexWave = isVertexWave; }
+        bool isVertexWave() const { return _isVertexWave; }
     };
 }
 

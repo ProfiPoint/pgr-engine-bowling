@@ -17,9 +17,22 @@ uniform mat4 view;
 uniform mat4 projection;
 uniform mat4 PVM;
 
+uniform float time;
+uniform bool isVertexWave;
+
 void main() {
-    fragmentPosition = vec3(model * vec4(position, 1.0f));
+    vec3 _position = position;
+
+    if (isVertexWave) {
+        float speed = 5.0;
+        float frequency = 3.0;
+        float amplitude = 0.04;
+
+        _position.x += (sin(time * speed + (_position.x + _position.y + _position.z) * frequency) * amplitude) * _position.y;
+    }
+
+    fragmentPosition = vec3(model * vec4(_position, 1.0f));
     fragmentNormal = (normalMatrix * vec4(normal, 0.0f)).xyz;
     fragTexCoord = textureCoord;
-    gl_Position = PVM * vec4(position, 1.0f);
+    gl_Position = PVM * vec4(_position, 1.0f);
 }

@@ -139,6 +139,12 @@ namespace copakond {
 
         body2Mesh->setParent(bodyMesh);
 
+
+        Mesh *flagMesh = new ObjMesh("assets/models/flag.obj", false, glm::vec3(2.0f, -3.0f, 0.0f),
+                                       glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+        meshes.push_back(flagMesh);
+        flagMesh->setVertexWave(true);
+
         TextLabel *textLabel1 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);
         textLabel1->scale() = glm::vec3(6.0f,1.0f,1.0f);
         textLabel1->position() = glm::vec3(0.0f, 6.0f, 0.0f);
@@ -305,7 +311,7 @@ namespace copakond {
         });
 
         // Draw Non-transparent Meshes
-        shader.update(camera, winWidth, winHeight); // use main shader
+        shader.update(camera, winWidth, winHeight, deltaTime); // use main shader
         for (Mesh *mesh: meshes) {
             if (mesh->getMaterial()->getAlpha() <= 0.999f) { continue; }
             if (dynamic_cast<const TextLabel*>(mesh) != nullptr) { continue; }
@@ -322,7 +328,7 @@ namespace copakond {
         glEnable(GL_BLEND);
         glDepthMask(GL_FALSE); // if the front triangle would render before the back it would fail
 
-        shader.update(camera, winWidth, winHeight); // use main shader
+        shader.update(camera, winWidth, winHeight, 0.0f); // use main shader
         for (Mesh *mesh: meshes) {
             if (mesh->getMaterial()->getAlpha() > 0.9999f) { continue; }
             glStencilFunc(GL_ALWAYS, mesh->getId(), 0);

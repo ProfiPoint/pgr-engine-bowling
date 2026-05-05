@@ -50,7 +50,10 @@ namespace copakond {
         _useShininessMapUID = glGetUniformLocation(_shaderProgram, "textureData.useShininessMap");
         _useAlphaMapUID = glGetUniformLocation(_shaderProgram, "textureData.useAlphaMap");
         _useNormalMapUID = glGetUniformLocation(_shaderProgram, "textureData.useNormalMap");
+
         _isTextLabelUID = glGetUniformLocation(_shaderProgram, "isTextLabel");
+        _isVertexWaveUID = glGetUniformLocation(_shaderProgram, "isVertexWave");
+        _timeUID = glGetUniformLocation(_shaderProgram, "time");
 
 
         _numLights = glGetUniformLocation(_shaderProgram, "numLights");
@@ -97,7 +100,7 @@ namespace copakond {
         glUniform1i(unifLocs.dim, light->dim());
     }
 
-    void Shader::update(Camera &camera, int winWidth, int winHeight) {
+    void Shader::update(Camera &camera, int winWidth, int winHeight, float deltaTime) {
         glUseProgram(_shaderProgram);
         _viewM = camera.getViewMatrix();
         _projectionM = camera.getProjectionMatrix((float)winWidth, (float)winHeight);
@@ -116,6 +119,8 @@ namespace copakond {
         glUniformMatrix4fv(_viewUID, 1, GL_FALSE, glm::value_ptr(_viewM));
         glUniformMatrix4fv(_projectionUID, 1, GL_FALSE, glm::value_ptr(_projectionM));
         glUniform3fv(_worldAmbientUID, 1, glm::value_ptr(getWorldAmbient()));
+
+        _totalTime += deltaTime;
     }
 
     void Shader::applyMaterialUniforms(std::shared_ptr<Material> mat) {
@@ -193,6 +198,8 @@ namespace copakond {
         glUniformMatrix4fv(_modelUID, 1, GL_FALSE, glm::value_ptr(modelM)); // TRUE: M -> M^t, opengl accepts vectors by rows.
         glUniformMatrix4fv(_pvmUID, 1, GL_FALSE, glm::value_ptr(PVM));
         glUniformMatrix4fv(_normalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+        glUniform1i(_isVertexWaveUID, mesh.isVertexWave());
+        glUniform1f(_timeUID, _totalTime);
 
         glBindVertexArray(mesh.getVao());
 
