@@ -5,7 +5,7 @@
 
 namespace copakond {
     class ImageSequenceLabel : public Mesh {
-    private:
+    protected:
         int _frame = 0;
         float _frameTime = 0.0f;
         bool _paused = false;
@@ -22,8 +22,8 @@ namespace copakond {
         void _generateGeometry();
 
     public:
-        ImageSequenceLabel(const std::string& imageSequencePath, int fps, int _totalFrames, int _imagesPerWidth, int _imagesPerHeight);
-        ImageSequenceLabel(const std::string& imageSequencePath, int fps, int _totalFrames, int _imagesPerWidth, int _imagesPerHeight, std::shared_ptr<Material> material);
+        ImageSequenceLabel(const std::string& imageSequencePath, int fps, int totalFrames, int imagesPerWidth, int imagesPerHeight);
+        ImageSequenceLabel(const std::string& imageSequencePath, int fps, int totalFrames, int imagesPerWidth, int imagesPerHeight, std::shared_ptr<Material> material);
         ~ImageSequenceLabel() override;
 
         void init(GLuint shader) override;

@@ -12,6 +12,7 @@
 #include "animation/spline.h"
 #include "animation/catmullroll.h"
 #include "animation/bezier.h"
+#include "meshes/imageLabel.h"
 #include "meshes/skybox.h"
 
 namespace copakond {
@@ -44,7 +45,7 @@ namespace copakond {
     }
 
     void init() {
-        glClearColor(0.2f, 0.1f, 0.3f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_DEPTH_TEST);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -139,6 +140,11 @@ namespace copakond {
         imageSequenceLabel->position() = glm::vec3(0.0f, 0.0f, -20.0f);
         imageSequenceLabel->scale() = glm::vec3(16*2.0f,9*2.0f,1.0f);
         meshes.push_back(imageSequenceLabel);
+
+        ImageLabel *imageLabel = new ImageLabel("assets/decals/cara_mia_portal2.jpg");
+        imageLabel->position() = glm::vec3(0.0f, 0.0f, -15.0f);
+        imageLabel->scale() = glm::vec3(16*2.0f,9*2.0f,1.0f);
+        meshes.push_back(imageLabel);
 
         for (Mesh *mesh: meshes) {
             mesh->init(shaderPrg);
