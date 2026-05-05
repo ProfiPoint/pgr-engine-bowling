@@ -28,6 +28,8 @@ namespace copakond {
 
     void Material::setDiffuseTexture(const std::string &textureFile, bool warpTexture) {
         if (textureFile == "") { return; }
+        if (_hasDiffuseTexture) { glDeleteTextures(1, &_diffuseTexture); } // delete prev texture
+
         _diffuseTexture = pgr::createTexture(textureFile, false);
         _hasDiffuseTexture = true;
 
@@ -42,24 +44,32 @@ namespace copakond {
 
     void Material::setSpecularTexture(const std::string &textureFile) {
         if (textureFile == "") { return; }
+        if (_hasSpecularTexture) { glDeleteTextures(1, &_specularTexture); } // delete prev texture
+
         _specularTexture = pgr::createTexture(textureFile);
         _hasSpecularTexture = true;
     }
 
     void Material::setShininessTexture(const std::string &textureFile) {
         if (textureFile == "") { return; }
+        if (_hasShininessTexture) { glDeleteTextures(1, &_shininessTexture); } // delete prev texture
+
         _shininessTexture = pgr::createTexture(textureFile);
         _hasShininessTexture = true;
     }
 
     void Material::setAlphaTexture(const std::string &textureFile) {
         if (textureFile == "") { return; }
+        if (_hasAlphaTexture) { glDeleteTextures(1, &_alphaTexture); } // delete prev texture
+
         _alphaTexture = pgr::createTexture(textureFile);
         _hasAlphaTexture = true;
     }
 
     void Material::setNormalTexture(const std::string &textureFile) {
         if (textureFile == "") { return; }
+        if (_hasNormalTexture) { glDeleteTextures(1, &_normalTexture); } // delete prev texture
+
         _normalTexture = pgr::createTexture(textureFile);
         _hasNormalTexture = true;
     }
