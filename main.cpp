@@ -33,6 +33,7 @@ namespace copakond {
         glm::vec3(0.0f, 0.0f, 0.0f),
         1000.0f
     );
+    Light *sun;
     Input input = Input(camera, winWidth, winHeight);
     Skybox *skybox;
 
@@ -87,8 +88,8 @@ namespace copakond {
         //lights.push_back(light);
         Light *light1 = new PointLight(lightPosition, lightAmbient, lightDiffuse, lightSpecular, 50.0f, true);
         lights.push_back(light1);
-        //Light *light2 = new DirectionalLight(-lightDirection, lightAmbient, lightDiffuse, lightSpecular);
-        //lights.push_back(light2);
+        sun = new DirectionalLight(-lightDirection, lightAmbient, lightDiffuse, lightSpecular);
+        //lights.push_back(sun);
 
         //Light *light3 = new DirectionalLight(lightDirection, lightAmbient, lightDiffuse, lightSpecular);
         //lights.push_back(light3);
@@ -100,12 +101,20 @@ namespace copakond {
         //meshes.push_back(teddyMesh);
 
         skybox = new Skybox(
-            "assets/skybox/right.jpg",
-            "assets/skybox/left.jpg",
-            "assets/skybox/top.jpg",
-            "assets/skybox/bottom.jpg",
-            "assets/skybox/front.jpg",
-            "assets/skybox/back.jpg",
+            "assets/skybox/day/px.png",
+            "assets/skybox/day/nx.png",
+            "assets/skybox/day/ny.png",
+            "assets/skybox/day/py.png",
+            "assets/skybox/day/pz.png",
+            "assets/skybox/day/nz.png",
+
+            "assets/skybox/night/px2.png",
+            "assets/skybox/night/nx2.png",
+            "assets/skybox/night/ny2.png",
+            "assets/skybox/night/py2.png",
+            "assets/skybox/night/pz2.png",
+            "assets/skybox/night/nz2.png",
+
             "shaders/shaders/skybox.vert",
             "shaders/shaders/skybox.frag"
         );
@@ -288,7 +297,7 @@ namespace copakond {
 
         // Draw skybox
         glStencilFunc(GL_ALWAYS, 1, 0); // id = 1 is for skybox
-        skybox->update(camera, winWidth, winHeight, deltaTime); // use skybox shader
+        skybox->update(camera, winWidth, winHeight, deltaTime, fmod(time/1000.0f/5.0f, 1.0f)); // use skybox shader
         skybox->draw(deltaTime);
 
         // Draw Transparent Meshes

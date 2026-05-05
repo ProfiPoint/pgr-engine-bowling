@@ -10,16 +10,19 @@ namespace copakond {
 class Skybox : public Mesh {
 private:
     GLuint _shaderProgram = 0;
-    GLuint _skyboxTextureUID = 0;
+    GLuint _skyboxDayTextureUID = 0;
+    GLuint _skyboxNightTextureUID = 0;
 
     GLuint _viewUID = 0;
     GLuint _projectionUID = 0;
+    GLuint _blendingCoeffUID = 0;
 
 public:
-    Skybox(const std::string &fileRight, const std::string &fileLeft, const std::string &fileTop, const std::string &fileBottom, const std::string &fileFront,
-        const std::string &fileBack, const std::string &fileSkyboxVertexShader, const std::string &fileSkyboxFragmentShader);
+    Skybox(const std::string &dRight, const std::string &dLeft, const std::string &dTop, const std::string &dBottom, const  std::string &dFront, const std::string &dBack,
+        const std::string &nRight, const std::string &nLeft, const std::string &nTop, const std::string &nBottom, const  std::string  &nFront, const std::string &nBack,
+        const std::string &fileSkyboxVertexShader, const std::string &fileSkyboxFragmentShader);
     void draw(float deltaTime) override;
-    void update(Camera &camera, int winWidth, int winHeight, float deltaTime);
+    void update(Camera &camera, int winWidth, int winHeight, float deltaTime, float blendingCoeff);
 };
 
 }
