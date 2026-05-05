@@ -26,10 +26,18 @@ namespace copakond {
         if (_hasNormalTexture) glDeleteTextures(1, &_normalTexture);
     }
 
-    void Material::setDiffuseTexture(const std::string &textureFile) {
+    void Material::setDiffuseTexture(const std::string &textureFile, bool warpTexture) {
         if (textureFile == "") { return; }
-        _diffuseTexture = pgr::createTexture(textureFile);
+        _diffuseTexture = pgr::createTexture(textureFile, false);
         _hasDiffuseTexture = true;
+
+        // bind again to the same id pgr lib just created (pls no race conditions) and make it warp
+        if (warpTexture) {
+            glBindTexture(GL_TEXTURE_2D, _diffuseTexture);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
     }
 
     void Material::setSpecularTexture(const std::string &textureFile) {

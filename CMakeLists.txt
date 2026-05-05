@@ -41,6 +41,8 @@ add_executable(${PROJECT_NAME} main.cpp
         meshes/imageSequenceLabel.h
         meshes/imageLabel.cpp
         meshes/imageLabel.h
+        meshes/imageMoving.cpp
+        meshes/imageMoving.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION

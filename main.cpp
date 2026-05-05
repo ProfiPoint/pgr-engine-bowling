@@ -13,6 +13,7 @@
 #include "animation/catmullroll.h"
 #include "animation/bezier.h"
 #include "meshes/imageLabel.h"
+#include "meshes/imageMoving.h"
 #include "meshes/skybox.h"
 
 namespace copakond {
@@ -145,6 +146,11 @@ namespace copakond {
         imageLabel->position() = glm::vec3(0.0f, 0.0f, -15.0f);
         imageLabel->scale() = glm::vec3(16*2.0f,9*2.0f,1.0f);
         meshes.push_back(imageLabel);
+
+        ImageMoving *imageMoving = new ImageMoving("assets/decals/arrow.png", glm::vec2(0.0f, -1.0f), glm::vec2(1.0f, 8.0f));
+        imageMoving->position() = glm::vec3(0.0f, 0.0f, -12.0f);
+        imageMoving->scale() = glm::vec3(3.0f, 3*8.0f,1.0f);
+        meshes.push_back(imageMoving);
 
         for (Mesh *mesh: meshes) {
             mesh->init(shaderPrg);
