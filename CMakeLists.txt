@@ -15,8 +15,8 @@ add_executable(${PROJECT_NAME} main.cpp
         parser/input.cpp
         parser/objLoader.cpp
         parser/objLoader.h
-        meshes/objMesh.cpp
-        meshes/objMesh.h
+        meshes/model/objMesh.cpp
+        meshes/model/objMesh.h
         geometry/geometry.cpp
         geometry/geometry.h
         geometry/material.cpp
@@ -26,8 +26,8 @@ add_executable(${PROJECT_NAME} main.cpp
         pgr-portable.h
         parser/mtlLoader.cpp
         parser/mtlLoader.h
-        meshes/skybox.cpp
-        meshes/skybox.h
+        meshes/model/skybox.cpp
+        meshes/model/skybox.h
         animation/spline.cpp
         animation/spline.h
         light/fog.h
@@ -35,18 +35,18 @@ add_executable(${PROJECT_NAME} main.cpp
         animation/catmullroll.h
         animation/bezier.cpp
         animation/bezier.h
-        meshes/textLabel.cpp
-        meshes/textLabel.h
-        meshes/imageSequenceLabel.cpp
-        meshes/imageSequenceLabel.h
-        meshes/imageLabel.cpp
-        meshes/imageLabel.h
-        meshes/imageMoving.cpp
-        meshes/imageMoving.h
-        collision/collisionBox.cpp
-        collision/collisionBox.h
-        collision/rigidBody.cpp
-        collision/rigidBody.h
+        meshes/label/textLabel.cpp
+        meshes/label/textLabel.h
+        meshes/label/imageSequenceLabel.cpp
+        meshes/label/imageSequenceLabel.h
+        meshes/label/imageLabel.cpp
+        meshes/label/imageLabel.h
+        meshes/label/imageMoving.cpp
+        meshes/label/imageMoving.h
+        meshes/collision/collisionBox.cpp
+        meshes/collision/collisionBox.h
+        meshes/collision/rigidBody.cpp
+        meshes/collision/rigidBody.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION

@@ -1,5 +1,5 @@
 #include "skybox.h"
-#include "../pgr-portable.h"
+#include "../../pgr-portable.h"
 
 namespace copakond {
     Skybox::Skybox(const std::string &dRight, const std::string &dLeft, const std::string &dTop, const std::string &dBottom, const  std::string &dFront, const std::string &dBack,

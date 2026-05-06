@@ -1,8 +1,8 @@
 #ifndef PGR_SEM_COPAKOND_TextLabel_H
 #define PGR_SEM_COPAKOND_TextLabel_H
 
-#include "mesh.h"
-#include "../geometry/material.h"
+#include "../mesh.h"
+#include "../../geometry/material.h"
 
 namespace copakond {
     class TextLabel : public Mesh {

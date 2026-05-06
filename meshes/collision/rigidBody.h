@@ -1,8 +1,9 @@
 #ifndef PGR_SEM_COPAKOND_RIGIDBODY_H
 #define PGR_SEM_COPAKOND_RIGIDBODY_H
+#include "collisionBox.h"
 
 namespace copakond {
-    class RigidBody {
+    class RigidBody : public CollisionBox {
     };
 }
 

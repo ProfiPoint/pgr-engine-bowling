@@ -1,7 +1,7 @@
 #ifndef PGR_SEM_COPAKOND_IMAGESEQUENCELABEL_H
 #define PGR_SEM_COPAKOND_IMAGESEQUENCELABEL_H
 
-#include "mesh.h"
+#include "../mesh.h"
 
 namespace copakond {
     class ImageSequenceLabel : public Mesh {

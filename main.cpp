@@ -2,9 +2,9 @@
 #include <algorithm>
 #include "pgr-portable.h"
 #include "meshes/mesh.h"
-#include "meshes/objMesh.h"
-#include "meshes/textLabel.h"
-#include "meshes/imageSequenceLabel.h"
+#include "meshes/model/objMesh.h"
+#include "meshes/label/textLabel.h"
+#include "meshes/label/imageSequenceLabel.h"
 #include "geometry/camera.h"
 #include "light/light.h"
 #include "parser/input.h"
@@ -12,9 +12,9 @@
 #include "animation/spline.h"
 #include "animation/catmullroll.h"
 #include "animation/bezier.h"
-#include "meshes/imageLabel.h"
-#include "meshes/imageMoving.h"
-#include "meshes/skybox.h"
+#include "meshes/label/imageLabel.h"
+#include "meshes/label/imageMoving.h"
+#include "meshes/model/skybox.h"
 
 namespace copakond {
     void menuCallback(int option);
@@ -89,7 +89,7 @@ namespace copakond {
         //lights.push_back(light);
         //Light *light1 = new PointLight(lightPosition, lightAmbient, lightDiffuse, lightSpecular, 50.0f, true);
         //lights.push_back(light1);
-        sun = new DirectionalLight(-lightDirection, lightAmbient, lightDiffuse, lightSpecular);
+        sun = new DirectionalLight(-lightDirection, lightAmbient, lightDiffuse, glm::vec3(0.0f, 0.0f, 0.0f));
         lights.push_back(sun);
 
         //Light *light3 = new DirectionalLight(lightDirection, lightAmbient, lightDiffuse, lightSpecular);

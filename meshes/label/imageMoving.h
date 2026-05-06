@@ -1,6 +1,6 @@
 #ifndef PGR_SEM_COPAKOND_IMAGEMOVING_H
 #define PGR_SEM_COPAKOND_IMAGEMOVING_H
-#include "mesh.h"
+#include "../mesh.h"
 
 namespace copakond {
     class ImageMoving : public Mesh {

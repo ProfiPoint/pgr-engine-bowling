@@ -1,7 +1,7 @@
 #ifndef PGR_SEM_COPAKOND_OBJMESH_H
 #define PGR_SEM_COPAKOND_OBJMESH_H
 
-#include "mesh.h"
+#include "../mesh.h"
 
 namespace copakond {
     class ObjMesh : public Mesh {
