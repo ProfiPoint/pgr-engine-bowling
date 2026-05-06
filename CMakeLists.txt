@@ -43,6 +43,10 @@ add_executable(${PROJECT_NAME} main.cpp
         meshes/imageLabel.h
         meshes/imageMoving.cpp
         meshes/imageMoving.h
+        collision/collisionBox.cpp
+        collision/collisionBox.h
+        collision/rigidBody.cpp
+        collision/rigidBody.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION
