@@ -13,6 +13,7 @@
 #include "animation/catmullroll.h"
 #include "animation/bezier.h"
 #include "meshes/collision/collisionBox.h"
+#include "meshes/collision/rigidBody.h"
 #include "meshes/label/imageLabel.h"
 #include "meshes/label/imageMoving.h"
 #include "meshes/model/skybox.h"
@@ -150,6 +151,9 @@ namespace copakond {
         // collision debug
         Mesh *collisionBox = new CollisionBox(glm::vec3(1.0f,1.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
         meshes.push_back(collisionBox);
+
+        Mesh *rigidBody = new RigidBody(glm::vec3(3.0f,50.0f,3.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), 1.0f, true);
+        meshes.push_back(rigidBody);
 
 
         TextLabel *textLabel1 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);

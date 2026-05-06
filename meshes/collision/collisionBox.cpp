@@ -109,7 +109,8 @@ namespace copakond {
     }
 
 
-    bool CollisionBox::collisionCheck(Mesh mesh) {
+    bool CollisionBox::collisionCheck(const Mesh &mesh) {
+        if (&mesh == this) { return false; }
         return false; // TODO: collision checks
     }
 

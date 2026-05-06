@@ -19,7 +19,7 @@ namespace copakond {
         void disable() { _enabled = false; }
         bool isEnabled() const { return _enabled; }
 
-        bool collisionCheck(Mesh mesh);
+        bool collisionCheck(const Mesh &mesh);
     };
 }
 #endif //PGR_SEM_COPAKOND_COLLISIONBOX_H
