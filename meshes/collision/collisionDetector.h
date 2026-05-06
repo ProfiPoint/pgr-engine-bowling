@@ -6,13 +6,17 @@
 namespace copakond {
     class CollisionDetector {
     private:
-        bool OBB1OOB2(CollisionBox box1, CollisionBox box2) { return false; }
-        bool OOB1Sphere2(CollisionBox box1, CollisionSphere box2) { return false; }
-        bool Sphere1OOB2(CollisionSphere box1, CollisionBox box2) { return false; }
-        bool Sphere1Sphere2(CollisionSphere box1, CollisionSphere box2) { return false; }
+        static bool OBB1OOB2(const CollisionBox &box1, const CollisionBox &box2);
+        static bool OOB1Sphere2(const CollisionBox &box1, const CollisionSphere &box2);
+        static bool Sphere1OOB2(const CollisionSphere &box1, const CollisionBox &box2);
+        static bool Sphere1Sphere2(const CollisionSphere &box1, const CollisionSphere &box2);
     public:
         CollisionDetector() {}
-        bool checkCollision(CollisionBox *mesh1, CollisionBox *mesh2) { return false; }
+
+        static bool checkCollision(const CollisionBox* box1, const CollisionBox* box2);
+        static bool checkCollision(const CollisionBox* box, const CollisionSphere* sphere);
+        static bool checkCollision(const CollisionSphere* sphere, const CollisionBox* box);
+        static bool checkCollision(const CollisionSphere* sphere1, const CollisionSphere* sphere2);
     };
 }
 

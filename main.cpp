@@ -13,6 +13,7 @@
 #include "animation/catmullroll.h"
 #include "animation/bezier.h"
 #include "meshes/collision/collisionBox.h"
+#include "meshes/collision/collisionSphere.h"
 #include "meshes/collision/rigidBody.h"
 #include "meshes/label/imageLabel.h"
 #include "meshes/label/imageMoving.h"
@@ -151,6 +152,9 @@ namespace copakond {
         // collision debug
         Mesh *collisionBox = new CollisionBox(glm::vec3(1.0f,1.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
         meshes.push_back(collisionBox);
+
+        Mesh *collisionBox2 = new CollisionSphere(glm::vec3(2.0f,1.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
+        meshes.push_back(collisionBox2);
 
         Mesh *rigidBody = new RigidBody(glm::vec3(3.0f,50.0f,3.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), 1.0f, true);
         meshes.push_back(rigidBody);
