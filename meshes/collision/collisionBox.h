@@ -15,9 +15,11 @@ namespace copakond {
         void init(GLuint shader) override;
         void draw(float deltaTime) override;
 
+        void setDebug(bool debug) { _debug = debug; }
         void enable() { _enabled = true; }
         void disable() { _enabled = false; }
         bool isEnabled() const { return _enabled; }
+
 
         bool collisionCheck(const Mesh &mesh);
     };
