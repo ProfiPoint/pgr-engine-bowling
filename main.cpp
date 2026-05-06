@@ -15,6 +15,7 @@
 #include "meshes/collision/collisionBox.h"
 #include "meshes/collision/collisionSphere.h"
 #include "meshes/collision/rigidBody.h"
+#include "meshes/collision/rigidSphere.h"
 #include "meshes/label/imageLabel.h"
 #include "meshes/label/imageMoving.h"
 #include "meshes/model/skybox.h"
@@ -41,6 +42,7 @@ namespace copakond {
     Skybox *skybox;
 
     std::vector<Spline *> splines = {};
+    std::vector<CollisionShape*> colliders = std::vector<CollisionShape*>();
 
     ImageLabel *clockHandHour;
     ImageLabel *clockHandMin;
@@ -153,10 +155,11 @@ namespace copakond {
         Mesh *collisionBox = new CollisionBox(glm::vec3(1.0f,1.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
         meshes.push_back(collisionBox);
 
-        Mesh *collisionBox2 = new CollisionSphere(glm::vec3(2.0f,1.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
+        Mesh *collisionBox2 = new CollisionSphere(glm::vec3(3.0f,1.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
         meshes.push_back(collisionBox2);
 
-        Mesh *rigidBody = new RigidBody(glm::vec3(3.0f,50.0f,3.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), 1.0f, true);
+        RigidBody *rigidBody = new RigidBody(glm::vec3(1.0f,30.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
+        rigidBody->velocity() = glm::vec3(0.0f, -1.0f, 0.0f);
         meshes.push_back(rigidBody);
 
 
@@ -211,6 +214,8 @@ namespace copakond {
 
         for (Mesh *mesh: meshes) {
             mesh->init(shaderPrg);
+            auto *colShape = dynamic_cast<CollisionShape*>(mesh);
+            if (colShape != nullptr) { colliders.push_back(colShape); }
         }
         for (size_t i = 0; i < lights.size(); i++) {
             shader.setLight(lights[i], i);
@@ -270,6 +275,14 @@ namespace copakond {
         // update spline animations
         for (Spline *spline: splines) {
             spline->update(deltaTime);
+        }
+
+        // process physics
+        for (CollisionShape *collider: colliders) {
+            auto *rigBody = dynamic_cast<RigidBody*>(collider);
+            auto *rigSphere = dynamic_cast<RigidSphere*>(collider);
+            if (rigBody != nullptr) { rigBody->physics_process(deltaTime, colliders); }
+            if (rigSphere != nullptr) { rigSphere->physics_process(deltaTime, colliders); }
         }
 
 

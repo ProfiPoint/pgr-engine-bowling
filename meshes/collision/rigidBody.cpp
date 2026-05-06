@@ -1,8 +1,8 @@
 #include "rigidBody.h"
 
 namespace copakond {
-    RigidBody::RigidBody(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale, float gravity, bool debug) :
-    _gravity(gravity), CollisionBox(position, rotation, scale, debug) {
+    RigidBody::RigidBody(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale, bool debug) :
+    CollisionBox(position, rotation, scale, debug) {
         if (debug) {
             _material = std::make_shared<Material>();
             _material->ambient() = glm::vec3(1.0f, 0.6f, 0.0f);
@@ -13,11 +13,22 @@ namespace copakond {
     }
 
     void RigidBody::physics_process(float deltaTime, const std::vector<CollisionShape*>& allColliders) {
-        // do collision check for all rigit bodies if i can fall
-        // lets assume I can
-        if (true) { // TODO check based of list of all collision boxes if i can fall (simulate the fall and then check if i can, if not return me back)
-            _velocity.y -= _gravity * deltaTime;
-            position() += _velocity * deltaTime;
+        glm::vec3 prevPosition = position();
+        position() += _velocity * deltaTime; // update pos
+
+        bool collides = false; // check collisions
+        for (CollisionShape* collider : allColliders) {
+            if (collider != this && collider->isEnabled()) {
+                if (collider->collisionCheck(*this)) {
+                    collides = true;
+                    break;
+                }
+            }
+        }
+
+        if (collides) { // if collides restore prev position
+            position() = prevPosition;
+            _velocity.y = 0.0f;
         }
     }
 }
