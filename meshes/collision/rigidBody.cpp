@@ -13,22 +13,29 @@ namespace copakond {
     }
 
     void RigidBody::physics_process(float deltaTime, const std::vector<CollisionShape*>& allColliders) {
-        glm::vec3 prevPosition = position();
-        position() += _velocity * deltaTime; // update pos
+        // implementation of delta fix t
+        float deltaTimeLeft = deltaTime;
+        while (deltaTimeLeft > 0.0f) {
+            float timeDeltaNow = DELTA_TIME_FIXED;
+            if (deltaTimeLeft < DELTA_TIME_FIXED) { timeDeltaNow = deltaTimeLeft; }
+            deltaTimeLeft -= DELTA_TIME_FIXED;
+            glm::vec3 prevPosition = position();
+            position() += _velocity * timeDeltaNow; // update pos
 
-        bool collides = false; // check collisions
-        for (CollisionShape* collider : allColliders) {
-            if (collider != this && collider->isEnabled()) {
-                if (collider->collisionCheck(*this)) {
-                    collides = true;
-                    break;
+            bool collides = false; // check collisions
+            for (CollisionShape* collider : allColliders) {
+                if (collider != this && collider->isEnabled()) {
+                    if (collider->collisionCheck(*this)) {
+                        collides = true;
+                        break;
+                    }
                 }
             }
-        }
 
-        if (collides) { // if collides restore prev position
-            position() = prevPosition;
-            _velocity.y = 0.0f;
+            if (collides) { // if collides restore prev position
+                position() = prevPosition;
+                _velocity = glm::vec3(0.0f);
+            }
         }
     }
 }
