@@ -20,7 +20,7 @@ namespace copakond {
         void disable() { _enabled = false; }
         bool isEnabled() const { return _enabled; }
 
-        virtual bool collisionCheck(const Mesh &mesh) = 0;
+        virtual bool collisionCheck(const CollisionShape &mesh) = 0; // virtual
     };
 }
 

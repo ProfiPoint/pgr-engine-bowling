@@ -1,4 +1,5 @@
 #include "collisionBox.h"
+#include "collisionDetector.h"
 
 namespace copakond {
     CollisionBox::CollisionBox(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale, bool visible)
@@ -67,9 +68,11 @@ namespace copakond {
         _generateGeometry(shader, vertices, vertices);
     }
 
-    bool CollisionBox::collisionCheck(const Mesh &mesh) {
+    bool CollisionBox::collisionCheck(const CollisionShape &mesh) {
         if (&mesh == this) { return false; }
-        return false; // TODO: collision checks
+
+        bool collides = CollisionDetector::checkCollision(this, &mesh);
+        return collides;
     }
 
 }

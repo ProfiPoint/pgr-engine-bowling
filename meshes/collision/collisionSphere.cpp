@@ -3,6 +3,8 @@
 #include "collisionSphere.h"
 #include <cmath>
 
+#include "collisionDetector.h"
+
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -133,8 +135,10 @@ namespace copakond {
         _generateGeometry(shader, vertices, vertices);
     }
 
-    bool CollisionSphere::collisionCheck(const Mesh &mesh) {
+    bool CollisionSphere::collisionCheck(const CollisionShape &mesh) {
         if (&mesh == this) { return false; }
-        return false; // TODO: sphere collision
+
+        bool collides = CollisionDetector::checkCollision(this, &mesh);
+        return collides;
     }
 }

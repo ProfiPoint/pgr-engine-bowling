@@ -17,6 +17,8 @@ namespace copakond {
         static bool checkCollision(const CollisionBox* box, const CollisionSphere* sphere);
         static bool checkCollision(const CollisionSphere* sphere, const CollisionBox* box);
         static bool checkCollision(const CollisionSphere* sphere1, const CollisionSphere* sphere2);
+
+        static bool checkCollision(const CollisionShape* shape1, const CollisionShape* shape2);
     };
 }
 
