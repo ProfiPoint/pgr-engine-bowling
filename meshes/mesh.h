@@ -19,6 +19,7 @@ namespace copakond {
         static int globalMeshCounter;
         int id;
         int _isVertexWave = false;
+        bool _visible = true;
 
         GLuint _shaderProgram = 0;
         GLuint _vboVertices = 0;
@@ -54,6 +55,11 @@ namespace copakond {
 
         void setVertexWave(bool isVertexWave) { _isVertexWave = isVertexWave; }
         bool isVertexWave() const { return _isVertexWave; }
+
+        void hide() { _visible = false; }
+        void show() { _visible = true; }
+        void setVisible(bool visible) { _visible = visible; }
+        bool isVisible() const { return _visible; }
     };
 }
 

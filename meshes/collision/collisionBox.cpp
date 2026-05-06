@@ -1,8 +1,8 @@
 #include "collisionBox.h"
 
 namespace copakond {
-    CollisionBox::CollisionBox(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale, bool debug)
-        : CollisionShape(position, rotation, scale, debug) {}
+    CollisionBox::CollisionBox(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale, bool visible)
+        : CollisionShape(position, rotation, scale, visible) {}
 
     void CollisionBox::init(GLuint shader) {
         _shaderProgram = shader;

@@ -1,11 +1,13 @@
 #include "collisionShape.h"
 
 namespace copakond {
-    CollisionShape::CollisionShape(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale, bool debug) 
-        : Mesh(position, rotation, scale), _debug(debug) {
-        
+    CollisionShape::CollisionShape(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale, bool visible)
+        : Mesh(position, rotation, scale) {
+
+        setVisible(visible);
+
         _material = std::make_shared<Material>();
-        if (debug) {
+        if (visible) {
             _material->ambient() = glm::vec3(0.19f, 0.36f, 0.86f);
             _material->diffuse() = glm::vec3(0.19f, 0.36f, 0.86f);
             _material->specular() = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -17,7 +19,7 @@ namespace copakond {
     }
 
     void CollisionShape::draw(float deltaTime) {
-        if (!_debug) { return; }
+        if (!_visible) { return; }
         Mesh::draw(deltaTime);
     }
 

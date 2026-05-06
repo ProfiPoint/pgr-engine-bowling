@@ -8,8 +8,8 @@
 #endif
 
 namespace copakond {
-    CollisionSphere::CollisionSphere(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale, bool debug)
-        : CollisionShape(position, rotation, scale, debug) {
+    CollisionSphere::CollisionSphere(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale, bool visible)
+        : CollisionShape(position, rotation, scale, visible) {
     }
 
     void CollisionSphere::init(GLuint shader) {
