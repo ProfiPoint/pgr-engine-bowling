@@ -175,4 +175,4 @@ namespace copakond {
         glBindVertexArray(0);
     }
 
-} // copakond
+}

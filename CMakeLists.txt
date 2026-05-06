@@ -47,6 +47,13 @@ add_executable(${PROJECT_NAME} main.cpp
         meshes/collision/collisionBox.h
         meshes/collision/rigidBody.cpp
         meshes/collision/rigidBody.h
+        meshes/collision/collisionDetector.cpp
+        meshes/collision/collisionDetector.h
+        meshes/collision/collisionSphere.cpp
+        meshes/collision/collisionSphere.h
+        meshes/collision/rigidSphere.cpp
+        meshes/collision/collisionShape.h
+        meshes/collision/collisionShape.cpp
 )
 
 if(WIN32) # WINDOWS CONFIGURATION
