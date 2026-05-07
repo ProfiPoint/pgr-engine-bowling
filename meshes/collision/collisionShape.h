@@ -6,6 +6,11 @@
 #include "collisionDetector.h"
 
 namespace copakond {
+    struct PhysicsMaterial {
+        float bounciness = 0.5f;
+        float friction = 0.2f;
+    };
+
     class CollisionShape : public Mesh {
     protected:
         bool _enabled = true;
@@ -13,6 +18,8 @@ namespace copakond {
         void _generateGeometry(GLuint shader, const std::vector<float>& vertices, const std::vector<float>& normals);
 
     public:
+        PhysicsMaterial material = PhysicsMaterial();
+
         CollisionShape(const glm::vec3 &position = glm::vec3(0.0f), const glm::vec3 &rotation = glm::vec3(0.0f),
             const glm::vec3 &scale = glm::vec3(1.0f), bool visible = false);
 

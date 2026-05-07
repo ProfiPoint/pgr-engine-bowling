@@ -186,6 +186,16 @@ namespace copakond {
         cb5->setParent(pivotRot);
 
 
+
+        Mesh *cba1 = new CollisionBox(glm::vec3(0.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(20.0f,1.0f,7.0f), true);
+        meshes.push_back(cba1);
+        Mesh *cba2 = new CollisionBox(glm::vec3(-10.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,3.0f,7.0f), true);
+        meshes.push_back(cba2);
+        Mesh *cba3 = new CollisionBox(glm::vec3(10.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,3.0f,7.0f), true);
+        meshes.push_back(cba3);
+
+
+
         TextLabel *textLabel1 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);
         textLabel1->scale() = glm::vec3(6.0f,1.0f,1.0f);
         textLabel1->position() = glm::vec3(0.0f, 6.0f, 0.0f);
