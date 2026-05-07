@@ -198,11 +198,14 @@ namespace copakond {
         meshes.push_back(rigidBody3);
         flagMesh->setParent(rigidBody3);
 
-        cba1->physicsMaterial.bounciness = 0.1f;
+        cba1->physicsMaterial.bounciness = 0.98f;
         cba2->physicsMaterial.bounciness = 1.0f;
         cba3->physicsMaterial.bounciness = 1.0f;
         rigidBody3->physicsMaterial.bounciness = 1.0f;
 
+        cba1->physicsMaterial.friction = 0.0f;
+        rigidBody3->physicsMaterial.friction = 0.0f;
+        rigidBody3->gravity() = glm::vec3(0.0f, -100.0f, 0.0f);
 
 
 
