@@ -20,8 +20,6 @@ namespace copakond {
     class CollisionDetector {
     private:
         static glm::vec3 OBB1OBB2Normal(const CollisionBox &box1, const CollisionBox &box2);
-        static glm::vec3 OBB1Sphere2Normal(const CollisionBox &box1, const CollisionSphere &box2);
-        static glm::vec3 Sphere1Sphere2Normal(const CollisionSphere &box1, const CollisionSphere &box2);
 
         static CollisionResult OBB1OBB2(const CollisionBox &box1, const CollisionBox &box2, glm::vec3 velocity, bool calculateNormal = false);
         static CollisionResult OBB1Sphere2(const CollisionBox &box1, const CollisionSphere &box2, glm::vec3 velocity, bool calculateNormal = false);

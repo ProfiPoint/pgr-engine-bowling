@@ -18,19 +18,65 @@ namespace copakond {
         return result;
     }
 
+
     // COLLISION NORMAL CALCULATION
+    // https://www.reddit.com/r/gamedev/comments/brb88i/question_bout_obb_collision_detection/ for normal calcualtion
+    glm::vec3 CollisionDetector::OBB1OBB2Normal(const CollisionBox &box1, const CollisionBox &box2) {
+        glm::vec3 pos1 = box1.getPosition();
+        glm::vec3 rot1 = box1.getRotation();
+        glm::vec3 siz1 = box1.getScale() / 2.0f;
+        glm::vec3 pos2 = box2.getPosition();
+        glm::vec3 rot2 = box2.getRotation();
+        glm::vec3 siz2 = box2.getScale() / 2.0f;
 
+        // euler angles with orthonormal basis
+        glm::mat3 Amat = glm::mat3(glm::quat(rot1));
+        glm::mat3 Bmat = glm::mat3(glm::quat(rot2));
 
+        glm::vec3 A[3] = { Amat[0], Amat[1], Amat[2] };
+        glm::vec3 B[3] = { Bmat[0], Bmat[1], Bmat[2] };
 
+        glm::vec3 v = pos2 - pos1; // world frame diff distance
 
+        // all separation axes
+        glm::vec3 axes[15] = {
+            A[0], A[1], A[2],
+            B[0], B[1], B[2],
+            glm::cross(A[0], B[0]), glm::cross(A[0], B[1]), glm::cross(A[0], B[2]),
+            glm::cross(A[1], B[0]), glm::cross(A[1], B[1]), glm::cross(A[1], B[2]),
+            glm::cross(A[2], B[0]), glm::cross(A[2], B[1]), glm::cross(A[2], B[2])
+        };
 
+        float minOverlap = std::numeric_limits<float>::max();
+        glm::vec3 minAxis = glm::vec3(0.0f, 1.0f, 0.0f); // if not found, or float errors
 
+        // searching for the min "Penetration Axe"
+        for (int i = 0; i < 15; i++) {
+            glm::vec3 axis = glm::normalize(axes[i]);
 
+            float lengthSq = glm::dot(axis, axis);
+            if (lengthSq < 0.001f) { continue; } // zero div prev, would be inf.
 
+            // projection of A, B to world coord.
+            float rA = siz1.x * std::abs(glm::dot(A[0], axis)) + siz1.y * std::abs(glm::dot(A[1], axis)) + siz1.z * std::abs(glm::dot(A[2], axis));
+            float rB = siz2.x * std::abs(glm::dot(B[0], axis)) + siz2.y * std::abs(glm::dot(B[1], axis)) + siz2.z * std::abs(glm::dot(B[2], axis));
 
+            float distProj = std::abs(glm::dot(v, axis)); // distance of the proj
+            float overlap = (rA + rB) - distProj; // total overlap
 
+            if (overlap < minOverlap) { // min overlap
+                minOverlap = overlap;
+                minAxis = axis;
+            }
+        }
 
+        // axe will must point out always
+        if (glm::dot(minAxis, v) > 0.0f) {
+            minAxis = -minAxis;
+        }
 
+        return minAxis;
+    }
 
 
     // COLLISION DETECTION
@@ -58,10 +104,8 @@ namespace copakond {
         glm::vec3 A[3] = { Amat[0], Amat[1], Amat[2] };
         glm::vec3 B[3] = { Bmat[0], Bmat[1], Bmat[2] };
 
-        glm::vec3 v = pos2 - pos1; // world frame
+        glm::vec3 v = pos2 - pos1; // world frame diff distance
         glm::vec3 T(glm::dot(v, A[0]), glm::dot(v, A[1]), glm::dot(v, A[2])); // box A coordinate system
-
-        const float EPSILON = 1e-6f; // 0-div prevention
 
         // rotation matrix R calculation
         float R[3][3];
@@ -69,7 +113,7 @@ namespace copakond {
         for (int i = 0; i < 3; i++) {
             for (int k = 0; k < 3; k++) {
                 R[i][k] = glm::dot(A[i], B[k]);
-                absR[i][k] = std::abs(R[i][k]) + EPSILON;
+                absR[i][k] = std::abs(R[i][k]) + 0.00001f; // preventing 0 division
             }
         }
 
@@ -181,8 +225,15 @@ namespace copakond {
         glm::vec3 diff = localSpherePos - closestPoint; // distance between the point
         float distanceSq = glm::dot(diff, diff); // ||diff||^2
         if (distanceSq <= (sphereRadius * sphereRadius)) { // check if the distance^2  collides with the sphere
+            // https://gamedev.net/tag/community/forums/topic.asp?topic_id=555502
             if (calculateNormal) {
-                glm::vec3 normal = OBB1Sphere2Normal(box1, sphere2);
+                glm::vec3 worldDiff = (diff.x * A[0]) + (diff.y * A[1]) + (diff.z * A[2]); // local diff in world space
+
+                glm::vec3 normal = glm::vec3(0.0f, 1.0f, 0.0f); // if centered
+                if (glm::length(worldDiff) > 0.001f) { // not centered
+                    normal = glm::normalize(-worldDiff); // flip to make it Sphere to Box
+                }
+
                 glm::vec3 reflection = glm::reflect(velocity, normal);
                 return collisionTrue(normal, reflection);
             } else {
@@ -200,7 +251,7 @@ namespace copakond {
         float distance = glm::distance(sphere1.getPosition(), sphere2.getPosition());
         if (distance < size1x + size2x) {
             if (calculateNormal) {
-                glm::vec3 normal = Sphere1Sphere2Normal(sphere1, sphere2);
+                glm::vec3 normal = glm::normalize(sphere1.getPosition() - sphere2.getPosition()); // diff between possition
                 glm::vec3 reflection = glm::reflect(velocity, normal);
                 return collisionTrue(normal, reflection);
             } else {
