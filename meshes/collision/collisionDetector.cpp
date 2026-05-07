@@ -277,6 +277,11 @@ namespace copakond {
 
     CollisionResult CollisionDetector::checkCollision(const CollisionSphere* sphere1, const CollisionBox* box2, const glm::vec3 &velocity, bool calculateNormal) {
         CollisionResult collides = OBB1Sphere2(*box2, *sphere1, velocity, calculateNormal);
+
+        // flip the normal, and recal reflection (inverse arguments)
+        collides.normal = -collides.normal;
+        collides.reflection = glm::reflect(velocity, collides.normal);
+
         return collides;
     }
 
