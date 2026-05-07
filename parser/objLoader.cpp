@@ -115,13 +115,13 @@ namespace copakond {
                 max[2] - min[2],
             };
 
-            // scale factor to get it in coord [-1,-1,-1] x [1,1,1]
+            // scale factor to get it in coord [-0.5,-0.5,-0.5] x [0.5,0.5,0.5]
             float scaleFactor[3];
             for (int i = 0; i < 3; i++) {
                 if (size[i] > 0.0f) {
-                    scaleFactor[i] = 2.0f / size[i];
+                    scaleFactor[i] = 1.0f / size[i];
                 } else {
-                    scaleFactor[i] = 1.0f;
+                    scaleFactor[i] = 0.5f;
                 }
             }
 

@@ -145,22 +145,24 @@ namespace copakond {
         body2Mesh->setParent(bodyMesh);
 
 
-        Mesh *flagMesh = new ObjMesh("assets/models/flag.obj", false, glm::vec3(2.0f, -3.0f, 0.0f),
-                                       glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+        Mesh *flagMesh = new ObjMesh("assets/models/flag.obj", true, glm::vec3(0.0f, 0.0f, 0.0f),
+                                       glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
         meshes.push_back(flagMesh);
         flagMesh->setVertexWave(true);
         shipMesh->setVertexWave(true);
 
         // collision debug
-        Mesh *collisionBox = new CollisionBox(glm::vec3(1.0f,1.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
+        Mesh *collisionBox = new CollisionBox(glm::vec3(1.0f,1.0f,1.0f), glm::vec3(1.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
         meshes.push_back(collisionBox);
 
         Mesh *collisionBox2 = new CollisionSphere(glm::vec3(3.0f,1.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
         meshes.push_back(collisionBox2);
 
-        RigidBody *rigidBody = new RigidBody(glm::vec3(1.0f,30.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
+        RigidBody *rigidBody = new RigidBody(glm::vec3(3.0f,30.0f,1.0f), glm::vec3(1.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
         rigidBody->velocity() = glm::vec3(0.0f, -1.0f, 0.0f);
         meshes.push_back(rigidBody);
+
+        flagMesh->setParent(rigidBody);
 
 
         TextLabel *textLabel1 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);

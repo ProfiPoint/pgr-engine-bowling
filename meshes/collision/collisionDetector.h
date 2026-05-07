@@ -19,19 +19,22 @@ namespace copakond {
 
     class CollisionDetector {
     private:
-        static CollisionResult OBB1OOB2(const CollisionBox &box1, const CollisionBox &box2, glm::vec3 velocity);
-        static CollisionResult OOB1Sphere2(const CollisionBox &box1, const CollisionSphere &box2, glm::vec3 velocity);
-        static CollisionResult Sphere1OOB2(const CollisionSphere &box1, const CollisionBox &box2, glm::vec3 velocity);
-        static CollisionResult Sphere1Sphere2(const CollisionSphere &box1, const CollisionSphere &box2, glm::vec3 velocity);
+        static glm::vec3 OBB1OBB2Normal(const CollisionBox &box1, const CollisionBox &box2);
+        static glm::vec3 OBB1Sphere2Normal(const CollisionBox &box1, const CollisionSphere &box2);
+        static glm::vec3 Sphere1Sphere2Normal(const CollisionSphere &box1, const CollisionSphere &box2);
+
+        static CollisionResult OBB1OBB2(const CollisionBox &box1, const CollisionBox &box2, glm::vec3 velocity, bool calculateNormal = false);
+        static CollisionResult OBB1Sphere2(const CollisionBox &box1, const CollisionSphere &box2, glm::vec3 velocity, bool calculateNormal = false);
+        static CollisionResult Sphere1Sphere2(const CollisionSphere &box1, const CollisionSphere &box2, glm::vec3 velocity, bool calculateNormal = false);
     public:
         CollisionDetector() {}
 
-        static CollisionResult checkCollision(const CollisionBox* box1, const CollisionBox* box2, glm::vec3 velocity = glm::vec3(0.0f));
-        static CollisionResult checkCollision(const CollisionBox* box, const CollisionSphere* sphere, glm::vec3 velocity = glm::vec3(0.0f));
-        static CollisionResult checkCollision(const CollisionSphere* sphere, const CollisionBox* box, glm::vec3 velocity = glm::vec3(0.0f));
-        static CollisionResult checkCollision(const CollisionSphere* sphere1, const CollisionSphere* sphere2, glm::vec3 velocity = glm::vec3(0.0f));
+        static CollisionResult checkCollision(const CollisionBox* box1, const CollisionBox* box2, const glm::vec3 &velocity = glm::vec3(0.0f), bool calculateNormal = false);
+        static CollisionResult checkCollision(const CollisionBox* box, const CollisionSphere* sphere, const glm::vec3 &velocity = glm::vec3(0.0f), bool calculateNormal = false);
+        static CollisionResult checkCollision(const CollisionSphere* sphere, const CollisionBox* box, const glm::vec3 &velocity = glm::vec3(0.0f), bool calculateNormal = false);
+        static CollisionResult checkCollision(const CollisionSphere* sphere1, const CollisionSphere* sphere2, const glm::vec3 &velocity = glm::vec3(0.0f), bool calculateNormal = false);
 
-        static CollisionResult checkCollision(const CollisionShape* shape1, const CollisionShape* shape2, glm::vec3 velocity = glm::vec3(0.0f));
+        static CollisionResult checkCollision(const CollisionShape* shape1, const CollisionShape* shape2, const glm::vec3 &velocity = glm::vec3(0.0f), bool calculateNormal = false);
     };
 }
 

@@ -18,10 +18,26 @@ namespace copakond {
         return result;
     }
 
-    // using Separation Axis theorem.
+    // COLLISION NORMAL CALCULATION
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // COLLISION DETECTION
+
+    // using Separation Axis theorem.
     // copied. exact implementation of https://web.archive.org/web/19991129035017/http://www.gamasutra.com/features/19991018/Gomez_5.htm
-    CollisionResult CollisionDetector::OBB1OOB2(const CollisionBox &box1, const CollisionBox &box2, glm::vec3 velocity) {
+    CollisionResult CollisionDetector::OBB1OBB2(const CollisionBox &box1, const CollisionBox &box2, glm::vec3 velocity, bool calculateNormal) {
         glm::vec3 pos1 = box1.getPosition();
         glm::vec3 rot1 = box1.getRotation();
         glm::vec3 siz1 = box1.getScale() / 2.0f;
@@ -129,12 +145,20 @@ namespace copakond {
         t = std::abs(T[1] * R[0][2] - T[0] * R[1][2]);
         if (t > ra + rb) return collisionFalse();
 
-        return collisionTrue(glm::vec3(404.0f), glm::vec3(404.0f)); // no separation axe found
+        // no separation axe found
+        if (calculateNormal) {
+            glm::vec3 normal = OBB1OBB2Normal(box1, box2);
+            glm::vec3 reflection = glm::reflect(velocity, normal);
+            return collisionTrue(normal, reflection);
+        } else {
+            return collisionTrue(glm::vec3(0.0f), glm::vec3(0.0f));
+        }
+
     }
 
     // assuming sphere is not an ellipsoid (MUST x=y=z)
     // copied and edited of https://www.geometrictools.com/Documentation/IntersectionBoxEllipsoid.pdf
-    CollisionResult CollisionDetector::OOB1Sphere2(const CollisionBox &box1, const CollisionSphere &sphere2, glm::vec3 velocity) {
+    CollisionResult CollisionDetector::OBB1Sphere2(const CollisionBox &box1, const CollisionSphere &sphere2, glm::vec3 velocity, bool calculateNormal) {
         glm::vec3 boxPos = box1.getPosition();
         glm::vec3 boxRot = box1.getRotation();
         glm::vec3 boxHalfExtents = box1.getScale() / 2.0f;
@@ -157,45 +181,60 @@ namespace copakond {
         glm::vec3 diff = localSpherePos - closestPoint; // distance between the point
         float distanceSq = glm::dot(diff, diff); // ||diff||^2
         if (distanceSq <= (sphereRadius * sphereRadius)) { // check if the distance^2  collides with the sphere
-            return collisionTrue(glm::vec3(404.0f), glm::vec3(404.0f));
+            if (calculateNormal) {
+                glm::vec3 normal = OBB1Sphere2Normal(box1, sphere2);
+                glm::vec3 reflection = glm::reflect(velocity, normal);
+                return collisionTrue(normal, reflection);
+            } else {
+                return collisionTrue(glm::vec3(0.0f), glm::vec3(0.0f));
+            }
         } else {
             return collisionFalse();
         }
     }
 
-    CollisionResult CollisionDetector::Sphere1OOB2(const CollisionSphere &sphere1, const CollisionBox &box2, glm::vec3 velocity) { return OOB1Sphere2(box2, sphere1, velocity); }
-
     // assuming the spheres are spheres not ellipsoids (MUST x=y=z).
-    CollisionResult CollisionDetector::Sphere1Sphere2(const CollisionSphere &sphere1, const CollisionSphere &sphere2, glm::vec3 velocity) {
+    CollisionResult CollisionDetector::Sphere1Sphere2(const CollisionSphere &sphere1, const CollisionSphere &sphere2, glm::vec3 velocity, bool calculateNormal) {
         float size1x = sphere1.getScale().x / 2.0f;
         float size2x = sphere2.getScale().x / 2.0f;
         float distance = glm::distance(sphere1.getPosition(), sphere2.getPosition());
-        if (distance < size1x + size2x) { return collisionTrue(glm::vec3(404.0f), glm::vec3(404.0f)); }
-        return collisionFalse();
+        if (distance < size1x + size2x) {
+            if (calculateNormal) {
+                glm::vec3 normal = Sphere1Sphere2Normal(sphere1, sphere2);
+                glm::vec3 reflection = glm::reflect(velocity, normal);
+                return collisionTrue(normal, reflection);
+            } else {
+                return collisionTrue(glm::vec3(0.0f), glm::vec3(0.0f));
+            }
+        } else {
+            return collisionFalse();
+        }
     }
 
 
-    CollisionResult CollisionDetector::checkCollision(const CollisionBox* box1, const CollisionBox* box2, glm::vec3 velocity) {
-        CollisionResult collides = OBB1OOB2(*box1, *box2, velocity);
+
+    // Public callers
+    CollisionResult CollisionDetector::checkCollision(const CollisionBox* box1, const CollisionBox* box2, const glm::vec3 &velocity, bool calculateNormal) {
+        CollisionResult collides = OBB1OBB2(*box1, *box2, velocity, calculateNormal);
         return collides;
     }
 
-    CollisionResult CollisionDetector::checkCollision(const CollisionBox* box1, const CollisionSphere* sphere2, glm::vec3 velocity) {
-        CollisionResult collides = OOB1Sphere2(*box1, *sphere2, velocity);
+    CollisionResult CollisionDetector::checkCollision(const CollisionBox* box1, const CollisionSphere* sphere2, const glm::vec3 &velocity, bool calculateNormal) {
+        CollisionResult collides = OBB1Sphere2(*box1, *sphere2, velocity, calculateNormal);
         return collides;
     }
 
-    CollisionResult CollisionDetector::checkCollision(const CollisionSphere* sphere1, const CollisionBox* box2, glm::vec3 velocity) {
-        CollisionResult collides = Sphere1OOB2(*sphere1, *box2, velocity);
+    CollisionResult CollisionDetector::checkCollision(const CollisionSphere* sphere1, const CollisionBox* box2, const glm::vec3 &velocity, bool calculateNormal) {
+        CollisionResult collides = OBB1Sphere2(*box2, *sphere1, velocity, calculateNormal);
         return collides;
     }
 
-    CollisionResult CollisionDetector::checkCollision(const CollisionSphere* sphere1, const CollisionSphere* sphere2, glm::vec3 velocity) {
-        CollisionResult collides = Sphere1Sphere2(*sphere1, *sphere2, velocity);
+    CollisionResult CollisionDetector::checkCollision(const CollisionSphere* sphere1, const CollisionSphere* sphere2, const glm::vec3 &velocity, bool calculateNormal) {
+        CollisionResult collides = Sphere1Sphere2(*sphere1, *sphere2, velocity, calculateNormal);
         return collides;
     }
 
-    CollisionResult CollisionDetector::checkCollision(const CollisionShape* shape1, const CollisionShape* shape2, glm::vec3 velocity) {
+    CollisionResult CollisionDetector::checkCollision(const CollisionShape* shape1, const CollisionShape* shape2, const glm::vec3 &velocity, bool calculateNormal) {
         // check if its a given type
         const CollisionBox* box1 = dynamic_cast<const CollisionBox*>(shape1);
         const CollisionBox* box2 = dynamic_cast<const CollisionBox*>(shape2);
@@ -203,10 +242,10 @@ namespace copakond {
         const CollisionSphere* sphere2 = dynamic_cast<const CollisionSphere*>(shape2);
 
         // check collisions
-        if (box1 && box2) { return checkCollision(box1, box2, velocity); }
-        else if (box1 && sphere2) { return checkCollision(box1, sphere2, velocity); }
-        else if (sphere1 && box2) { return checkCollision(sphere1, box2, velocity); }
-        else if (sphere1 && sphere2) { return checkCollision(sphere1, sphere2, velocity); }
+        if (box1 && box2) { return checkCollision(box1, box2, velocity, calculateNormal); }
+        else if (box1 && sphere2) { return checkCollision(box1, sphere2, velocity, calculateNormal); }
+        else if (sphere1 && box2) { return checkCollision(sphere1, box2, velocity, calculateNormal); }
+        else if (sphere1 && sphere2) { return checkCollision(sphere1, sphere2, velocity, calculateNormal); }
 
         return collisionFalse();
     }
