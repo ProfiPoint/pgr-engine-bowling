@@ -19,6 +19,10 @@ namespace copakond {
             float timeDeltaNow = DELTA_TIME_FIXED;
             if (deltaTimeLeft < DELTA_TIME_FIXED) { timeDeltaNow = deltaTimeLeft; }
             deltaTimeLeft -= DELTA_TIME_FIXED;
+
+            _velocity += _gravity * timeDeltaNow; // gravity
+            _velocity *= (1.0f - (_airFriction * timeDeltaNow)); // air friction formula
+
             glm::vec3 prevPosition = position();
             position() += _velocity * timeDeltaNow; // update pos
 

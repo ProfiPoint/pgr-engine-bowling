@@ -7,7 +7,7 @@ namespace copakond {
     private:
         glm::vec3 _velocity = glm::vec3(0.0f, 0.0f, 0.0f);
         glm::vec3 _gravity = glm::vec3(0.0f, -9.81f, 0.0f); // Earth gravity
-        float _airResistance = 0.1f;
+        float _airFriction = 0.1f;
 
     public:
         RigidSphere(const glm::vec3 &position = glm::vec3(0.0f), const glm::vec3 &rotation = glm::vec3(0.0f),
@@ -16,8 +16,8 @@ namespace copakond {
         void physics_process(float deltaTime, const std::vector<CollisionShape*>& allColliders);
         glm::vec3& velocity() { return _velocity; }
         glm::vec3& gravity() { return _gravity; }
-        void setAirResistance(float airResistance);
-        float getAirResistance() const { return _airResistance; }
+        void setAirFriction(float airFriction);
+        float getAirFriction() const { return _airFriction; }
     };
 }
 
