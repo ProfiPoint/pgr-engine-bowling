@@ -1,24 +1,28 @@
 #ifndef PGR_SEM_COPAKOND_COLLISIONDETECTOR_H
 #define PGR_SEM_COPAKOND_COLLISIONDETECTOR_H
-#include "collisionBox.h"
-#include "collisionSphere.h"
+
+#include "../../pgr-portable.h"
 
 namespace copakond {
+    class CollisionShape; // circular include dependency fix
+    class CollisionBox;
+    class CollisionSphere;
+
     struct CollisionResult {
         bool collides = false;
         glm::vec3 normal = glm::vec3(0.0f);
         glm::vec3 reflection = glm::vec3(0.0f);
     };
 
-    static CollisionResult collisionFalse();
-    static CollisionResult collisionTrue(const glm::vec3 &normal, const glm::vec3 &reflection);
+    CollisionResult collisionFalse();
+    CollisionResult collisionTrue(const glm::vec3 &normal, const glm::vec3 &reflection);
 
     class CollisionDetector {
     private:
-        static CollisionResult OBB1OOB2(const CollisionBox &box1, const CollisionBox &box2);
-        static CollisionResult OOB1Sphere2(const CollisionBox &box1, const CollisionSphere &box2);
-        static CollisionResult Sphere1OOB2(const CollisionSphere &box1, const CollisionBox &box2);
-        static CollisionResult Sphere1Sphere2(const CollisionSphere &box1, const CollisionSphere &box2);
+        static CollisionResult OBB1OOB2(const CollisionBox &box1, const CollisionBox &box2, glm::vec3 velocity);
+        static CollisionResult OOB1Sphere2(const CollisionBox &box1, const CollisionSphere &box2, glm::vec3 velocity);
+        static CollisionResult Sphere1OOB2(const CollisionSphere &box1, const CollisionBox &box2, glm::vec3 velocity);
+        static CollisionResult Sphere1Sphere2(const CollisionSphere &box1, const CollisionSphere &box2, glm::vec3 velocity);
     public:
         CollisionDetector() {}
 
