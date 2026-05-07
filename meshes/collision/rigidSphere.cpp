@@ -12,6 +12,24 @@ namespace copakond {
         }
     }
 
+    void RigidSphere::rollRotation(float timeDeltaNow) {
+        glm::vec3 horizontalVel = glm::vec3(_velocity.x, 0.0f, _velocity.z);
+        float speed = glm::length(horizontalVel);
+
+        if (speed > 0.001f) {
+            float radius = scale().x / 2.0f; // x=y=z
+            float distance = speed * timeDeltaNow;
+            float angle = distance / radius; // calculate the rotation angle
+
+            glm::vec3 axe = glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), horizontalVel));
+
+            glm::quat currentRot = glm::quat(rotation());
+            glm::quat deltaRot = glm::angleAxis(angle, axe); // rotation around the given axe for the given angle
+
+            rotation() = glm::eulerAngles(deltaRot * currentRot);
+        }
+    }
+
     void RigidSphere::physics_process(float deltaTime, const std::vector<CollisionShape*>& allColliders) {
         // implementation of delta fix t
         float deltaTimeLeft = deltaTime;
@@ -25,6 +43,8 @@ namespace copakond {
 
             glm::vec3 prevPosition = position();
             position() += _velocity * timeDeltaNow; // update pos
+
+            rollRotation(timeDeltaNow);
 
             CollisionResult result = collisionFalse();
             CollisionShape* resCollider = nullptr;
@@ -41,8 +61,8 @@ namespace copakond {
             if (result.collides) { // if collides restore prev position
                 position() = prevPosition;
 
-                float bouncinessRes = this->material.bounciness * resCollider->material.bounciness;
-                float frictionRes = this->material.friction * resCollider->material.friction;
+                float bouncinessRes = this->physicsMaterial.bounciness * resCollider->physicsMaterial.bounciness;
+                float frictionRes = this->physicsMaterial.friction * resCollider->physicsMaterial.friction;
 
                 glm::vec3 normalDirVel = glm::dot(result.normal, _velocity) * result.normal; // reflect angle norm corr
                 _velocity = normalDirVel * (-bouncinessRes) + (_velocity - normalDirVel) * (1.0f - frictionRes); // apply bounciness and friction formula

@@ -41,8 +41,8 @@ namespace copakond {
             if (result.collides) { // if collides restore prev position
                 position() = prevPosition;
 
-                float bouncinessRes = this->material.bounciness * resCollider->material.bounciness;
-                float frictionRes = this->material.friction * resCollider->material.friction;
+                float bouncinessRes = this->physicsMaterial.bounciness * resCollider->physicsMaterial.bounciness;
+                float frictionRes = this->physicsMaterial.friction * resCollider->physicsMaterial.friction;
 
                 glm::vec3 normalDirVel = glm::dot(result.normal, _velocity) * result.normal; // reflect angle norm corr
                 _velocity = normalDirVel * (-bouncinessRes) + (_velocity - normalDirVel) * (1.0f - frictionRes); // apply bounciness and friction formula

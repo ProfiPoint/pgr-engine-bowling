@@ -9,6 +9,8 @@ namespace copakond {
         glm::vec3 _gravity = glm::vec3(0.0f, -9.81f, 0.0f); // Earth gravity
         float _airFriction = 0.1f;
 
+        void rollRotation(float timeDeltaNow);
+
     public:
         RigidSphere(const glm::vec3 &position = glm::vec3(0.0f), const glm::vec3 &rotation = glm::vec3(0.0f),
             const glm::vec3 &scale = glm::vec3(1.0f), bool debug = false);

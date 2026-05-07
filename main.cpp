@@ -163,19 +163,19 @@ namespace copakond {
         rigidBody->velocity() = glm::vec3(0.0f, -100.0f, -70.0f);
         meshes.push_back(rigidBody);
 
-        flagMesh->setParent(rigidBody);
+
 
 
         // testing collisions bouncing
-        Mesh *cb1 = new CollisionBox(glm::vec3(0.0f,-10.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,22.0f), true);
+        CollisionBox *cb1 = new CollisionBox(glm::vec3(0.0f,-10.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,22.0f), true);
         meshes.push_back(cb1);
-        Mesh *cb2 = new CollisionBox(glm::vec3(0.0f,10.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,22.0f), true);
+        CollisionBox *cb2 = new CollisionBox(glm::vec3(0.0f,10.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,22.0f), true);
         meshes.push_back(cb2);
-        Mesh *cb3 = new CollisionBox(glm::vec3(0.0f,0.0f,-10.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,20.0f,1.0f), true);
+        CollisionBox *cb3 = new CollisionBox(glm::vec3(0.0f,0.0f,-10.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,20.0f,1.0f), true);
         meshes.push_back(cb3);
-        Mesh *cb4 = new CollisionBox(glm::vec3(0.0f,0.0f,10.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,20.0f,1.0f), true);
+        CollisionBox *cb4 = new CollisionBox(glm::vec3(0.0f,0.0f,10.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,20.0f,1.0f), true);
         meshes.push_back(cb4);
-        Mesh *cb5 = new CollisionSphere(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(5.0f,5.0f,5.0f), true);
+        CollisionSphere *cb5 = new CollisionSphere(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(5.0f,5.0f,5.0f), true);
         meshes.push_back(cb5);
 
         pivotRot = new CollisionBox(glm::vec3(10.0f,10.0f,0.0f), glm::vec3(5.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
@@ -187,15 +187,24 @@ namespace copakond {
 
 
 
-        Mesh *cba1 = new CollisionBox(glm::vec3(0.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(20.0f,1.0f,7.0f), true);
+        CollisionBox *cba1 = new CollisionBox(glm::vec3(0.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(20.0f,1.0f,7.0f), true);
         meshes.push_back(cba1);
-        Mesh *cba2 = new CollisionBox(glm::vec3(-10.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,6.0f,7.0f), true);
+        CollisionBox *cba2 = new CollisionBox(glm::vec3(-10.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,6.0f,7.0f), true);
         meshes.push_back(cba2);
-        Mesh *cba3 = new CollisionBox(glm::vec3(10.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,6.0f,7.0f), true);
+        CollisionBox *cba3 = new CollisionBox(glm::vec3(10.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,6.0f,7.0f), true);
         meshes.push_back(cba3);
-        RigidBody *rigidBody3 = new RigidBody(glm::vec3(0.0f,-13.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
+        RigidSphere *rigidBody3 = new RigidSphere(glm::vec3(0.0f,-13.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
         rigidBody3->velocity() = glm::vec3(50.0f, 0.0f, 0.0f);
         meshes.push_back(rigidBody3);
+        flagMesh->setParent(rigidBody3);
+
+        cba1->physicsMaterial.bounciness = 0.1f;
+        cba2->physicsMaterial.bounciness = 1.0f;
+        cba3->physicsMaterial.bounciness = 1.0f;
+        rigidBody3->physicsMaterial.bounciness = 1.0f;
+
+
+
 
 
         TextLabel *textLabel1 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);
