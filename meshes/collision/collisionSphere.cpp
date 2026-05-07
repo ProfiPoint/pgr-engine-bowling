@@ -135,10 +135,17 @@ namespace copakond {
         _generateGeometry(shader, vertices, vertices);
     }
 
-    bool CollisionSphere::collisionCheck(const CollisionShape &mesh) {
+    bool CollisionSphere::collisionCheck(const CollisionShape &mesh, glm::vec3 velocity) {
         if (&mesh == this) { return false; }
 
-        bool collides = CollisionDetector::checkCollision(this, &mesh);
+        CollisionResult collides = CollisionDetector::checkCollision(this, &mesh, velocity);
+        return collides.collides;
+    }
+
+    CollisionResult CollisionSphere::collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity) {
+        if (&mesh == this) { return collisionFalse(); }
+
+        CollisionResult collides = CollisionDetector::checkCollision(this, &mesh, velocity);
         return collides;
     }
 }

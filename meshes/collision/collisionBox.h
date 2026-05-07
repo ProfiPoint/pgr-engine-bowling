@@ -1,6 +1,7 @@
 #ifndef PGR_SEM_COPAKOND_COLLISIONBOX_H
 #define PGR_SEM_COPAKOND_COLLISIONBOX_H
 #include "collisionShape.h"
+#include "collisionDetector.h"
 
 namespace copakond {
     class CollisionBox : public CollisionShape {
@@ -9,7 +10,8 @@ namespace copakond {
             const glm::vec3 &scale = glm::vec3(1.0f), bool visible = false);
 
         void init(GLuint shader) override;
-        bool collisionCheck(const CollisionShape &mesh) override;
+        bool collisionCheck(const CollisionShape &mesh, glm::vec3 velocity = glm::vec3(0.0f)) override;
+        CollisionResult collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity) override;
     };
 }
 #endif //PGR_SEM_COPAKOND_COLLISIONBOX_H

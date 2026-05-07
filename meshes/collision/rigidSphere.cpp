@@ -25,7 +25,7 @@ namespace copakond {
             bool collides = false; // check collisions
             for (CollisionShape* collider : allColliders) {
                 if (collider != this && collider->isEnabled()) {
-                    if (collider->collisionCheck(*this)) {
+                    if (collider->collisionCheck(*this, _velocity)) {
                         collides = true;
                         break;
                     }

@@ -3,6 +3,7 @@
 
 #define DELTA_TIME_FIXED (1.0f / 200.0f)
 #include "../mesh.h"
+#include "collisionDetector.h"
 
 namespace copakond {
     class CollisionShape : public Mesh {
@@ -21,7 +22,8 @@ namespace copakond {
         void disable() { _enabled = false; }
         bool isEnabled() const { return _enabled; }
 
-        virtual bool collisionCheck(const CollisionShape &mesh) = 0; // virtual
+        virtual bool collisionCheck(const CollisionShape &mesh, glm::vec3 velocity) = 0; // virtual
+        virtual CollisionResult collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity) = 0; // virtual
     };
 }
 
