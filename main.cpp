@@ -159,28 +159,31 @@ namespace copakond {
         Mesh *collisionBox2 = new CollisionSphere(glm::vec3(3.0f,1.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
         meshes.push_back(collisionBox2);
 
-        RigidBody *rigidBody = new RigidBody(glm::vec3(10.0f,10.0f,1.0f), glm::vec3(1.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
-        rigidBody->velocity() = glm::vec3(0.0f, -10.0f, -5.0f);
+        RigidBody *rigidBody = new RigidBody(glm::vec3(10.0f,5.0f,1.0f), glm::vec3(1.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
+        rigidBody->velocity() = glm::vec3(0.0f, -100.0f, -70.0f);
         meshes.push_back(rigidBody);
 
         flagMesh->setParent(rigidBody);
 
 
         // testing collisions bouncing
-        Mesh *cb1 = new CollisionBox(glm::vec3(10.0f,1.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,22.0f), true);
+        Mesh *cb1 = new CollisionBox(glm::vec3(0.0f,-10.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,22.0f), true);
         meshes.push_back(cb1);
-        Mesh *cb2 = new CollisionBox(glm::vec3(10.0f,20.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,22.0f), true);
+        Mesh *cb2 = new CollisionBox(glm::vec3(0.0f,10.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,22.0f), true);
         meshes.push_back(cb2);
-        Mesh *cb3 = new CollisionBox(glm::vec3(10.0f,10.0f,-10.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,20.0f,1.0f), true);
+        Mesh *cb3 = new CollisionBox(glm::vec3(0.0f,0.0f,-10.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,20.0f,1.0f), true);
         meshes.push_back(cb3);
-        Mesh *cb4 = new CollisionBox(glm::vec3(10.0f,10.0f,10.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,20.0f,1.0f), true);
+        Mesh *cb4 = new CollisionBox(glm::vec3(0.0f,0.0f,10.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,20.0f,1.0f), true);
         meshes.push_back(cb4);
+        Mesh *cb5 = new CollisionSphere(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(5.0f,5.0f,5.0f), true);
+        meshes.push_back(cb5);
 
-        pivotRot = new CollisionBox(glm::vec3(0.0f,0.0f,1.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
+        pivotRot = new CollisionBox(glm::vec3(10.0f,10.0f,0.0f), glm::vec3(5.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
         cb1->setParent(pivotRot);
         cb2->setParent(pivotRot);
         cb3->setParent(pivotRot);
         cb4->setParent(pivotRot);
+        cb5->setParent(pivotRot);
 
 
         TextLabel *textLabel1 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);
@@ -304,8 +307,6 @@ namespace copakond {
             if (rigBody != nullptr) { rigBody->physics_process(deltaTime, colliders); }
             if (rigSphere != nullptr) { rigSphere->physics_process(deltaTime, colliders); }
         }
-
-        pivotRot->rotation().x += deltaTime * 0.1f; // test debug collision rotation
 
         // updating clocks time and hands:
         clockHandHour->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[0]/12*(2*glm::pi<float>()));

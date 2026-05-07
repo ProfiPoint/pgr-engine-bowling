@@ -12,6 +12,9 @@
 namespace copakond {
     CollisionSphere::CollisionSphere(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale, bool visible)
         : CollisionShape(position, rotation, scale, visible) {
+        if (scale.x != scale.y && scale.x != scale.z) {
+            std::cerr << "Collision Sphere id: " << id << " must have all sides equal (x=y=z)" << std::endl;
+        }
     }
 
     void CollisionSphere::init(GLuint shader) {
