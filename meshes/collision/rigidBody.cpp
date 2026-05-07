@@ -27,10 +27,12 @@ namespace copakond {
             position() += _velocity * timeDeltaNow; // update pos
 
             CollisionResult result = collisionFalse();
+            CollisionShape* resCollider = nullptr;
             for (CollisionShape* collider : allColliders) {
                 if (collider != this && collider->isEnabled()) {
                     result = collider->collisionCheckDetailed(*this, _velocity, true);
                     if (result.collides) {
+                        resCollider = collider;
                         break;
                     }
                 }
@@ -38,7 +40,15 @@ namespace copakond {
 
             if (result.collides) { // if collides restore prev position
                 position() = prevPosition;
-                _velocity = result.reflection;
+
+                float bouncinessRes = this->material.bounciness * resCollider->material.bounciness;
+
+                // apply bounciness
+                _velocity = _velocity - (1.0f + bouncinessRes) * glm::dot(result.normal, _velocity) * result.normal;
+
+                if (glm::length(_velocity) < 0.001f) { // oscilation prevention
+                    _velocity = glm::vec3(0.0f);
+                }
             }
         }
     }

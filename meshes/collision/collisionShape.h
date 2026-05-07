@@ -7,7 +7,7 @@
 
 namespace copakond {
     struct PhysicsMaterial {
-        float bounciness = 0.5f;
+        float bounciness = 1.0f;
         float friction = 0.1f;
     };
 
