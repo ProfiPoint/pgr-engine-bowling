@@ -42,9 +42,10 @@ namespace copakond {
                 position() = prevPosition;
 
                 float bouncinessRes = this->material.bounciness * resCollider->material.bounciness;
+                float frictionRes = this->material.friction * resCollider->material.friction;
 
-                // apply bounciness
-                _velocity = _velocity - (1.0f + bouncinessRes) * glm::dot(result.normal, _velocity) * result.normal;
+                glm::vec3 normalDirVel = glm::dot(result.normal, _velocity) * result.normal; // reflect angle norm corr
+                _velocity = normalDirVel * (-bouncinessRes) + (_velocity - normalDirVel) * (1.0f - frictionRes); // apply bounciness and friction formula
 
                 if (glm::length(_velocity) < 0.001f) { // oscilation prevention
                     _velocity = glm::vec3(0.0f);

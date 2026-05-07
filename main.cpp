@@ -189,11 +189,13 @@ namespace copakond {
 
         Mesh *cba1 = new CollisionBox(glm::vec3(0.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(20.0f,1.0f,7.0f), true);
         meshes.push_back(cba1);
-        Mesh *cba2 = new CollisionBox(glm::vec3(-10.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,3.0f,7.0f), true);
+        Mesh *cba2 = new CollisionBox(glm::vec3(-10.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,6.0f,7.0f), true);
         meshes.push_back(cba2);
-        Mesh *cba3 = new CollisionBox(glm::vec3(10.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,3.0f,7.0f), true);
+        Mesh *cba3 = new CollisionBox(glm::vec3(10.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,6.0f,7.0f), true);
         meshes.push_back(cba3);
-
+        RigidBody *rigidBody3 = new RigidBody(glm::vec3(0.0f,-13.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
+        rigidBody3->velocity() = glm::vec3(50.0f, 0.0f, 0.0f);
+        meshes.push_back(rigidBody3);
 
 
         TextLabel *textLabel1 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png", labelMaterial);
