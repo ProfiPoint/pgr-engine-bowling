@@ -305,7 +305,7 @@ namespace copakond {
             if (rigSphere != nullptr) { rigSphere->physics_process(deltaTime, colliders); }
         }
 
-        pivotRot->rotation().x += deltaTime; // test debug collision rotation
+        pivotRot->rotation().x += deltaTime * 0.1f; // test debug collision rotation
 
         // updating clocks time and hands:
         clockHandHour->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[0]/12*(2*glm::pi<float>()));

@@ -92,6 +92,8 @@ namespace copakond {
         return getPositionMatrix() * getRotationMatrix() * getScaleMatrix();
     }
 
+
+
     glm::mat4 Geometry::getWorldModelMatrix() const {
         glm::mat4 localModelMatrix = getModelMatrix();
 
@@ -102,4 +104,47 @@ namespace copakond {
 
         return localModelMatrix; // if no parent
     }
+
+    glm::mat4 Geometry::getWorldRotationMatrix() const {
+        if (parent != nullptr) {
+            return parent->getWorldRotationMatrix() * getRotationMatrix();
+        }
+        return getRotationMatrix();
+    }
+
+    glm::mat4 Geometry::getWorldScaleMatrix() const {
+        if (parent != nullptr) {
+            return parent->getWorldScaleMatrix() * getScaleMatrix();
+        }
+        return getScaleMatrix();
+    }
+
+    glm::mat4 Geometry::getWorldPositionMatrix() const {
+        return glm::translate(glm::mat4(1.0f), getWorldPosition());
+    }
+
+
+
+    glm::vec3 Geometry::getWorldPosition() const {
+        return glm::vec3(getWorldModelMatrix()[3]);
+    }
+
+    glm::vec3 Geometry::getWorldScale() const {
+        if (parent != nullptr) {
+            return parent->getWorldScale() * _scale;
+        }
+        return _scale;
+    }
+
+    glm::vec3 Geometry::getWorldRotation() const {
+        glm::mat4 worldRotMat = getWorldRotationMatrix();
+        glm::quat q = glm::quat_cast(worldRotMat); // converting to quaternion, just to be able extract the angles lol
+        return glm::eulerAngles(q); // get the angles x,y,z
+    }
+
+
+    glm::vec3 Geometry::worldPosition() const { return getWorldPosition(); }
+    glm::vec3 Geometry::worldRotation() const { return getWorldRotation(); }
+    glm::vec3 Geometry::worldScale() const { return getWorldScale(); }
+
 }

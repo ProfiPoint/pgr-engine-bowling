@@ -31,10 +31,16 @@ namespace copakond {
         glm::mat4 getRotationYMatrix() const;
         glm::mat4 getRotationZMatrix() const;
 
+        // local
         glm::mat4 getPositionMatrix() const;
         glm::mat4 getRotationMatrix() const;
         glm::mat4 getScaleMatrix() const;
         glm::mat4 getModelMatrix() const; // local matrix
+
+        // world position
+        glm::mat4 getWorldPositionMatrix() const;
+        glm::mat4 getWorldRotationMatrix() const;
+        glm::mat4 getWorldScaleMatrix() const;
         glm::mat4 getWorldModelMatrix() const; // used for shader (all matrixes of all ancestors multiplied)
 
         glm::vec3 getPosition() const { return _position; }
@@ -42,9 +48,17 @@ namespace copakond {
         glm::vec3 getScale() const { return _scale; }
         glm::vec3 getRotationDegrees() const { return glm::degrees(_rotation); }
 
+        glm::vec3 getWorldPosition() const;
+        glm::vec3 getWorldRotation() const;
+        glm::vec3 getWorldScale() const;
+
         glm::vec3& position() { return _position; }
         glm::vec3& rotation() { return _rotation; }
         glm::vec3& scale() { return _scale; }
+
+        glm::vec3 worldPosition() const;
+        glm::vec3 worldRotation() const;
+        glm::vec3 worldScale() const;
 
         bool setParent(Geometry *newParent);
         Geometry* getParent() const { return parent; }

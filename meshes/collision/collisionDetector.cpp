@@ -22,12 +22,12 @@ namespace copakond {
     // COLLISION NORMAL CALCULATION
     // https://www.reddit.com/r/gamedev/comments/brb88i/question_bout_obb_collision_detection/ for normal calcualtion
     glm::vec3 CollisionDetector::OBB1OBB2Normal(const CollisionBox &box1, const CollisionBox &box2) {
-        glm::vec3 pos1 = box1.getPosition();
-        glm::vec3 rot1 = box1.getRotation();
-        glm::vec3 siz1 = box1.getScale() / 2.0f;
-        glm::vec3 pos2 = box2.getPosition();
-        glm::vec3 rot2 = box2.getRotation();
-        glm::vec3 siz2 = box2.getScale() / 2.0f;
+        glm::vec3 pos1 = box1.getWorldPosition();
+        glm::vec3 rot1 = box1.getWorldRotation();
+        glm::vec3 siz1 = box1.getWorldScale() / 2.0f;
+        glm::vec3 pos2 = box2.getWorldPosition();
+        glm::vec3 rot2 = box2.getWorldRotation();
+        glm::vec3 siz2 = box2.getWorldScale() / 2.0f;
 
         // euler angles with orthonormal basis
         glm::mat3 Amat = glm::mat3(glm::quat(rot1));
@@ -84,12 +84,12 @@ namespace copakond {
     // using Separation Axis theorem.
     // copied. exact implementation of https://web.archive.org/web/19991129035017/http://www.gamasutra.com/features/19991018/Gomez_5.htm
     CollisionResult CollisionDetector::OBB1OBB2(const CollisionBox &box1, const CollisionBox &box2, glm::vec3 velocity, bool calculateNormal) {
-        glm::vec3 pos1 = box1.getPosition();
-        glm::vec3 rot1 = box1.getRotation();
-        glm::vec3 siz1 = box1.getScale() / 2.0f;
-        glm::vec3 pos2 = box2.getPosition();
-        glm::vec3 rot2 = box2.getRotation();
-        glm::vec3 siz2 = box2.getScale() / 2.0f;
+        glm::vec3 pos1 = box1.getWorldPosition();
+        glm::vec3 rot1 = box1.getWorldRotation();
+        glm::vec3 siz1 = box1.getWorldScale() / 2.0f;
+        glm::vec3 pos2 = box2.getWorldPosition();
+        glm::vec3 rot2 = box2.getWorldRotation();
+        glm::vec3 siz2 = box2.getWorldScale() / 2.0f;
 
         float radius1 = glm::length(siz1);
         float radius2 = glm::length(siz2);
@@ -203,12 +203,12 @@ namespace copakond {
     // assuming sphere is not an ellipsoid (MUST x=y=z)
     // copied and edited of https://www.geometrictools.com/Documentation/IntersectionBoxEllipsoid.pdf
     CollisionResult CollisionDetector::OBB1Sphere2(const CollisionBox &box1, const CollisionSphere &sphere2, glm::vec3 velocity, bool calculateNormal) {
-        glm::vec3 boxPos = box1.getPosition();
-        glm::vec3 boxRot = box1.getRotation();
-        glm::vec3 boxHalfExtents = box1.getScale() / 2.0f;
+        glm::vec3 boxPos = box1.getWorldPosition();
+        glm::vec3 boxRot = box1.getWorldRotation();
+        glm::vec3 boxHalfExtents = box1.getWorldScale() / 2.0f;
 
-        glm::vec3 spherePos = sphere2.getPosition();
-        float sphereRadius = sphere2.getScale().x / 2.0f;
+        glm::vec3 spherePos = sphere2.getWorldPosition();
+        float sphereRadius = sphere2.getWorldScale().x / 2.0f;
 
         // orthonormal basis
         glm::mat3 boxMat = glm::mat3(glm::quat(boxRot));
@@ -246,12 +246,12 @@ namespace copakond {
 
     // assuming the spheres are spheres not ellipsoids (MUST x=y=z).
     CollisionResult CollisionDetector::Sphere1Sphere2(const CollisionSphere &sphere1, const CollisionSphere &sphere2, glm::vec3 velocity, bool calculateNormal) {
-        float size1x = sphere1.getScale().x / 2.0f;
-        float size2x = sphere2.getScale().x / 2.0f;
-        float distance = glm::distance(sphere1.getPosition(), sphere2.getPosition());
+        float size1x = sphere1.getWorldScale().x / 2.0f;
+        float size2x = sphere2.getWorldScale().x / 2.0f;
+        float distance = glm::distance(sphere1.getWorldPosition(), sphere2.getWorldPosition());
         if (distance < size1x + size2x) {
             if (calculateNormal) {
-                glm::vec3 normal = glm::normalize(sphere1.getPosition() - sphere2.getPosition()); // diff between possition
+                glm::vec3 normal = glm::normalize(sphere1.getWorldPosition() - sphere2.getWorldPosition()); // diff between possition
                 glm::vec3 reflection = glm::reflect(velocity, normal);
                 return collisionTrue(normal, reflection);
             } else {
