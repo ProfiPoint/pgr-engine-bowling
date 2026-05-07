@@ -11,7 +11,7 @@ namespace copakond {
 
         void init(GLuint shader) override;
         bool collisionCheck(const CollisionShape &mesh, glm::vec3 velocity = glm::vec3(0.0f)) override;
-        CollisionResult collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity) override;
+        CollisionResult collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity, bool calculateNormal = false) override;
     };
 }
 

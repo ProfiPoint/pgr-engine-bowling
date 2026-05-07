@@ -74,10 +74,10 @@ namespace copakond {
         return collides.collides;
     }
 
-    CollisionResult CollisionBox::collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity) {
+    CollisionResult CollisionBox::collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity, bool calculateNormal) {
         if (&mesh == this) { return collisionFalse(); }
 
-        CollisionResult collides = CollisionDetector::checkCollision(this, &mesh, velocity);
+        CollisionResult collides = CollisionDetector::checkCollision(this, &mesh, velocity, calculateNormal);
         return collides;
     }
 

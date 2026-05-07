@@ -22,19 +22,19 @@ namespace copakond {
             glm::vec3 prevPosition = position();
             position() += _velocity * timeDeltaNow; // update pos
 
-            bool collides = false; // check collisions
+            CollisionResult result = collisionFalse();
             for (CollisionShape* collider : allColliders) {
                 if (collider != this && collider->isEnabled()) {
-                    if (collider->collisionCheck(*this, _velocity)) {
-                        collides = true;
+                    result = collider->collisionCheckDetailed(*this, _velocity, true);
+                    if (result.collides) {
                         break;
                     }
                 }
             }
 
-            if (collides) { // if collides restore prev position
+            if (result.collides) { // if collides restore prev position
                 position() = prevPosition;
-                _velocity = glm::vec3(0.0f);
+                _velocity = result.reflection;
             }
         }
     }

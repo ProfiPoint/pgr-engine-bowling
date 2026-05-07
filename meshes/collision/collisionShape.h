@@ -23,7 +23,7 @@ namespace copakond {
         bool isEnabled() const { return _enabled; }
 
         virtual bool collisionCheck(const CollisionShape &mesh, glm::vec3 velocity) = 0; // virtual
-        virtual CollisionResult collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity) = 0; // virtual
+        virtual CollisionResult collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity, bool calculateNormal = false) = 0; // virtual
     };
 }
 
