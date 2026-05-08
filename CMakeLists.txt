@@ -54,6 +54,9 @@ add_executable(${PROJECT_NAME} main.cpp
         meshes/collision/rigidSphere.cpp
         meshes/collision/collisionShape.h
         meshes/collision/collisionShape.cpp
+        scenes/Scene.h
+        scenes/sampleScene.cpp
+        scenes/sampleScene.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION
