@@ -23,6 +23,8 @@
 #include "scenes/scene.h"
 
 namespace copakond {
+    float SIMULATION_SPEED = 1.0f;
+
     void menuCallback(int option);
 
     int winWidth = 1280;
@@ -85,7 +87,7 @@ namespace copakond {
 
     void draw() {
         Camera camera = currentScene->getCamera();
-        float deltaTime = currentScene->updateTime(); // calculate delta time
+        float deltaTime = currentScene->updateTime() * SIMULATION_SPEED; // calculate delta time
 
         // update spline animations
         for (Spline *spline: currentScene->getSplines()) {

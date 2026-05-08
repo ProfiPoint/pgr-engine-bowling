@@ -41,34 +41,39 @@ namespace copakond {
             _velocity += _gravity * timeDeltaNow; // gravity
             _velocity *= (1.0f - (_airFriction * timeDeltaNow)); // air friction formula
 
-            glm::vec3 prevPosition = position();
-            position() += _velocity * timeDeltaNow; // update pos
-
             rollRotation(timeDeltaNow);
 
-            CollisionResult result = collisionFalse();
-            CollisionShape* resCollider = nullptr;
-            for (CollisionShape* collider : allColliders) {
-                if (collider != this && collider->isEnabled()) {
-                    result = collider->collisionCheckDetailed(*this, _velocity, true);
-                    if (result.collides) {
-                        resCollider = collider;
-                        break;
+            for (int i = 0; i < 3; ++i) {
+                float prevPosition = position()[i];
+                position()[i] += _velocity[i] * timeDeltaNow; // update pos
+
+                glm::vec3 curAxeVelocity(0.0f);
+                curAxeVelocity[i] = _velocity[i];
+
+                CollisionResult result = collisionFalse();
+                CollisionShape* resCollider = nullptr;
+                for (CollisionShape* collider : allColliders) {
+                    if (collider != this && collider->isEnabled()) {
+                        result = collider->collisionCheckDetailed(*this, curAxeVelocity, true);
+                        if (result.collides) {
+                            resCollider = collider;
+                            break;
+                        }
                     }
                 }
-            }
 
-            if (result.collides) { // if collides restore prev position
-                position() = prevPosition;
+                if (result.collides) { // if collides restore prev position
+                    position()[i] = prevPosition;
 
-                float bouncinessRes = this->physicsMaterial.bounciness * resCollider->physicsMaterial.bounciness;
-                float frictionRes = this->physicsMaterial.friction * resCollider->physicsMaterial.friction;
+                    float bouncinessRes = this->physicsMaterial.bounciness * resCollider->physicsMaterial.bounciness;
+                    float frictionRes = this->physicsMaterial.friction * resCollider->physicsMaterial.friction;
 
-                glm::vec3 normalDirVel = glm::dot(result.normal, _velocity) * result.normal; // reflect angle norm corr
-                _velocity = normalDirVel * (-bouncinessRes) + (_velocity - normalDirVel) * (1.0f - frictionRes); // apply bounciness and friction formula
+                    glm::vec3 normalDirVel = glm::dot(result.normal, _velocity) * result.normal; // reflect angle norm corr
+                    _velocity = normalDirVel * (-bouncinessRes) + (_velocity - normalDirVel) * (1.0f - frictionRes); // apply bounciness and friction formula
 
-                if (glm::length(_velocity) < 0.001f) { // oscilation prevention
-                    _velocity = glm::vec3(0.0f);
+                    if (glm::length(_velocity) < 0.001f) { // oscilation prevention
+                        _velocity = glm::vec3(0.0f);
+                    }
                 }
             }
         }
