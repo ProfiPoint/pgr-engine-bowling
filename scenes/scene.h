@@ -30,7 +30,7 @@ namespace copakond {
         Input* input;
         Shader* shader;
 
-        Camera camera = Camera(glm::vec3(0.0f),glm::vec3(0.0f), 1000.0f);
+        Camera *camera;
         std::vector<Mesh*> meshes = std::vector<Mesh*>();
         std::vector<Light*> lights = std::vector<Light*>();
         std::vector<Spline*> splines = std::vector<Spline*>();
@@ -44,11 +44,15 @@ namespace copakond {
         int winHeight = 0;
 
         void addToScene(Mesh* mesh);
+        void addToScene(Light* light);
+        void addToScene(Spline* spline);
 
     public:
         Scene(const char *sceneName, Input* engineInput, Shader* engineShader, int winWidth, int winHeight) : input(engineInput), shader
-        (engineShader),
-        winWidth(winWidth), winHeight(winHeight) { WIN_TITLE = sceneName; }
+        (engineShader), winWidth(winWidth), winHeight(winHeight) {
+            WIN_TITLE = sceneName;
+            camera = new Camera(glm::vec3(0.0f),glm::vec3(0.0f), 1000.0f); // sample camera
+        }
 
         virtual ~Scene() = default;
 
@@ -59,7 +63,7 @@ namespace copakond {
         const std::vector<CollisionShape*>& getColliders() const { return colliders; }
         Skybox* getSkybox() const { return skybox; }
         Light* getSun() const { return sun; }
-        Camera& getCamera() { return camera; }
+        Camera& getCamera() { return *camera; }
         Shader* getShader() const { return shader; }
         float updateTime();
         float getSkyboxBlendingCoeff() { return 0.0f; } // each scene can overwrite it with custom logic

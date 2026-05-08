@@ -42,9 +42,9 @@ namespace copakond {
 
         input = new Input(*camera, winWidth, winHeight);
         shader = new Shader();
-        currentScene = new SampleScene("PGR Semestral Work Copakond", input, shader, winWidth, winHeight);
+        currentScene = new SampleScene("Sample Scene", input, shader, winWidth, winHeight);
 
-        GLuint shaderPrg = shader->init(
+        GLuint shaderUID = shader->init(
             "shaders/shaders/shader.vert",
             "shaders/shaders/shader.frag"
         );
@@ -58,7 +58,7 @@ namespace copakond {
         currentScene->init();
 
         for (Mesh *mesh: currentScene->getMeshes()) {
-            mesh->init(shaderPrg);
+            mesh->init(shaderUID);
         }
 
         std::vector<Light*> lights = currentScene->getLights();
@@ -250,7 +250,7 @@ int main(int argc, char **argv) {
 
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_STENCIL);
     glutInitWindowSize( winWidth,  winHeight);
-    glutCreateWindow( currentScene->getSceneName());
+    glutCreateWindow( "PGR Semestral Work Copakond");
 
     // INPUT - keyboard and mouse event callbacks
     glutKeyboardFunc( keyboardInputEvent);

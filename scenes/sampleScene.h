@@ -3,21 +3,25 @@
 
 #include "scene.h"
 
-using namespace copakond;
+namespace copakond {
+    class SampleScene : public Scene {
+    private:
+        ImageLabel* clock = nullptr;
+        ImageLabel* clockHandSec = nullptr;
+        ImageLabel* clockHandMin = nullptr;
+        ImageLabel* clockHandHour = nullptr;
+        Mesh *pivotRot = nullptr;
 
-class SampleScene : public Scene {
-public:
-    SampleScene(const char *sceneName, Input* input, Shader* shader, int winWidth, int winHeight) : Scene(sceneName, input, shader,
-        winWidth, winHeight) {}
-    ~SampleScene() override;
+        float clockTime[3] = {0, 0, 0}; // hh:mm:ss
 
-    void init() override;
-    void update(float deltaTime) override;
-    void physics_update(float deltaTime) override;
+    public:
+        SampleScene(const char *sceneName, Input* input, Shader* shader, int winWidth, int winHeight);
+        ~SampleScene() override;
 
-    void onSpecialKeyEvent(int key, int x, int y, bool isDown) override;
-
-
-};
+        void init() override;
+        void update(float deltaTime) override;
+        void physics_update(float deltaTime) override;
+    };
+}
 
 #endif // PGR_SEM_COPAKOND_SAMPLE_SCENE_H

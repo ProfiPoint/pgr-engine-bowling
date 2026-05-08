@@ -9,14 +9,17 @@ namespace copakond {
     }
 
     void Scene::addToScene(Mesh* mesh) {
-        meshes.push_back(mesh);
-
-        auto *light = dynamic_cast<Light*>(mesh);
-        auto *spline = dynamic_cast<Spline*>(mesh);
         auto *collider = dynamic_cast<CollisionShape*>(mesh);
-
-        if (light) { lights.push_back(light); }
-        if (spline) { splines.push_back(spline); }
         if (collider) { colliders.push_back(collider); }
+
+        meshes.push_back(mesh);
+    }
+
+    void Scene::addToScene(Light* light) {
+        lights.push_back(light);
+    }
+
+    void Scene::addToScene(Spline* spline) {
+        splines.push_back(spline);
     }
 }
