@@ -57,6 +57,7 @@ add_executable(${PROJECT_NAME} main.cpp
         scenes/Scene.h
         scenes/sampleScene.cpp
         scenes/sampleScene.h
+        scenes/scene.cpp
 )
 
 if(WIN32) # WINDOWS CONFIGURATION
