@@ -74,9 +74,15 @@ namespace copakond {
         virtual void init() {};
         virtual void update(float deltaTime) {};
         virtual void physics_update(float deltaTime) {};
+
         virtual void onKeyboardEvent(unsigned char key, int x, int y, bool isDown) {}
         virtual void onSpecialKeyEvent(int key, int x, int y, bool isDown) {}
+
         virtual void onMouseButtonEvent(int button, int state, int x, int y) {}
+        virtual void onMouseWheelEvent(int wheel, int direction, int x, int y) {}
+        virtual void onMouseMoveEvent(int x, int y) {}
+        virtual void onScreenResizeEvent(int width, int height) {}
+
         virtual void onMenuEvent(int option) {}
     };
 }

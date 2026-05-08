@@ -92,6 +92,11 @@ namespace copakond {
             spline->update(deltaTime);
         }
 
+        // update lights
+        for (Light *light: currentScene->getLights()) {
+            shader->updateLight(light);
+        }
+
         // process physics
         std::vector<CollisionShape*> colliders = currentScene->getColliders();
         for (CollisionShape *collider: colliders) {
@@ -158,9 +163,7 @@ namespace copakond {
             exit(0);
         }
 
-        if (currentScene) {
-            currentScene->onMenuEvent(option);
-        }
+        if (currentScene) { currentScene->onMenuEvent(option); }
     }
 
     void keyboardInputEvent(unsigned char key, int x, int y) {
@@ -181,18 +184,17 @@ namespace copakond {
 
     void mouseButtonEvent(int button, int state, int x, int y) {
         input->mouseButtonEvent(button, state, x, y);
-
-        if (currentScene) {
-            currentScene->onMouseButtonEvent(button, state, x, y);
-        }
+        if (currentScene) { currentScene->onMouseButtonEvent(button, state, x, y); }
     }
 
     void mouseMoveEvent(int x, int y) {
         input->mouseMoveEvent(x, y);
+        if (currentScene) { currentScene->onMouseMoveEvent(x, y); }
     }
 
     void mouseWheelEvent(int wheel, int direction, int x, int y) {
         input->mouseWheelEvent(wheel, direction, x, y);
+        if (currentScene) { currentScene->onMouseWheelEvent(wheel, direction, x, y); }
     }
 
     void screenResizeEvent(int width, int height) {
@@ -204,6 +206,7 @@ namespace copakond {
 
         glViewport(0, 0, width, height);
         input->update(winWidth, winHeight);
+        if (currentScene) { currentScene->onScreenResizeEvent(width, height); }
     }
 }
 

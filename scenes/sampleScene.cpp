@@ -281,6 +281,14 @@ namespace copakond {
         inputController->onMouseButtonEvent(button, state, x, y);
     }
 
+    void SampleScene::onMouseWheelEvent(int wheel, int direction, int x, int y) {
+        if (direction > 0) {
+            camera->addFov(-3.0f);
+        } else {
+            camera->addFov(3.0f);
+        }
+    }
+
     void SampleScene::onMenuEvent(int option) {
         if (inputController) {
             inputController->onMenuEvent(option);
