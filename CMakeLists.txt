@@ -58,6 +58,10 @@ add_executable(${PROJECT_NAME} main.cpp
         scenes/sampleScene.cpp
         scenes/sampleScene.h
         scenes/scene.cpp
+        scenes/utils/inputController.cpp
+        scenes/utils/inputController.h
+        scenes/utils/controller.cpp
+        scenes/utils/controller.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION
