@@ -2,7 +2,7 @@
 
 namespace copakond {
     SampleScene::SampleScene(const char *sceneName, Input* input, Shader* shader, int winWidth, int winHeight): Scene(sceneName, input, shader, winWidth, winHeight) {
-        camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), 1000.0f);
+        camera = new Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f), 1000.0f);
     }
 
     SampleScene::~SampleScene() {};
@@ -104,6 +104,10 @@ namespace copakond {
         addToScene(rigidBody);
 
 
+        player = new RigidBody(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), true);
+        camera->setParent(player);
+        inputController->setPlayer(player);
+        addToScene(player);
 
 
         // testing collisions bouncing
@@ -230,6 +234,9 @@ namespace copakond {
 
     void SampleScene::update(float deltaTime) {
         inputController->update(deltaTime);
+
+        camera->position() = player->getWorldPosition();
+
 
         // updating clocks time and hands:
         clockHandHour->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[0]/12*(2*glm::pi<float>()));

@@ -236,7 +236,7 @@ int main(int argc, char **argv) {
     glutMotionFunc(mouseMoveEvent);
     glutMouseWheelFunc(mouseWheelEvent);
     glutReshapeFunc(screenResizeEvent);
-    glutSetCursor(GLUT_CURSOR_NONE); // hide cursor
+    //glutSetCursor(GLUT_CURSOR_NONE); // hide cursor
 
     // SET DRAW CALLBACK
     glutDisplayFunc(draw);

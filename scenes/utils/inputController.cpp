@@ -1,13 +1,15 @@
 #include "inputController.h"
 
 namespace copakond {
+
+
     void InputController::update(float deltaTime) {
         const auto keysMap = input->keysMap;
 
         // keyboard input
         float currentSpeed = baseSpeed;
         if (input->keysMap[KEY_SHIFT]) { currentSpeed *= shiftMultiplier; }
-        float speed = deltaTime * shiftMultiplier;
+        float speed = currentSpeed;
 
         glm::vec3 direction(0.0f);
 
@@ -21,22 +23,20 @@ namespace copakond {
         if (glm::length(direction) > 0.0f && _canMove) {
             direction = glm::normalize(direction);
 
-            if (direction.z > 0.0f) {
-                camera->processKeyboard(FRONT, direction.z * speed);
-            } else if (direction.z < 0.0f) {
-                camera->processKeyboard(BACK, -direction.z * speed);
-            }
+            // moving with rigid body player
+            if (glm::length(direction) > 0.0f && _canMove) {
+                float yaw = camera->rotation().y;
 
-            if (direction.x > 0.0f) {
-                camera->processKeyboard(RIGHT, direction.x * speed);
-            } else if (direction.x < 0.0f) {
-                camera->processKeyboard(LEFT, -direction.x * speed);
-            }
+                glm::vec3 forward = glm::normalize(glm::vec3(cos(yaw), 0.0f, sin(yaw)));
+                glm::vec3 right = glm::normalize(glm::cross(forward, glm::vec3(0.0f, 1.0f, 0.0f)));
+                glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 
-            if (direction.y > 0.0f) {
-                camera->processKeyboard(UP, direction.y * speed);
-            } else if (direction.y < 0.0f) {
-                camera->processKeyboard(DOWN, -direction.y * speed);
+                glm::vec3 moveVector = (forward * direction.z) + (right * direction.x) + (up * direction.y);
+
+                if (glm::length(moveVector) > 0.0f) {
+                    moveVector = glm::normalize(moveVector);
+                    player->velocity() = moveVector * speed;
+                }
             }
         }
 

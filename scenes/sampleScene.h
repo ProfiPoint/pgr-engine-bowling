@@ -14,6 +14,7 @@ namespace copakond {
         ImageLabel* clockHandMin = nullptr;
         ImageLabel* clockHandHour = nullptr;
         Mesh *pivotRot = nullptr;
+        RigidBody *player = nullptr;
 
         float clockTime[3] = {0, 0, 0}; // hh:mm:ss
 

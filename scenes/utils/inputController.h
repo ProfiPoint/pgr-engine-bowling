@@ -5,8 +5,10 @@
 #include "../../geometry/camera.h"
 #include "../../parser/input.h"
 #include "../../animation/spline.h"
+#include "../../meshes/collision/rigidBody.h"
 
 namespace copakond {
+
     class InputController : public Controller {
     private:
         bool _canMove = true;
@@ -15,6 +17,7 @@ namespace copakond {
         Camera* camera;
         Input* input;
         Spline* _spline = nullptr;
+        RigidBody* player = nullptr;
 
         void toggleFullScreen();
         void switchCamera(int mode);
@@ -25,6 +28,7 @@ namespace copakond {
         float mouseDragCoeff = 0.05f;
 
         InputController(Camera* cam, Input* input) : camera(cam), input(input) {};
+        void setPlayer(RigidBody* p) { player = p; }
 
         void update(float deltaTime) override;
         unsigned char raycast(int x, int y);
