@@ -22,12 +22,9 @@ namespace copakond {
         Camera &_camera;
         int _winWidth;
         int _winHeight;
-        bool _canMove = true;
 
         bool _firstMouseMovement = false;
-        float shiftSpeedBoost = 1.0f;
 
-        bool _isFullScreen = false;
         int _windowWidth = 0;
         int _windowHeight = 0;
         int _windowPosX = 0;

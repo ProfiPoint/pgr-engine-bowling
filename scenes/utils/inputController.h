@@ -7,12 +7,14 @@
 #include "../../animation/spline.h"
 
 namespace copakond {
-
     class InputController : Controller {
     private:
+        bool _canMove = true;
+        bool _isFullScreen = false;
+
         Camera* camera;
         Input* input;
-        Spline* activeSpline = nullptr;
+        Spline* _spline = nullptr;
 
     public:
         float baseSpeed = 10.0f;
@@ -21,16 +23,14 @@ namespace copakond {
 
         InputController(Camera* cam, Input* input) : camera(cam), input(input) {};
 
-        void update(float deltaTime);
+        void update(float deltaTime) override;
         unsigned char raycast(int x, int y);
-        void setCameraSpline(Spline *spline);
+        void setCameraSpline(Spline *spline) { _spline = spline; }
 
-
-        void onKeyInput(float deltaTime);
-        void onMouseButtonEvent(int button, int state, int x, int y);
-        void onMouseMoveEvent(int x, int y);
-        void onMouseWheelEvent(int wheel, int direction, int x, int y);
-    };
+        void onMouseButtonEvent(int button, int state, int x, int y) override;
+        void onMouseMoveEvent(int x, int y) override;
+        void onSpecialKeyEvent(int key, int x, int y, bool isDown) override;
     };
 }
+
 #endif //PGR_SEM_COPAKOND_INPUTCONTROLLER_H
