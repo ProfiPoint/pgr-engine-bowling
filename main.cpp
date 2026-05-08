@@ -221,19 +221,21 @@ int main(int argc, char **argv) {
     glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
 
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_STENCIL);
-    glutInitWindowSize( winWidth,  winHeight);
-    glutCreateWindow( "PGR Semestral Work Copakond");
+    glutInitWindowSize(winWidth,  winHeight);
+    glutCreateWindow("PGR Semestral Work Copakond");
 
     // INPUT - keyboard and mouse event callbacks
-    glutKeyboardFunc( keyboardInputEvent);
-    glutSpecialFunc( specKeyboardInputEvent);
-    glutKeyboardUpFunc( keyboardUpInputEvent);
-    glutSpecialUpFunc( specKeyboardUpInputEvent);
+    glutKeyboardFunc(keyboardInputEvent);
+    glutSpecialFunc(specKeyboardInputEvent);
+    glutKeyboardUpFunc(keyboardUpInputEvent);
+    glutSpecialUpFunc(specKeyboardUpInputEvent);
+    glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF); // turn of the spammign of character when holding it down (w ______ wwwwww)
 
-    glutMouseFunc( mouseButtonEvent);
-    glutPassiveMotionFunc( mouseMoveEvent);
-    glutMotionFunc( mouseMoveEvent);
-    glutMouseWheelFunc( mouseWheelEvent);
+    glutMouseFunc(mouseButtonEvent);
+    glutPassiveMotionFunc(mouseMoveEvent);
+    glutMotionFunc(mouseMoveEvent);
+    glutMouseWheelFunc(mouseWheelEvent);
+    glutReshapeFunc(screenResizeEvent);
     glutSetCursor(GLUT_CURSOR_NONE); // hide cursor
 
     // SET DRAW CALLBACK

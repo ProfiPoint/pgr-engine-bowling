@@ -134,7 +134,7 @@ namespace copakond {
         CollisionBox *cba3 = new CollisionBox(glm::vec3(10.0f,-15.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,6.0f,7.0f), true);
         addToScene(cba3);
         RigidSphere *rigidBody3 = new RigidSphere(glm::vec3(0.0f,-13.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f), true);
-        rigidBody3->velocity() = glm::vec3(50.0f, 0.0f, 0.0f);
+        rigidBody3->velocity() = glm::vec3(30.0f, 0.0f, 0.0f);
         addToScene(rigidBody3);
         flagMesh->setParent(rigidBody3);
 

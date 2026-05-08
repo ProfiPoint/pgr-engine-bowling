@@ -50,6 +50,24 @@ namespace copakond {
         input->mouseDeltaX = 0.0f;
         input->mouseDeltaY = 0.0f;
 
+        if (keysMap[GLUT_KEY_F11 + IS_SPECIAL_KEY]) {
+            if (_isFullScreen) {
+                glutReshapeWindow(input->_windowWidth, input->_windowHeight);
+                glutPositionWindow(input->_windowPosX, input->_windowPosY);
+                _isFullScreen = false;
+            } else {
+                input->_windowWidth = glutGet(GLUT_WINDOW_WIDTH);
+                input->_windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
+                input->_windowPosX = glutGet(GLUT_WINDOW_X);
+                input->_windowPosY = glutGet(GLUT_WINDOW_Y);
+
+                glutFullScreen();
+                _isFullScreen = true;
+            }
+
+            keysMap[GLUT_KEY_F11 + IS_SPECIAL_KEY] = false;
+        }
+
         if (keysMap[KEY_ESC]) {
             glutLeaveMainLoop();
             exit(0);
