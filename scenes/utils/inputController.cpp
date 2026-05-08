@@ -52,6 +52,7 @@ namespace copakond {
 
         if (keysMap[KEY_ESC]) {
             glutLeaveMainLoop();
+            exit(0);
         }
     }
 
@@ -111,5 +112,62 @@ namespace copakond {
     unsigned char InputController::raycast(int x, int y) {
         std::cout << "Raycast clicked at X: " << x << " Y: " << y << std::endl;
         return 0;
+    }
+
+    void InputController::onMenuEvent(int option) {
+        if (option >= 1 && option <= 4) {
+            switchCamera(option);
+        }
+        else if (option == 5) {
+            toggleFullScreen();
+        }
+    }
+
+    void InputController::switchCamera(int mode) {
+        switch(mode) {
+            case 1:
+                _canMove = false;
+                if (_spline) {
+                    _spline->reset();
+                    _spline->unpause();
+                }
+                break;
+            case 2:
+                _canMove = true;
+                if (_spline) { _spline->pause(); }
+                break;
+            case 3:
+                _canMove = false;
+                if (_spline) { _spline->pause(); }
+                if (camera) {
+                    camera->position() = glm::vec3(5.0f, 0.0f, 20.0f);
+                    camera->lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
+                }
+                break;
+            case 4:
+                _canMove = false;
+                if (_spline) { _spline->pause(); }
+                if (camera) {
+                    camera->position() = glm::vec3(5.0f, 0.0f, -20.0f);
+                    camera->lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
+                }
+                break;
+        }
+    }
+
+    void InputController::toggleFullScreen() {
+        if (_isFullScreen) {
+            glutReshapeWindow(input->_windowWidth, input->_windowHeight);
+            glutPositionWindow(input->_windowPosX, input->_windowPosY);
+            _isFullScreen = false;
+        } else {
+            input->_windowWidth = glutGet(GLUT_WINDOW_WIDTH);
+            input->_windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
+            input->_windowPosX = glutGet(GLUT_WINDOW_X);
+            input->_windowPosY = glutGet(GLUT_WINDOW_Y);
+
+            glutFullScreen();
+            _isFullScreen = true;
+        }
     }
 }

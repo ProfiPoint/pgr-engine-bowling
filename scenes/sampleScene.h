@@ -2,10 +2,13 @@
 #define PGR_SEM_COPAKOND_SAMPLE_SCENE_H
 
 #include "scene.h"
+#include "utils/inputController.h"
 
 namespace copakond {
     class SampleScene : public Scene {
     private:
+        InputController* inputController = nullptr;
+
         ImageLabel* clock = nullptr;
         ImageLabel* clockHandSec = nullptr;
         ImageLabel* clockHandMin = nullptr;
@@ -21,6 +24,10 @@ namespace copakond {
         void init() override;
         void update(float deltaTime) override;
         void physics_update(float deltaTime) override;
+
+        void onSpecialKeyEvent(int key, int x, int y, bool isDown) override;
+        void onMouseButtonEvent(int button, int state, int x, int y) override;
+        void onMenuEvent(int option) override;
     };
 }
 

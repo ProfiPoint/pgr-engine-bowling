@@ -7,7 +7,7 @@
 #include "../../animation/spline.h"
 
 namespace copakond {
-    class InputController : Controller {
+    class InputController : public Controller {
     private:
         bool _canMove = true;
         bool _isFullScreen = false;
@@ -15,6 +15,9 @@ namespace copakond {
         Camera* camera;
         Input* input;
         Spline* _spline = nullptr;
+
+        void toggleFullScreen();
+        void switchCamera(int mode);
 
     public:
         float baseSpeed = 10.0f;
@@ -28,8 +31,8 @@ namespace copakond {
         void setCameraSpline(Spline *spline) { _spline = spline; }
 
         void onMouseButtonEvent(int button, int state, int x, int y) override;
-        void onMouseMoveEvent(int x, int y) override;
         void onSpecialKeyEvent(int key, int x, int y, bool isDown) override;
+        void onMenuEvent(int option) override;
     };
 }
 

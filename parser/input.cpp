@@ -2,12 +2,8 @@
 
 #include <iostream>
 
-#include "../animation/spline.h"
-
 #define SHIFT_BOOST 1.5f
 #define MOUSE_DRAG_COEFF 0.05f
-
-// TODO move this all into some other script, the logic
 
 namespace copakond {
     Input::Input(Camera &cam, int winWidth, int winHeight) : _camera(cam), _winWidth(winWidth), _winHeight(winHeight) {
@@ -40,7 +36,7 @@ namespace copakond {
     }
 
     // LMB, RMB, MMB
-    unsigned char Input::mouseButtonEvent(int button, int state, int x, int y) {
+    void Input::mouseButtonEvent(int button, int state, int x, int y) {
         if (button == GLUT_MIDDLE_BUTTON) {
             if (state == GLUT_DOWN) {
                 keysMap[MOUSE_BUTTON_RIGHT] = true;
@@ -48,8 +44,6 @@ namespace copakond {
                 keysMap[MOUSE_BUTTON_RIGHT] = false;
             }
         }
-
-        return (unsigned char)0;
     }
 
     // mouse movement - changing yaw and pitch
@@ -66,7 +60,8 @@ namespace copakond {
 
         if (_firstMouseMovement == false) {
             _firstMouseMovement = true;
-            return;
+            mouseDeltaX = 0;
+            mouseDeltaY = 0;
         }
 
         glutPostRedisplay();

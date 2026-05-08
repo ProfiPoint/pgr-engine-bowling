@@ -40,7 +40,7 @@ namespace copakond {
         void keyboardUpInputEvent(unsigned char key, int x, int y);
         void specKeyboardUpInputEvent(int key, int x, int y);
 
-        unsigned char mouseButtonEvent(int button, int state, int x, int y);
+        void mouseButtonEvent(int button, int state, int x, int y);
         void mouseMoveEvent(int x, int y);
         void mouseWheelEvent(int wheel, int direction, int x, int y);
     };

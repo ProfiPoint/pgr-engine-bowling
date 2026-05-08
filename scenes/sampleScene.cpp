@@ -9,6 +9,8 @@ namespace copakond {
 
 
     void SampleScene::init() {
+        inputController = new InputController(camera, input);
+
         std::shared_ptr<Material> teddyMaterial = std::make_shared<Material>(
             glm::vec3(0.5f, 0.33f, 0.2f) * 0.1f,
             glm::vec3(0.5f, 0.33f, 0.2f),
@@ -219,7 +221,7 @@ namespace copakond {
 
         addToScene(cameraSpline);
         cameraSpline->pause();
-        input->setCameraSpline(cameraSpline);
+        inputController->setCameraSpline(cameraSpline);
 
 
         Fog fog = Fog(30.0f, 50.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
@@ -227,6 +229,8 @@ namespace copakond {
     }
 
     void SampleScene::update(float deltaTime) {
+        inputController->update(deltaTime);
+
         // updating clocks time and hands:
         clockHandHour->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[0]/12*(2*glm::pi<float>()));
         clockHandMin->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[1]/60*(2*glm::pi<float>()));
@@ -251,21 +255,35 @@ namespace copakond {
         // update skybox, directional light,
         // skybox day night blending
         float currentHour = clockTime[0];
-        float skyboxBlending = 0.0f; // default day
+        skyboxBlendingCoeff = 0.0f; // default day
 
-        if (currentHour >= 20.0f || currentHour <= 4.0f) { skyboxBlending = 1.0f; } // full night
-        else if (currentHour > 4.0f && currentHour < 8.0f) { skyboxBlending = 1.0f - ((currentHour - 4.0f) / 4.0f); } // night -> day
-        else if (currentHour > 16.0f && currentHour < 20.0f) { skyboxBlending = (currentHour - 16.0f) / 4.0f; } // day -> night
+        if (currentHour >= 20.0f || currentHour <= 4.0f) { skyboxBlendingCoeff = 1.0f; } // full night
+        else if (currentHour > 4.0f && currentHour < 8.0f) { skyboxBlendingCoeff = 1.0f - ((currentHour - 4.0f) / 4.0f); } // night -> day
+        else if (currentHour > 16.0f && currentHour < 20.0f) { skyboxBlendingCoeff = (currentHour - 16.0f) / 4.0f; } // day -> night
 
         // update sunlight based of the time
         // z stars at -1, middle 0, end 1 (pi/2, pi, 3pi/2)
         // y stars at 0, middle 1, end 0 (pi/2, pi, 3pi/2)
         float thetaSun = (2 * glm::pi<float>() * currentHour / 24.0f); // 0 is down, 12 is up, 24 down, 6 start, 18 end
-        sun->diffuse() = glm::vec3(0.5f, 0.5f, 0.5f) * (1-skyboxBlending); // set the intensity
+        sun->diffuse() = glm::vec3(0.5f, 0.5f, 0.5f) * (1-skyboxBlendingCoeff); // set the intensity
         sun->direction() = glm::vec3(0.0f, glm::cos(thetaSun), glm::sin(thetaSun));
     }
 
     void SampleScene::physics_update(float deltaTime) {
         return;
+    }
+
+    void SampleScene::onSpecialKeyEvent(int key, int x, int y, bool isDown) {
+        inputController->onSpecialKeyEvent(key, x, y, isDown);
+    }
+
+    void SampleScene::onMouseButtonEvent(int button, int state, int x, int y) {
+        inputController->onMouseButtonEvent(button, state, x, y);
+    }
+
+    void SampleScene::onMenuEvent(int option) {
+        if (inputController) {
+            inputController->onMenuEvent(option);
+        }
     }
 }

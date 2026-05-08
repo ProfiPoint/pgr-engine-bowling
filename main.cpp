@@ -29,12 +29,20 @@ namespace copakond {
     int winHeight = 720;
 
     Shader* shader;
-    Camera* camera;
     Input* input;
     Scene* currentScene;
 
     void init() {
-        camera = new Camera(
+        glutCreateMenu(menuCallback);
+        glutAddMenuEntry("Player Cam", 1);
+        glutAddMenuEntry("Catmull Roll Cam", 2);
+        glutAddMenuEntry("Static Cam 1", 3);
+        glutAddMenuEntry("Static Cam 2", 4);
+        glutAddMenuEntry("Full Screen", 5);
+        glutAddMenuEntry("Exit Game", 6);
+        glutAttachMenu(GLUT_RIGHT_BUTTON);
+
+        Camera *camera = new Camera(
             glm::vec3(0.0f, 0.0f, 5.0f),
             glm::vec3(0.0f, 0.0f, 0.0f),
             1000.0f
@@ -76,8 +84,8 @@ namespace copakond {
     }
 
     void draw() {
+        Camera camera = currentScene->getCamera();
         float deltaTime = currentScene->updateTime(); // calculate delta time
-        input->keyInput(deltaTime); // process input
 
         // update spline animations
         for (Spline *spline: currentScene->getSplines()) {
@@ -100,7 +108,7 @@ namespace copakond {
 
         // sort all meshes, from the furthest to the nearest (for transparent meshes), all meshes, could be optimized more...
         std::vector<Mesh*> meshes = currentScene->getMeshes();
-        glm::vec3 camPos = camera->getPosition();
+        glm::vec3 camPos = camera.getPosition();
         std::sort(meshes.begin(), meshes.end(), [&camPos](Mesh* a, Mesh* b) {
                 glm::vec3 pos1 = glm::vec3(a->getModelMatrix()[3]); // position
                 glm::vec3 pos2 = glm::vec3(b->getModelMatrix()[3]); // position
@@ -109,7 +117,7 @@ namespace copakond {
         });
 
         // draw Non-transparent Meshes
-        shader->update(*camera, winWidth, winHeight, deltaTime); // use main shader
+        shader->update(camera, winWidth, winHeight, deltaTime); // use main shader
         for (Mesh *mesh: meshes) {
             if (mesh->getMaterial()->getAlpha() <= 0.999f) { continue; }
             if (dynamic_cast<const TextLabel*>(mesh) != nullptr) { continue; }
@@ -123,7 +131,7 @@ namespace copakond {
 
         if (skybox) {
             glStencilFunc(GL_ALWAYS, 1, 0); // id = 1 is for skybox
-            skybox->update(*camera, winWidth, winHeight, deltaTime, skyboxBlending); // use skybox shader
+            skybox->update(camera, winWidth, winHeight, deltaTime, skyboxBlending); // use skybox shader
             skybox->draw(deltaTime);
         }
 
@@ -131,7 +139,7 @@ namespace copakond {
         glEnable(GL_BLEND);
         glDepthMask(GL_FALSE); // if the front triangle would render before the back it would fail
 
-        shader->update(*camera, winWidth, winHeight, 0.0f); // use main shader
+        shader->update(camera, winWidth, winHeight, 0.0f); // use main shader
         for (Mesh *mesh: meshes) {
             if (mesh->getMaterial()->getAlpha() > 0.9999f) { continue; }
             glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
@@ -145,58 +153,14 @@ namespace copakond {
         glutPostRedisplay(); // !!!!!!!!! schedules display, doesnt stack!!!
     }
 
-    // TODO take the logic away from the input into different class
     void menuCallback(int option) {
-        if (option == 1) {
-            input->_canMove = true;
-            input->_spline->pause();
-        }
-
-        if (option == 2) {
-            input->_canMove = false;
-            input->_spline->reset();
-            input->_spline->unpause();
-        }
-
-        if (option == 3) {
-            input->_canMove = false;
-            input->_spline->pause();
-            input->_camera.position() = glm::vec3(5.0f, 0.0f, 20.0f);
-            input->_camera.lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
-        }
-
-        if (option == 4) {
-            input->_canMove = false;
-            input->_spline->pause();
-            input->_camera.position() = glm::vec3(5.0f, 0.0f, -20.0f);
-            input->_camera.lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
-        }
-
-        if (option == 5) {
-            if (input->_isFullScreen) {
-                glutReshapeWindow(input->_windowWidth, input->_windowHeight);
-                glutPositionWindow(input->_windowPosX, input->_windowPosY);
-                input->_isFullScreen = false;
-            } else {
-                input->_windowWidth = glutGet(GLUT_WINDOW_WIDTH);
-                input->_windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
-                input->_windowPosX = glutGet(GLUT_WINDOW_X);
-                input->_windowPosY = glutGet(GLUT_WINDOW_Y);
-
-                glutFullScreen();
-                input->_isFullScreen = true;
-            }
-        }
-
         if (option == 6) {
-            glutLeaveMainLoop();
+            exit(0);
         }
 
-        input->resetMouseTarget();
-    }
-
-    void handleMouseClickedOnObject(int id) {
-        std::cout << "Clicked on object: " << id << std::endl;
+        if (currentScene) {
+            currentScene->onMenuEvent(option);
+        }
     }
 
     void keyboardInputEvent(unsigned char key, int x, int y) {
@@ -216,8 +180,11 @@ namespace copakond {
     }
 
     void mouseButtonEvent(int button, int state, int x, int y) {
-        int objectClickedId = (int)input->mouseButtonEvent(button, state, x, y);
-        if (objectClickedId > 0) { handleMouseClickedOnObject(objectClickedId); }
+        input->mouseButtonEvent(button, state, x, y);
+
+        if (currentScene) {
+            currentScene->onMouseButtonEvent(button, state, x, y);
+        }
     }
 
     void mouseMoveEvent(int x, int y) {
@@ -265,7 +232,7 @@ int main(int argc, char **argv) {
     glutSetCursor(GLUT_CURSOR_NONE); // hide cursor
 
     // SET DRAW CALLBACK
-    glutDisplayFunc( draw);
+    glutDisplayFunc(draw);
 
     if (!pgr::initialize(pgr::OGL_VER_MAJOR, pgr::OGL_VER_MINOR)) {
         pgr::dieWithError("pgr init failed, required OpenGL not supported?");

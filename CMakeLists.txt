@@ -60,7 +60,6 @@ add_executable(${PROJECT_NAME} main.cpp
         scenes/scene.cpp
         scenes/utils/inputController.cpp
         scenes/utils/inputController.h
-        scenes/utils/controller.cpp
         scenes/utils/controller.h
 )
 

@@ -42,6 +42,7 @@ namespace copakond {
         uint64_t time = 0;
         int winWidth = 0;
         int winHeight = 0;
+        float skyboxBlendingCoeff = 0.0f;
 
         void addToScene(Mesh* mesh);
         void addToScene(Light* light);
@@ -66,7 +67,7 @@ namespace copakond {
         Camera& getCamera() { return *camera; }
         Shader* getShader() const { return shader; }
         float updateTime();
-        float getSkyboxBlendingCoeff() { return 0.0f; } // each scene can overwrite it with custom logic
+        float getSkyboxBlendingCoeff() { return skyboxBlendingCoeff; } // each scene can overwrite it with custom logic
         const char* getSceneName() { return WIN_TITLE; }
 
         // functions for scene
@@ -76,6 +77,7 @@ namespace copakond {
         virtual void onKeyboardEvent(unsigned char key, int x, int y, bool isDown) {}
         virtual void onSpecialKeyEvent(int key, int x, int y, bool isDown) {}
         virtual void onMouseButtonEvent(int button, int state, int x, int y) {}
+        virtual void onMenuEvent(int option) {}
     };
 }
 
