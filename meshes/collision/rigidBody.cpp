@@ -13,6 +13,7 @@ namespace copakond {
     }
 
     void RigidBody::physics_process(float deltaTime, const std::vector<CollisionShape*>& allColliders) {
+        if (!_enabled) { return; }
         // implementation of delta fix t
 
         float deltaTimeLeft = deltaTime;

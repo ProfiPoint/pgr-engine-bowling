@@ -104,7 +104,7 @@ namespace copakond {
         addToScene(rigidBody);
 
 
-        player = new RigidBody(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), true);
+        player = new RigidBody(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
         camera->setParent(player);
         inputController->setPlayer(player);
         addToScene(player);
@@ -215,7 +215,7 @@ namespace copakond {
         Spline *cameraSpline = new CatmullRoll(
             20.0f,
             cameraSplinePoints,
-            camera->position(),
+            player->position(),
             [this](glm::vec3 derivative) {
                 if (glm::length(derivative) > 0.0001f) {  // prevent on screen glitching
                     camera->lookToPoint(camera->getPosition() + derivative);
@@ -278,10 +278,6 @@ namespace copakond {
 
     void SampleScene::physics_update(float deltaTime) {
         return;
-    }
-
-    void SampleScene::onSpecialKeyEvent(int key, int x, int y, bool isDown) {
-        inputController->onSpecialKeyEvent(key, x, y, isDown);
     }
 
     void SampleScene::onMouseButtonEvent(int button, int state, int x, int y) {

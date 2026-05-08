@@ -11,7 +11,6 @@ namespace copakond {
 
         virtual void onMouseButtonEvent(int button, int state, int x, int y) {}
         virtual void onMouseMoveEvent(int x, int y) {}
-        virtual void onSpecialKeyEvent(int key, int x, int y, bool isDown) {}
         virtual void onKeyboardEvent(unsigned char key, int x, int y, bool isDown) {}
 
         virtual void onMenuEvent(int option) {}

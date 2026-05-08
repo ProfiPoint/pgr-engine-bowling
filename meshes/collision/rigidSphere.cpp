@@ -31,6 +31,8 @@ namespace copakond {
     }
 
     void RigidSphere::physics_process(float deltaTime, const std::vector<CollisionShape*>& allColliders) {
+        if (!_enabled) { return; }
+
         // implementation of delta fix t
         float deltaTimeLeft = deltaTime;
         while (deltaTimeLeft > 0.0f) {

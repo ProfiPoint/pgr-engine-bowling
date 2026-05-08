@@ -37,11 +37,12 @@ namespace copakond {
     void init() {
         glutCreateMenu(menuCallback);
         glutAddMenuEntry("Player Cam", 1);
-        glutAddMenuEntry("Catmull Roll Cam", 2);
-        glutAddMenuEntry("Static Cam 1", 3);
-        glutAddMenuEntry("Static Cam 2", 4);
-        glutAddMenuEntry("Full Screen", 5);
-        glutAddMenuEntry("Exit Game", 6);
+        glutAddMenuEntry("Free Cam", 2);
+        glutAddMenuEntry("Catmull Roll Cam", 3);
+        glutAddMenuEntry("Static Cam 1", 4);
+        glutAddMenuEntry("Static Cam 2", 5);
+        glutAddMenuEntry("Full Screen", 6);
+        glutAddMenuEntry("Exit Game", 7);
         glutAttachMenu(GLUT_RIGHT_BUTTON);
 
         Camera *camera = new Camera(
@@ -161,7 +162,7 @@ namespace copakond {
     }
 
     void menuCallback(int option) {
-        if (option == 6) {
+        if (option == 7) {
             exit(0);
         }
 

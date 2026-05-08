@@ -23,7 +23,7 @@ namespace copakond {
         void switchCamera(int mode);
 
     public:
-        float baseSpeed = 10.0f;
+        float baseSpeed = 3.0f;
         float shiftMultiplier = 1.5f;
         float mouseDragCoeff = 0.05f;
 
@@ -35,7 +35,6 @@ namespace copakond {
         void setCameraSpline(Spline *spline) { _spline = spline; }
 
         void onMouseButtonEvent(int button, int state, int x, int y) override;
-        void onSpecialKeyEvent(int key, int x, int y, bool isDown) override;
         void onMenuEvent(int option) override;
     };
 }

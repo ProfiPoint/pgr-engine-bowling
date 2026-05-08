@@ -35,7 +35,11 @@ namespace copakond {
 
                 if (glm::length(moveVector) > 0.0f) {
                     moveVector = glm::normalize(moveVector);
-                    player->velocity() = moveVector * speed;
+                    if (player->isEnabled()) {
+                        player->velocity() = moveVector * speed; // if enabled - update it using velocity (rigid body)
+                    } else {
+                        player->position() += moveVector * speed * deltaTime; // if disabled update it using positon (normal geometry node)
+                    }
                 }
             }
         }
@@ -50,21 +54,28 @@ namespace copakond {
         input->mouseDeltaX = 0.0f;
         input->mouseDeltaY = 0.0f;
 
+        if (keysMap[GLUT_KEY_F1 + IS_SPECIAL_KEY]) {
+            onMenuEvent(1);
+            keysMap[GLUT_KEY_F1 + IS_SPECIAL_KEY] = false;
+        }
+
+        if (keysMap[GLUT_KEY_F2 + IS_SPECIAL_KEY]) {
+            onMenuEvent(2);
+            keysMap[GLUT_KEY_F2 + IS_SPECIAL_KEY] = false;
+        }
+
+        if (keysMap[GLUT_KEY_F3 + IS_SPECIAL_KEY]) {
+            onMenuEvent(3);
+            keysMap[GLUT_KEY_F3 + IS_SPECIAL_KEY] = false;
+        }
+
+        if (keysMap[GLUT_KEY_F4 + IS_SPECIAL_KEY]) {
+            onMenuEvent(4);
+            keysMap[GLUT_KEY_F4 + IS_SPECIAL_KEY] = false;
+        }
+
         if (keysMap[GLUT_KEY_F11 + IS_SPECIAL_KEY]) {
-            if (_isFullScreen) {
-                glutReshapeWindow(input->_windowWidth, input->_windowHeight);
-                glutPositionWindow(input->_windowPosX, input->_windowPosY);
-                _isFullScreen = false;
-            } else {
-                input->_windowWidth = glutGet(GLUT_WINDOW_WIDTH);
-                input->_windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
-                input->_windowPosX = glutGet(GLUT_WINDOW_X);
-                input->_windowPosY = glutGet(GLUT_WINDOW_Y);
-
-                glutFullScreen();
-                _isFullScreen = true;
-            }
-
+            onMenuEvent(6);
             keysMap[GLUT_KEY_F11 + IS_SPECIAL_KEY] = false;
         }
 
@@ -80,95 +91,50 @@ namespace copakond {
         }
     }
 
-    void InputController::onSpecialKeyEvent(int key, int x, int y, bool isDown) {
-        if (!isDown) return; // Only execute on key PRESS, not release
-
-        const auto keysMap = input->keysMap;
-
-        if (keysMap[GLUT_KEY_F1 + IS_SPECIAL_KEY]) {
-            _canMove = true;
-            _spline->pause();
-        }
-
-        if (keysMap[GLUT_KEY_F2 + IS_SPECIAL_KEY]) {
-            _canMove = false;
-            _spline->reset();
-            _spline->unpause();
-        }
-
-        if (keysMap[GLUT_KEY_F3 + IS_SPECIAL_KEY]) {
-            _canMove = false;
-            _spline->pause();
-            camera->position() = glm::vec3(5.0f, 0.0f, 20.0f);
-            camera->lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
-        }
-
-        if (keysMap[GLUT_KEY_F4 + IS_SPECIAL_KEY]) {
-            _canMove = false;
-            _spline->pause();
-            camera->position() = glm::vec3(5.0f, 0.0f, -20.0f);
-            camera->lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
-        }
-
-        if (keysMap[GLUT_KEY_F11 + IS_SPECIAL_KEY]) {
-            if (_isFullScreen) {
-                glutReshapeWindow(input->_windowWidth, input->_windowHeight);
-                glutPositionWindow(input->_windowPosX, input->_windowPosY);
-                _isFullScreen = false;
-            } else {
-                input->_windowWidth = glutGet(GLUT_WINDOW_WIDTH);
-                input->_windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
-                input->_windowPosX = glutGet(GLUT_WINDOW_X);
-                input->_windowPosY = glutGet(GLUT_WINDOW_Y);
-
-                glutFullScreen();
-                _isFullScreen = true;
-            }
-        }
-    }
-
     unsigned char InputController::raycast(int x, int y) {
         std::cout << "Raycast clicked at X: " << x << " Y: " << y << std::endl;
         return 0;
     }
 
     void InputController::onMenuEvent(int option) {
-        if (option >= 1 && option <= 4) {
+        if (option >= 1 && option <= 5) {
             switchCamera(option);
         }
-        else if (option == 5) {
+        else if (option == 6) {
             toggleFullScreen();
         }
     }
 
     void InputController::switchCamera(int mode) {
         switch(mode) {
-            case 1:
-                _canMove = false;
-                if (_spline) {
-                    _spline->reset();
-                    _spline->unpause();
-                }
-                break;
-            case 2:
+            case 1: // player mode
                 _canMove = true;
-                if (_spline) { _spline->pause(); }
+                if (_spline) { _spline->pause(); _spline->reset(); }
+                player->enable();
                 break;
-            case 3:
+            case 2: // free cam
+                _canMove = true;
+                if (_spline) { _spline->pause(); _spline->reset(); }
+                player->disable();
+                break;
+            case 3: // CR spline
+                _canMove = false;
+                if (_spline) { _spline->unpause(); }
+                player->disable();
+                break;
+            case 4: // pos 1
                 _canMove = false;
                 if (_spline) { _spline->pause(); }
-                if (camera) {
-                    camera->position() = glm::vec3(5.0f, 0.0f, 20.0f);
-                    camera->lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
-                }
+                player->position() = glm::vec3(5.0f, 0.0f, 20.0f);
+                camera->lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
+                player->disable();
                 break;
-            case 4:
+            case 5: // pos 2
                 _canMove = false;
                 if (_spline) { _spline->pause(); }
-                if (camera) {
-                    camera->position() = glm::vec3(5.0f, 0.0f, -20.0f);
-                    camera->lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
-                }
+                player->position() = glm::vec3(5.0f, 0.0f, -20.0f);
+                camera->lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
+                player->disable();
                 break;
         }
     }
