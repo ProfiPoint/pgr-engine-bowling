@@ -29,6 +29,7 @@ namespace copakond {
         void onMouseButtonEvent(int button, int state, int x, int y) override;
         void onMenuEvent(int option) override;
         void onMouseWheelEvent(int wheel, int direction, int x, int y)  override;
+        void onKeyboardEvent(unsigned char key, int x, int y, bool isDown) override;
     };
 }
 

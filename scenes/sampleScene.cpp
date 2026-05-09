@@ -11,6 +11,7 @@ namespace copakond {
     void SampleScene::init() {
         inputController = new InputController(camera, input);
         LevelEditor* lev = new LevelEditor(this);
+        inputController->setLevelEditor(lev);
 
         std::shared_ptr<Material> teddyMaterial = std::make_shared<Material>(
             glm::vec3(0.5f, 0.33f, 0.2f) * 0.1f,
@@ -279,6 +280,12 @@ namespace copakond {
 
     void SampleScene::physics_update(float deltaTime) {
         return;
+    }
+
+    void SampleScene::onKeyboardEvent(unsigned char key, int x, int y, bool isDown) {
+        if (inputController) {
+            inputController->onKeyboardEvent(key, x, y, isDown);
+        }
     }
 
     void SampleScene::onMouseButtonEvent(int button, int state, int x, int y) {

@@ -181,10 +181,12 @@ namespace copakond {
 
     void keyboardInputEvent(unsigned char key, int x, int y) {
         input->keyboardInputEvent(key, x, y);
+        if (currentScene) { currentScene->onKeyboardEvent(key, x, y, true); }
     }
 
     void specKeyboardInputEvent(int key, int x, int y) {
         input->specKeyboardInputEvent(key, x, y);
+        if (currentScene) { currentScene->onKeyboardEvent(key, x, y, true); }
     }
 
     void keyboardUpInputEvent(unsigned char key, int x, int y) {
