@@ -65,6 +65,8 @@ add_executable(${PROJECT_NAME} main.cpp
         scenes/utils/controller.h
         scenes/utils/levelEditor.cpp
         scenes/utils/levelEditor.h
+        scenes/bowlingScene.cpp
+        scenes/bowlingScene.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION
