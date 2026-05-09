@@ -20,6 +20,7 @@
 #include "meshes/label/imageMoving.h"
 #include "meshes/model/skybox.h"
 #include "scenes/sampleScene.h"
+#include "scenes/templateScene.h"
 #include "scenes/scene.h"
 
 namespace copakond {
@@ -53,7 +54,8 @@ namespace copakond {
 
         input = new Input(*camera, winWidth, winHeight);
         shader = new Shader();
-        currentScene = new SampleScene("Sample Scene", input, shader, winWidth, winHeight);
+        //currentScene = new SampleScene("Sample Scene", input, shader, winWidth, winHeight);
+        currentScene = new TemplateScene("Template Scene", input, shader, winWidth, winHeight);
 
         GLuint shaderUID = shader->init(
             "shaders/shaders/shader.vert",

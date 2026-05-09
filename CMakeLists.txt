@@ -54,10 +54,12 @@ add_executable(${PROJECT_NAME} main.cpp
         meshes/collision/rigidSphere.cpp
         meshes/collision/collisionShape.h
         meshes/collision/collisionShape.cpp
-        scenes/Scene.h
+        scenes/scene.h
+        scenes/scene.cpp
         scenes/sampleScene.cpp
         scenes/sampleScene.h
-        scenes/scene.cpp
+        scenes/templateScene.cpp
+        scenes/templateScene.h
         scenes/utils/inputController.cpp
         scenes/utils/inputController.h
         scenes/utils/controller.h
