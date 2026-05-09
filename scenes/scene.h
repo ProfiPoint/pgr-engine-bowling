@@ -24,6 +24,9 @@
 #include "../meshes/model/skybox.h"
 
 namespace copakond {
+    enum class StencilSelect { ALL, MESHES, COLLISION };
+    extern StencilSelect stencilMode; // only declare once
+
     class Scene {
     protected:
         const char *WIN_TITLE;
@@ -66,6 +69,7 @@ namespace copakond {
         Light* getSun() const { return sun; }
         Camera& getCamera() { return *camera; }
         Shader* getShader() const { return shader; }
+        Input* getInput() const { return input; }
         float updateTime();
         float getSkyboxBlendingCoeff() { return skyboxBlendingCoeff; } // each scene can overwrite it with custom logic
         const char* getSceneName() { return WIN_TITLE; }

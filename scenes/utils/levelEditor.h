@@ -5,7 +5,8 @@
 
 namespace copakond {
     enum class EditMode { NONE, TRANSLATE, ROTATE, SCALE };
-    enum class EditAxis { NONE, X, Y, Z };
+    enum class EditAxe { NONE, X, Y, Z };
+
     struct StateSaved { glm::vec3 pos; glm::vec3 rot; glm::vec3 scale; };
 
     class LevelEditor {
@@ -14,7 +15,7 @@ namespace copakond {
         Mesh* _selectedMesh = nullptr;
         StateSaved _originalState;
         EditMode _currentMode = EditMode::NONE;
-        EditAxis _currentAxis = EditAxis::NONE;
+        EditAxe _currentAxe = EditAxe::NONE;
 
     public:
         LevelEditor(Scene* scene) : _scene(scene) {}
@@ -22,10 +23,10 @@ namespace copakond {
         void onObjectClickedEvent(int id);
         void onKeyboardEvent(unsigned char key, int x, int y, bool isDown);
         void onMouseWheelEvent(int wheel, int direction, int x, int y);
-        void saveSnapshot(std::string filename);
+        void saveSnapshot(std::string filename = "meshes.txt");
 
         EditMode getEditMode() const { return _currentMode; }
-        EditAxis getEditAxis() const { return _currentAxis; }
+        EditAxe getEditAxe() const { return _currentAxe; }
     };
 }
 

@@ -4,6 +4,7 @@
 #define IS_SPECIAL_KEY 256
 
 #define KEY_ESC 27
+#define KEY_BACKSPACE 8
 #define KEY_SHIFT 513
 #define MOUSE_BUTTON_LEFT 514
 #define MOUSE_BUTTON_RIGHT 515

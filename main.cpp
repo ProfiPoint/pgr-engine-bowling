@@ -23,9 +23,9 @@
 #include "scenes/scene.h"
 
 namespace copakond {
-    float SIMULATION_SPEED = 1.0f;
-
     void menuCallback(int option);
+
+    float SIMULATION_SPEED = 1.0f;
 
     int winWidth = 1280;
     int winHeight = 720;
@@ -150,7 +150,17 @@ namespace copakond {
         shader->update(camera, winWidth, winHeight, 0.0f); // use main shader
         for (Mesh *mesh: meshes) {
             if (mesh->getMaterial()->getAlpha() > 0.9999f) { continue; }
-            glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
+
+            if (stencilMode == StencilSelect::ALL) {
+                glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
+            } else if (stencilMode == StencilSelect::MESHES) {
+                if (dynamic_cast<const CollisionShape*>(mesh) != nullptr) { continue; }
+                glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
+            } else if (stencilMode == StencilSelect::COLLISION) {
+                if (dynamic_cast<const CollisionShape*>(mesh) == nullptr) { continue; }
+                glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
+            }
+
             shader->draw(*mesh, true, deltaTime); // drawing transparent objects
         }
 
