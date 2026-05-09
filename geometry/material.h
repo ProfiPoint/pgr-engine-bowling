@@ -49,7 +49,7 @@ namespace copakond {
         float &alpha() { return _alpha; }
 
         // texture managers
-        void setDiffuseTexture(const std::string &textureFile, bool warpTexture = false);
+        void setDiffuseTexture(const std::string &textureFile, bool warpTexture = false, bool mipMap = true);
         bool hasDiffuseTexture() const { return _hasDiffuseTexture; }
         void clearDiffuseTexture() { _hasDiffuseTexture = false; }
 
