@@ -64,16 +64,19 @@ namespace copakond {
         else if (keysMap['8']) {
             keysMap['8'] = false;
             stencilMode = StencilSelect::ALL;
+            _selectedMesh = nullptr;
             std::cout << "StencilSelect::ALL" << std::endl;
         }
         else if (keysMap['9']) {
             keysMap['9'] = false;
             stencilMode = StencilSelect::MESHES;
+            _selectedMesh = nullptr;
             std::cout << "StencilSelect::MESHES" << std::endl;
         }
         else if (keysMap['0']) {
             keysMap['0'] = false;
             stencilMode = StencilSelect::COLLISION;
+            _selectedMesh = nullptr;
             std::cout << "StencilSelect::COLLISION" << std::endl;
         }
 
@@ -117,6 +120,8 @@ namespace copakond {
                     case EditAxe::Y: _selectedMesh->position().y += value; break;
                     case EditAxe::Z: _selectedMesh->position().z += value; break;
                 }
+                std::cout << "POSITION glm::vec3(" << _selectedMesh->position().x << ", " << _selectedMesh->position().y << ", " <<
+                    _selectedMesh->position().z << ");" << std::endl;
                 break;
             }
 
@@ -135,6 +140,8 @@ namespace copakond {
                     case EditAxe::Y: _selectedMesh->rotation().y += value; break;
                     case EditAxe::Z: _selectedMesh->rotation().z += value; break;
                 }
+                std::cout << "ROTATE glm::vec3(" << _selectedMesh->rotation().x << ", " << _selectedMesh->rotation().y << ", " <<
+                    _selectedMesh->rotation().z << ");" << std::endl;
                 break;
             }
 
@@ -153,6 +160,8 @@ namespace copakond {
                     case EditAxe::Y: _selectedMesh->scale().y += value; break;
                     case EditAxe::Z: _selectedMesh->scale().z += value; break;
                 }
+                std::cout << "SCALE glm::vec3(" << _selectedMesh->scale().x << ", " << _selectedMesh->scale().y << ", " <<
+                    _selectedMesh->scale().z << ");" << std::endl;
                 break;
             }
         }
