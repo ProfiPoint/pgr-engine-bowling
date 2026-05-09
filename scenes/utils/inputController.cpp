@@ -91,9 +91,15 @@ namespace copakond {
         }
     }
 
-    unsigned char InputController::raycast(int x, int y) {
-        std::cout << "Raycast clicked at X: " << x << " Y: " << y << std::endl;
-        return 0;
+    int InputController::raycast(int x, int y) {
+        unsigned char objectClickedId = 0;
+        glReadPixels(x,  input->_winHeight - y - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &objectClickedId);
+        std::cout << "Raycast clicked at X: " << x << " Y: " << y << " ID: " << (int)objectClickedId << std::endl;
+
+        // connect to the level editor
+        _levelEditor->onObjectClickedEvent((int)objectClickedId);
+
+        return (int)objectClickedId;
     }
 
     void InputController::onMenuEvent(int option) {
@@ -154,4 +160,9 @@ namespace copakond {
             _isFullScreen = true;
         }
     }
+
+    void InputController::onKeyboardEvent(unsigned char key, int x, int y, bool isDown) {
+        _levelEditor->onKeyboardEvent(key, x, y, isDown);
+    }
+
 }

@@ -10,6 +10,7 @@ namespace copakond {
 
     void SampleScene::init() {
         inputController = new InputController(camera, input);
+        LevelEditor* lev = new LevelEditor(this);
 
         std::shared_ptr<Material> teddyMaterial = std::make_shared<Material>(
             glm::vec3(0.5f, 0.33f, 0.2f) * 0.1f,
@@ -285,11 +286,15 @@ namespace copakond {
     }
 
     void SampleScene::onMouseWheelEvent(int wheel, int direction, int x, int y) {
-        if (direction > 0) {
-            camera->addFov(-3.0f);
-        } else {
-            camera->addFov(3.0f);
+        if (inputController->getLevelEditor()->getEditMode() == EditMode::NONE) {
+            if (direction > 0) {
+                camera->addFov(-3.0f);
+            } else {
+                camera->addFov(3.0f);
+            }
         }
+
+        inputController->getLevelEditor()->onMouseWheelEvent(wheel, direction, x, y);
     }
 
     void SampleScene::onMenuEvent(int option) {

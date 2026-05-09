@@ -6,6 +6,7 @@
 #include "../../parser/input.h"
 #include "../../animation/spline.h"
 #include "../../meshes/collision/rigidBody.h"
+#include "levelEditor.h"
 
 namespace copakond {
 
@@ -14,6 +15,7 @@ namespace copakond {
         bool _canMove = true;
         bool _isFullScreen = false;
 
+        LevelEditor* _levelEditor = nullptr;
         Camera* camera;
         Input* input;
         Spline* _spline = nullptr;
@@ -29,11 +31,14 @@ namespace copakond {
 
         InputController(Camera* cam, Input* input) : camera(cam), input(input) {};
         void setPlayer(RigidBody* p) { player = p; }
+        void setLevelEditor(LevelEditor* lev) { _levelEditor = lev; }
+        LevelEditor* getLevelEditor() { return _levelEditor; }
 
         void update(float deltaTime) override;
-        unsigned char raycast(int x, int y);
+        int raycast(int x, int y);
         void setCameraSpline(Spline *spline) { _spline = spline; }
 
+        void onKeyboardEvent(unsigned char key, int x, int y, bool isDown) override;
         void onMouseButtonEvent(int button, int state, int x, int y) override;
         void onMenuEvent(int option) override;
     };
