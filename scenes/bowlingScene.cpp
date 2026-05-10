@@ -44,7 +44,13 @@ namespace copakond {
         camera->setFog(fog);
 
         
-        
+        //Mesh *bomb = new ObjMesh("assets/models/custom/bomb.obj", false, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f),
+         //   glm::vec3(1.0f, 1.0f, 1.0f));
+        //addToScene(bomb);
+
+        Mesh *bomb = new ObjMesh("assets/models/custom/crate.obj", false, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(1.0f, 1.0f, 1.0f));
+        addToScene(bomb);
 
         
         // meshes loading from the bowling model
