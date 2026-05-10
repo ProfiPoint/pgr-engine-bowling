@@ -53,6 +53,52 @@ namespace copakond {
         //Mesh *bomb = new ObjMesh("assets/models/custom/trophy.obj", false, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
         //addToScene(bomb);
 
+        // pins
+        Mesh *pin1a = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.625f, 0.150f, 2.650f)); addToScene(pin1a);
+        Mesh *pin2a = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.750f, 0.150f, 2.750f)); addToScene(pin2a);
+        Mesh *pin3a = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.750f, 0.150f, 2.550f)); addToScene(pin3a);
+        Mesh *pin4a = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.875f, 0.150f, 2.850f)); addToScene(pin4a);
+        Mesh *pin5a = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.875f, 0.150f, 2.650f)); addToScene(pin5a);
+        Mesh *pin6a = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.875f, 0.150f, 2.450f)); addToScene(pin6a);
+        Mesh *pin7a = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.950f)); addToScene(pin7a);
+        Mesh *pin8a = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.750f)); addToScene(pin8a);
+        Mesh *pin9a = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.550f)); addToScene(pin9a);
+        Mesh *pin10a = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.350f)); addToScene(pin10a);
+
+        Mesh *pin1b = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.625f, 0.150f, 2.650f-ALLEY_SPACING*1)); addToScene(pin1b);
+        Mesh *pin2b = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.750f, 0.150f, 2.750f-ALLEY_SPACING*1)); addToScene(pin2b);
+        Mesh *pin3b = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.750f, 0.150f, 2.550f-ALLEY_SPACING*1)); addToScene(pin3b);
+        Mesh *pin4b = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.875f, 0.150f, 2.850f-ALLEY_SPACING*1)); addToScene(pin4b);
+        Mesh *pin5b = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.875f, 0.150f, 2.650f-ALLEY_SPACING*1)); addToScene(pin5b);
+        Mesh *pin6b = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.875f, 0.150f, 2.450f-ALLEY_SPACING*1)); addToScene(pin6b);
+        Mesh *pin7b = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.950f-ALLEY_SPACING*1)); addToScene(pin7b);
+        Mesh *pin8b = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.750f-ALLEY_SPACING*1)); addToScene(pin8b);
+        Mesh *pin9b = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.550f-ALLEY_SPACING*1)); addToScene(pin9b);
+        Mesh *pin10b = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.350f-ALLEY_SPACING*1)); addToScene(pin10b);
+
+        Mesh *pin1c = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.625f, 0.150f, 2.650f-ALLEY_SPACING*2+0.05f)); addToScene(pin1c);
+        Mesh *pin2c = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.750f, 0.150f, 2.750f-ALLEY_SPACING*2+0.05f)); addToScene(pin2c);
+        Mesh *pin3c = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.750f, 0.150f, 2.550f-ALLEY_SPACING*2+0.05f)); addToScene(pin3c);
+        Mesh *pin4c = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.875f, 0.150f, 2.850f-ALLEY_SPACING*2+0.05f)); addToScene(pin4c);
+        Mesh *pin5c = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.875f, 0.150f, 2.650f-ALLEY_SPACING*2+0.05f)); addToScene(pin5c);
+        Mesh *pin6c = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.875f, 0.150f, 2.450f-ALLEY_SPACING*2+0.05f)); addToScene(pin6c);
+        Mesh *pin7c = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.950f-ALLEY_SPACING*2+0.05f)); addToScene(pin7c);
+        Mesh *pin8c = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.750f-ALLEY_SPACING*2+0.05f)); addToScene(pin8c);
+        Mesh *pin9c = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.550f-ALLEY_SPACING*2+0.05f)); addToScene(pin9c);
+        Mesh *pin10c = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.350f-ALLEY_SPACING*2+0.05f)); addToScene(pin10c);
+
+        Mesh *pin1d = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.625f, 0.150f, 2.650f-ALLEY_SPACING*3+0.05f)); addToScene(pin1d);
+        Mesh *pin2d = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.750f, 0.150f, 2.750f-ALLEY_SPACING*3+0.05f)); addToScene(pin2d);
+        Mesh *pin3d = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.750f, 0.150f, 2.550f-ALLEY_SPACING*3+0.05f)); addToScene(pin3d);
+        Mesh *pin4d = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.875f, 0.150f, 2.850f-ALLEY_SPACING*3+0.05f)); addToScene(pin4d);
+        Mesh *pin5d = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.875f, 0.150f, 2.650f-ALLEY_SPACING*3+0.05f)); addToScene(pin5d);
+        Mesh *pin6d = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.875f, 0.150f, 2.450f-ALLEY_SPACING*3+0.05f)); addToScene(pin6d);
+        Mesh *pin7d = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.950f-ALLEY_SPACING*3+0.05f)); addToScene(pin7d);
+        Mesh *pin8d = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.750f-ALLEY_SPACING*3+0.05f)); addToScene(pin8d);
+        Mesh *pin9d = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.550f-ALLEY_SPACING*3+0.05f)); addToScene(pin9d);
+        Mesh *pin10d = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.350f-ALLEY_SPACING*3+0.05f)); addToScene(pin10d);
+
+        // Player collision
         CollisionBox *collisionWall1 = new CollisionBox(glm::vec3(10.080f, -0.050f, 0.000f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(7.000f, 0.500f, 10.500f), true);
         addToScene(collisionWall1);
         CollisionBox *collisionWall2 = new CollisionBox(glm::vec3(1.580f, 2.550f, 0.000f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(28.500f, 0.500f, 10.500f), true);
@@ -66,6 +112,7 @@ namespace copakond {
         CollisionBox *collisionWall6 = new CollisionBox(glm::vec3(-13.250f, 1.350f, 0.430f), glm::vec3(0.000f, -1.571f, 0.000f), glm::vec3(9.250f, 3.000f, 0.300f), true);
         addToScene(collisionWall6);
 
+        // Bowling Alley collisions
         CollisionBox *collisionBowlingAlley1 = new CollisionBox(glm::vec3(-3.670f, -0.050f, 2.630f-ALLEY_SPACING*0), glm::vec3(0.0f), glm::vec3(glm::vec3(20.500f, 0.500f, 0.750f)), true);
         addToScene(collisionBowlingAlley1);
         CollisionBox *collisionBowlingAlley2 = new CollisionBox(glm::vec3(-3.670f, -0.050f, 2.630f-ALLEY_SPACING*1), glm::vec3(0.0f), glm::vec3(glm::vec3(20.500f, 0.500f, 0.750f)), true);
