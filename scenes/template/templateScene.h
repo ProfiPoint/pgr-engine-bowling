@@ -1,11 +1,11 @@
-#ifndef PGR_SEM_COPAKOND_BOWLINGSCENE_H
-#define PGR_SEM_COPAKOND_BOWLINGSCENE_H
+#ifndef PGR_SEM_COPAKOND_TEMPLATE_SCENE_H
+#define PGR_SEM_COPAKOND_TEMPLATE_SCENE_H
 
-#include "scene.h"
-#include "utils/inputController.h"
+#include "../scene.h"
+#include "../utils/inputController.h"
 
 namespace copakond {
-    class BowlingScene : public Scene {
+    class TemplateScene : public Scene {
     private:
         InputController* inputController = nullptr;
         RigidBody *player = nullptr;
@@ -13,8 +13,8 @@ namespace copakond {
         float clockTime[3] = {0, 0, 0}; // hh:mm:ss
 
     public:
-        BowlingScene(const char *sceneName, Input* input, Shader* shader, int winWidth, int winHeight);
-        ~BowlingScene() override;
+        TemplateScene(const char *sceneName, Input* input, Shader* shader, int winWidth, int winHeight);
+        ~TemplateScene() override;
 
         void init() override;
         void update(float deltaTime) override;
@@ -27,4 +27,4 @@ namespace copakond {
     };
 }
 
-#endif //PGR_SEM_COPAKOND_BOWLINGSCENE_H
+#endif // PGR_SEM_COPAKOND_TEMPLATE_SCENE_H

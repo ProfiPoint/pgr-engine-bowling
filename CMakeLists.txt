@@ -56,17 +56,21 @@ add_executable(${PROJECT_NAME} main.cpp
         meshes/collision/collisionShape.cpp
         scenes/scene.h
         scenes/scene.cpp
-        scenes/sampleScene.cpp
-        scenes/sampleScene.h
-        scenes/templateScene.cpp
-        scenes/templateScene.h
+        scenes/sample/sampleScene.cpp
+        scenes/sample/sampleScene.h
+        scenes/template/templateScene.cpp
+        scenes/template/templateScene.h
         scenes/utils/inputController.cpp
         scenes/utils/inputController.h
         scenes/utils/controller.h
         scenes/utils/levelEditor.cpp
         scenes/utils/levelEditor.h
-        scenes/bowlingScene.cpp
-        scenes/bowlingScene.h
+        scenes/bowling/bowlingScene.cpp
+        scenes/bowling/bowlingScene.h
+        scenes/bowling/bowlingGame.cpp
+        scenes/bowling/bowlingGame.h
+        scenes/bowling/inputControllerBowling.cpp
+        scenes/bowling/inputControllerBowling.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION

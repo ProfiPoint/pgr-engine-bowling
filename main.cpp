@@ -19,9 +19,9 @@
 #include "meshes/label/imageLabel.h"
 #include "meshes/label/imageMoving.h"
 #include "meshes/model/skybox.h"
-#include "scenes/sampleScene.h"
-#include "scenes/templateScene.h"
-#include "scenes/bowlingScene.h"
+#include "scenes/sample/sampleScene.h"
+#include "scenes/template/templateScene.h"
+#include "scenes/bowling/bowlingScene.h"
 #include "scenes/scene.h"
 
 namespace copakond {

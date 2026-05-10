@@ -1,8 +1,8 @@
 #ifndef PGR_SEM_COPAKOND_SAMPLE_SCENE_H
 #define PGR_SEM_COPAKOND_SAMPLE_SCENE_H
 
-#include "scene.h"
-#include "utils/inputController.h"
+#include "../scene.h"
+#include "../utils/inputController.h"
 
 namespace copakond {
     class SampleScene : public Scene {

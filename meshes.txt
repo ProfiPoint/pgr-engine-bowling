@@ -1,4 +1,0 @@
-ID = 125
-PREVIOUS = scale=glm::vec3(1.000f, 1.000f, 1.000f) 
-NEW = scale=glm::vec3(1.000f, 5.000f, 1.000f) 
-

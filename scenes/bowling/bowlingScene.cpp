@@ -1,5 +1,5 @@
 #include "bowlingScene.h"
-
+#include "../bowling/inputControllerBowling.h"
 #define ALLEY_SPACING 1.8f
 
 namespace copakond {
@@ -10,7 +10,8 @@ namespace copakond {
     BowlingScene::~BowlingScene() {};
 
     void BowlingScene::init() {
-        inputController = new InputController(camera, input);
+        inputController = new InputControllerBowling(camera, input, this);
+        game = new BowlingGame();
         LevelEditor* lev = new LevelEditor(this);
         inputController->setLevelEditor(lev);
 
@@ -339,7 +340,7 @@ namespace copakond {
         Mesh *doorsWalls1d1 = new ObjMesh("assets/models/bowling/doorsWalls1d1.obj");
         addToScene(doorsWalls1d1);
 
-        Mesh *doorsWalls2d1 = new ObjMesh("assets/models/bowling/doorsWalls2d1.obj");
+        Mesh *doorsWalls2d1 = new ObjMesh("assets/models/bowling/doorsWalls2d1.obj", glm::vec3(0.0f, 0.0f, -0.05f));
         addToScene(doorsWalls2d1);
 
         Mesh *doorsWalls3d1 = new ObjMesh("assets/models/bowling/doorsWalls3d1.obj");
@@ -529,6 +530,12 @@ namespace copakond {
         addToScene(windowFrames2);
 
 
+
+        // set bowling game pointers
+        game->door1 = doorsWalls1d1;
+        game->door2 = doorsWalls2d1;
+        game->door3 = doorsWalls3d1;
+        game->door4 = doorsWalls4d1;
     }
 
     void BowlingScene::update(float deltaTime) {
@@ -567,6 +574,8 @@ namespace copakond {
         float thetaSun = (2 * glm::pi<float>() * currentHour / 24.0f); // 0 is down, 12 is up, 24 down, 6 start, 18 end
         sun->diffuse() = glm::vec3(0.5f, 0.5f, 0.5f) * (1-skyboxBlendingCoeff); // set the intensity
         sun->direction() = glm::vec3(0.0f, glm::cos(thetaSun), glm::sin(thetaSun));
+
+        game->update(deltaTime);
     }
 
     void BowlingScene::physics_update(float deltaTime) {
