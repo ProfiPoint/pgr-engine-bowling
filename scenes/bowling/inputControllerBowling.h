@@ -22,7 +22,7 @@ namespace copakond {
         Input* input;
         Spline* _spline = nullptr;
         RigidBody* player = nullptr;
-        float space_power = 2.0f;
+        float spacePower = 2.0f;
 
         void toggleFullScreen();
         void switchCamera(int mode);

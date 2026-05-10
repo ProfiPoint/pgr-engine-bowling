@@ -39,7 +39,7 @@ namespace copakond {
         BowlingGame(Camera *camera) : camera(camera) {};
         void update(float deltaTime);
 
-        void pickBowlingBall(Mesh* bowlingBall);
+        void pickBowlingBall(Mesh* bowlingBall, float power = 2.0f);
         void throwBall(float power = 2.0f);
 
         void toggleDoor1() { bowlingAlleyOpened1 = !bowlingAlleyOpened1; }

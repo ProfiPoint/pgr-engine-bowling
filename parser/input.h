@@ -6,6 +6,7 @@
 #define KEY_ESC 27
 #define KEY_BACKSPACE 8
 #define KEY_SHIFT 513
+#define KEY_SPACE ' '
 #define MOUSE_BUTTON_LEFT 514
 #define MOUSE_BUTTON_RIGHT 515
 #define MOUSE_BUTTON_MIDDLE 516

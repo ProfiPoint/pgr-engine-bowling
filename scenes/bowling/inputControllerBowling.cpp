@@ -19,6 +19,7 @@ namespace copakond {
         if (keysMap['e']) {
             if (player->isEnabled()) {
                 selectBowlingBallE();
+                keysMap['e'] = false;
             } else {
                 direction.y += 1.0f;
             }
@@ -114,6 +115,14 @@ namespace copakond {
             glutLeaveMainLoop();
             exit(0);
         }
+
+        if (keysMap[' ']) {
+            spacePower += 2 * deltaTime;
+            spacePower = glm::min(spacePower, 10.0f);
+        } else {
+            spacePower -= 2 * deltaTime;
+            spacePower = glm::max(spacePower, 2.0f);
+        }
     }
 
     void InputControllerBowling::onMouseButtonEvent(int button, int state, int x, int y) {
@@ -128,14 +137,14 @@ namespace copakond {
             if (raycastResult == bowlingBallId) {
                 for (Mesh *mesh : scene->getMeshes()) {
                     if (mesh->getId() == bowlingBallId) {
-                        scene->getGame()->pickBowlingBall(mesh);
+                        scene->getGame()->pickBowlingBall(mesh, spacePower);
                         return;
                     }
                 }
             }
         }
 
-        scene->getGame()->throwBall();
+        scene->getGame()->throwBall(spacePower);
     }
 
     int InputControllerBowling::raycast(int x, int y) {

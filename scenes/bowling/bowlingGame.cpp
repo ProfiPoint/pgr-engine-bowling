@@ -47,12 +47,18 @@ namespace copakond {
         // update bowling ball if rolling
         timeToDespawnBowlingBall -= deltaTime;
         if (rollingBowlingBallNow && timeToDespawnBowlingBall <= 0.0f) {
+            selectedBowlingBall->show();
+            selectedBowlingBall = nullptr;
+            rollingBowlingBallNow = false;
             bowlingBall->disable();
             bowlingBall->position() = glm::vec3(0.0f, 1000.0f, 0.0f);
         }
     }
 
     void BowlingGame::throwBall(float power) {
+        if (!selectedBowlingBall) { return; }
+        if (rollingBowlingBallNow) { return; }
+
         bowlingBall->enable();
         rollingBowlingBallNow = true;
         timeToDespawnBowlingBall = 20.0f;
@@ -73,8 +79,8 @@ namespace copakond {
         bowlingBall->velocity() = lookDirection * power;
     }
 
-    void BowlingGame::pickBowlingBall(Mesh* bowlingBall) {
-        if (selectedBowlingBall) { throwBall(); }
+    void BowlingGame::pickBowlingBall(Mesh* bowlingBall, float power) {
+        if (selectedBowlingBall) { throwBall(power); return; }
 
         selectedBowlingBall = bowlingBall;
         bowlingBall->hide();
