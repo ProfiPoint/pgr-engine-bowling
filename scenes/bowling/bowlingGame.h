@@ -1,6 +1,9 @@
 #ifndef PGR_SEM_COPAKOND_BOWLINGGAME_H
 #define PGR_SEM_COPAKOND_BOWLINGGAME_H
 
+#include "collisionPin.h"
+#include <vector>
+
 namespace copakond {
     class Camera;
     class RigidSphere;
@@ -35,6 +38,8 @@ namespace copakond {
         Mesh *selectedBowlingBall = nullptr;
         Camera *camera;
 
+
+
     public:
         BowlingGame(Camera *camera) : camera(camera) {};
         void update(float deltaTime);
@@ -52,6 +57,7 @@ namespace copakond {
         Mesh *door3 = nullptr;
         Mesh *door4 = nullptr;
 
+        std::vector<CollisionPin*> pins;
         RigidSphere *bowlingBall = nullptr;
     };
 }

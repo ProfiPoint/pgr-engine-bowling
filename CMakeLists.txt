@@ -71,6 +71,8 @@ add_executable(${PROJECT_NAME} main.cpp
         scenes/bowling/bowlingGame.h
         scenes/bowling/inputControllerBowling.cpp
         scenes/bowling/inputControllerBowling.h
+        scenes/bowling/collisionPin.cpp
+        scenes/bowling/collisionPin.h
 )
 
 if(WIN32) # WINDOWS CONFIGURATION

@@ -73,7 +73,7 @@ namespace copakond {
         );
         lookDirection = glm::normalize(lookDirection);
 
-        // add ofset to prevnet collision
+        // add offset to prevnet collision
         float spawnDistanceOffset = 1.0f;
         bowlingBall->position() = camera->position() + (lookDirection * spawnDistanceOffset);
         bowlingBall->velocity() = lookDirection * power;
