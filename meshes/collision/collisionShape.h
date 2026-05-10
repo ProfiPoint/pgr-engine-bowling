@@ -6,6 +6,8 @@
 #include "collisionDetector.h"
 
 namespace copakond {
+    enum class ShapeType { BOX, SPHERE };
+
     struct PhysicsMaterial {
         float bounciness = 0.05f; // 0 = no bounce, 1 = full bounce
         float friction = 0.95f; // 0 = no friction, 1 = instant stop
@@ -18,6 +20,7 @@ namespace copakond {
         void _generateGeometry(GLuint shader, const std::vector<float>& vertices, const std::vector<float>& normals);
 
     public:
+        ShapeType shapeType;
         PhysicsMaterial physicsMaterial = PhysicsMaterial();
 
         CollisionShape(const glm::vec3 &position = glm::vec3(0.0f), const glm::vec3 &rotation = glm::vec3(0.0f),

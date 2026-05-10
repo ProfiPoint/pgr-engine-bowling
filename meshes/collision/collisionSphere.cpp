@@ -15,6 +15,7 @@ namespace copakond {
         if (scale.x != scale.y && scale.x != scale.z) {
             std::cerr << "Collision Sphere id: " << id << " must have all sides equal (x=y=z)" << std::endl;
         }
+        shapeType = ShapeType::SPHERE;
     }
 
     void CollisionSphere::init(GLuint shader) {

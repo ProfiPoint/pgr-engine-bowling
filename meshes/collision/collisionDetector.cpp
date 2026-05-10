@@ -291,18 +291,18 @@ namespace copakond {
     }
 
     CollisionResult CollisionDetector::checkCollision(const CollisionShape* shape1, const CollisionShape* shape2, const glm::vec3 &velocity, bool calculateNormal) {
-        // check if its a given type
-        const CollisionBox* box1 = dynamic_cast<const CollisionBox*>(shape1);
-        const CollisionBox* box2 = dynamic_cast<const CollisionBox*>(shape2);
-        const CollisionSphere* sphere1 = dynamic_cast<const CollisionSphere*>(shape1);
-        const CollisionSphere* sphere2 = dynamic_cast<const CollisionSphere*>(shape2);
-
-        // check collisions
-        if (box1 && box2) { return checkCollision(box1, box2, velocity, calculateNormal); }
-        else if (box1 && sphere2) { return checkCollision(box1, sphere2, velocity, calculateNormal); }
-        else if (sphere1 && box2) { return checkCollision(sphere1, box2, velocity, calculateNormal); }
-        else if (sphere1 && sphere2) { return checkCollision(sphere1, sphere2, velocity, calculateNormal); }
-
+        if (shape1->shapeType == ShapeType::BOX && shape2->shapeType == ShapeType::BOX) {
+            return checkCollision(static_cast<const CollisionBox*>(shape1), static_cast<const CollisionBox*>(shape2), velocity, calculateNormal);
+        }
+        else if (shape1->shapeType == ShapeType::BOX && shape2->shapeType == ShapeType::SPHERE) {
+            return checkCollision(static_cast<const CollisionBox*>(shape1), static_cast<const CollisionSphere*>(shape2), velocity, calculateNormal);
+        }
+        else if (shape1->shapeType == ShapeType::SPHERE && shape2->shapeType == ShapeType::BOX) {
+            return checkCollision(static_cast<const CollisionSphere*>(shape1), static_cast<const CollisionBox*>(shape2), velocity, calculateNormal);
+        }
+        else if (shape1->shapeType == ShapeType::SPHERE && shape2->shapeType == ShapeType::SPHERE) {
+            return checkCollision(static_cast<const CollisionSphere*>(shape1), static_cast<const CollisionSphere*>(shape2), velocity, calculateNormal);
+        }
         return collisionFalse();
     }
 }

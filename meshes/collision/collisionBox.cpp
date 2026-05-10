@@ -2,7 +2,9 @@
 
 namespace copakond {
     CollisionBox::CollisionBox(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale, bool visible)
-        : CollisionShape(position, rotation, scale, visible) {}
+        : CollisionShape(position, rotation, scale, visible) {
+        shapeType = ShapeType::BOX;
+    }
 
     void CollisionBox::init(GLuint shader) {
         _shaderProgram = shader;

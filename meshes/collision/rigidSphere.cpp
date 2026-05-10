@@ -57,9 +57,21 @@ namespace copakond {
                 curAxeVelocity[i] = _velocity[i];
 
                 CollisionResult result = collisionFalse();
+
                 CollisionShape* resCollider = nullptr;
                 for (CollisionShape* collider : allColliders) {
                     if (collider != this && collider->isEnabled()) {
+
+                        // sphere mutualy exclusion of collision
+                        float radius1 = std::max({this->scale().x, this->scale().y, this->scale().z}) * 0.866f;
+                        float radius2 = std::max({collider->scale().x, collider->scale().y, collider->scale().z}) * 0.866f;
+
+                        float dist = glm::distance(this->position(), collider->position());
+
+                        if (dist > (radius1 + radius2 + glm::length(curAxeVelocity))) {
+                            continue;
+                        }
+
                         result = collider->collisionCheckDetailed(*this, curAxeVelocity, true);
                         if (result.collides) {
                             resCollider = collider;
