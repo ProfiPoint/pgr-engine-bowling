@@ -16,8 +16,20 @@ namespace copakond {
         if (keysMap['s'] || keysMap[GLUT_KEY_DOWN + IS_SPECIAL_KEY]) { direction.z -= 1.0f; }
         if (keysMap['a'] || keysMap[GLUT_KEY_LEFT + IS_SPECIAL_KEY]) { direction.x -= 1.0f; }
         if (keysMap['d'] || keysMap[GLUT_KEY_RIGHT + IS_SPECIAL_KEY]) { direction.x += 1.0f; }
-        if (keysMap['e']) { direction.y += 1.0f; }
-        if (keysMap['q']) { direction.y -= 1.0f; }
+        if (keysMap['e']) {
+            if (player->isEnabled()) {
+                selectBowlingBallE();
+            } else {
+                direction.y += 1.0f;
+            }
+        }
+        if (keysMap['q']) {
+            if (player->isEnabled()) {
+                // nothing
+            } else {
+                direction.y += -1.0f;
+            }
+        }
 
         if (glm::length(direction) > 0.0f && _canMove) {
             direction = glm::normalize(direction);
@@ -108,6 +120,22 @@ namespace copakond {
         if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
             raycast(x, y);
         }
+    }
+
+    void InputControllerBowling::selectBowlingBallE() {
+        int raycastResult = raycast(input->_winWidth/2, input->_winHeight/2);
+        for (int bowlingBallId : scene->getBowlingBallIds()) {
+            if (raycastResult == bowlingBallId) {
+                for (Mesh *mesh : scene->getMeshes()) {
+                    if (mesh->getId() == bowlingBallId) {
+                        scene->getGame()->pickBowlingBall(mesh);
+                        return;
+                    }
+                }
+            }
+        }
+
+        scene->getGame()->throwBall();
     }
 
     int InputControllerBowling::raycast(int x, int y) {

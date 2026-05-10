@@ -3,12 +3,13 @@
 #include <algorithm>
 
 #include "../../meshes/mesh.h"
+#include "../../meshes/collision/rigidSphere.h"
+#include "../../geometry/camera.h"
 
 #define DOOR_OPEN_SPEED 0.07f
 #define DOOR_MAX_OFFSET 0.45f
 
 namespace copakond {
-    BowlingGame::BowlingGame() {}
     void BowlingGame::update(float deltaTime) {
         if (bowlingAlleyOpened1) {
             offsetDoor1 += deltaTime * DOOR_OPEN_SPEED;
@@ -42,5 +43,40 @@ namespace copakond {
         door2->position().y = offsetDoor2;
         door3->position().y = offsetDoor3;
         door4->position().y = offsetDoor4;
+
+        // update bowling ball if rolling
+        timeToDespawnBowlingBall -= deltaTime;
+        if (rollingBowlingBallNow && timeToDespawnBowlingBall <= 0.0f) {
+            bowlingBall->disable();
+            bowlingBall->position() = glm::vec3(0.0f, 1000.0f, 0.0f);
+        }
+    }
+
+    void BowlingGame::throwBall(float power) {
+        bowlingBall->enable();
+        rollingBowlingBallNow = true;
+        timeToDespawnBowlingBall = 20.0f;
+
+        // set position and velocity of the ball based of the camera position
+        glm::vec3 camRot = camera->rotation();
+
+        glm::vec3 lookDirection = glm::vec3(
+            cos(camRot.y) * cos(camRot.x),
+            sin(camRot.x),
+            sin(camRot.y) * cos(camRot.x)
+        );
+        lookDirection = glm::normalize(lookDirection);
+
+        // add ofset to prevnet collision
+        float spawnDistanceOffset = 1.0f;
+        bowlingBall->position() = camera->position() + (lookDirection * spawnDistanceOffset);
+        bowlingBall->velocity() = lookDirection * power;
+    }
+
+    void BowlingGame::pickBowlingBall(Mesh* bowlingBall) {
+        if (selectedBowlingBall) { throwBall(); }
+
+        selectedBowlingBall = bowlingBall;
+        bowlingBall->hide();
     }
 }

@@ -11,7 +11,7 @@ namespace copakond {
 
     void BowlingScene::init() {
         inputController = new InputControllerBowling(camera, input, this);
-        game = new BowlingGame();
+        game = new BowlingGame(camera);
         LevelEditor* lev = new LevelEditor(this);
         inputController->setLevelEditor(lev);
 
@@ -113,29 +113,44 @@ namespace copakond {
         addToScene(collisionWall6);
 
         // Bowling Alley collisions
+        std::vector<CollisionShape*> collisionShapes = {};
         CollisionBox *collisionBowlingAlley1 = new CollisionBox(glm::vec3(-3.670f, -0.050f, 2.630f-ALLEY_SPACING*0), glm::vec3(0.0f), glm::vec3(glm::vec3(20.500f, 0.500f, 0.750f)), true);
-        addToScene(collisionBowlingAlley1);
+        addToScene(collisionBowlingAlley1); collisionShapes.push_back(collisionBowlingAlley1);
         CollisionBox *collisionBowlingAlley2 = new CollisionBox(glm::vec3(-3.670f, -0.050f, 2.630f-ALLEY_SPACING*1), glm::vec3(0.0f), glm::vec3(glm::vec3(20.500f, 0.500f, 0.750f)), true);
-        addToScene(collisionBowlingAlley2);
+        addToScene(collisionBowlingAlley2); collisionShapes.push_back(collisionBowlingAlley2);
         CollisionBox *collisionBowlingAlley3 = new CollisionBox(glm::vec3(-3.670f, -0.050f, 2.630f-ALLEY_SPACING*2+0.05f), glm::vec3(0.0f), glm::vec3(glm::vec3(20.500f, 0.500f, 0.750f)), true);
-        addToScene(collisionBowlingAlley3);
+        addToScene(collisionBowlingAlley3); collisionShapes.push_back(collisionBowlingAlley3);
         CollisionBox *collisionBowlingAlley4 = new CollisionBox(glm::vec3(-3.670f, -0.050f, 2.630f-ALLEY_SPACING*3+0.05f), glm::vec3(0.0f), glm::vec3(glm::vec3(20.500f, 0.500f, 0.750f)), true);
-        addToScene(collisionBowlingAlley4);
+        addToScene(collisionBowlingAlley4); collisionShapes.push_back(collisionBowlingAlley4);
 
         CollisionBox *collisionBowlingAlleySeparation1 = new CollisionBox(glm::vec3(-5.970f, 0.350f, 3.550f), glm::vec3(0.0f), glm::vec3(glm::vec3(24.500f, 1.000f, 0.050f) ), true);
-        addToScene(collisionBowlingAlleySeparation1);
+        addToScene(collisionBowlingAlleySeparation1); collisionShapes.push_back(collisionBowlingAlleySeparation1);
         CollisionBox *collisionBowlingAlleySeparation2 = new CollisionBox(glm::vec3(-5.970f, 0.350f, 1.750f), glm::vec3(0.0f), glm::vec3(glm::vec3(24.500f, 1.000f, 0.050f) ), true);
-        addToScene(collisionBowlingAlleySeparation2);
+        addToScene(collisionBowlingAlleySeparation2); collisionShapes.push_back(collisionBowlingAlleySeparation2);
         CollisionBox *collisionBowlingAlleySeparation3 = new CollisionBox(glm::vec3(-5.970f, 0.350f, -0.040f), glm::vec3(0.0f), glm::vec3(glm::vec3(24.500f, 1.000f, 0.050f) ), true);
-        addToScene(collisionBowlingAlleySeparation3);
+        addToScene(collisionBowlingAlleySeparation3); collisionShapes.push_back(collisionBowlingAlleySeparation3);
         CollisionBox *collisionBowlingAlleySeparation4 = new CollisionBox(glm::vec3(-5.970f, 0.350f, -1.820f), glm::vec3(0.0f), glm::vec3(glm::vec3(24.500f, 1.000f, 0.050f) ), true);
-        addToScene(collisionBowlingAlleySeparation4);
+        addToScene(collisionBowlingAlleySeparation4); collisionShapes.push_back(collisionBowlingAlleySeparation4);
         CollisionBox *collisionBowlingAlleySeparation5 = new CollisionBox(glm::vec3(-5.970f, 0.350f, -3.600f), glm::vec3(0.0f), glm::vec3(glm::vec3(24.500f, 1.000f, 0.050f) ), true);
-        addToScene(collisionBowlingAlleySeparation5);
-
+        addToScene(collisionBowlingAlleySeparation5); collisionShapes.push_back(collisionBowlingAlleySeparation5);
 
         CollisionBox *collsionFailSpot = new CollisionBox(glm::vec3(-2.920f, -0.180f, 0.000f), glm::vec3(0.000f, 0.000f, 0.000f), glm::vec3(19.000f, 0.500f, 10.500f), true);
-        addToScene(collsionFailSpot);
+        addToScene(collsionFailSpot); collisionShapes.push_back(collsionFailSpot);
+
+        RigidSphere *bowlingBall = new RigidSphere(glm::vec3(0.0f, 1000.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f)/4.0f, true);
+        addToScene(bowlingBall); collisionShapes.push_back(bowlingBall);
+        Mesh *bowlingBallMesh = new ObjMesh("assets/models/bowling/bowlingBall1.obj", true);
+        addToScene(bowlingBallMesh);
+        bowlingBallMesh->setParent(bowlingBall);
+        bowlingBall->disable();
+        game->bowlingBall = bowlingBall;
+
+        //set physics material:
+        for (CollisionShape *shape : collisionShapes) {
+            shape->physicsMaterial.bounciness = 0.70f;
+            shape->physicsMaterial.friction = 0.050f;
+        }
+
 
         // meshes loading from the bowling model
         Mesh *ballSideTrack1 = new ObjMesh("assets/models/bowling/ballSideTrack1.obj");
@@ -193,94 +208,94 @@ namespace copakond {
         addToScene(bowlingAlleyFloor4);
 
         Mesh *bowlingBall1 = new ObjMesh("assets/models/bowling/bowlingBall1.obj");
-        addToScene(bowlingBall1);
+        addToScene(bowlingBall1); bowlingBallIds.push_back(bowlingBall1->getId());
 
         Mesh *bowlingBall10 = new ObjMesh("assets/models/bowling/bowlingBall10.obj");
-        addToScene(bowlingBall10);
+        addToScene(bowlingBall10); bowlingBallIds.push_back(bowlingBall10->getId());
 
         Mesh *bowlingBall11 = new ObjMesh("assets/models/bowling/bowlingBall11.obj");
-        addToScene(bowlingBall11);
+        addToScene(bowlingBall11); bowlingBallIds.push_back(bowlingBall11->getId());
 
         Mesh *bowlingBall12 = new ObjMesh("assets/models/bowling/bowlingBall12.obj");
-        addToScene(bowlingBall12);
+        addToScene(bowlingBall12); bowlingBallIds.push_back(bowlingBall12->getId());
 
         Mesh *bowlingBall13 = new ObjMesh("assets/models/bowling/bowlingBall13.obj");
-        addToScene(bowlingBall13);
+        addToScene(bowlingBall13); bowlingBallIds.push_back(bowlingBall13->getId());
 
         Mesh *bowlingBall14 = new ObjMesh("assets/models/bowling/bowlingBall14.obj");
-        addToScene(bowlingBall14);
+        addToScene(bowlingBall14); bowlingBallIds.push_back(bowlingBall14->getId());
 
         Mesh *bowlingBall15 = new ObjMesh("assets/models/bowling/bowlingBall15.obj");
-        addToScene(bowlingBall15);
+        addToScene(bowlingBall15); bowlingBallIds.push_back(bowlingBall15->getId());
 
         Mesh *bowlingBall16 = new ObjMesh("assets/models/bowling/bowlingBall16.obj");
-        addToScene(bowlingBall16);
+        addToScene(bowlingBall16); bowlingBallIds.push_back(bowlingBall16->getId());
 
         Mesh *bowlingBall17 = new ObjMesh("assets/models/bowling/bowlingBall17.obj");
-        addToScene(bowlingBall17);
+        addToScene(bowlingBall17); bowlingBallIds.push_back(bowlingBall17->getId());
 
         Mesh *bowlingBall18 = new ObjMesh("assets/models/bowling/bowlingBall18.obj");
-        addToScene(bowlingBall18);
+        addToScene(bowlingBall18); bowlingBallIds.push_back(bowlingBall18->getId());
 
         Mesh *bowlingBall19 = new ObjMesh("assets/models/bowling/bowlingBall19.obj");
-        addToScene(bowlingBall19);
+        addToScene(bowlingBall19); bowlingBallIds.push_back(bowlingBall19->getId());
 
         Mesh *bowlingBall2 = new ObjMesh("assets/models/bowling/bowlingBall2.obj");
-        addToScene(bowlingBall2);
+        addToScene(bowlingBall2); bowlingBallIds.push_back(bowlingBall2->getId());
 
         Mesh *bowlingBall20 = new ObjMesh("assets/models/bowling/bowlingBall20.obj");
-        addToScene(bowlingBall20);
+        addToScene(bowlingBall20); bowlingBallIds.push_back(bowlingBall20->getId());
 
         Mesh *bowlingBall21 = new ObjMesh("assets/models/bowling/bowlingBall21.obj");
-        addToScene(bowlingBall21);
+        addToScene(bowlingBall21); bowlingBallIds.push_back(bowlingBall21->getId());
 
         Mesh *bowlingBall22 = new ObjMesh("assets/models/bowling/bowlingBall22.obj");
-        addToScene(bowlingBall22);
+        addToScene(bowlingBall22); bowlingBallIds.push_back(bowlingBall22->getId());
 
         Mesh *bowlingBall23 = new ObjMesh("assets/models/bowling/bowlingBall23.obj");
-        addToScene(bowlingBall23);
+        addToScene(bowlingBall23); bowlingBallIds.push_back(bowlingBall23->getId());
 
         Mesh *bowlingBall24 = new ObjMesh("assets/models/bowling/bowlingBall24.obj");
-        addToScene(bowlingBall24);
+        addToScene(bowlingBall24); bowlingBallIds.push_back(bowlingBall24->getId());
 
         Mesh *bowlingBall25 = new ObjMesh("assets/models/bowling/bowlingBall25.obj");
-        addToScene(bowlingBall25);
+        addToScene(bowlingBall25); bowlingBallIds.push_back(bowlingBall25->getId());
 
         Mesh *bowlingBall26 = new ObjMesh("assets/models/bowling/bowlingBall26.obj");
-        addToScene(bowlingBall26);
+        addToScene(bowlingBall26); bowlingBallIds.push_back(bowlingBall26->getId());
 
         Mesh *bowlingBall27 = new ObjMesh("assets/models/bowling/bowlingBall27.obj");
-        addToScene(bowlingBall27);
+        addToScene(bowlingBall27); bowlingBallIds.push_back(bowlingBall27->getId());
 
         Mesh *bowlingBall28 = new ObjMesh("assets/models/bowling/bowlingBall28.obj");
-        addToScene(bowlingBall28);
+        addToScene(bowlingBall28); bowlingBallIds.push_back(bowlingBall28->getId());
 
         Mesh *bowlingBall29 = new ObjMesh("assets/models/bowling/bowlingBall29.obj");
-        addToScene(bowlingBall29);
+        addToScene(bowlingBall29); bowlingBallIds.push_back(bowlingBall29->getId());
 
         Mesh *bowlingBall3 = new ObjMesh("assets/models/bowling/bowlingBall3.obj");
-        addToScene(bowlingBall3);
+        addToScene(bowlingBall3); bowlingBallIds.push_back(bowlingBall3->getId());
 
         Mesh *bowlingBall30 = new ObjMesh("assets/models/bowling/bowlingBall30.obj");
-        addToScene(bowlingBall30);
+        addToScene(bowlingBall30); bowlingBallIds.push_back(bowlingBall30->getId());
 
         Mesh *bowlingBall4 = new ObjMesh("assets/models/bowling/bowlingBall4.obj");
-        addToScene(bowlingBall4);
+        addToScene(bowlingBall4); bowlingBallIds.push_back(bowlingBall4->getId());
 
         Mesh *bowlingBall5 = new ObjMesh("assets/models/bowling/bowlingBall5.obj");
-        addToScene(bowlingBall5);
+        addToScene(bowlingBall5); bowlingBallIds.push_back(bowlingBall5->getId());
 
         Mesh *bowlingBall6 = new ObjMesh("assets/models/bowling/bowlingBall6.obj");
-        addToScene(bowlingBall6);
+        addToScene(bowlingBall6); bowlingBallIds.push_back(bowlingBall6->getId());
 
         Mesh *bowlingBall7 = new ObjMesh("assets/models/bowling/bowlingBall7.obj");
-        addToScene(bowlingBall7);
+        addToScene(bowlingBall7); bowlingBallIds.push_back(bowlingBall7->getId());
 
         Mesh *bowlingBall8 = new ObjMesh("assets/models/bowling/bowlingBall8.obj");
-        addToScene(bowlingBall8);
+        addToScene(bowlingBall8); bowlingBallIds.push_back(bowlingBall8->getId());
 
         Mesh *bowlingBall9 = new ObjMesh("assets/models/bowling/bowlingBall9.obj");
-        addToScene(bowlingBall9);
+        addToScene(bowlingBall9); bowlingBallIds.push_back(bowlingBall9->getId());
 
         Mesh *bowlingBallStand1 = new ObjMesh("assets/models/bowling/bowlingBallStand1.obj");
         addToScene(bowlingBallStand1);
@@ -422,126 +437,6 @@ namespace copakond {
 
         Mesh *table5 = new ObjMesh("assets/models/bowling/table5.obj");
         addToScene(table5);
-
-        Mesh *teapot1 = new ObjMesh("assets/models/bowling/teapot1.obj");
-        addToScene(teapot1);
-
-        Mesh *teapot10 = new ObjMesh("assets/models/bowling/teapot10.obj");
-        addToScene(teapot10);
-
-        Mesh *teapot11 = new ObjMesh("assets/models/bowling/teapot11.obj");
-        addToScene(teapot11);
-
-        Mesh *teapot12 = new ObjMesh("assets/models/bowling/teapot12.obj");
-        addToScene(teapot12);
-
-        Mesh *teapot13 = new ObjMesh("assets/models/bowling/teapot13.obj");
-        addToScene(teapot13);
-
-        Mesh *teapot14 = new ObjMesh("assets/models/bowling/teapot14.obj");
-        addToScene(teapot14);
-
-        Mesh *teapot15 = new ObjMesh("assets/models/bowling/teapot15.obj");
-        addToScene(teapot15);
-
-        Mesh *teapot16 = new ObjMesh("assets/models/bowling/teapot16.obj");
-        addToScene(teapot16);
-
-        Mesh *teapot17 = new ObjMesh("assets/models/bowling/teapot17.obj");
-        addToScene(teapot17);
-
-        Mesh *teapot18 = new ObjMesh("assets/models/bowling/teapot18.obj");
-        addToScene(teapot18);
-
-        Mesh *teapot19 = new ObjMesh("assets/models/bowling/teapot19.obj");
-        addToScene(teapot19);
-
-        Mesh *teapot2 = new ObjMesh("assets/models/bowling/teapot2.obj");
-        addToScene(teapot2);
-
-        Mesh *teapot20 = new ObjMesh("assets/models/bowling/teapot20.obj");
-        addToScene(teapot20);
-
-        Mesh *teapot21 = new ObjMesh("assets/models/bowling/teapot21.obj");
-        addToScene(teapot21);
-
-        Mesh *teapot22 = new ObjMesh("assets/models/bowling/teapot22.obj");
-        addToScene(teapot22);
-
-        Mesh *teapot23 = new ObjMesh("assets/models/bowling/teapot23.obj");
-        addToScene(teapot23);
-
-        Mesh *teapot24 = new ObjMesh("assets/models/bowling/teapot24.obj");
-        addToScene(teapot24);
-
-        Mesh *teapot25 = new ObjMesh("assets/models/bowling/teapot25.obj");
-        addToScene(teapot25);
-
-        Mesh *teapot26 = new ObjMesh("assets/models/bowling/teapot26.obj");
-        addToScene(teapot26);
-
-        Mesh *teapot27 = new ObjMesh("assets/models/bowling/teapot27.obj");
-        addToScene(teapot27);
-
-        Mesh *teapot28 = new ObjMesh("assets/models/bowling/teapot28.obj");
-        addToScene(teapot28);
-
-        Mesh *teapot29 = new ObjMesh("assets/models/bowling/teapot29.obj");
-        addToScene(teapot29);
-
-        Mesh *teapot3 = new ObjMesh("assets/models/bowling/teapot3.obj");
-        addToScene(teapot3);
-
-        Mesh *teapot30 = new ObjMesh("assets/models/bowling/teapot30.obj");
-        addToScene(teapot30);
-
-        Mesh *teapot31 = new ObjMesh("assets/models/bowling/teapot31.obj");
-        addToScene(teapot31);
-
-        Mesh *teapot32 = new ObjMesh("assets/models/bowling/teapot32.obj");
-        addToScene(teapot32);
-
-        Mesh *teapot33 = new ObjMesh("assets/models/bowling/teapot33.obj");
-        addToScene(teapot33);
-
-        Mesh *teapot34 = new ObjMesh("assets/models/bowling/teapot34.obj");
-        addToScene(teapot34);
-
-        Mesh *teapot35 = new ObjMesh("assets/models/bowling/teapot35.obj");
-        addToScene(teapot35);
-
-        Mesh *teapot36 = new ObjMesh("assets/models/bowling/teapot36.obj");
-        addToScene(teapot36);
-
-        Mesh *teapot37 = new ObjMesh("assets/models/bowling/teapot37.obj");
-        addToScene(teapot37);
-
-        Mesh *teapot38 = new ObjMesh("assets/models/bowling/teapot38.obj");
-        addToScene(teapot38);
-
-        Mesh *teapot39 = new ObjMesh("assets/models/bowling/teapot39.obj");
-        addToScene(teapot39);
-
-        Mesh *teapot4 = new ObjMesh("assets/models/bowling/teapot4.obj");
-        addToScene(teapot4);
-
-        Mesh *teapot40 = new ObjMesh("assets/models/bowling/teapot40.obj");
-        addToScene(teapot40);
-
-        Mesh *teapot5 = new ObjMesh("assets/models/bowling/teapot5.obj");
-        addToScene(teapot5);
-
-        Mesh *teapot6 = new ObjMesh("assets/models/bowling/teapot6.obj");
-        addToScene(teapot6);
-
-        Mesh *teapot7 = new ObjMesh("assets/models/bowling/teapot7.obj");
-        addToScene(teapot7);
-
-        Mesh *teapot8 = new ObjMesh("assets/models/bowling/teapot8.obj");
-        addToScene(teapot8);
-
-        Mesh *teapot9 = new ObjMesh("assets/models/bowling/teapot9.obj");
-        addToScene(teapot9);
 
         Mesh *upscreen1 = new ObjMesh("assets/models/bowling/upscreen1.obj");
         addToScene(upscreen1);

@@ -16,6 +16,7 @@ namespace copakond {
         RigidBody *player = nullptr;
 
         float clockTime[3] = {0, 0, 0}; // hh:mm:ss
+        std::vector<int> bowlingBallIds = {};
 
     public:
         BowlingScene(const char *sceneName, Input* input, Shader* shader, int winWidth, int winHeight);
@@ -31,6 +32,7 @@ namespace copakond {
         void onKeyboardEvent(unsigned char key, int x, int y, bool isDown) override;
 
         BowlingGame *getGame() { return game; }
+        std::vector<int> getBowlingBallIds() { return bowlingBallIds; }
     };
 }
 

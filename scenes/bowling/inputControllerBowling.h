@@ -22,6 +22,7 @@ namespace copakond {
         Input* input;
         Spline* _spline = nullptr;
         RigidBody* player = nullptr;
+        float space_power = 2.0f;
 
         void toggleFullScreen();
         void switchCamera(int mode);
@@ -40,6 +41,7 @@ namespace copakond {
         int raycast(int x, int y);
         void setCameraSpline(Spline *spline) { _spline = spline; }
 
+        void selectBowlingBallE();
         void onKeyboardEvent(unsigned char key, int x, int y, bool isDown) override;
         void onMouseButtonEvent(int button, int state, int x, int y) override;
         void onMenuEvent(int option) override;
