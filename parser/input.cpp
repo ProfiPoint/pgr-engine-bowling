@@ -9,7 +9,7 @@ namespace copakond {
     Input::Input(Camera &cam, int winWidth, int winHeight) : _camera(cam), _winWidth(winWidth), _winHeight(winHeight) {
     }
 
-    void Input::update(int winWidth, int winHeight) {
+    void Input::screenResize(int winWidth, int winHeight) {
         _winWidth = winWidth;
         _winHeight = winHeight;
     }
@@ -18,21 +18,25 @@ namespace copakond {
     void Input::keyboardInputEvent(unsigned char key, int x, int y) {
         keysMap[std::tolower(key)] = true;
         keysMap[std::toupper(key)] = true;
-        if (glutGetModifiers() & GLUT_ACTIVE_SHIFT) { keysMap[KEY_SHIFT] = true; }
     }
 
     void Input::keyboardUpInputEvent(unsigned char key, int x, int y) {
         keysMap[std::tolower(key)] = false;
         keysMap[std::toupper(key)] = false;
-        if (!(glutGetModifiers() & GLUT_ACTIVE_SHIFT)) {keysMap[KEY_SHIFT] = false; }
     }
 
     void Input::specKeyboardInputEvent(int key, int x, int y) {
         keysMap[key + IS_SPECIAL_KEY] = true;
+
+        if (key == GLUT_KEY_SHIFT_L || key == GLUT_KEY_SHIFT_R) { keysMap[KEY_SHIFT] = true; }
+        if (glutGetModifiers() & GLUT_ACTIVE_SHIFT) { keysMap[KEY_SHIFT] = true; }
     }
 
     void Input::specKeyboardUpInputEvent(int key, int x, int y) {
         keysMap[key + IS_SPECIAL_KEY] = false;
+
+        if (key == GLUT_KEY_SHIFT_L || key == GLUT_KEY_SHIFT_R) { keysMap[KEY_SHIFT] = false; }
+        if (!(glutGetModifiers() & GLUT_ACTIVE_SHIFT)) { keysMap[KEY_SHIFT] = false; }
     }
 
     // LMB, RMB, MMB

@@ -33,7 +33,7 @@ namespace copakond {
 
         Input(Camera &cam, int winWidth, int winHeight);
 
-        void update(int winWidth, int winHeight);
+        void screenResize(int winWidth, int winHeight);
         void resetMouseTarget() { _firstMouseMovement = false; }
 
         void keyboardInputEvent(unsigned char key, int x, int y);

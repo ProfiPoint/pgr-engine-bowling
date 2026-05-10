@@ -26,7 +26,11 @@ namespace copakond {
             _velocity *= (1.0f - (_airFriction * timeDeltaNow)); // air friction formula
 
             // do the position updates for each axe individually
-            for (int i = 0; i < 3; ++i) {
+            for (int n = 0; n < 3; ++n) {
+                int i = n;
+                if (n == 1) {i = 2;} // x,z,y (so gravity can stop it after x and z are processed)
+                if (n == 2) {i = 1;}
+
                 float prevPosition = position()[i];
                 position()[i] += _velocity[i] * timeDeltaNow; // update pos
 

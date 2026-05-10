@@ -7,8 +7,8 @@
 
 namespace copakond {
     struct PhysicsMaterial {
-        float bounciness = 0.5f; // 0 = no bounce, 1 = full bounce
-        float friction = 0.2f; // 0 = no friction, 1 = instant stop
+        float bounciness = 0.05f; // 0 = no bounce, 1 = full bounce
+        float friction = 0.95f; // 0 = no friction, 1 = instant stop
     };
 
     class CollisionShape : public Mesh {

@@ -25,8 +25,8 @@ namespace copakond {
         void switchCamera(int mode);
 
     public:
-        float baseSpeed = 3.0f;
-        float shiftMultiplier = 1.5f;
+        float baseSpeed = 1.5f;
+        float shiftMultiplier = 1.75f;
         float mouseDragCoeff = 0.05f;
 
         InputController(Camera* cam, Input* input) : camera(cam), input(input) {};

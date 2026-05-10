@@ -55,8 +55,8 @@ namespace copakond {
 
         input = new Input(*camera, winWidth, winHeight);
         shader = new Shader();
-        //currentScene = new SampleScene("Sample Scene", input, shader, winWidth, winHeight);
         //currentScene = new TemplateScene("Template Scene", input, shader, winWidth, winHeight);
+        //currentScene = new SampleScene("Sample Scene", input, shader, winWidth, winHeight);
         currentScene = new BowlingScene("Bowling Scene", input, shader, winWidth, winHeight);
 
         GLuint shaderUID = shader->init(
@@ -132,8 +132,19 @@ namespace copakond {
         shader->update(camera, winWidth, winHeight, deltaTime); // use main shader
         for (Mesh *mesh: meshes) {
             if (mesh->getMaterial()->getAlpha() <= 0.999f) { continue; }
+
             if (dynamic_cast<const TextLabel*>(mesh) != nullptr) { continue; }
-            glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
+
+            if (stencilMode == StencilSelect::ALL) {
+                glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
+            } else if (stencilMode == StencilSelect::MESHES) {
+                if (dynamic_cast<const CollisionShape*>(mesh) != nullptr) { continue; }
+                glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
+            } else if (stencilMode == StencilSelect::COLLISION) {
+                if (dynamic_cast<const CollisionShape*>(mesh) == nullptr) { continue; }
+                glStencilFunc(GL_ALWAYS, mesh->getId(), 0);
+            }
+
             shader->draw(*mesh, false, deltaTime); // drawing non-transparent objects
         }
 
@@ -224,7 +235,7 @@ namespace copakond {
         winHeight = height;
 
         glViewport(0, 0, width, height);
-        input->update(winWidth, winHeight);
+        input->screenResize(winWidth, winHeight);
         if (currentScene) { currentScene->onScreenResizeEvent(width, height); }
     }
 }

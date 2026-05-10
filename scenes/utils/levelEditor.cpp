@@ -28,9 +28,12 @@ namespace copakond {
                 }
 
                 std::cout << "SELECTED id: " << id << std::endl;
+                saveSnapshot();
                 return;
             }
         }
+
+        saveSnapshot();
     }
 
     void LevelEditor::onKeyboardEvent(unsigned char key, int x, int y, bool isDown) {
@@ -241,6 +244,6 @@ namespace copakond {
         }
 
         outFile.close();
-        std::cout << "saved " << filename << std::endl;
+        //std::cout << "saved " << filename << std::endl;
     }
 }
