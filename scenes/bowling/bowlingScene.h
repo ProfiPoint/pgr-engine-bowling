@@ -18,6 +18,8 @@ namespace copakond {
         float clockTime[3] = {0, 0, 0}; // hh:mm:ss
         std::vector<int> bowlingBallIds = {};
 
+        void initLights();
+
     public:
         BowlingScene(const char *sceneName, Input* input, Shader* shader, int winWidth, int winHeight);
         ~BowlingScene() override;

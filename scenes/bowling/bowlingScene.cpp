@@ -9,6 +9,41 @@ namespace copakond {
 
     BowlingScene::~BowlingScene() {};
 
+    void BowlingScene::initLights() {
+        float roofY = 2.2f;
+        float pointRange = 7.0f;
+
+        float spotRange = 10.0f;
+        float spotAngle = 60.0f;
+        float spotExponent = 5.0f;
+
+        glm::vec3 ambientColor = glm::vec3(0.0f, 0.0f, 0.0f);
+        glm::vec3 diffuseColor = glm::vec3(0.2f, 0.2f, 0.2f);
+        glm::vec3 specularColor = glm::vec3(1.0f, 1.0f, 1.0f)/3.0f;
+        glm::vec3 spotDirection = glm::normalize(glm::vec3(-1.0f, -0.3f, 0.0f));
+        glm::vec3 spotDiffuse = glm::vec3(0.8f);
+        bool useDim = true;
+
+        for (int i = -1; i < 8; i++) {
+            glm::vec3 pos = glm::vec3(10.910f - (10.910f - 8.360f) * i, roofY, 1.570f);
+            PointLight* laneLight = new PointLight(pos, ambientColor, diffuseColor, specularColor, pointRange, useDim);
+            addToScene(laneLight);
+
+            glm::vec3 pos2 = glm::vec3(10.910f - (10.910f - 8.360f) * i, roofY, -1.640f);
+            PointLight* laneLight2 = new PointLight(pos2, ambientColor, diffuseColor, specularColor, pointRange, useDim);
+            addToScene(laneLight2);
+        }
+
+        SpotLight* spotlight1 = new SpotLight(glm::vec3(-6.94f, roofY, 2.650f), spotDirection, glm::vec3(0.0f), spotDiffuse, specularColor, spotRange, spotAngle, spotExponent, useDim);
+        addToScene(spotlight1);
+        SpotLight* spotlight2 = new SpotLight(glm::vec3(-6.94f, roofY, 2.650f-ALLEY_SPACING), spotDirection, glm::vec3(0.0f), spotDiffuse, specularColor, spotRange, spotAngle, spotExponent,useDim);
+        addToScene(spotlight2);
+        SpotLight* spotlight3 = new SpotLight(glm::vec3(-6.94f, roofY, 2.650f-ALLEY_SPACING*2+0.05f), spotDirection, glm::vec3(0.0f), spotDiffuse, specularColor, spotRange, spotAngle, spotExponent, useDim);
+        addToScene(spotlight3);
+        SpotLight* spotlight4 = new SpotLight(glm::vec3(-6.94f, roofY, 2.650f-ALLEY_SPACING*3+0.05f), spotDirection, glm::vec3(0.0f), spotDiffuse, specularColor, spotRange, spotAngle, spotExponent, useDim);
+        addToScene(spotlight4);
+    }
+
     void BowlingScene::init() {
         inputController = new InputControllerBowling(camera, input, this);
         game = new BowlingGame(camera);
@@ -17,6 +52,8 @@ namespace copakond {
 
         sun = new DirectionalLight(-glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
         addToScene(sun);
+
+        initLights();
 
         skybox = new Skybox(
             "assets/skybox/day/px.png",
