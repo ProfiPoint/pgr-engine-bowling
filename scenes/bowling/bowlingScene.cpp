@@ -99,6 +99,19 @@ namespace copakond {
         //Mesh *bomb = new ObjMesh("assets/models/custom/trophy.obj", false, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
         //addToScene(bomb);
 
+        // rainbow textures
+        ImageMoving *imageMoving1 = new ImageMoving("assets/decals/pixels.png", glm::vec2(0.0f, -1.0f), glm::vec2(1.0f, 80.0f));
+        imageMoving1->position() = glm::vec3(-3.000f, 0.400f, 3.590f);
+        imageMoving1->scale() = glm::vec3(0.250f, 19.150f, 1.0);
+        imageMoving1->rotation() = glm::vec3(0.000f, 3.141f, 1.571f);
+        addToScene(imageMoving1);
+
+        ImageMoving *imageMoving2 = new ImageMoving("assets/decals/pixels.png", glm::vec2(0.0f, -1.0f), glm::vec2(1.0f, 80.0f));
+        imageMoving2->position() = glm::vec3(-3.000f, 0.400f, -3.670f);
+        imageMoving2->scale() = glm::vec3(0.250f, 19.150f, 1.0);
+        imageMoving2->rotation() = glm::vec3(0.000f, 0.000f, 1.571f);
+        addToScene(imageMoving2);
+
         // pins
         std::vector<Mesh *> pinMeshes = {};
         Mesh *pin1a = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-12.625f, 0.150f, 2.650f)); pinMeshes.push_back(pin1a);
