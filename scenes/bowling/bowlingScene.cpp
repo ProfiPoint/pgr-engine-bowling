@@ -199,22 +199,22 @@ namespace copakond {
         TextLabel *scoreLabel1 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png");
         scoreLabel1->position() = glm::vec3(6.710f, 1.5f, 2.640f); scoreLabel1->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
         scoreLabel1->scale() = glm::vec3(0.7835, 0.1105, 0.9); addToScene(scoreLabel1);
-        scoreLabel1->setText("0 0|0 0|0 0|00");
+        scoreLabel1->setText("   |   |   |00");
 
         TextLabel *scoreLabel2 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png");
         scoreLabel2->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING); scoreLabel2->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
         scoreLabel2->scale() = glm::vec3(0.7835, 0.1105, 0.9)*0.95f; addToScene(scoreLabel2);
-        scoreLabel2->setText("0 0|0 0|0 0|00");
+        scoreLabel2->setText("   |   |   |00");
 
         TextLabel *scoreLabel3 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png");
         scoreLabel3->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*2+0.05f); scoreLabel3->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
         scoreLabel3->scale() = glm::vec3(0.7835, 0.1105, 0.9); addToScene(scoreLabel3);
-        scoreLabel3->setText("0 0|0 0|0 0|00");
+        scoreLabel3->setText("   |   |   |00");
 
         TextLabel *scoreLabel4 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png");
         scoreLabel4->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*3+0.05f); scoreLabel4->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
-        scoreLabel4->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(scoreLabel4);
-        scoreLabel4->setText("0 0|0 0|0 0|00");
+        scoreLabel4->scale() = glm::vec3(0.7835, 0.1105, 0.9); addToScene(scoreLabel4);
+        scoreLabel4->setText("   |   |   |00");
 
         ImageSequenceLabel *videoSplit1 = new ImageSequenceLabel("assets/decals/split1.png", 20, 20*8,16, 16);
         videoSplit1->position() = glm::vec3(6.710f, 1.5f, 2.640f); videoSplit1->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
@@ -264,6 +264,7 @@ namespace copakond {
         game->videoSpare2 = videoSpare2; videoSpare2->hide();
         game->videoStrike3 = videoStrike3; videoStrike3->hide();
         game->videoMiss4 = videoMiss4; videoMiss4->hide();
+        game->videoEnd5 = videoEnd5; videoEnd5->hide();
 
         game->videoIdle1 = videoIdle1;
         game->videoIdle2 = videoIdle2;

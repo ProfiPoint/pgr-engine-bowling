@@ -163,6 +163,7 @@ namespace copakond {
             scoreNow[i] = 0;
         }
 
+        playVideo(BowlingVideoEvent::END, i + 1);
         resetPinsForAlley(alley);
         renderText(alley);
     }
@@ -301,6 +302,8 @@ namespace copakond {
         if (event == BowlingVideoEvent::SPARE) { videoLabel = videoSpare2; videoTimeout = 8.0f; }
         if (event == BowlingVideoEvent::STRIKE) { videoLabel = videoStrike3; videoTimeout = 8.0f;}
         if (event == BowlingVideoEvent::MISS) { videoLabel = videoMiss4; videoTimeout = 6.0f; }
+        if (event == BowlingVideoEvent::END) { videoLabel = videoEnd5; videoTimeout = 11.25f; }
+
 
         videoSplit1->hide(); videoSplit1->setFrame(0);
         videoSpare2->hide(); videoSpare2->setFrame(0);

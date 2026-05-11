@@ -14,7 +14,7 @@ namespace copakond {
     class TextLabel;
     class ImageSequenceLabel;
     class ImageSequence;
-    enum class BowlingVideoEvent { SPLIT, SPARE, STRIKE, MISS };
+    enum class BowlingVideoEvent { SPLIT, SPARE, STRIKE, MISS, END };
 
     class BowlingGame {
     private:
@@ -93,6 +93,7 @@ namespace copakond {
         ImageSequenceLabel *videoSpare2;
         ImageSequenceLabel *videoStrike3;
         ImageSequenceLabel *videoMiss4;
+        ImageSequenceLabel *videoEnd5;
 
         ImageSequenceLabel *videoIdle1;
         ImageSequenceLabel *videoIdle2;
