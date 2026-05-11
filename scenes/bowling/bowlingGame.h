@@ -4,6 +4,8 @@
 #include "collisionPin.h"
 #include <vector>
 
+#define TOTAL_ROUNDS 3
+
 namespace copakond {
     class Camera;
     class RigidSphere;
@@ -12,16 +14,18 @@ namespace copakond {
     class TextLabel;
     class ImageSequenceLabel;
     class ImageSequence;
+    enum class BowlingVideoEvent { SPLIT, SPARE, STRIKE, MISS };
 
     class BowlingGame {
     private:
         float timeToDespawnBowlingBall = 0.0f;
+        float videoTimeout = 999.0f;
         bool rollingBowlingBallNow = false;
 
-        int score1[7] = {0,0,0,0,0,0,0};
-        int score2[7] = {0,0,0,0,0,0,0};
-        int score3[7] = {0,0,0,0,0,0,0};
-        int score4[7] = {0,0,0,0,0,0,0};
+        int score1[TOTAL_ROUNDS*2+1] = {0,0,0,0,0,0,0};
+        int score2[TOTAL_ROUNDS*2+1] = {0,0,0,0,0,0,0};
+        int score3[TOTAL_ROUNDS*2+1] = {0,0,0,0,0,0,0};
+        int score4[TOTAL_ROUNDS*2+1] = {0,0,0,0,0,0,0};
 
         bool bowlingAlleyOpened1 = false;
         bool bowlingAlleyOpened2 = false;
@@ -44,7 +48,8 @@ namespace copakond {
         int getClosestAlleyToBowlingBall();
         int resetBowlingBall(); // also returning the number of pins down
         bool checkIfBowlingBallHitTheWall() const;
-
+        void renderText(int alley);
+        void playVideo(BowlingVideoEvent event, int alley);
 
 
     public:

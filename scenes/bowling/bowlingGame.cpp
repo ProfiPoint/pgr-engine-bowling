@@ -99,6 +99,16 @@ namespace copakond {
 
         // if it touches the wall, then end it 5 seconds, instead of waiting 20 seconds to despawn
         if (checkIfBowlingBallHitTheWall()) { timeToDespawnBowlingBall = glm::min(timeToDespawnBowlingBall, 5.0f); }
+
+        // manage videos
+        videoTimeout -= deltaTime;
+        if (videoTimeout <= 0.0f) {
+            videoSplit1->hide();
+            videoSpare2->hide();
+            videoStrike3->hide();
+            videoMiss4->hide();
+            videoTimeout = 999.0f;
+        }
     }
 
     void BowlingGame::throwBall(float power) {
@@ -171,5 +181,55 @@ namespace copakond {
             scoreLabel4->hide();
             videoIdle4->show();
         }
+    }
+
+    // format the given text result score
+    void BowlingGame::renderText(int alley) {
+        TextLabel *label = scoreLabel1;
+        int *scoreNow = score1;
+        if (alley == 2) { label = scoreLabel2; scoreNow = score2; }
+        if (alley == 3) { label = scoreLabel3; scoreNow = score3; }
+        if (alley == 4) { label = scoreLabel4; scoreNow = score4; }
+
+        std::string res = ""; //0 0|0 0|0 0|00
+        int sum = 0;
+
+        for (int i = 0; i < TOTAL_ROUNDS * 2; i++) {
+            sum += scoreNow[i];
+            res += std::to_string(scoreNow[i]);
+
+            if (i % 2 == 1 && i < TOTAL_ROUNDS * 2 - 1) {
+                res += "|";
+            } else {
+                res += " ";
+            }
+        }
+
+        if (!res.empty() && res.back() == ' ') { res.pop_back(); }
+        res += "|";
+        if (sum < 10) { res += "0"; }
+        res += std::to_string(sum);
+
+        label->setText(res);
+    }
+
+    void BowlingGame::playVideo(BowlingVideoEvent event, int alley) {
+        glm::vec3 pos = videoIdle1->position();
+        if (alley == 2) { videoIdle2->position(); }
+        if (alley == 3) { videoIdle3->position(); }
+        if (alley == 4) { videoIdle4->position(); }
+
+        ImageSequenceLabel *videoLabel = videoSplit1; videoTimeout = 8.0f;
+        if (event == BowlingVideoEvent::SPARE) { videoLabel = videoSpare2; videoTimeout = 8.0f; }
+        if (event == BowlingVideoEvent::STRIKE) { videoLabel = videoStrike3; videoTimeout = 8.0f;}
+        if (event == BowlingVideoEvent::MISS) { videoLabel = videoMiss4; videoTimeout = 6.0f; }
+
+        videoSplit1->hide(); videoSplit1->setFrame(0);
+        videoSpare2->hide(); videoSpare2->setFrame(0);
+        videoStrike3->hide(); videoStrike3->setFrame(0);
+        videoMiss4->hide(); videoMiss4->setFrame(0);
+
+        videoLabel->position() = pos;
+        videoLabel->show(); videoLabel->setFrame(0);
     }
 }
