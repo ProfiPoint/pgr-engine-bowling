@@ -93,17 +93,17 @@ namespace copakond {
 
         
         // added my own models, to gain points for custom models :D
-        Mesh *bench = new ObjMesh("assets/models/custom/bench.obj", true, glm::vec3(9.250f, 0.450f, 3.250f), glm::vec3(0.0f), glm::vec3(1.000f, 0.500f, 0.500f) );
-        Mesh *bomb = new ObjMesh("assets/models/custom/bomb.obj", true, glm::vec3(2.0f, 20.0f, 0.0f), glm::vec3(0.0f));
-        Mesh *bowlingBallF = new ObjMesh("assets/models/custom/bowlingBall.obj", true, glm::vec3(3.0f, 20.0f, 0.0f), glm::vec3(0.0f));
-        Mesh *bowlingPin = new ObjMesh("assets/models/custom/bowlingPin.obj", true, glm::vec3(4.0f, 20.0f, 0.0f), glm::vec3(0.0f));
-        Mesh *chairWithTable = new ObjMesh("assets/models/custom/chairWithTable.obj", true, glm::vec3(5.0f, 20.0f, 0.0f), glm::vec3(0.0f));
-        Mesh *crate = new ObjMesh("assets/models/custom/crate.obj", true, glm::vec3(6.0f, 20.0f, 0.0f), glm::vec3(0.0f));
-        Mesh *logo = new ObjMesh("assets/models/custom/logo.obj", true, glm::vec3(7.0f, 20.0f, 0.0f), glm::vec3(0.0f));
-        Mesh *spotlight = new ObjMesh("assets/models/custom/spotlight.obj", true, glm::vec3(8.0f, 20.0f, 0.0f), glm::vec3(0.0f));
-        Mesh *trophy = new ObjMesh("assets/models/custom/trophy.obj", true, glm::vec3(9.0f, 20.0f, 0.0f), glm::vec3(0.0f));
-        Mesh *vendingMachine = new ObjMesh("assets/models/custom/vendingMachine.obj", true, glm::vec3(10.0f, 20.0f, 0.0f), glm::vec3(0.0f));
-        Mesh *flag = new ObjMesh("assets/models/flag.obj", true, glm::vec3(10.0f, 20.0f, 0.0f), glm::vec3(0.0f));
+        Mesh *bench = new ObjMesh("assets/models/custom/bench.obj", true, glm::vec3(9.250f, 0.450f, 3.250f), glm::vec3(0.0f), glm::vec3(1.000f, 0.500f, 0.500f));
+        Mesh *bomb = new ObjMesh("assets/models/custom/bomb.obj", true, glm::vec3(1.250f, 1.700f, 3.600f), glm::vec3(0.0f), glm::vec3(0.500f, 1.000f, 0.100f));
+        Mesh *bowlingBallF = new ObjMesh("assets/models/custom/bowlingBall.obj", true, glm::vec3(12.100f, 0.920f, 0.150f), glm::vec3(0.0f), glm::vec3(0.150f, 0.150f, 0.150f));
+        Mesh *bowlingPin = new ObjMesh("assets/models/custom/bowlingPin.obj", true, glm::vec3(12.000f, 1.000f, 0.250f), glm::vec3(0.0f), glm::vec3(0.100f, 0.250f, 0.100f));
+        Mesh *chairWithTable = new ObjMesh("assets/models/custom/chairWithTable.obj", true, glm::vec3(12.000f, 0.600f, 3.000f), glm::vec3(0.000f, 1.571f, 0.000f), glm::vec3(0.800f, 0.800f, 0.800f));
+        Mesh *crate = new ObjMesh("assets/models/custom/crate.obj", true, glm::vec3(9.500f, 0.350f, -3.450f), glm::vec3(0.0f), glm::vec3(0.500f, 0.300f, 0.500f));
+        Mesh *logo = new ObjMesh("assets/models/custom/logo.obj", true, glm::vec3(1.500f, 1.500f, -3.680f), glm::vec3(1.571f, 0.000f, 0.000f), glm::vec3(1.000f, 0.100f, 1.000f));
+        Mesh *spotlight = new ObjMesh("assets/models/custom/spotlight.obj", true, glm::vec3(-9.000f, 2.440f, 0.800f), glm::vec3(0.000f, -1.571f, 0.000f), glm::vec3(0.250f, 0.500f, 0.350f));
+        Mesh *trophy = new ObjMesh("assets/models/custom/trophy.obj", true, glm::vec3(11.600f, 1.000f, 0.000f), glm::vec3(0.000f, -3.142f, 0.000f), glm::vec3(0.250f, 0.250f, 0.250f));
+        Mesh *vendingMachine = new ObjMesh("assets/models/custom/vendingMachine.obj", true, glm::vec3(11.980f, 0.700f, -3.450f), glm::vec3(0.000f, 5.341f, 0.000f));
+        Mesh *flag = new ObjMesh("assets/models/flag.obj", true, glm::vec3(12.000f, 1.680f, 3.580f), glm::vec3(0.000f, -1.571f, 0.000f), glm::vec3(0.020f, 0.500f, 1.000f));
         flag->setVertexWave(true);
 
         addToScene(bench); addToScene(bomb); addToScene(bowlingBallF);
@@ -533,39 +533,6 @@ namespace copakond {
         Mesh *ceillingLights1 = new ObjMesh("assets/models/bowling/ceillingLights1.obj");
         addToScene(ceillingLights1);
 
-        Mesh *chair1 = new ObjMesh("assets/models/bowling/chair1.obj");
-        addToScene(chair1);
-
-        Mesh *chair11 = new ObjMesh("assets/models/bowling/chair11.obj");
-        addToScene(chair11);
-
-        Mesh *chair12 = new ObjMesh("assets/models/bowling/chair12.obj");
-        addToScene(chair12);
-
-        Mesh *chair13 = new ObjMesh("assets/models/bowling/chair13.obj");
-        addToScene(chair13);
-
-        Mesh *chair14 = new ObjMesh("assets/models/bowling/chair14.obj");
-        addToScene(chair14);
-
-        Mesh *chair21 = new ObjMesh("assets/models/bowling/chair21.obj");
-        addToScene(chair21);
-
-        Mesh *chair22 = new ObjMesh("assets/models/bowling/chair22.obj");
-        addToScene(chair22);
-
-        Mesh *chair23 = new ObjMesh("assets/models/bowling/chair23.obj");
-        addToScene(chair23);
-
-        Mesh *chair24 = new ObjMesh("assets/models/bowling/chair24.obj");
-        addToScene(chair24);
-
-        Mesh *chair25 = new ObjMesh("assets/models/bowling/chair25.obj");
-        addToScene(chair25);
-
-        Mesh *chair26 = new ObjMesh("assets/models/bowling/chair26.obj");
-        addToScene(chair26);
-
         Mesh *chair31 = new ObjMesh("assets/models/bowling/chair31.obj");
         addToScene(chair31);
 
@@ -581,39 +548,6 @@ namespace copakond {
         Mesh *chair35 = new ObjMesh("assets/models/bowling/chair35.obj");
         addToScene(chair35);
 
-        Mesh *chair41 = new ObjMesh("assets/models/bowling/chair41.obj");
-        addToScene(chair41);
-
-        Mesh *chair42 = new ObjMesh("assets/models/bowling/chair42.obj");
-        addToScene(chair42);
-
-        Mesh *chair43 = new ObjMesh("assets/models/bowling/chair43.obj");
-        addToScene(chair43);
-
-        Mesh *chair44 = new ObjMesh("assets/models/bowling/chair44.obj");
-        addToScene(chair44);
-
-        Mesh *chair45 = new ObjMesh("assets/models/bowling/chair45.obj");
-        addToScene(chair45);
-
-        Mesh *chair46 = new ObjMesh("assets/models/bowling/chair46.obj");
-        addToScene(chair46);
-
-        Mesh *chair51 = new ObjMesh("assets/models/bowling/chair51.obj");
-        addToScene(chair51);
-
-        Mesh *chair52 = new ObjMesh("assets/models/bowling/chair52.obj");
-        addToScene(chair52);
-
-        Mesh *chair53 = new ObjMesh("assets/models/bowling/chair53.obj");
-        addToScene(chair53);
-
-        Mesh *chair54 = new ObjMesh("assets/models/bowling/chair54.obj");
-        addToScene(chair54);
-
-        Mesh *chair55 = new ObjMesh("assets/models/bowling/chair55.obj");
-        addToScene(chair55);
-
         Mesh *doorsWalls1d1 = new ObjMesh("assets/models/bowling/doorsWalls1d1.obj");
         addToScene(doorsWalls1d1);
 
@@ -626,20 +560,8 @@ namespace copakond {
         Mesh *doorsWalls4d1 = new ObjMesh("assets/models/bowling/doorsWalls4d1.obj");
         addToScene(doorsWalls4d1);
 
-        Mesh *table1 = new ObjMesh("assets/models/bowling/table1.obj");
-        addToScene(table1);
-
-        Mesh *table2 = new ObjMesh("assets/models/bowling/table2.obj");
-        addToScene(table2);
-
         Mesh *table3 = new ObjMesh("assets/models/bowling/table3.obj");
         addToScene(table3);
-
-        Mesh *table4 = new ObjMesh("assets/models/bowling/table4.obj");
-        addToScene(table4);
-
-        Mesh *table5 = new ObjMesh("assets/models/bowling/table5.obj");
-        addToScene(table5);
 
         Mesh *upscreen1 = new ObjMesh("assets/models/bowling/upscreen1.obj");
         addToScene(upscreen1);
