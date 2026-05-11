@@ -43,9 +43,9 @@ namespace copakond {
     void Input::mouseButtonEvent(int button, int state, int x, int y) {
         if (button == GLUT_MIDDLE_BUTTON) {
             if (state == GLUT_DOWN) {
-                keysMap[MOUSE_BUTTON_RIGHT] = true;
+                keysMap[MOUSE_BUTTON_MIDDLE] = true;
             } else if (state == GLUT_UP) {
-                keysMap[MOUSE_BUTTON_RIGHT] = false;
+                keysMap[MOUSE_BUTTON_MIDDLE] = false;
             }
         }
     }

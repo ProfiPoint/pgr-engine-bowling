@@ -76,8 +76,20 @@ namespace copakond {
         }
 
         // mouse movement
-        if (input->keysMap[MOUSE_BUTTON_RIGHT]) {
-            camera->processMouseDrag(input->mouseDeltaX * mouseDragCoeff, input->mouseDeltaY * mouseDragCoeff);
+        if (input->keysMap[MOUSE_BUTTON_MIDDLE]) { // copied the function from camera drag here, as the players position is now changing, not cameras
+            float yaw = camera->rotation().y;
+            float pitch = camera->rotation().x;
+
+            glm::vec3 front = glm::normalize(glm::vec3(
+                cos(yaw) * cos(pitch),
+                sin(pitch),
+                sin(yaw) * cos(pitch)
+            ));
+            glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0.0f, 1.0f, 0.0f)));
+            glm::vec3 up = glm::normalize(glm::cross(right, front));
+
+            player->position() += right * input->mouseDeltaX * mouseDragCoeff * 0.1f; // lower sensitivity
+            player->position() += up * input->mouseDeltaY * mouseDragCoeff * 0.1f;
         } else {
             camera->processMouseMovement(input->mouseDeltaX, input->mouseDeltaY);
         }

@@ -1,6 +1,8 @@
 #include "bowlingScene.h"
 #include "../bowling/inputControllerBowling.h"
+
 #define ALLEY_SPACING 1.8f
+#define CLOCK_SPEED_PER_SECOND 600.0f
 
 namespace copakond {
     BowlingScene::BowlingScene(const char *sceneName, Input* input, Shader* shader, int winWidth, int winHeight): Scene(sceneName, input, shader, winWidth, winHeight) {
@@ -81,8 +83,7 @@ namespace copakond {
             "shaders/shaders/skybox.vert",
             "shaders/shaders/skybox.frag"
         );
-
-        player = new RigidBody(glm::vec3(10.0f, 1.25f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f/4, 1.5f, 1.0f/4));
+        player = new RigidBody(glm::vec3(10.65f, 1.25f, 3.25f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f/4, 1.5f, 1.0f/4));
         camera->setParent(player);
         inputController->setPlayer(player);
         game->player = player;
@@ -610,8 +611,8 @@ namespace copakond {
 
         camera->position() = player->getWorldPosition();
 
-        clockTime[2] += 600.0f * deltaTime; // smooth seconds
-        clockTime[0] += 600.0f * deltaTime / 3600.0f; // smooth hours
+        clockTime[2] += CLOCK_SPEED_PER_SECOND * deltaTime; // smooth seconds
+        clockTime[0] += CLOCK_SPEED_PER_SECOND * deltaTime / 3600.0f; // smooth hours
 
         if (clockTime[2] >= 60.0f) {
             clockTime[2] -= 60.0f;

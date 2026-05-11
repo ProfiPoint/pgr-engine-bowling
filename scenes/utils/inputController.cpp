@@ -45,7 +45,7 @@ namespace copakond {
         }
 
         // mouse movement
-        if (input->keysMap[MOUSE_BUTTON_RIGHT]) {
+        if (input->keysMap[MOUSE_BUTTON_MIDDLE]) {
             camera->processMouseDrag(input->mouseDeltaX * mouseDragCoeff, input->mouseDeltaY * mouseDragCoeff);
         } else {
             camera->processMouseMovement(input->mouseDeltaX, input->mouseDeltaY);
