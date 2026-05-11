@@ -92,12 +92,25 @@ namespace copakond {
         camera->setFog(fog);
 
         
-        //Mesh *bomb = new ObjMesh("assets/models/custom/bomb.obj", false, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f),
-         //   glm::vec3(1.0f, 1.0f, 1.0f));
-        //addToScene(bomb);
+        // added my own models, to gain points for custom models :D
+        Mesh *bench = new ObjMesh("assets/models/custom/bench.obj", true, glm::vec3(9.250f, 0.450f, 3.250f), glm::vec3(0.0f), glm::vec3(1.000f, 0.500f, 0.500f) );
+        Mesh *bomb = new ObjMesh("assets/models/custom/bomb.obj", true, glm::vec3(2.0f, 20.0f, 0.0f), glm::vec3(0.0f));
+        Mesh *bowlingBallF = new ObjMesh("assets/models/custom/bowlingBall.obj", true, glm::vec3(3.0f, 20.0f, 0.0f), glm::vec3(0.0f));
+        Mesh *bowlingPin = new ObjMesh("assets/models/custom/bowlingPin.obj", true, glm::vec3(4.0f, 20.0f, 0.0f), glm::vec3(0.0f));
+        Mesh *chairWithTable = new ObjMesh("assets/models/custom/chairWithTable.obj", true, glm::vec3(5.0f, 20.0f, 0.0f), glm::vec3(0.0f));
+        Mesh *crate = new ObjMesh("assets/models/custom/crate.obj", true, glm::vec3(6.0f, 20.0f, 0.0f), glm::vec3(0.0f));
+        Mesh *logo = new ObjMesh("assets/models/custom/logo.obj", true, glm::vec3(7.0f, 20.0f, 0.0f), glm::vec3(0.0f));
+        Mesh *spotlight = new ObjMesh("assets/models/custom/spotlight.obj", true, glm::vec3(8.0f, 20.0f, 0.0f), glm::vec3(0.0f));
+        Mesh *trophy = new ObjMesh("assets/models/custom/trophy.obj", true, glm::vec3(9.0f, 20.0f, 0.0f), glm::vec3(0.0f));
+        Mesh *vendingMachine = new ObjMesh("assets/models/custom/vendingMachine.obj", true, glm::vec3(10.0f, 20.0f, 0.0f), glm::vec3(0.0f));
+        Mesh *flag = new ObjMesh("assets/models/flag.obj", true, glm::vec3(10.0f, 20.0f, 0.0f), glm::vec3(0.0f));
+        flag->setVertexWave(true);
 
-        //Mesh *bomb = new ObjMesh("assets/models/custom/trophy.obj", false, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-        //addToScene(bomb);
+        addToScene(bench); addToScene(bomb); addToScene(bowlingBallF);
+        addToScene(bowlingPin); addToScene(chairWithTable); addToScene(crate);
+        addToScene(logo); addToScene(spotlight); addToScene(trophy);
+        addToScene(vendingMachine); addToScene(flag);
+
 
         // rainbow textures
         ImageMoving *imageMoving1 = new ImageMoving("assets/decals/pixels.png", glm::vec2(0.0f, -1.0f), glm::vec2(1.0f, 80.0f));

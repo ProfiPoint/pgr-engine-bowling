@@ -1,0 +1,44 @@
+ID = 3 XXX
+PREVIOUS = position=glm::vec3(1.000f, 20.000f, 0.000f) scale=glm::vec3(1.000f, 1.000f, 1.000f) 
+NEW = position=glm::vec3(9.250f, 0.450f, 3.250f) scale=glm::vec3(1.000f, 0.500f, 0.500f) 
+
+ID = 10
+PREVIOUS = position=glm::vec3(8.000f, 20.000f, 0.000f) rotation=glm::vec3(0.000f, 0.000f, 0.000f) scale=glm::vec3(1.000f, 1.000f, 1.000f) 
+NEW = position=glm::vec3(-9.000f, 2.440f, 0.800f) rotation=glm::vec3(0.000f, -1.571f, 0.000f) scale=glm::vec3(0.250f, 0.500f, 0.350f) 
+
+ID = 11
+PREVIOUS = position=glm::vec3(9.000f, 20.000f, 0.000f) rotation=glm::vec3(0.000f, 0.000f, 0.000f) scale=glm::vec3(1.000f, 1.000f, 1.000f) 
+NEW = position=glm::vec3(11.600f, 1.000f, 0.000f) rotation=glm::vec3(0.000f, -3.142f, 0.000f) scale=glm::vec3(0.250f, 0.250f, 0.250f) 
+
+ID = 7
+PREVIOUS = position=glm::vec3(5.000f, 20.000f, 0.000f) rotation=glm::vec3(0.000f, 0.000f, 0.000f) scale=glm::vec3(1.000f, 1.000f, 1.000f) 
+NEW = position=glm::vec3(12.000f, 0.600f, 3.000f) rotation=glm::vec3(0.000f, 1.571f, 0.000f) scale=glm::vec3(0.800f, 0.800f, 0.800f) 
+
+ID = 9
+PREVIOUS = position=glm::vec3(7.000f, 20.000f, 0.000f) rotation=glm::vec3(0.000f, 0.000f, 0.000f) scale=glm::vec3(1.000f, 1.000f, 1.000f) 
+NEW = position=glm::vec3(1.500f, 1.500f, -3.680f) rotation=glm::vec3(1.571f, 0.000f, 0.000f) scale=glm::vec3(1.000f, 0.100f, 1.000f) 
+
+ID = 4
+PREVIOUS = position=glm::vec3(2.000f, 20.000f, 0.000f) scale=glm::vec3(1.000f, 1.000f, 1.000f) 
+NEW = position=glm::vec3(1.250f, 1.700f, 3.600f) scale=glm::vec3(0.500f, 1.000f, 0.100f) 
+
+ID = 6
+PREVIOUS = position=glm::vec3(4.000f, 20.000f, 0.000f) scale=glm::vec3(1.000f, 1.000f, 1.000f) 
+NEW = position=glm::vec3(12.000f, 1.000f, 0.250f) scale=glm::vec3(0.100f, 0.250f, 0.100f) 
+
+ID = 5
+PREVIOUS = position=glm::vec3(3.000f, 20.000f, 0.000f) scale=glm::vec3(1.000f, 1.000f, 1.000f) 
+NEW = position=glm::vec3(12.100f, 0.920f, 0.150f) scale=glm::vec3(0.150f, 0.150f, 0.150f) 
+
+ID = 8
+PREVIOUS = position=glm::vec3(6.000f, 20.000f, 0.000f) scale=glm::vec3(1.000f, 1.000f, 1.000f) 
+NEW = position=glm::vec3(9.500f, 0.350f, -3.450f) scale=glm::vec3(0.500f, 0.300f, 0.500f) 
+
+ID = 12
+PREVIOUS = position=glm::vec3(10.000f, 20.000f, 0.000f) rotation=glm::vec3(0.000f, 0.000f, 0.000f) 
+NEW = position=glm::vec3(11.980f, 0.700f, -3.450f) rotation=glm::vec3(0.000f, 5.341f, 0.000f) 
+
+ID = 13
+PREVIOUS = position=glm::vec3(10.000f, 20.000f, 0.000f) rotation=glm::vec3(0.000f, 0.000f, 0.000f) scale=glm::vec3(1.000f, 1.000f, 1.000f) 
+NEW = position=glm::vec3(12.000f, 1.680f, 3.580f) rotation=glm::vec3(0.000f, -1.571f, 0.000f) scale=glm::vec3(0.020f, 0.500f, 1.000f) 
+
