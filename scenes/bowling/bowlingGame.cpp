@@ -6,6 +6,11 @@
 #include "../../meshes/collision/rigidSphere.h"
 #include "../../geometry/camera.h"
 
+#include "../../meshes/label/textLabel.h"
+#include "../../meshes/label/imageLabel.h"
+#include "../../meshes/label/imageMoving.h"
+#include "../../meshes/label/imageSequenceLabel.h"
+
 #define DOOR_OPEN_SPEED 0.07f
 #define DOOR_MAX_OFFSET 0.45f
 #define BALL_DESPAWN_TIME 30.0f
@@ -125,5 +130,46 @@ namespace copakond {
 
         selectedBowlingBall = bowlingBall;
         bowlingBall->hide();
+    }
+
+    void BowlingGame::toggleDoor1() {
+        bowlingAlleyOpened1 = !bowlingAlleyOpened1;
+        if (bowlingAlleyOpened1) {
+            scoreLabel1->show();
+            videoIdle1->hide();
+        } else {
+            scoreLabel1->hide();
+            videoIdle1->show();
+        }
+    }
+    void BowlingGame::toggleDoor2() {
+        bowlingAlleyOpened2 = !bowlingAlleyOpened2;
+        if (bowlingAlleyOpened2) {
+            scoreLabel2->show();
+            videoIdle2->hide();
+        } else {
+            scoreLabel2->hide();
+            videoIdle2->show();
+        }
+    }
+    void BowlingGame::toggleDoor3() {
+        bowlingAlleyOpened3 = !bowlingAlleyOpened3;
+        if (bowlingAlleyOpened3) {
+            scoreLabel3->show();
+            videoIdle3->hide();
+        } else {
+            scoreLabel3->hide();
+            videoIdle3->show();
+        }
+    }
+    void BowlingGame::toggleDoor4() {
+        bowlingAlleyOpened4 = !bowlingAlleyOpened4;
+        if (bowlingAlleyOpened4) {
+            scoreLabel4->show();
+            videoIdle4->hide();
+        } else {
+            scoreLabel4->hide();
+            videoIdle4->show();
+        }
     }
 }

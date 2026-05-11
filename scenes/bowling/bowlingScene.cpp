@@ -164,6 +164,105 @@ namespace copakond {
             shape->physicsMaterial.friction = 0.050f;
         }
 
+        // screens
+        Mesh *screen1 = new ObjMesh("assets/models/bowling/screen1.obj", glm::vec3(18.500f, 0.0f, 0.0f));
+        addToScene(screen1);
+
+        Mesh *screen2 = new ObjMesh("assets/models/bowling/screen2.obj", glm::vec3(18.490f, 0.0f, -0.05f));
+        addToScene(screen2);
+
+        Mesh *screen3 = new ObjMesh("assets/models/bowling/screen3.obj", glm::vec3(18.500f, 0.0f, 0.0f));
+        addToScene(screen3);
+
+        Mesh *screen4 = new ObjMesh("assets/models/bowling/screen4.obj", glm::vec3(18.500f, 0.0f, 0.0f));
+        addToScene(screen4);
+
+        // screen bg and videos
+        ImageLabel *bg1 = new ImageLabel("assets/decals/background.jpg");
+        bg1->position() = glm::vec3(6.70f, 1.5f, 2.640f); bg1->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        bg1->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(bg1);
+
+        ImageLabel *bg2 = new ImageLabel("assets/decals/background.jpg");
+        bg2->position() = glm::vec3(6.700f, 1.5f, 2.640f-ALLEY_SPACING); bg2->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        bg2->scale() = glm::vec3(0.930f, 0.590f, 1.0f)*0.94f; addToScene(bg2);
+
+        ImageLabel *bg3 = new ImageLabel("assets/decals/background.jpg");
+        bg3->position() = glm::vec3(6.700f, 1.5f, 2.640f-ALLEY_SPACING*2+0.05f); bg3->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        bg3->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(bg3);
+
+        ImageLabel *bg4 = new ImageLabel("assets/decals/background.jpg");
+        bg4->position() = glm::vec3(6.700f, 1.5f, 2.640f-ALLEY_SPACING*3+0.05f); bg4->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        bg4->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(bg4);
+
+
+        TextLabel *scoreLabel1 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png");
+        scoreLabel1->position() = glm::vec3(6.710f, 1.5f, 2.640f); scoreLabel1->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        scoreLabel1->scale() = glm::vec3(0.7835, 0.1105, 0.9); addToScene(scoreLabel1);
+        scoreLabel1->setText("0 0|0 0|0 0|00");
+
+        TextLabel *scoreLabel2 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png");
+        scoreLabel2->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING); scoreLabel2->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        scoreLabel2->scale() = glm::vec3(0.7835, 0.1105, 0.9)*0.95f; addToScene(scoreLabel2);
+        scoreLabel2->setText("0 0|0 0|0 0|00");
+
+        TextLabel *scoreLabel3 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png");
+        scoreLabel3->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*2+0.05f); scoreLabel3->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        scoreLabel3->scale() = glm::vec3(0.7835, 0.1105, 0.9); addToScene(scoreLabel3);
+        scoreLabel3->setText("0 0|0 0|0 0|00");
+
+        TextLabel *scoreLabel4 = new TextLabel("assets/fonts/fredoka-one/fredokaone2.png");
+        scoreLabel4->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*3+0.05f); scoreLabel4->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        scoreLabel4->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(scoreLabel4);
+        scoreLabel4->setText("0 0|0 0|0 0|00");
+
+        ImageSequenceLabel *videoSplit1 = new ImageSequenceLabel("assets/decals/split1.png", 20, 20*8,16, 16);
+        videoSplit1->position() = glm::vec3(6.710f, 1.5f, 2.640f); videoSplit1->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        videoSplit1->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoSplit1);
+
+        ImageSequenceLabel *videoSpare2 = new ImageSequenceLabel("assets/decals/spare2.png", 20, 20*8,16, 16);
+        videoSpare2->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING); videoSpare2->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        videoSpare2->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoSpare2);
+
+        ImageSequenceLabel *videoStrike3 = new ImageSequenceLabel("assets/decals/strike3.png", 20, 20*8,16, 16);
+        videoStrike3->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*2+0.05f); videoStrike3->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        videoStrike3->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoStrike3);
+
+        ImageSequenceLabel *videoMiss4 = new ImageSequenceLabel("assets/decals/miss4.png", 20, 20*6,12, 12);
+        videoMiss4->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*3+0.05f); videoMiss4->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        videoMiss4->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoMiss4);
+
+
+        ImageSequenceLabel *videoIdle1 = new ImageSequenceLabel("assets/decals/tutorial.png", 8, 32*32,32, 32);
+        videoIdle1->position() = glm::vec3(6.710f, 1.5f, 2.640f); videoIdle1->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        videoIdle1->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoIdle1);
+
+        ImageSequenceLabel *videoIdle2 = new ImageSequenceLabel("assets/decals/tutorial.png", 8, 32*32,32, 32);
+        videoIdle2->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING); videoIdle2->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        videoIdle2->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoIdle2); videoIdle2->setFrame(8*32);
+
+        ImageSequenceLabel *videoIdle3 = new ImageSequenceLabel("assets/decals/tutorial.png", 8, 32*32,32, 32);
+        videoIdle3->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*2+0.05f); videoIdle3->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        videoIdle3->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoIdle3); videoIdle3->setFrame(16*32);
+
+        ImageSequenceLabel *videoIdle4 = new ImageSequenceLabel("assets/decals/tutorial.png", 8, 32*32,32, 32);
+        videoIdle4->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*3+0.05f); videoIdle4->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        videoIdle4->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoIdle4); videoIdle4->setFrame(24*32);
+
+        game->scoreLabel1 = scoreLabel1; scoreLabel1->hide();
+        game->scoreLabel2 = scoreLabel2; scoreLabel2->hide();
+        game->scoreLabel3 = scoreLabel3; scoreLabel3->hide();
+        game->scoreLabel4 = scoreLabel4; scoreLabel4->hide();
+
+        game->videoSplit1 = videoSplit1; videoSplit1->hide();
+        game->videoSpare2 = videoSpare2; videoSpare2->hide();
+        game->videoStrike3 = videoStrike3; videoStrike3->hide();
+        game->videoMiss4 = videoMiss4; videoMiss4->hide();
+
+        game->videoIdle1 = videoIdle1;
+        game->videoIdle2 = videoIdle2;
+        game->videoIdle3 = videoIdle3;
+        game->videoIdle4 = videoIdle4;
+
 
         // meshes loading from the bowling model
         Mesh *ballSideTrack1 = new ObjMesh("assets/models/bowling/ballSideTrack1.obj");
@@ -423,18 +522,6 @@ namespace copakond {
 
         Mesh *doorsWalls4d1 = new ObjMesh("assets/models/bowling/doorsWalls4d1.obj");
         addToScene(doorsWalls4d1);
-
-        Mesh *screen1 = new ObjMesh("assets/models/bowling/screen1.obj");
-        addToScene(screen1);
-
-        Mesh *screen2 = new ObjMesh("assets/models/bowling/screen2.obj");
-        addToScene(screen2);
-
-        Mesh *screen3 = new ObjMesh("assets/models/bowling/screen3.obj");
-        addToScene(screen3);
-
-        Mesh *screen4 = new ObjMesh("assets/models/bowling/screen4.obj");
-        addToScene(screen4);
 
         Mesh *table1 = new ObjMesh("assets/models/bowling/table1.obj");
         addToScene(table1);

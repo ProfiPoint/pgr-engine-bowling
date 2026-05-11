@@ -31,6 +31,7 @@ namespace copakond {
 
         void pause() { _paused = true; }
         void unpause() { _paused = false; }
+        void setFrame(int frame) { _frame = frame; }
     };
 }
 

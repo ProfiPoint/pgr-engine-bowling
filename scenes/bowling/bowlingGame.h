@@ -9,16 +9,19 @@ namespace copakond {
     class RigidSphere;
     class RigidBody;
     class Mesh;
+    class TextLabel;
+    class ImageSequenceLabel;
+    class ImageSequence;
 
     class BowlingGame {
     private:
         float timeToDespawnBowlingBall = 0.0f;
         bool rollingBowlingBallNow = false;
 
-        int totalScore1 = 0;
-        int totalScore2 = 0;
-        int totalScore3 = 0;
-        int totalScore4 = 0;
+        int score1[7] = {0,0,0,0,0,0,0};
+        int score2[7] = {0,0,0,0,0,0,0};
+        int score3[7] = {0,0,0,0,0,0,0};
+        int score4[7] = {0,0,0,0,0,0,0};
 
         bool bowlingAlleyOpened1 = false;
         bool bowlingAlleyOpened2 = false;
@@ -42,6 +45,8 @@ namespace copakond {
         int resetBowlingBall(); // also returning the number of pins down
         bool checkIfBowlingBallHitTheWall() const;
 
+
+
     public:
         BowlingGame(Camera *camera) : camera(camera) {};
         void update(float deltaTime);
@@ -49,10 +54,10 @@ namespace copakond {
         void pickBowlingBall(Mesh* bowlingBall, float power = 2.0f);
         void throwBall(float power = 2.0f);
 
-        void toggleDoor1() { bowlingAlleyOpened1 = !bowlingAlleyOpened1; }
-        void toggleDoor2() { bowlingAlleyOpened2 = !bowlingAlleyOpened2; }
-        void toggleDoor3() { bowlingAlleyOpened3 = !bowlingAlleyOpened3; }
-        void toggleDoor4() { bowlingAlleyOpened4 = !bowlingAlleyOpened4; }
+        void toggleDoor1();
+        void toggleDoor2();
+        void toggleDoor3();
+        void toggleDoor4();
 
         Mesh *door1 = nullptr;
         Mesh *door2 = nullptr;
@@ -61,6 +66,21 @@ namespace copakond {
 
         std::vector<CollisionPin*> pins;
         RigidSphere *bowlingBall = nullptr;
+
+        TextLabel *scoreLabel1;
+        TextLabel *scoreLabel2;
+        TextLabel *scoreLabel3;
+        TextLabel *scoreLabel4;
+
+        ImageSequenceLabel *videoSplit1;
+        ImageSequenceLabel *videoSpare2;
+        ImageSequenceLabel *videoStrike3;
+        ImageSequenceLabel *videoMiss4;
+
+        ImageSequenceLabel *videoIdle1;
+        ImageSequenceLabel *videoIdle2;
+        ImageSequenceLabel *videoIdle3;
+        ImageSequenceLabel *videoIdle4;
     };
 }
 
