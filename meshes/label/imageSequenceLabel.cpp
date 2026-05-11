@@ -13,7 +13,7 @@ namespace copakond {
         _material->ambient() = glm::vec3(1.0f, 1.0f, 1.0f);
         _material->diffuse() = glm::vec3(1.0f, 1.0f, 1.0f);
         _material->specular() = glm::vec3(0.0f, 0.0f, 0.0f);
-        _material->setDiffuseTexture(imageSequencePath, false, false);
+        _material->setDiffuseTexture(imageSequencePath, false, true);
     }
 
     ImageSequenceLabel::ImageSequenceLabel(const std::string& imageSequencePath, int fps, int totalFrames, int imagesPerWidth, int
@@ -25,7 +25,7 @@ namespace copakond {
         _imagesPerHeight = imagesPerHeight;
 
         _material = material;
-        _material->setDiffuseTexture(imageSequencePath, false, false);
+        _material->setDiffuseTexture(imageSequencePath, false, true);
     }
 
     ImageSequenceLabel::~ImageSequenceLabel() {

@@ -8,14 +8,14 @@ namespace copakond {
         _material->ambient() = glm::vec3(1.0f, 1.0f, 1.0f);
         _material->diffuse() = glm::vec3(1.0f, 1.0f, 1.0f);
         _material->specular() = glm::vec3(0.0f, 0.0f, 0.0f);
-        _material->setDiffuseTexture(imagePath, true, false);
+        _material->setDiffuseTexture(imagePath, true, true);
     }
 
     ImageMoving::ImageMoving(const std::string& imagePath, glm::vec2 movingSpeed, glm::vec2 imageRepeated, std::shared_ptr<Material> material) {
         _movingSpeed = movingSpeed;
         _imageRepeated = imageRepeated;
         _material = material;
-        _material->setDiffuseTexture(imagePath, true, false);
+        _material->setDiffuseTexture(imagePath, true, true);
     }
 
     ImageMoving::~ImageMoving() {
