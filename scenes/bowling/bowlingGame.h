@@ -42,8 +42,10 @@ namespace copakond {
         bool canBeUsed3 = true;
         bool canBeUsed4 = true;
 
+
         Mesh *selectedBowlingBall = nullptr;
         Camera *camera;
+        glm::vec3 plrThrowPos = glm::vec3(0.0f);
 
         int currentSubround[4] = {0, 0, 0, 0};
         float gameOverTimer[4] = {0.0f, 0.0f, 0.0f, 0.0f};
@@ -71,6 +73,8 @@ namespace copakond {
         void toggleDoor2();
         void toggleDoor3();
         void toggleDoor4();
+
+        RigidBody *player = nullptr;
 
         Mesh *door1 = nullptr;
         Mesh *door2 = nullptr;

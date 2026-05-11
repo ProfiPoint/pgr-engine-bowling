@@ -40,6 +40,7 @@ namespace copakond {
         player = new RigidBody(glm::vec3(10.0f, 1.25f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f/4, 1.5f, 1.0f/4));
         camera->setParent(player);
         inputController->setPlayer(player);
+        game->player = player;
         addToScene(player);
 
         Fog fog = Fog(30.0f, 50.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
@@ -247,6 +248,7 @@ namespace copakond {
         ImageSequenceLabel *videoIdle4 = new ImageSequenceLabel("assets/decals/tutorial.png", 8, 32*32,32, 32);
         videoIdle4->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*3+0.05f); videoIdle4->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
         videoIdle4->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoIdle4); videoIdle4->setFrame(24*32);
+
 
         game->scoreLabel1 = scoreLabel1; scoreLabel1->hide();
         game->scoreLabel2 = scoreLabel2; scoreLabel2->hide();

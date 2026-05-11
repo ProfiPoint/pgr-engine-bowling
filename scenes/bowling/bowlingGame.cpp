@@ -4,6 +4,7 @@
 
 #include "../../meshes/mesh.h"
 #include "../../meshes/collision/rigidSphere.h"
+#include "../../meshes/collision/rigidBody.h"
 #include "../../geometry/camera.h"
 
 #include "../../meshes/label/textLabel.h"
@@ -18,10 +19,16 @@
 
 namespace copakond {
     int BowlingGame::getClosestAlleyToBowlingBall() {
-        float dist1 = glm::distance(bowlingBall->position(), door1->position());
-        float dist2 = glm::distance(bowlingBall->position(), door2->position());
-        float dist3 = glm::distance(bowlingBall->position(), door3->position());
-        float dist4 = glm::distance(bowlingBall->position(), door4->position());
+        float dist1 = glm::distance(plrThrowPos, pins[0]->position());
+        float dist2 = glm::distance(plrThrowPos, pins[10]->position());
+        float dist3 = glm::distance(plrThrowPos, pins[20]->position());
+        float dist4 = glm::distance(plrThrowPos, pins[30]->position());
+
+        if (!bowlingAlleyOpened1) { dist1 = 9999.0f; }
+        if (!bowlingAlleyOpened2) { dist1 = 9999.0f; }
+        if (!bowlingAlleyOpened3) { dist1 = 9999.0f; }
+        if (!bowlingAlleyOpened4) { dist1 = 9999.0f; }
+
 
         if (dist1 < dist2 && dist1 < dist3 && dist1 < dist4) { return 1; }
         if (dist2 < dist3 && dist2 < dist4) { return 2; }
@@ -31,15 +38,30 @@ namespace copakond {
 
     int BowlingGame::resetBowlingBall() {
         int alley = getClosestAlleyToBowlingBall();
-        int count = 0;
-        int startIndex = (alley - 1) * 10;
-        for (int i = startIndex; i < startIndex + 10 && i < pins.size(); i++) {
+        size_t totalPinsDown = 0;
+        const size_t startIndex = (alley - 1) * 10;
+        for (size_t i = startIndex; i < startIndex + 10 && i < pins.size(); i++) {
             if (pins[i]->isDown()) {
-                count++;
+                totalPinsDown++;
             }
         }
 
-        evaluateScore(alley, count);
+        int aIdx = alley - 1;
+        bool isFirstThrow = (currentSubround[aIdx] % 2 == 0);
+        int pinsKnockedThisThrow = totalPinsDown;
+
+        if (!isFirstThrow) {
+            int* scoreNow = score1;
+            if (alley == 2) scoreNow = score2;
+            if (alley == 3) scoreNow = score3;
+            if (alley == 4) scoreNow = score4;
+
+            // substract pins knocked down
+            pinsKnockedThisThrow = totalPinsDown - scoreNow[currentSubround[aIdx] - 1];
+            if (pinsKnockedThisThrow < 0) pinsKnockedThisThrow = 0; // Failsafe
+        }
+
+        evaluateScore(alley, pinsKnockedThisThrow);
 
         if (selectedBowlingBall) { selectedBowlingBall->show(); }
         selectedBowlingBall = nullptr;
@@ -47,7 +69,7 @@ namespace copakond {
         bowlingBall->disable();
         bowlingBall->position() = glm::vec3(0.0f, 1000.0f, 0.0f);
 
-        return count;
+        return totalPinsDown;
     }
 
     bool BowlingGame::checkIfBowlingBallHitTheWall() const {
@@ -151,6 +173,7 @@ namespace copakond {
 
         bowlingBall->enable();
         rollingBowlingBallNow = true;
+        plrThrowPos = player->position();
         timeToDespawnBowlingBall = BALL_DESPAWN_TIME;
 
         // set position and velocity of the ball based of the camera position
@@ -270,9 +293,9 @@ namespace copakond {
 
     void BowlingGame::playVideo(BowlingVideoEvent event, int alley) {
         glm::vec3 pos = videoIdle1->position();
-        if (alley == 2) { videoIdle2->position(); }
-        if (alley == 3) { videoIdle3->position(); }
-        if (alley == 4) { videoIdle4->position(); }
+        if (alley == 2) { pos = videoIdle2->position(); }
+        if (alley == 3) { pos = videoIdle3->position(); }
+        if (alley == 4) { pos = videoIdle4->position(); }
 
         ImageSequenceLabel *videoLabel = videoSplit1; videoTimeout = 8.0f;
         if (event == BowlingVideoEvent::SPARE) { videoLabel = videoSpare2; videoTimeout = 8.0f; }
@@ -289,9 +312,9 @@ namespace copakond {
     }
 
     void BowlingGame::resetPinsForAlley(int alley) {
-        int startIndex = (alley - 1) * 10;
+        size_t startIndex = (alley - 1) * 10;
 
-        for (int i = startIndex; i < startIndex + 10 && i < pins.size(); i++) {
+        for (size_t i = startIndex; i < startIndex + 10 && i < pins.size(); i++) {
             pins[i]->reset();
         }
     }
