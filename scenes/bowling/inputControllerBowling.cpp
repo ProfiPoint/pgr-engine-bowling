@@ -238,20 +238,20 @@ namespace copakond {
                 _canMove = false;
                 if (player) {
                     player->disable();
-                    player->position() = glm::vec3(0.0f, 5.0f, 20.0f);
+                    player->position() = glm::vec3(7.710f, 1.5f, 2.640f-1.80f);
                     camera->position() = player->position();
                 }
-                camera->lookToPoint(glm::vec3(0.0f, 1.0f, 0.0f));
+                camera->lookToPoint(player->position() + glm::vec3(1.0f, 0.0f, 0.0f));
                 break;
 
             case 4: // F4 - static pos 2
                 _canMove = false;
                 if (player) {
                     player->disable();
-                    player->position() = glm::vec3(0.0f, 5.0f, -20.0f);
+                    player->position() = glm::vec3(-10.625f, 0.750f, 2.650f-1.80f);
                     camera->position() = player->position();
                 }
-                camera->lookToPoint(glm::vec3(0.0f, 1.0f, 0.0f));
+                camera->lookToPoint(player->position() + glm::vec3(0.5f, 0.3f, 0.0f));
                 break;
 
             case 5: // fullscreen
