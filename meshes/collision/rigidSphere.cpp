@@ -33,6 +33,8 @@ namespace copakond {
     void RigidSphere::physics_process(float deltaTime, const std::vector<CollisionShape*>& allColliders) {
         if (!_enabled) { return; }
 
+        float radius1 = std::max({this->scale().x, this->scale().y, this->scale().z}) * 0.866f;
+
         // implementation of delta fix t
         float deltaTimeLeft = deltaTime;
         while (deltaTimeLeft > 0.0f) {
@@ -56,19 +58,19 @@ namespace copakond {
                 glm::vec3 curAxeVelocity(0.0f);
                 curAxeVelocity[i] = _velocity[i];
 
-                CollisionResult result = collisionFalse();
+                float curVelLen = std::abs(_velocity[i]);
 
+                CollisionResult result = collisionFalse();
                 CollisionShape* resCollider = nullptr;
                 for (CollisionShape* collider : allColliders) {
                     if (collider != this && collider->isEnabled()) {
 
                         // sphere mutualy exclusion of collision
-                        float radius1 = std::max({this->scale().x, this->scale().y, this->scale().z}) * 0.866f;
                         float radius2 = std::max({collider->scale().x, collider->scale().y, collider->scale().z}) * 0.866f;
-
-                        float dist = glm::distance(this->position(), collider->position());
-
-                        if (dist > (radius1 + radius2 + glm::length(curAxeVelocity))) {
+                        float totalRadius = radius1 + radius2 + curVelLen;
+                        glm::vec3 diff = this->position() - collider->position();
+                        float distSq = (diff.x * diff.x) + (diff.y * diff.y) + (diff.z * diff.z);
+                        if (distSq > (totalRadius * totalRadius)) {
                             continue;
                         }
 

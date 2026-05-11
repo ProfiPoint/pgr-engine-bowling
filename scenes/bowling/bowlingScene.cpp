@@ -100,10 +100,14 @@ namespace copakond {
         Mesh *pin10d = new ObjMesh("assets/models/custom/pin.obj", glm::vec3(-13.000f, 0.150f, 2.350f-ALLEY_SPACING*3+0.05f)); pinMeshes.push_back(pin10d);
 
         // init pins:
+        const float scaleFactor = 0.45f;
         for (Mesh *pin : pinMeshes) {
             addToScene(pin);
-            CollisionPin *collisionPin = new CollisionPin(glm::vec3(pin->position().x,pin->position().y+0.1f,pin->position().z), glm::vec3(0.0f), glm::vec3(0.3f), true);
+            CollisionPin *collisionPin = new CollisionPin(glm::vec3(pin->position().x,pin->position().y+0.1f,pin->position().z), glm::vec3(0.0f), glm::vec3(scaleFactor), true);
             game->pins.push_back(collisionPin);
+            pin->setParent(collisionPin);
+            pin->position() = glm::vec3(0.0f, -0.1f, 0.0f);
+            pin->scale() = glm::vec3(1/scaleFactor, 1/scaleFactor, 1/scaleFactor);
             addToScene(collisionPin);
         }
 
@@ -525,6 +529,10 @@ namespace copakond {
         float thetaSun = (2 * glm::pi<float>() * currentHour / 24.0f); // 0 is down, 12 is up, 24 down, 6 start, 18 end
         sun->diffuse() = glm::vec3(0.5f, 0.5f, 0.5f) * (1-skyboxBlendingCoeff); // set the intensity
         sun->direction() = glm::vec3(0.0f, glm::cos(thetaSun), glm::sin(thetaSun));
+
+        for (CollisionPin * pin : game->pins) {
+            pin->updatePin(deltaTime, game->bowlingBall);
+        }
 
         game->update(deltaTime);
     }

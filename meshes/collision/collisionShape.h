@@ -1,7 +1,7 @@
 #ifndef PGR_SEM_COPAKOND_COLLISIONSHAPE_H
 #define PGR_SEM_COPAKOND_COLLISIONSHAPE_H
 
-#define DELTA_TIME_FIXED (1.0f / 60.0f)
+#define DELTA_TIME_FIXED (1.0f / 20.0f)
 #include "../mesh.h"
 #include "collisionDetector.h"
 
