@@ -45,11 +45,19 @@ namespace copakond {
         Mesh *selectedBowlingBall = nullptr;
         Camera *camera;
 
+        int currentSubround[4] = {0, 0, 0, 0};
+        float gameOverTimer[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+        bool isGameOver[4] = {false, false, false, false};
+
         int getClosestAlleyToBowlingBall();
         int resetBowlingBall(); // also returning the number of pins down
         bool checkIfBowlingBallHitTheWall() const;
         void renderText(int alley);
         void playVideo(BowlingVideoEvent event, int alley);
+
+        void evaluateScore(int alley, int pinsKnocked);
+        void resetPinsForAlley(int alley);
+        void resetGameForAlley(int alley);
 
 
     public:

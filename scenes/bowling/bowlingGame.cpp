@@ -30,19 +30,23 @@ namespace copakond {
     }
 
     int BowlingGame::resetBowlingBall() {
-        // reset bowling ball
-        selectedBowlingBall->show();
+        int alley = getClosestAlleyToBowlingBall();
+        int count = 0;
+        int startIndex = (alley - 1) * 10;
+        for (int i = startIndex; i < startIndex + 10 && i < pins.size(); i++) {
+            if (pins[i]->isDown()) {
+                count++;
+            }
+        }
+
+        evaluateScore(alley, count);
+
+        if (selectedBowlingBall) { selectedBowlingBall->show(); }
         selectedBowlingBall = nullptr;
         rollingBowlingBallNow = false;
         bowlingBall->disable();
         bowlingBall->position() = glm::vec3(0.0f, 1000.0f, 0.0f);
 
-        // count and reset all pins
-        int count = 0;
-        for (CollisionPin *pin : pins) {
-            if (pin->isDown()) { ++count; }
-            pin->reset();
-        }
         return count;
     }
 
@@ -109,6 +113,36 @@ namespace copakond {
             videoMiss4->hide();
             videoTimeout = 999.0f;
         }
+
+        // game logic
+        for (int i = 0; i < 4; i++) {
+            if (isGameOver[i]) {
+                gameOverTimer[i] -= deltaTime;
+                if (gameOverTimer[i] <= 0.0f) {
+                    resetGameForAlley(i + 1);
+                }
+            }
+        }
+    }
+
+    void BowlingGame::resetGameForAlley(int alley) {
+        int aIdx = alley - 1;
+        currentSubround[aIdx] = 0;
+        isGameOver[aIdx] = false;
+        gameOverTimer[aIdx] = 0.0f;
+
+        // Pick the right array to clear
+        int* scoreNow = score1;
+        if (alley == 2) scoreNow = score2;
+        if (alley == 3) scoreNow = score3;
+        if (alley == 4) scoreNow = score4;
+
+        for(int i = 0; i < TOTAL_ROUNDS * 2 + 1; i++) {
+            scoreNow[i] = 0;
+        }
+
+        resetPinsForAlley(alley);
+        renderText(alley);
     }
 
     void BowlingGame::throwBall(float power) {
@@ -185,18 +219,39 @@ namespace copakond {
 
     // format the given text result score
     void BowlingGame::renderText(int alley) {
-        TextLabel *label = scoreLabel1;
-        int *scoreNow = score1;
-        if (alley == 2) { label = scoreLabel2; scoreNow = score2; }
-        if (alley == 3) { label = scoreLabel3; scoreNow = score3; }
-        if (alley == 4) { label = scoreLabel4; scoreNow = score4; }
+        int aIdx = alley - 1;
+        int* scoreNow = score1;
+        TextLabel* label = scoreLabel1;
+        if (alley == 2) { scoreNow = score2; label = scoreLabel2; }
+        if (alley == 3) { scoreNow = score3; label = scoreLabel3; }
+        if (alley == 4) { scoreNow = score4; label = scoreLabel4; }
 
-        std::string res = ""; //0 0|0 0|0 0|00
+        std::string res = "";
         int sum = 0;
 
         for (int i = 0; i < TOTAL_ROUNDS * 2; i++) {
             sum += scoreNow[i];
-            res += std::to_string(scoreNow[i]);
+            bool hasPlayed = (i < currentSubround[aIdx]);
+
+            if (i % 2 == 0) {  // FIRST THROW
+                if (hasPlayed && scoreNow[i] == 10) {
+                    res += "X";
+                } else if (hasPlayed && scoreNow[i] == 0) {
+                    res += "-";
+                } else {
+                    res += hasPlayed ? std::to_string(scoreNow[i]) : " ";
+                }
+            } else { // SECOND THROW
+                if (hasPlayed && scoreNow[i - 1] == 10) {
+                    res += " "; // strike from prev round
+                } else if (hasPlayed && scoreNow[i - 1] + scoreNow[i] == 10) {
+                    res += "/";
+                } else if (hasPlayed && scoreNow[i] == 0) {
+                    res += "-";
+                } else {
+                    res += hasPlayed ? std::to_string(scoreNow[i]) : " ";
+                }
+            }
 
             if (i % 2 == 1 && i < TOTAL_ROUNDS * 2 - 1) {
                 res += "|";
@@ -231,5 +286,69 @@ namespace copakond {
 
         videoLabel->position() = pos;
         videoLabel->show(); videoLabel->setFrame(0);
+    }
+
+    void BowlingGame::resetPinsForAlley(int alley) {
+        int startIndex = (alley - 1) * 10;
+
+        for (int i = startIndex; i < startIndex + 10 && i < pins.size(); i++) {
+            pins[i]->reset();
+        }
+    }
+
+    void BowlingGame::evaluateScore(int alley, int pinsKnocked) {
+        int aIdx = alley - 1;
+        if (isGameOver[aIdx]) return;
+
+        int* scoreNow = score1;
+        if (alley == 2) scoreNow = score2;
+        if (alley == 3) scoreNow = score3;
+        if (alley == 4) scoreNow = score4;
+
+        scoreNow[currentSubround[aIdx]] = pinsKnocked;
+        bool isFirstThrow = (currentSubround[aIdx] % 2 == 0);
+
+        // STRIKE
+        if (pinsKnocked == 10 && isFirstThrow) {
+            playVideo(BowlingVideoEvent::STRIKE, alley);
+            scoreNow[currentSubround[aIdx] + 1] = 0; // skip 2nd throw
+            currentSubround[aIdx] += 2; // next round
+            resetPinsForAlley(alley);
+        }
+
+        // SPARE
+        else if (!isFirstThrow && (scoreNow[currentSubround[aIdx] - 1] + pinsKnocked == 10)) {
+            playVideo(BowlingVideoEvent::SPARE, alley);
+            currentSubround[aIdx]++;
+            resetPinsForAlley(alley);
+        }
+
+        // SPLIT
+        else if (pinsKnocked == 8) {
+            playVideo(BowlingVideoEvent::SPLIT, alley);
+            if (!isFirstThrow) resetPinsForAlley(alley);
+            currentSubround[aIdx]++;
+        }
+
+        // MISS
+        else if (pinsKnocked == 0) {
+            playVideo(BowlingVideoEvent::MISS, alley);
+            if (!isFirstThrow) resetPinsForAlley(alley);
+            currentSubround[aIdx]++;
+        }
+
+        // OTHER
+        else {
+            if (!isFirstThrow) resetPinsForAlley(alley);
+            currentSubround[aIdx]++;
+        }
+
+        renderText(alley);
+
+        // END GAME
+        if (currentSubround[aIdx] >= TOTAL_ROUNDS * 2) {
+            isGameOver[aIdx] = true;
+            gameOverTimer[aIdx] = 15.0f;
+        }
     }
 }
