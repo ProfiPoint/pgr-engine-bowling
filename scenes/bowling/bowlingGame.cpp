@@ -133,6 +133,11 @@ namespace copakond {
             videoSpare2->hide();
             videoStrike3->hide();
             videoMiss4->hide();
+            if (videoPlayingALleyId == 1) { scoreLabel1->show(); }
+            if (videoPlayingALleyId == 2) { scoreLabel2->show(); }
+            if (videoPlayingALleyId == 3) { scoreLabel3->show(); }
+            if (videoPlayingALleyId == 4) { scoreLabel4->show(); }
+            videoPlayingALleyId = 0;
             videoTimeout = 999.0f;
         }
 
@@ -293,10 +298,12 @@ namespace copakond {
     }
 
     void BowlingGame::playVideo(BowlingVideoEvent event, int alley) {
+        videoPlayingALleyId = alley;
         glm::vec3 pos = videoIdle1->position();
-        if (alley == 2) { pos = videoIdle2->position(); }
-        if (alley == 3) { pos = videoIdle3->position(); }
-        if (alley == 4) { pos = videoIdle4->position(); }
+        if (alley == 1) { pos = videoIdle1->position(); scoreLabel1->hide(); }
+        if (alley == 2) { pos = videoIdle2->position(); scoreLabel2->hide(); }
+        if (alley == 3) { pos = videoIdle3->position(); scoreLabel3->hide(); }
+        if (alley == 4) { pos = videoIdle4->position(); scoreLabel4->hide(); }
 
         ImageSequenceLabel *videoLabel = videoSplit1; videoTimeout = 8.0f;
         if (event == BowlingVideoEvent::SPARE) { videoLabel = videoSpare2; videoTimeout = 8.0f; }

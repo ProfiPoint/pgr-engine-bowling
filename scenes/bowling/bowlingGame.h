@@ -18,6 +18,7 @@ namespace copakond {
 
     class BowlingGame {
     private:
+        int videoPlayingALleyId = 0;
         float timeToDespawnBowlingBall = 0.0f;
         float videoTimeout = 999.0f;
         bool rollingBowlingBallNow = false;
