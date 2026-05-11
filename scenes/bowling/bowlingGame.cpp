@@ -89,7 +89,7 @@ namespace copakond {
 
         // make sure the ball keeps moving constantly
         if (bowlingBall->velocity().x > BALL_MIN_SPEED) {
-            bowlingBall->velocity().x += BALL_MIN_SPEED / 5 * deltaTime;
+            bowlingBall->velocity().x += BALL_MIN_SPEED / 15;
         }
 
         // if it touches the wall, then end it 5 seconds, instead of waiting 20 seconds to despawn

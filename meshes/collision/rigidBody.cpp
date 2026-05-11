@@ -13,6 +13,8 @@ namespace copakond {
     }
 
     void RigidBody::physics_process(float deltaTime, const std::vector<CollisionShape*>& allColliders) {
+        _isOnFloor = false;
+
         if (!_enabled) { return; }
         // implementation of delta fix t
 
@@ -64,6 +66,7 @@ namespace copakond {
                 }
 
                 if (result.collides) { // if collides restore prev position
+                    _isOnFloor = true;
                     position()[i] = prevPosition;
 
                     float bouncinessRes = this->physicsMaterial.bounciness * resCollider->physicsMaterial.bounciness;

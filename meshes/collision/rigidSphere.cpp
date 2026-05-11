@@ -31,6 +31,7 @@ namespace copakond {
     }
 
     void RigidSphere::physics_process(float deltaTime, const std::vector<CollisionShape*>& allColliders) {
+        _isOnFloor = false;
         if (!_enabled) { return; }
 
         float radius1 = std::max({this->scale().x, this->scale().y, this->scale().z}) * 0.866f;
@@ -83,6 +84,7 @@ namespace copakond {
                 }
 
                 if (result.collides) { // if collides restore prev position
+                    _isOnFloor = true;
                     position()[i] = prevPosition;
 
                     float bouncinessRes = this->physicsMaterial.bounciness * resCollider->physicsMaterial.bounciness;

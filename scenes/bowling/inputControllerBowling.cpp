@@ -1,8 +1,11 @@
 #include "inputControllerBowling.h"
 #include "bowlingScene.h"
 
+#define JUMP_POWER 50.0f
+
 namespace copakond {
     void InputControllerBowling::update(float deltaTime) {
+        _playerSpaceUpTick -= deltaTime;
         const auto keysMap = input->keysMap;
 
         // keyboard input
@@ -31,6 +34,14 @@ namespace copakond {
                 direction.y += -1.0f;
             }
         }
+        if (keysMap[' '] && player->isOnFloor()) {
+            _playerSpaceUpTick = 0.1f;
+            keysMap[' '] = false;
+        }
+
+        if (_playerSpaceUpTick > 0.0f) {
+            player->position() += glm::vec3(0.0f, JUMP_POWER*_playerSpaceUpTick*deltaTime, 0.0f);
+        }
 
         if (glm::length(direction) > 0.0f && _canMove) {
             direction = glm::normalize(direction);
@@ -47,8 +58,14 @@ namespace copakond {
 
                 if (glm::length(moveVector) > 0.0f) {
                     moveVector = glm::normalize(moveVector);
-                    if (player->isEnabled()) {
-                        player->velocity() = moveVector * speed; // if enabled - update it using velocity (rigid body)
+                    if (player->isEnabled()) { // if enabled - update it using velocity (rigid body)
+                        if (glm::abs(moveVector.y) < 0.001f) { // dont set y if its 0
+                            player->velocity().x = moveVector.x * speed;
+                            player->velocity().z = moveVector.z * speed;
+                        } else {
+                            player->velocity() = moveVector * speed; // if enabled - update it using velocity (rigid body)
+                        }
+
                     } else {
                         player->position() += moveVector * speed * deltaTime; // if disabled update it using positon (normal geometry node)
                     }
@@ -116,12 +133,13 @@ namespace copakond {
             exit(0);
         }
 
-        if (keysMap[' ']) {
-            spacePower += 2 * deltaTime;
-            spacePower = glm::min(spacePower, 10.0f);
+        //
+        if (keysMap[KEY_ENTER]) {
+            shootPower += 2 * deltaTime;
+            shootPower = glm::min(shootPower, 10.0f);
         } else {
-            spacePower -= 2 * deltaTime;
-            spacePower = glm::max(spacePower, 2.0f);
+            shootPower -= 2 * deltaTime;
+            shootPower = glm::max(shootPower, 2.0f);
         }
     }
 
@@ -137,14 +155,14 @@ namespace copakond {
             if (raycastResult == bowlingBallId) {
                 for (Mesh *mesh : scene->getMeshes()) {
                     if (mesh->getId() == bowlingBallId) {
-                        scene->getGame()->pickBowlingBall(mesh, spacePower);
+                        scene->getGame()->pickBowlingBall(mesh, shootPower);
                         return;
                     }
                 }
             }
         }
 
-        scene->getGame()->throwBall(spacePower);
+        scene->getGame()->throwBall(shootPower);
     }
 
     int InputControllerBowling::raycast(int x, int y) {

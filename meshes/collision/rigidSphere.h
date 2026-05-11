@@ -10,6 +10,7 @@ namespace copakond {
         float _airFriction = 0.1f;
 
         void rollRotation(float timeDeltaNow);
+        bool _isOnFloor = false;
 
     public:
         RigidSphere(const glm::vec3 &position = glm::vec3(0.0f), const glm::vec3 &rotation = glm::vec3(0.0f),
@@ -20,6 +21,8 @@ namespace copakond {
         glm::vec3& gravity() { return _gravity; }
         void setAirFriction(float airFriction);
         float getAirFriction() const { return _airFriction; }
+
+        bool isOnFloor() const { return _isOnFloor; }
     };
 }
 

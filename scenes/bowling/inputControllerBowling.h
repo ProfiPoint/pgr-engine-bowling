@@ -22,7 +22,8 @@ namespace copakond {
         Input* input;
         Spline* _spline = nullptr;
         RigidBody* player = nullptr;
-        float spacePower = 2.0f;
+        float shootPower = 2.0f;
+        float _playerSpaceUpTick = 0.0f;
 
         void toggleFullScreen();
         void switchCamera(int mode);
