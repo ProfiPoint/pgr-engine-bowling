@@ -5,6 +5,7 @@
 
 namespace copakond {
 
+/** @brief Caches shader uniform locations for a specific light instance to avoid repeated lookups */
 struct LightUniforms {
     GLint type;
     GLint position;
@@ -18,8 +19,8 @@ struct LightUniforms {
     GLint dim;
 };
 
+/** @brief Base class for scene lighting calculations */
 class Light {
-
 public:
     enum LightType {
         DIRECTIONAL,
@@ -38,13 +39,17 @@ protected:
     glm::vec3 _specular;
 
     int _id;
-    float _range;
-    float _angle;
-    float _exponent;
-    bool _dim;
+    float _range; /**< Maximum distance the light reaches */
+    float _angle; /**< Cutoff angle for spotlights */
+    float _exponent; /**< Falloff exponent for spotlights */
+    bool _dim; /**< If true, light intensity attenuates based on distance */
     LightUniforms _uniformLocations;
 
 public:
+    /**
+     * @brief Initializes base light properties.
+     * @param dim If true, applies distance-based attenuation (dimming).
+     */
     Light(LightType type, glm::vec3 position, glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float range,
         float angle, float exponent, bool dim);
 

@@ -8,17 +8,19 @@
 #include "../geometry/geometry.h"
 
 namespace copakond {
+    /** @brief Represents a part of a mesh that uses a specific material */
     struct SubMesh {
         std::shared_ptr<Material> material;
-        unsigned int indexOffset;
-        unsigned int indexCount;
+        unsigned int indexOffset; /**< Starting point in the element buffer (EBO) */
+        unsigned int indexCount; /**< Number of indices to draw for this submesh */
     };
 
+    /** @brief Base drawable 3D object containing geometry and material data */
     class Mesh : public Geometry {
     protected:
-        static int globalMeshCounter;
+        static int globalMeshCounter; /**< Used to generate unique IDs for stencil buffer picking */
         int id;
-        int _isVertexWave = false;
+        int _isVertexWave = false; /**< Flag for procedural vertex animation in shader */
         bool _visible = true;
 
         GLuint _shaderProgram = 0;
@@ -42,6 +44,8 @@ namespace copakond {
         virtual ~Mesh();
 
         void setVertices(const std::vector<float> &vertices);
+
+        /** @brief Applies a material to the entire mesh and all its submeshes */
         void setMaterial(const std::shared_ptr<Material> &material);
         const std::vector<SubMesh>& getSubMeshes() const { return _subMeshes; }
         std::shared_ptr<Material> getMaterial();
@@ -49,6 +53,10 @@ namespace copakond {
         GLuint getVao() const { return _vao; }
         GLsizei getNumVertices() const { return _numVertices; }
 
+        /**
+         * @brief Initializes OpenGL buffers (VAO, VBO) for the mesh.
+         * @param shader The compiled shader program ID used to get attribute locations.
+         */
         virtual void init(GLuint shader);
         virtual void draw(float deltaTime);
         int getId() const { return id; }

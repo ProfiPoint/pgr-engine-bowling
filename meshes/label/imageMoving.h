@@ -3,11 +3,12 @@
 #include "../mesh.h"
 
 namespace copakond {
+    /** @brief 2D plane with an animated (scrolling) texture map */
     class ImageMoving : public Mesh {
     private:
-        glm::vec2 _imageRepeated;
-        glm::vec2 _movingSpeed;
-        glm::vec2 _curOffset;
+        glm::vec2 _imageRepeated; /**< How many times the texture repeats across the plane */
+        glm::vec2 _movingSpeed; /**< Texture scrolling speed in U and V directions */
+        glm::vec2 _curOffset; /**< Current UV offset */
 
         bool _paused = false;
 
@@ -15,6 +16,7 @@ namespace copakond {
         std::vector<float> _normals;
         GLuint _vboUvs = 0;
 
+        /** @brief Recalculates UV coordinates based on current offset and repetition */
         void _generateGeometry();
     public:
         ImageMoving(const std::string& imagePath, glm::vec2 movingSpeed, glm::vec2 imageRepeated);
@@ -22,6 +24,8 @@ namespace copakond {
         ~ImageMoving() override;
 
         void init(GLuint shader) override;
+
+        /** @brief Updates scrolling offset and triggers geometry regeneration if needed */
         void draw(float deltaTime) override;
 
         void pause() { _paused = true; }

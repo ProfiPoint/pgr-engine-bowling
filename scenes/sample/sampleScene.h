@@ -5,6 +5,7 @@
 #include "../utils/inputController.h"
 
 namespace copakond {
+    /** @brief Demonstration scene featuring a working procedural clock and basic physics interactions */
     class SampleScene : public Scene {
     private:
         InputController* inputController = nullptr;
@@ -16,7 +17,7 @@ namespace copakond {
         Mesh *pivotRot = nullptr;
         RigidBody *player = nullptr;
 
-        float clockTime[3] = {0, 0, 0}; // hh:mm:ss
+        float clockTime[3] = {0, 0, 0}; /**< hh:mm:ss */
 
     public:
         SampleScene(const char *sceneName, Input* input, Shader* shader, int winWidth, int winHeight);

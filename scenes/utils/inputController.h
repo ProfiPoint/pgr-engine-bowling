@@ -9,7 +9,7 @@
 #include "levelEditor.h"
 
 namespace copakond {
-
+    /** @brief Handles player movement, camera perspective switching, and object interaction logic */
     class InputController : public Controller {
     private:
         bool _canMove = true;
@@ -35,7 +35,16 @@ namespace copakond {
         LevelEditor* getLevelEditor() { return _levelEditor; }
 
         void update(float deltaTime) override;
+
+        /**
+         * @brief Performs stencil buffer reading at cursor position to find object ID.
+         * @param x Screen X coordinate
+         * @param y Screen Y coordinate
+         * @return The ID of the clicked mesh.
+         */
         int raycast(int x, int y);
+
+        /** @brief Attaches the active camera to a spline for cinematic movement */
         void setCameraSpline(Spline *spline) { _spline = spline; }
 
         void onKeyboardEvent(unsigned char key, int x, int y, bool isDown) override;

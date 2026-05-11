@@ -4,6 +4,7 @@
 #include "collisionDetector.h"
 
 namespace copakond {
+    /** @brief Spherical collider, optimized for fast radius-based intersection tests */
     class CollisionSphere : public CollisionShape {
     public:
         CollisionSphere(const glm::vec3 &position = glm::vec3(0.0f), const glm::vec3 &rotation = glm::vec3(0.0f),

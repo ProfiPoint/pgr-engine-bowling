@@ -9,6 +9,7 @@
 #include "../light/light.h"
 
 namespace copakond {
+    /** @brief Core manager for shader program compilation, uniform binding, and rendering */
     class Shader {
     private:
         float _totalTime = 0.0f;
@@ -63,12 +64,25 @@ namespace copakond {
 
         static glm::vec3 getWorldAmbient() { return WORLD_AMBIENT; }
 
+        /** @brief Binds material properties and active textures to the shader pipeline */
         void applyMaterialUniforms(std::shared_ptr<Material> mat);
         void setLight(Light *light, int lightIndex);
         void updateLight(Light* light);
 
+        /**
+         * @brief Compiles and links vertex and fragment shaders.
+         * @return The generated OpenGL shader program ID.
+         */
         GLuint init(std::string vertShaderLocation, std::string fragShaderLocation);
+
+        /** @brief Updates global shader uniforms (Camera, Fog, Time) */
         void update(Camera &camera, int winWidth, int winHeight, float deltaTime);
+
+        /**
+         * @brief Issues draw calls for a specific mesh.
+         * @param drawTransparent If true, renders only transparent submeshes (for blending). If false, renders opaque.
+         * @param deltaTime Passed for procedural vertex wave animations.
+         */
         void draw(Mesh &mesh, bool drawTransparent, float deltaTime);
     };
 }

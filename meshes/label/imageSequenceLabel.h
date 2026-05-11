@@ -4,21 +4,23 @@
 #include "../mesh.h"
 
 namespace copakond {
+    /** @brief 2D plane that plays an animation by cycling through a sprite sheet texture */
     class ImageSequenceLabel : public Mesh {
     protected:
-        int _frame = 0;
-        float _frameTime = 0.0f;
+        int _frame = 0; /**< Current animation frame index */
+        float _frameTime = 0.0f; /**< Accumulated time since the last frame change */
         bool _paused = false;
 
         int _fps;
         int _totalFrames;
-        int _imagesPerWidth;
-        int _imagesPerHeight;
+        int _imagesPerWidth; /**< Columns in the sprite sheet */
+        int _imagesPerHeight; /**< Rows in the sprite sheet */
 
         std::vector<float> _uvs;
         std::vector<float> _normals;
         GLuint _vboUvs = 0;
 
+        /** @brief Recalculates UV mapping to display the current frame from the sprite sheet */
         void _generateGeometry();
 
     public:
@@ -27,6 +29,8 @@ namespace copakond {
         ~ImageSequenceLabel() override;
 
         void init(GLuint shader) override;
+
+        /** @brief Advances animation timer and triggers geometry regeneration if frame changes */
         void draw(float deltaTime) override;
 
         void pause() { _paused = true; }

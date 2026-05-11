@@ -16,6 +16,7 @@
 #define MIN_FOV 1.0f
 
 namespace copakond {
+    /** @brief Camera for generating view and projection matrices */
     class Camera : public Geometry {
     private:
         const glm::vec3 _worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -28,23 +29,34 @@ namespace copakond {
         float _mouseSensitivity;
         float _maxPitch;
 
-        float _nearZ;
-        float _farZ;
-        float _fov; // fovY
+        float _nearZ; /**< Near clipping plane distance */
+        float _farZ; /**< Far clipping plane distance */
+        float _fov; /**< Field of view in degrees (Y-axis) */
 
         Fog _fog = Fog();
 
-        void updateCameraVectors(); // calculates front, up based off of yaw and pitch and position
+        /** @brief Recalculates front, up, and right directional vectors based on current rotation */
+        void updateCameraVectors();
 
     public:
         Camera(const glm::vec3 &startPosition, const glm::vec3 &startLookPoint, float distance);
 
+        /**
+         * @brief Orients the camera to look directly at a specific world coordinate.
+         * @param point Target coordinates in world space.
+         */
         void lookToPoint(const glm::vec3 &point);
         void setRotation(const glm::vec3& rotation) override;
         void setRotationDegrees(const glm::vec3& rotationDegrees) override;
         void addFov(float fov);
 
         glm::mat4 getViewMatrix();
+
+        /**
+         * @brief Generates perspective projection matrix.
+         * @param aspectWidth Window width.
+         * @param aspectHeight Window height.
+         */
         glm::mat4 getProjectionMatrix(float aspectWidth, float aspectHeight);
 
         glm::vec3 getPosition() const { return _position; }
@@ -52,6 +64,11 @@ namespace copakond {
         glm::vec3& position() { return _position; }
         glm::vec3& rotation() { return _rotation; }
 
+        /**
+         * @brief Processes keyboard movement input.
+         * @param direction Predefined movement macro (e.g., FRONT, BACK).
+         * @param deltaTime Time elapsed since last frame.
+         */
         void processKeyboard(int direction, float deltaTime);
         void processMouseMovement(float deltaX, float deltaY);
         void processMouseDrag(float deltaX, float deltaY);

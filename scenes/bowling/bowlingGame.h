@@ -24,6 +24,7 @@ namespace copakond {
         glm::vec3 targetDiffuse;
     };
 
+    /** @brief Core logic manager handling bowling rules, scoring, and lane interactions */
     class BowlingGame {
     private:
         int videoPlayingALleyId = 0;
@@ -76,9 +77,14 @@ namespace copakond {
 
     public:
         BowlingGame(Camera *camera) : camera(camera) {};
+
+        /** @brief Evaluates pin states and manages game progression */
         void update(float deltaTime);
 
+        /** @brief Attaches ball to player and prepares for throw */
         void pickBowlingBall(Mesh* bowlingBall, float power = 2.0f);
+
+        /** @brief Releases ball with current velocity and direction */
         void throwBall(float power = 2.0f);
 
         void toggleDoor1();

@@ -5,6 +5,7 @@
 #include "../utils/inputController.h"
 
 namespace copakond {
+    /** @brief Empty starter scene with initialized lighting, skybox, and a player controller */
     class TemplateScene : public Scene {
     private:
         InputController* inputController = nullptr;

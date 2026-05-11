@@ -14,6 +14,7 @@
 #include <map>
 
 namespace copakond {
+    /** @brief Parses Wavefront .obj files and extracts vertices, normals, UVs, and submeshes */
     class ObjLoader {
     private:
         std::vector<float> _vertices;
@@ -23,6 +24,7 @@ namespace copakond {
         std::map<std::string, std::shared_ptr<Material>> _materialDict;
         std::vector<SubMesh> _subMeshes;
 
+        /** @brief Reorders index buffers to ensure unique combinations of attributes for OpenGL glDrawElements */
         void remapBuffers(const std::vector<float> &vertices, const std::vector<float> &normals, const std::vector<float> &tempUvs, const
             std::vector<std::string> &faces);
 

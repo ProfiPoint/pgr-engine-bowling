@@ -7,6 +7,7 @@
 namespace copakond {
     enum class PinState { IDLE, FALLING, DEAD };
 
+    /** @brief Specialized sphere collider for bowling pins with custom fall physics */
     class CollisionPin : public CollisionSphere {
     private:
         PinState _state = PinState::IDLE;
@@ -18,10 +19,12 @@ namespace copakond {
     public:
         CollisionPin(const glm::vec3 &position, const glm::vec3 &rotation, const glm::vec3 &scale, bool visible = true);
 
+        /** @brief Custom physics update simulating toppling over when hit */
         void updatePin(float deltaTime, RigidSphere* ball);
 
         CollisionResult collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity, bool calculateNormal) override;
 
+        /** @brief Restores pin to its initial standing position and state */
         void reset();
         bool isDown() { return _state == PinState::DEAD; }
     };

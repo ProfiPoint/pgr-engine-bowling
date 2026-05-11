@@ -8,11 +8,13 @@
 namespace copakond {
     enum class ShapeType { BOX, SPHERE };
 
+    /** @brief Physical properties affecting collision resolution */
     struct PhysicsMaterial {
-        float bounciness = 0.05f; // 0 = no bounce, 1 = full bounce
-        float friction = 0.95f; // 0 = no friction, 1 = instant stop
+        float bounciness = 0.05f; /**< 0 = no bounce, 1 = full energy retention */
+        float friction = 0.95f; /**< 0 = no friction, 1 = instant stop on slide */
     };
 
+    /** @brief Base class for physics colliders, acting as an invisible (or debug) mesh */
     class CollisionShape : public Mesh {
     protected:
         bool _enabled = true;
@@ -32,8 +34,11 @@ namespace copakond {
         void disable() { _enabled = false; }
         bool isEnabled() const { return _enabled; }
 
-        virtual bool collisionCheck(const CollisionShape &mesh, glm::vec3 velocity) = 0; // virtual
-        virtual CollisionResult collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity, bool calculateNormal = false) = 0; // virtual
+        /** @brief Fast boolean check if this shape intersects with another */
+        virtual bool collisionCheck(const CollisionShape &mesh, glm::vec3 velocity) = 0;
+
+        /** @brief Detailed collision check returning overlap status, normal, and reflection vectors */
+        virtual CollisionResult collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity, bool calculateNormal = false) = 0;
     };
 }
 

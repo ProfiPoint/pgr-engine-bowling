@@ -11,6 +11,7 @@
 namespace copakond {
     class BowlingScene;
 
+    /** @brief Bowling-specific player controller handling throwing mechanics and scene interactions */
     class InputControllerBowling : public Controller {
     private:
         bool _canMove = true;
@@ -42,6 +43,7 @@ namespace copakond {
         int raycast(int x, int y);
         void setCameraSpline(Spline *spline) { _spline = spline; }
 
+        /** @brief Triggers ball pickup logic when close to an available bowling ball */
         void selectBowlingBallE();
         void onKeyboardEvent(unsigned char key, int x, int y, bool isDown) override;
         void onMouseButtonEvent(int button, int state, int x, int y) override;

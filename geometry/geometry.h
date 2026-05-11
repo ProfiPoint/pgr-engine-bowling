@@ -5,13 +5,14 @@
 #include <iostream>
 
 namespace copakond {
+    /** @brief Base class for all spatial objects, serving as a node in the scene graph */
     class Geometry {
     protected:
-        Geometry *parent = nullptr;
-        std::vector<Geometry*> children;
+        Geometry *parent = nullptr; /**< Pointer to the parent node in the hierarchy */
+        std::vector<Geometry*> children;/**< List of child nodes */
 
         glm::vec3 _position;
-        glm::vec3 _rotation; // radiants
+        glm::vec3 _rotation; /**< Rotation in radians */
         glm::vec3 _scale;
 
     public:
@@ -35,12 +36,16 @@ namespace copakond {
         glm::mat4 getPositionMatrix() const;
         glm::mat4 getRotationMatrix() const;
         glm::mat4 getScaleMatrix() const;
-        glm::mat4 getModelMatrix() const; // local matrix
+
+        /** @brief Calculates local transformation matrix */
+        glm::mat4 getModelMatrix() const;
 
         // world position
         glm::mat4 getWorldPositionMatrix() const;
         glm::mat4 getWorldRotationMatrix() const;
         glm::mat4 getWorldScaleMatrix() const;
+
+        /** @brief Calculates global transformation matrix by multiplying all ancestor matrices */
         glm::mat4 getWorldModelMatrix() const; // used for shader (all matrixes of all ancestors multiplied)
 
         glm::vec3 getPosition() const { return _position; }
@@ -60,6 +65,11 @@ namespace copakond {
         glm::vec3 worldRotation() const;
         glm::vec3 worldScale() const;
 
+        /**
+         * @brief Attaches this object to a new parent in the scene graph.
+         * @param newParent Pointer to the new parent node.
+         * @return True if successful, false if a cycle is detected.
+         */
         bool setParent(Geometry *newParent);
         Geometry* getParent() const { return parent; }
         std::vector<Geometry*> getChildren() const { return children; }

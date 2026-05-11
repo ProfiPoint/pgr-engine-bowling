@@ -24,9 +24,11 @@
 #include "../meshes/model/skybox.h"
 
 namespace copakond {
+    /** @brief Determines which objects are written to the stencil buffer for mouse picking */
     enum class StencilSelect { ALL, MESHES, COLLISION };
     extern StencilSelect stencilMode; // only declare once
 
+    /** @brief Base class for all game scenes, managing lifecycle, rendering, and scene entities */
     class Scene {
     protected:
         const char *WIN_TITLE;
@@ -70,6 +72,8 @@ namespace copakond {
         Camera& getCamera() { return *camera; }
         Shader* getShader() const { return shader; }
         Input* getInput() const { return input; }
+
+        /** @brief Calculates delta time since the last frame */
         float updateTime();
         float getSkyboxBlendingCoeff() { return skyboxBlendingCoeff; } // each scene can overwrite it with custom logic
         const char* getSceneName() { return WIN_TITLE; }
@@ -77,6 +81,8 @@ namespace copakond {
         // functions for scene
         virtual void init() {};
         virtual void update(float deltaTime) {};
+
+        /** @brief Fixed-step physics update loop for resolving collisions and forces */
         virtual void physics_update(float deltaTime) {};
 
         virtual void onKeyboardEvent(unsigned char key, int x, int y, bool isDown) {}
@@ -84,6 +90,8 @@ namespace copakond {
         virtual void onMouseButtonEvent(int button, int state, int x, int y) {}
         virtual void onMouseWheelEvent(int wheel, int direction, int x, int y) {}
         virtual void onMouseMoveEvent(int x, int y) {}
+
+        /** @brief Handles viewport and projection matrix updates on window resize */
         virtual void onScreenResizeEvent(int width, int height) {}
 
         virtual void onMenuEvent(int option) {}

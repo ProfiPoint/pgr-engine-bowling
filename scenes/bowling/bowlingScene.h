@@ -9,6 +9,7 @@ namespace copakond {
     class InputControllerBowling;
     class RigidBody;
 
+    /** @brief Main playable scene containing the bowling alley environment and game loop */
     class BowlingScene : public Scene {
     private:
         BowlingGame *game;

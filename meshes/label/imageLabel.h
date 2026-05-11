@@ -3,6 +3,7 @@
 #include "imageSequenceLabel.h"
 
 namespace copakond {
+    /** @brief Static 2D image plane, implemented as a paused 1-frame image sequence */
     class ImageLabel : public ImageSequenceLabel {
     public:
         ImageLabel(const std::string& imagePath);

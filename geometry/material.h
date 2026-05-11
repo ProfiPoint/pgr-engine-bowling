@@ -10,6 +10,7 @@
 #define DEFAULT_SHININESS 32.0f
 
 namespace copakond {
+    /** @brief Defines surface properties and texture maps for rendering a mesh */
     class Material {
     protected:
         glm::vec3 _ambient;
@@ -30,7 +31,7 @@ namespace copakond {
         bool _hasAlphaTexture;
         bool _hasNormalTexture;
 
-        bool _isTextLabel = false;
+        bool _isTextLabel = false; /**< Flag to indicate if material is for a text label (changes shader blend logic) */
 
         void constructor(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, float shininess, float alpha);
 
@@ -48,7 +49,12 @@ namespace copakond {
         float &shininess() { return _shininess; }
         float &alpha() { return _alpha; }
 
-        // texture managers
+        // textures managers
+        /**
+         * @brief Loads and binds a diffuse texture map.
+         * @param warpTexture If true, applies GL_REPEAT wrapping.
+         * @param mipMap If true, generates mipmaps.
+         */
         void setDiffuseTexture(const std::string &textureFile, bool warpTexture = false, bool mipMap = true);
         bool hasDiffuseTexture() const { return _hasDiffuseTexture; }
         void clearDiffuseTexture() { _hasDiffuseTexture = false; }

@@ -24,6 +24,8 @@
 #include "scenes/bowling/bowlingScene.h"
 #include "scenes/scene.h"
 
+/** @brief PGR Semestral work with sample scenes and bowling.
+ * doxygen was generated with a help of LLM */
 namespace copakond {
     void menuCallback(int option);
 
@@ -36,6 +38,7 @@ namespace copakond {
     Input* input;
     Scene* currentScene;
 
+    /** @brief Initializes OpenGL context, scene data, and sets up GLUT callbacks */
     void init() {
         glutCreateMenu(menuCallback);
         glutAddMenuEntry("Player Cam", 1);
@@ -90,6 +93,7 @@ namespace copakond {
         glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
     }
 
+    /** @brief Main render loop. Handles updates, physics, and rendering of all scene elements */
     void draw() {
         Camera camera = currentScene->getCamera();
         float deltaTime = currentScene->updateTime() * SIMULATION_SPEED; // calculate delta time
@@ -227,6 +231,7 @@ namespace copakond {
         if (currentScene) { currentScene->onMouseWheelEvent(wheel, direction, x, y); }
     }
 
+    /** @brief Handles window resize events to maintain correct projection aspect ratio */
     void screenResizeEvent(int width, int height) {
         if (width == 0) width = 1; // sadly it can be 0 for some reason.
         if (height == 0) height = 1;

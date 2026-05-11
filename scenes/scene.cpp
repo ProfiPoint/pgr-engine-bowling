@@ -1,7 +1,7 @@
 #include "scene.h"
 
 namespace copakond {
-    StencilSelect stencilMode = StencilSelect::ALL;
+    StencilSelect stencilMode = StencilSelect::MESHES;
 
     float Scene::updateTime() {
         int currentFrameTime = glutGet(GLUT_ELAPSED_TIME);

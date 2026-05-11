@@ -16,9 +16,10 @@
 #include "../geometry/camera.h"
 
 namespace copakond {
+    /** @brief Global input manager tracking keyboard states and mouse deltas */
     class Input {
     public:
-        bool keysMap[1024] = {false}; // 256 normal, 256 special
+        bool keysMap[1024] = {false}; /**< Array mapping ASCII and special keys to their boolean pressed state */
         float mouseDeltaX = 0.0f;
         float mouseDeltaY = 0.0f;
 
@@ -36,6 +37,8 @@ namespace copakond {
         Input(Camera &cam, int winWidth, int winHeight);
 
         void screenResize(int winWidth, int winHeight);
+
+        /** @brief Resets mouse deltas to prevent abrupt camera snapping upon initial window focus */
         void resetMouseTarget() { _firstMouseMovement = false; }
 
         void keyboardInputEvent(unsigned char key, int x, int y);

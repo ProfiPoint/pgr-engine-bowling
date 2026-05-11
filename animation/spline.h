@@ -5,18 +5,19 @@
 #include "../pgr-portable.h"
 
 namespace copakond {
+    /** @brief Base class for parameterized spline animations */
     class Spline {
     protected:
-        float t = 0.0f;
-        float duration;
-        size_t pointsCount;
+        float t = 0.0f; /**< Current continuous time of the spline animation */
+        float duration; /**< Total time to complete one full spline loop */
+        size_t pointsCount; /**< Number of control points */
         bool hasDerivative;
         bool paused = false;
 
         bool hasFunctionVector = false;
         bool hasFunctionVectorDerivative = false;
-        std::function<void(glm::vec3)> applyVector;
-        std::function<void(glm::vec3)> applyVectorDerivative;
+        std::function<void(glm::vec3)> applyVector; /**< Callback function to apply calculated position */
+        std::function<void(glm::vec3)> applyVectorDerivative; /**< Callback function to apply calculated tangent */
 
         std::vector<glm::vec3> points;
         glm::vec3 &vector;
@@ -40,6 +41,10 @@ namespace copakond {
         Spline(float duration, std::vector<glm::vec3> &points, glm::vec3 &vector, std::function<void(glm::vec3)> applyVectorDerivative);
         Spline(float duration, std::vector<glm::vec3> &points, std::function<void(glm::vec3)> applyVector, std::function<void(glm::vec3)> applyVectorDerivative);
 
+        /**
+         * @brief Updates spline state and calculates new vectors based on time.
+         * @param deltaTime Time elapsed since the last frame.
+         */
         void update(float deltaTime);
         void pause() { paused = true; }
         void unpause() { paused = false; }

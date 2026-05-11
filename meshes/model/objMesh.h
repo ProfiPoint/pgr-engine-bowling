@@ -4,6 +4,7 @@
 #include "../mesh.h"
 
 namespace copakond {
+    /** @brief Mesh loaded from an external .obj file */
     class ObjMesh : public Mesh {
     private:
         std::string _fileLocation;
@@ -31,7 +32,10 @@ namespace copakond {
 
         ~ObjMesh() override;
 
+        /** @brief Initializes VAO, VBOs and EBO with loaded OBJ data */
         void init(GLuint shader) override;
+
+        /** @brief Draws the mesh using glDrawElements */
         void draw(float deltaTime) override;
     };
 }

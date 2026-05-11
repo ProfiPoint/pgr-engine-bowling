@@ -2,6 +2,7 @@
 #define PGR_SEM_COPAKOND_CONTROLLER_H
 
 namespace copakond {
+    /** @brief Base interface for input handling and logic updates */
     class Controller {
     public:
         Controller() = default;
