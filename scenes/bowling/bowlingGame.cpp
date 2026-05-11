@@ -163,7 +163,7 @@ namespace copakond {
             scoreNow[i] = 0;
         }
 
-        playVideo(BowlingVideoEvent::END, i + 1);
+        playVideo(BowlingVideoEvent::END, alley);
         resetPinsForAlley(alley);
         renderText(alley);
     }
