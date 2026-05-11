@@ -8,6 +8,8 @@
 
 #define DOOR_OPEN_SPEED 0.07f
 #define DOOR_MAX_OFFSET 0.45f
+#define BALL_DESPAWN_TIME 30.0f
+#define BALL_MIN_SPEED -0.5f
 
 namespace copakond {
     int BowlingGame::getClosestAlleyToBowlingBall() {
@@ -45,6 +47,7 @@ namespace copakond {
 
 
     void BowlingGame::update(float deltaTime) {
+        // door opening logic
         if (bowlingAlleyOpened1) {
             offsetDoor1 += deltaTime * DOOR_OPEN_SPEED;
             offsetDoor1 = std::min(offsetDoor1, DOOR_MAX_OFFSET);
@@ -84,6 +87,11 @@ namespace copakond {
             resetBowlingBall();
         }
 
+        // make sure the ball keeps moving constantly
+        if (bowlingBall->velocity().x > BALL_MIN_SPEED) {
+            bowlingBall->velocity().x += BALL_MIN_SPEED / 5 * deltaTime;
+        }
+
         // if it touches the wall, then end it 5 seconds, instead of waiting 20 seconds to despawn
         if (checkIfBowlingBallHitTheWall()) { timeToDespawnBowlingBall = glm::min(timeToDespawnBowlingBall, 5.0f); }
     }
@@ -94,7 +102,7 @@ namespace copakond {
 
         bowlingBall->enable();
         rollingBowlingBallNow = true;
-        timeToDespawnBowlingBall = 20.0f;
+        timeToDespawnBowlingBall = BALL_DESPAWN_TIME;
 
         // set position and velocity of the ball based of the camera position
         glm::vec3 camRot = camera->rotation();
