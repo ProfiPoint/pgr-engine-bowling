@@ -232,6 +232,11 @@ namespace copakond {
         videoMiss4->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*3+0.05f); videoMiss4->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
         videoMiss4->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoMiss4);
 
+        ImageSequenceLabel *videoEnd5 = new ImageSequenceLabel("assets/decals/miss4.png", 16, 11*16+4,16, 16);
+        videoEnd5->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*4+0.05f); videoEnd5->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
+        videoEnd5->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoEnd5);
+
+
 
         ImageSequenceLabel *videoIdle1 = new ImageSequenceLabel("assets/decals/tutorial.png", 8, 32*32,32, 32);
         videoIdle1->position() = glm::vec3(6.710f, 1.5f, 2.640f); videoIdle1->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
