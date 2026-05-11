@@ -253,23 +253,23 @@ namespace copakond {
         scoreLabel4->scale() = glm::vec3(0.7835, 0.1105, 0.9); addToScene(scoreLabel4);
         scoreLabel4->setText("   |   |   |00");
 
-        ImageSequenceLabel *videoSplit1 = new ImageSequenceLabel("assets/decals/split1.png", 20, 20*8,16, 16);
+        ImageSequenceLabel *videoSplit1 = new ImageSequenceLabel("assets/decals/split1.png", 30, 240, 16, 16);
         videoSplit1->position() = glm::vec3(6.710f, 1.5f, 2.640f); videoSplit1->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
         videoSplit1->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoSplit1);
 
-        ImageSequenceLabel *videoSpare2 = new ImageSequenceLabel("assets/decals/spare2.png", 20, 20*8,16, 16);
+        ImageSequenceLabel *videoSpare2 = new ImageSequenceLabel("assets/decals/spare2.png", 30, 240, 16, 16);
         videoSpare2->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING); videoSpare2->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
         videoSpare2->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoSpare2);
 
-        ImageSequenceLabel *videoStrike3 = new ImageSequenceLabel("assets/decals/strike3.png", 20, 20*8,16, 16);
+        ImageSequenceLabel *videoStrike3 = new ImageSequenceLabel("assets/decals/strike3.png", 30, 240, 16, 16);
         videoStrike3->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*2+0.05f); videoStrike3->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
         videoStrike3->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoStrike3);
 
-        ImageSequenceLabel *videoMiss4 = new ImageSequenceLabel("assets/decals/miss4.png", 20, 20*6,12, 12);
+        ImageSequenceLabel *videoMiss4 = new ImageSequenceLabel("assets/decals/miss4.png", 24, 144, 12, 12);
         videoMiss4->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*3+0.05f); videoMiss4->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
         videoMiss4->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoMiss4);
 
-        ImageSequenceLabel *videoEnd5 = new ImageSequenceLabel("assets/decals/miss4.png", 16, 11*16+4,16, 16);
+        ImageSequenceLabel *videoEnd5 = new ImageSequenceLabel("assets/decals/end5.png", 18, 148, 16, 16);
         videoEnd5->position() = glm::vec3(6.710f, 1.5f, 2.640f-ALLEY_SPACING*4+0.05f); videoEnd5->rotation() = glm::vec3(0.0f, 1.571f, 0.0f);
         videoEnd5->scale() = glm::vec3(0.930f, 0.590f, 1.0f); addToScene(videoEnd5);
 
@@ -308,6 +308,30 @@ namespace copakond {
         game->videoIdle3 = videoIdle3;
         game->videoIdle4 = videoIdle4;
 
+
+        //clock
+        ImageLabel *clock = new ImageLabel("assets/decals/clock.png");
+        clock->position() = glm::vec3(9.000f, 1.600f, -3.670f);
+        clock->scale() = glm::vec3(1.000f, 1.000f, 1.500f) * 0.7f;
+        addToScene(clock);
+
+        clockHandSec = new ImageLabel("assets/decals/handSeconds2.png");
+        clockHandSec->position() = glm::vec3(0.0f, 0.0f, 0.005f);
+        clockHandSec->scale() = glm::vec3(1.0f*0.05f, 1.0f, 1.0f*0.05f);
+        clockHandSec->setParent(clock);
+        addToScene(clockHandSec);
+
+        clockHandMin = new ImageLabel("assets/decals/handMinutes2.png");
+        clockHandMin->position() = glm::vec3(0.0f, 0.0f, 0.01f);
+        clockHandMin->scale() = glm::vec3(1.0f*0.05f, 1.0f, 1.0f*0.05f);
+        clockHandMin->setParent(clock);
+        addToScene(clockHandMin);
+
+        clockHandHour = new ImageLabel("assets/decals/handHours2.png");
+        clockHandHour->position() = glm::vec3(0.0f, 0.0f, 0.01f);
+        clockHandHour->scale() = glm::vec3(1.0f*0.05f, 1.0f, 1.0f*0.05f);
+        clockHandHour->setParent(clock);
+        addToScene(clockHandHour);
 
         // meshes loading from the bowling model
         Mesh *ballSideTrack1 = new ObjMesh("assets/models/bowling/ballSideTrack1.obj");
@@ -645,6 +669,11 @@ namespace copakond {
         if (clockTime[0] >= 24.0f) {
             clockTime[0] -= 24.0f;
         }
+
+        // update clock
+        clockHandHour->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[0]/12*(2*glm::pi<float>()));
+        clockHandMin->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[1]/60*(2*glm::pi<float>()));
+        clockHandSec->rotation() = glm::vec3(0.0f, 0.0f, -clockTime[2]/60*(2*glm::pi<float>()));
 
         // update skybox, directional light,
         // skybox day night blending

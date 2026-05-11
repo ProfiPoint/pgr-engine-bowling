@@ -123,6 +123,11 @@ namespace copakond {
             keysMap[GLUT_KEY_F8 + IS_SPECIAL_KEY] = false;
         }
 
+        if (keysMap[GLUT_KEY_F9 + IS_SPECIAL_KEY]) {
+            scene->getClock()[0] += 1.0f;
+            keysMap[GLUT_KEY_F9 + IS_SPECIAL_KEY] = false;
+        }
+
         if (keysMap[GLUT_KEY_F11 + IS_SPECIAL_KEY]) {
             onMenuEvent(6);
             keysMap[GLUT_KEY_F11 + IS_SPECIAL_KEY] = false;

@@ -133,6 +133,8 @@ namespace copakond {
             videoSpare2->hide();
             videoStrike3->hide();
             videoMiss4->hide();
+            videoEnd5->hide();
+
             if (videoPlayingALleyId == 1) { scoreLabel1->show(); }
             if (videoPlayingALleyId == 2) { scoreLabel2->show(); }
             if (videoPlayingALleyId == 3) { scoreLabel3->show(); }
@@ -274,7 +276,7 @@ namespace copakond {
                 if (hasPlayed && scoreNow[i - 1] == 10) {
                     res += " "; // strike from prev round
                 } else if (hasPlayed && scoreNow[i - 1] + scoreNow[i] == 10) {
-                    res += "/";
+                    res += "\\";
                 } else if (hasPlayed && scoreNow[i] == 0) {
                     res += "-";
                 } else {
@@ -316,6 +318,7 @@ namespace copakond {
         videoSpare2->hide(); videoSpare2->setFrame(0);
         videoStrike3->hide(); videoStrike3->setFrame(0);
         videoMiss4->hide(); videoMiss4->setFrame(0);
+        videoEnd5->hide(); videoEnd5->setFrame(0);
 
         videoLabel->position() = pos;
         videoLabel->show(); videoLabel->setFrame(0);

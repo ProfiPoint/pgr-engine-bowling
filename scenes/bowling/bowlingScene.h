@@ -18,6 +18,11 @@ namespace copakond {
         float clockTime[3] = {0, 0, 0}; // hh:mm:ss
         std::vector<int> bowlingBallIds = {};
 
+        ImageLabel* clock = nullptr;
+        ImageLabel* clockHandSec = nullptr;
+        ImageLabel* clockHandMin = nullptr;
+        ImageLabel* clockHandHour = nullptr;
+
         void initLights();
 
     public:
@@ -35,6 +40,7 @@ namespace copakond {
 
         BowlingGame *getGame() { return game; }
         std::vector<int> getBowlingBallIds() { return bowlingBallIds; }
+        float *getClock() { return clockTime; }
     };
 }
 
