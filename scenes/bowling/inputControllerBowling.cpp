@@ -223,35 +223,39 @@ namespace copakond {
     }
 
     void InputControllerBowling::switchCamera(int mode) {
-        switch(mode) {
-            case 1: // player mode
+        switch (mode) {
+            case 1: // F1 - player cam
                 _canMove = true;
-                if (_spline) { _spline->pause(); _spline->reset(); }
-                player->enable();
+                if (player) player->enable();
                 break;
-            case 2: // free cam
+
+            case 2: // F2 - free cam
                 _canMove = true;
-                if (_spline) { _spline->pause(); _spline->reset(); }
-                player->disable();
+                if (player) player->disable();
                 break;
-            case 3: // CR spline
+
+            case 3: // F3 - static pos 1
                 _canMove = false;
-                if (_spline) { _spline->unpause(); }
-                player->disable();
+                if (player) {
+                    player->disable();
+                    player->position() = glm::vec3(0.0f, 5.0f, 20.0f);
+                    camera->position() = player->position();
+                }
+                camera->lookToPoint(glm::vec3(0.0f, 1.0f, 0.0f));
                 break;
-            case 4: // pos 1
+
+            case 4: // F4 - static pos 2
                 _canMove = false;
-                if (_spline) { _spline->pause(); }
-                player->position() = glm::vec3(5.0f, 0.0f, 20.0f);
-                camera->lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
-                player->disable();
+                if (player) {
+                    player->disable();
+                    player->position() = glm::vec3(0.0f, 5.0f, -20.0f);
+                    camera->position() = player->position();
+                }
+                camera->lookToPoint(glm::vec3(0.0f, 1.0f, 0.0f));
                 break;
-            case 5: // pos 2
-                _canMove = false;
-                if (_spline) { _spline->pause(); }
-                player->position() = glm::vec3(5.0f, 0.0f, -20.0f);
-                camera->lookToPoint(glm::vec3(0.0f, 0.0f, 0.0f));
-                player->disable();
+
+            case 5: // fullscreen
+                toggleFullScreen();
                 break;
         }
     }

@@ -682,6 +682,11 @@ namespace copakond {
     }
 
     void BowlingScene::onMenuEvent(int option) {
-        return;
+        if (inputController) {
+            if (option > 3) { // skipping broken catm roll
+                option -= 1;
+            }
+            inputController->onMenuEvent(option);
+        }
     }
 }
