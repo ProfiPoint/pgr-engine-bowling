@@ -7,6 +7,7 @@
 #define TOTAL_ROUNDS 3
 
 namespace copakond {
+    class Light;
     class Camera;
     class RigidSphere;
     class RigidBody;
@@ -15,6 +16,13 @@ namespace copakond {
     class ImageSequenceLabel;
     class ImageSequence;
     enum class BowlingVideoEvent { SPLIT, SPARE, STRIKE, MISS, END };
+    enum class BowlingLightMode { NORMAL, OFF, DISCO };
+
+    struct BowlingLightData {
+        Light* light;
+        glm::vec3 originalDiffuse;
+        glm::vec3 targetDiffuse;
+    };
 
     class BowlingGame {
     private:
@@ -62,6 +70,9 @@ namespace copakond {
         void resetPinsForAlley(int alley);
         void resetGameForAlley(int alley);
 
+        // for light modes
+        float discoTimer = 0.0f;
+        void updateArenaLights(float deltaTime);
 
     public:
         BowlingGame(Camera *camera) : camera(camera) {};
@@ -74,6 +85,10 @@ namespace copakond {
         void toggleDoor2();
         void toggleDoor3();
         void toggleDoor4();
+
+        void turnOffAllLights();
+        void resetLights();
+        void setDiscoMode();
 
         RigidBody *player = nullptr;
 
@@ -100,6 +115,9 @@ namespace copakond {
         ImageSequenceLabel *videoIdle2;
         ImageSequenceLabel *videoIdle3;
         ImageSequenceLabel *videoIdle4;
+
+        std::vector<BowlingLightData> arenaLights;
+        BowlingLightMode lightMode = BowlingLightMode::NORMAL;
     };
 }
 

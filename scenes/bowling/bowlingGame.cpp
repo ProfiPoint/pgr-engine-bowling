@@ -6,6 +6,7 @@
 #include "../../meshes/collision/rigidSphere.h"
 #include "../../meshes/collision/rigidBody.h"
 #include "../../geometry/camera.h"
+#include "../../light/light.h"
 
 #include "../../meshes/label/textLabel.h"
 #include "../../meshes/label/imageLabel.h"
@@ -78,6 +79,8 @@ namespace copakond {
 
 
     void BowlingGame::update(float deltaTime) {
+        updateArenaLights(deltaTime);
+
         // door opening logic
         if (bowlingAlleyOpened1) {
             offsetDoor1 += deltaTime * DOOR_OPEN_SPEED;
@@ -129,6 +132,7 @@ namespace copakond {
         // manage videos
         videoTimeout -= deltaTime;
         if (videoTimeout <= 0.0f) {
+            resetLights();
             videoSplit1->hide();
             videoSpare2->hide();
             videoStrike3->hide();
@@ -350,6 +354,7 @@ namespace copakond {
             scoreNow[currentSubround[aIdx] + 1] = 0; // skip 2nd throw
             currentSubround[aIdx] += 2; // next round
             resetPinsForAlley(alley);
+            setDiscoMode();
         }
 
         // SPARE
@@ -371,6 +376,7 @@ namespace copakond {
             playVideo(BowlingVideoEvent::MISS, alley);
             if (!isFirstThrow) resetPinsForAlley(alley);
             currentSubround[aIdx]++;
+            turnOffAllLights();
         }
 
         // OTHER
@@ -386,5 +392,48 @@ namespace copakond {
             isGameOver[aIdx] = true;
             gameOverTimer[aIdx] = 15.0f;
         }
+    }
+
+
+    void BowlingGame::updateArenaLights(float deltaTime) {
+        if (lightMode == BowlingLightMode::DISCO) {
+            discoTimer -= deltaTime; // keep changing each 2 seconds
+            if (discoTimer <= 0.0f) {
+                discoTimer = 1.2f;
+
+                for (auto& arenaLight : arenaLights) { // generate random r,g,b
+                    float r = (float)(rand() % 100) / 100.0f;
+                    float g = (float)(rand() % 100) / 100.0f;
+                    float b = (float)(rand() % 100) / 100.0f;
+
+                    arenaLight.targetDiffuse = glm::vec3(r, g, b) * 0.75f;
+                }
+            }
+        }
+
+        // lerping between the colors
+        float interpSpeed = (lightMode == BowlingLightMode::DISCO) ? 2.5f : 4.0f;
+        for (auto& arenaLight : arenaLights) {
+            arenaLight.light->diffuse() += (arenaLight.targetDiffuse - arenaLight.light->diffuse()) * interpSpeed * deltaTime;
+        }
+    }
+
+    void BowlingGame::turnOffAllLights() {
+        lightMode = BowlingLightMode::OFF;
+        for (auto& al : arenaLights) {
+            al.targetDiffuse = glm::vec3(0.0f);
+        }
+    }
+
+    void BowlingGame::resetLights() {
+        lightMode = BowlingLightMode::NORMAL;
+        for (auto& al : arenaLights) {
+            al.targetDiffuse = al.originalDiffuse;
+        }
+    }
+
+    void BowlingGame::setDiscoMode() {
+        lightMode = BowlingLightMode::DISCO;
+        discoTimer = 0.0f;
     }
 }

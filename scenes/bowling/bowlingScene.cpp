@@ -32,6 +32,9 @@ namespace copakond {
             glm::vec3 pos2 = glm::vec3(10.910f - (10.910f - 8.360f) * i, roofY, -1.640f);
             PointLight* laneLight2 = new PointLight(pos2, ambientColor, diffuseColor, specularColor, pointRange, useDim);
             addToScene(laneLight2);
+
+            game->arenaLights.push_back({laneLight, diffuseColor, diffuseColor});
+            game->arenaLights.push_back({laneLight2, diffuseColor, diffuseColor});
         }
 
         SpotLight* spotlight1 = new SpotLight(glm::vec3(-6.94f, roofY, 2.650f), spotDirection, glm::vec3(0.0f), spotDiffuse, specularColor, spotRange, spotAngle, spotExponent, useDim);
@@ -42,6 +45,11 @@ namespace copakond {
         addToScene(spotlight3);
         SpotLight* spotlight4 = new SpotLight(glm::vec3(-6.94f, roofY, 2.650f-ALLEY_SPACING*3+0.05f), spotDirection, glm::vec3(0.0f), spotDiffuse, specularColor, spotRange, spotAngle, spotExponent, useDim);
         addToScene(spotlight4);
+
+        game->arenaLights.push_back({spotlight1, spotDiffuse, spotDiffuse});
+        game->arenaLights.push_back({spotlight2, spotDiffuse, spotDiffuse});
+        game->arenaLights.push_back({spotlight3, spotDiffuse, spotDiffuse});
+        game->arenaLights.push_back({spotlight4, spotDiffuse, spotDiffuse});
     }
 
     void BowlingScene::init() {

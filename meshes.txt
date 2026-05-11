@@ -1,4 +1,0 @@
-ID = 53
-PREVIOUS = rotation=glm::vec3(0.000f, 0.000f, 0.000f) 
-NEW = rotation=glm::vec3(0.019f, -0.000f, 1.571f) 
-

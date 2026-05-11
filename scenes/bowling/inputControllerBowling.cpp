@@ -4,6 +4,8 @@
 #define JUMP_POWER 50.0f
 
 namespace copakond {
+    class BowlingGame;
+
     void InputControllerBowling::update(float deltaTime) {
         _playerSpaceUpTick -= deltaTime;
         const auto keysMap = input->keysMap;
@@ -126,6 +128,24 @@ namespace copakond {
         if (keysMap[GLUT_KEY_F9 + IS_SPECIAL_KEY]) {
             scene->getClock()[0] += 1.0f;
             keysMap[GLUT_KEY_F9 + IS_SPECIAL_KEY] = false;
+        }
+
+        if (keysMap[GLUT_KEY_F10 + IS_SPECIAL_KEY]) {
+            BowlingLightMode lightMode = scene->getGame()->lightMode;
+            switch (lightMode) {
+                case BowlingLightMode::NORMAL:
+                    scene->getGame()->turnOffAllLights();
+                    break;
+                case BowlingLightMode::OFF:
+                    scene->getGame()->setDiscoMode();
+                    break;
+                case BowlingLightMode::DISCO:
+                    scene->getGame()->resetLights();
+                    break;
+            }
+
+
+            keysMap[GLUT_KEY_F10 + IS_SPECIAL_KEY] = false;
         }
 
         if (keysMap[GLUT_KEY_F11 + IS_SPECIAL_KEY]) {
