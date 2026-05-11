@@ -22,7 +22,8 @@ namespace copakond {
 
         CollisionResult collisionCheckDetailed(const CollisionShape &mesh, glm::vec3 velocity, bool calculateNormal) override;
 
-        void resetPin();
+        void reset();
+        bool isDown() { return _state == PinState::DEAD; }
     };
 }
 

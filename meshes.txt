@@ -1,4 +1,0 @@
-ID = 148
-PREVIOUS = position=glm::vec3(0.000f, 0.000f, 0.000f) 
-NEW = position=glm::vec3(-17.400f, 0.750f, 0.000f) 
-

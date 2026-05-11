@@ -32,7 +32,7 @@ namespace copakond {
 
                 glm::vec3 fastNormal = glm::normalize(diff);
 
-                ball->velocity() *= 0.90f; // slowdown by 15 %
+                ball->velocity() *= 0.90f; // slowdown by 10 %
                 ball->velocity() += fastNormal * 0.25f; // flings little bit
             }
         }
@@ -44,12 +44,6 @@ namespace copakond {
             }
 
             rotation() = _fallAxis * _fallAngle;
-        }
-        else if (_state == PinState::DEAD) {
-            _timeSinceHit += deltaTime;
-            if (_timeSinceHit > 5.0f) {
-                resetPin();
-            }
         }
     }
 
@@ -65,12 +59,11 @@ namespace copakond {
         return result;
     }
 
-    void CollisionPin::resetPin() {
+    void CollisionPin::reset() {
         _state = PinState::IDLE;
         _fallAngle = 0.0f;
         _timeSinceHit = 0.0f;
         rotation() = glm::vec3(0.0f);
         position() = _startPosition;
     }
-
 }

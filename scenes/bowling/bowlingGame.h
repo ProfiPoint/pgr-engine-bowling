@@ -38,7 +38,9 @@ namespace copakond {
         Mesh *selectedBowlingBall = nullptr;
         Camera *camera;
 
-
+        int getClosestAlleyToBowlingBall();
+        int resetBowlingBall(); // also returning the number of pins down
+        bool checkIfBowlingBallHitTheWall() const;
 
     public:
         BowlingGame(Camera *camera) : camera(camera) {};

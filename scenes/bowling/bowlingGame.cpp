@@ -10,6 +10,40 @@
 #define DOOR_MAX_OFFSET 0.45f
 
 namespace copakond {
+    int BowlingGame::getClosestAlleyToBowlingBall() {
+        float dist1 = glm::distance(bowlingBall->position(), door1->position());
+        float dist2 = glm::distance(bowlingBall->position(), door2->position());
+        float dist3 = glm::distance(bowlingBall->position(), door3->position());
+        float dist4 = glm::distance(bowlingBall->position(), door4->position());
+
+        if (dist1 < dist2 && dist1 < dist3 && dist1 < dist4) { return 1; }
+        if (dist2 < dist3 && dist2 < dist4) { return 2; }
+        if (dist3 < dist4) { return 3; }
+        return 4;
+    }
+
+    int BowlingGame::resetBowlingBall() {
+        // reset bowling ball
+        selectedBowlingBall->show();
+        selectedBowlingBall = nullptr;
+        rollingBowlingBallNow = false;
+        bowlingBall->disable();
+        bowlingBall->position() = glm::vec3(0.0f, 1000.0f, 0.0f);
+
+        // count and reset all pins
+        int count = 0;
+        for (CollisionPin *pin : pins) {
+            if (pin->isDown()) { ++count; }
+            pin->reset();
+        }
+        return count;
+    }
+
+    bool BowlingGame::checkIfBowlingBallHitTheWall() const {
+        return bowlingBall->position().x < -11.5f; // if its behind the start of the last wall retrun true
+    }
+
+
     void BowlingGame::update(float deltaTime) {
         if (bowlingAlleyOpened1) {
             offsetDoor1 += deltaTime * DOOR_OPEN_SPEED;
@@ -47,12 +81,11 @@ namespace copakond {
         // update bowling ball if rolling
         timeToDespawnBowlingBall -= deltaTime;
         if (rollingBowlingBallNow && timeToDespawnBowlingBall <= 0.0f) {
-            selectedBowlingBall->show();
-            selectedBowlingBall = nullptr;
-            rollingBowlingBallNow = false;
-            bowlingBall->disable();
-            bowlingBall->position() = glm::vec3(0.0f, 1000.0f, 0.0f);
+            resetBowlingBall();
         }
+
+        // if it touches the wall, then end it 5 seconds, instead of waiting 20 seconds to despawn
+        if (checkIfBowlingBallHitTheWall()) { timeToDespawnBowlingBall = glm::min(timeToDespawnBowlingBall, 5.0f); }
     }
 
     void BowlingGame::throwBall(float power) {
