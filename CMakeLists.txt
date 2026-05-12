@@ -99,4 +99,9 @@ elseif(UNIX AND NOT APPLE) # ARCH LINUX CONFIGURATION
             GLEW
             glfw
     )
+
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+            BUILD_WITH_INSTALL_RPATH TRUE
+            INSTALL_RPATH "$ORIGIN"
+    )
 endif()
